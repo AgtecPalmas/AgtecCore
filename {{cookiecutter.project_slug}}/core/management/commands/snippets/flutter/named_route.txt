@@ -1,0 +1,51 @@
+/// Arquivo gerado via manager do Django para controlar as rotas nomeadas
+/// da aplicação.
+///
+/// Caso uma nova app seja adicionada no projeto siga os passos abaixo:
+///   1. Adicionar as constantes nas páginas:
+///       1.1 Index ->  static const routeNameIndexPage = "/xptoIndex";
+///       1.2 List -> static const routeNameListPage = "/xptoListPage";
+///       1.3 Create -> static const routeNameAddPage = "/xptoAddPage";
+///       1.4 Detail -> static const routeNameDetailPage = "/xptoDetailPage";
+///       1.5 Update -> static const routeNameUpdatePage = "/xptoUpdate";
+///
+///   2. Adicionar no Switch da classe RouteGenerator o apontamento para as rotas.
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// #FileLocked
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+$IMPORTS$
+
+class RouteGenerator {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    /// Recuperando os agumentos passados como parâmetro
+    final args = settings.arguments;
+
+    /// Switch para identificar qual rota está sendo invocada
+    switch (settings.name) {
+      $ROUTES_APPS$
+      default:
+        /// Caso a rota invocada não exista será mostrado o views de erro.
+        return _errorRoute();
+    }
+  }
+
+  // Retornando a tela de rota não encontrada. Caso deseje configurar a tela de erro basta editar o código desse método
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(builder: (_) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Error'),
+        ),
+        body: Center(
+          child: Text('ERROR'),
+        ),
+      );
+    });
+  }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Checkbox</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Checkbox padrão</p>
+      <p class="label mb-0">Rótulo</p>
+      <p class="text-down-01">Informações adicionais</p>
+      <div class="br-checkbox">
+        <input id="checkbox-1" name="checkbox-1" type="checkbox" aria-label="opção 1"/>
+        <label for="checkbox-1">Opção 1</label>
+      </div>
+      <div class="br-checkbox">
+        <input id="checkbox-2" name="checkbox-2" type="checkbox" aria-label="opção 2" checked="checked"/>
+        <label for="checkbox-2">Opção 2</label>
+      </div>
+      <div class="br-checkbox">
+        <input id="checkbox-3" name="checkbox-3" type="checkbox" aria-label="opção 3"/>
+        <label for="checkbox-3">Opção 3</label>
+      </div>
+      <div class="mt-3"><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Texto de mensagem</span>
+      </div>
+      <p class="h4 mt-5">Listagem horizontal</p>
+      <div class="d-inline-block mr-5">
+        <div class="br-checkbox">
+          <input id="h-checkbox-1" name="h-checkbox-1" type="checkbox"/>
+          <label for="h-checkbox-1">Opção 1</label>
+        </div>
+      </div>
+      <div class="d-inline-block mr-5">
+        <div class="br-checkbox">
+          <input id="h-checkbox-2" name="h-checkbox-2" type="checkbox"/>
+          <label for="h-checkbox-2">Opção 2</label>
+        </div>
+      </div>
+      <div class="d-inline-block mr-5">
+        <div class="br-checkbox">
+          <input id="h-checkbox-3" name="h-checkbox-3" type="checkbox"/>
+          <label for="h-checkbox-3">Opção 3</label>
+        </div>
+      </div>
+      <p class="h4 mt-5">Estados e validação</p>
+      <div class="br-checkbox">
+        <input id="check-state-checked" name="check-state-checked" type="checkbox" checked="checked"/>
+        <label for="check-state-checked">Checado</label>
+      </div>
+      <div class="br-checkbox disabled">
+        <input id="check-state-disabled" name="check-state-disabled" type="checkbox" disabled="disabled"/>
+        <label for="check-state-disabled">Desativado</label>
+      </div>
+      <div class="br-checkbox invalid">
+        <input id="check-state-invalid" name="check-state-invalid" type="checkbox"/>
+        <label for="check-state-invalid">Inválido</label>
+      </div>
+      <div class="br-checkbox valid">
+        <input id="check-state-valid" name="check-state-valid" type="checkbox"/>
+        <label for="check-state-valid">Válido</label>
+      </div>
+      <p class="h4 mt-5">Checkbox sem Label</p>
+      <div class="br-checkbox hidden-label">
+        <input id="check-all" name="check-all" type="checkbox"/>
+        <label for="check-all">Opção 5</label>
+      </div>
+      <p class="h4 mt-5">Checkbox com estado intermediário</p>
+      <div class="br-checkbox">
+        <input id="checkbox-ind1" name="checkbox-ind1" type="checkbox" aria-label="selecionar tudo" checked="checked" indeterminate="indeterminate" data-parent="check-01"/>
+        <label for="checkbox-ind1">Selecionar tudo</label>
+      </div>
+      <div class="br-checkbox">
+        <input id="checkbox-01" name="checkbox-01" type="checkbox" aria-label="opção 1" checked="checked" data-child="check-01"/>
+        <label for="checkbox-01">Opção 1</label>
+      </div>
+      <div class="br-checkbox">
+        <input id="checkbox-02" name="checkbox-02" type="checkbox" aria-label="opção 2" data-child="check-01"/>
+        <label for="checkbox-02">Opção 2</label>
+      </div>
+      <div class="br-checkbox">
+        <input id="checkbox-03" name="checkbox-03" type="checkbox" aria-label="opção 3" data-child="check-01"/>
+        <label for="checkbox-03">Opção 3</label>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

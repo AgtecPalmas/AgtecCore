@@ -1,0 +1,91 @@
+/// [Travar o arquivo]
+/// Caso deseje \"travar\" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// #FileLocked
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import '../../../core/user_interface/widget.dart';
+
+
+class SigninPage extends StatefulWidget {
+  @override
+  _SigninPageState createState() => _SigninPageState();
+}
+
+class _SigninPageState extends State<SigninPage> with SingleTickerProviderStateMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  AnimationController? _animationController;
+  final _formSigin = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(vsync: this);
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+      _loadData();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _loadData() async {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(backgroundColor: Colors.transparent),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(children: <Widget>[HeadWidget(), _buildPage()]);
+  }
+
+  Widget _buildPage() {
+    return Column();
+  }
+
+  /// Método responsável por mostrar um SnackBar com uma mensagem
+  /// com o texto passada como parâmetro
+  _showMessage(String message, {bool error = false}) {
+    if (message.isNotEmpty) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          error == false ? customSuccessSnackbar(message) : customErrorSnackbar(message),
+        );
+      });
+    }
+  }
+
+  _hideKeyboard(BuildContext context) {
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  _makeToast(String texto) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(''),
+          content: Text(texto),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {},
+            )
+          ],
+        );
+      },
+    );
+  }
+}

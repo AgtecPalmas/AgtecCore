@@ -1,0 +1,92 @@
+.br-breadcrumb {
+  display: inline-grid;
+  font-size: var(--font-size-scale-down-01);
+  font-weight: var(--font-weight-medium);
+  position: relative;
+}
+.br-breadcrumb .crumb-list {
+  align-items: center;
+  border: 0;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+}
+.br-breadcrumb .crumb {
+  align-items: center;
+  display: flex;
+  height: var(--spacing-scale-5x);
+  margin: auto 0 auto -5px;
+}
+.br-breadcrumb .crumb .icon {
+  color: var(--border-color);
+  font-size: var(--icon-size-sm);
+  margin-right: -6px;
+}
+.br-breadcrumb .crumb a {
+  max-width: 180px;
+  overflow: hidden;
+  padding: 0 6px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.br-breadcrumb .crumb:last-child span {
+  font-weight: var(--font-weight-medium);
+  padding: 0 0 0 var(--spacing-scale-base);
+  white-space: nowrap;
+}
+.br-breadcrumb .home,
+.br-breadcrumb .menu-mobil {
+  --focus-offset: calc(var(--spacing-scale-half) * -1);
+  margin-left: 0;
+  margin-right: -3px;
+}
+@media (max-width: 991px) {
+  .br-breadcrumb .crumb a:not(.br-button) {
+    display: block;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .br-breadcrumb .menu-mobil,
+  .br-breadcrumb .menu-mobil + .crumb,
+  .br-breadcrumb .home + .crumb {
+    display: flex;
+  }
+}
+.br-breadcrumb .br-card {
+  left: var(--spacing-scale-9x);
+  min-width: fit-content;
+  position: absolute;
+  top: var(--spacing-scale-7x);
+  z-index: var(--z-index-layer-1);
+}
+.br-breadcrumb .br-item {
+  color: var(--color);
+  cursor: pointer;
+  padding: 0;
+}
+.br-breadcrumb .br-item:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+}
+.br-breadcrumb .br-item a {
+  --interactive: var(--color);
+  --interactive-rgb: var(--color-rgb);
+  display: block;
+  padding: var(--spacing-scale-2x);
+}
+@media (max-width: 575px) {
+  .br-breadcrumb .menu-mobil > .icon {
+    display: none;
+  }
+  .br-breadcrumb .br-card {
+    left: var(--spacing-scale-base);
+    width: 250px;
+  }
+}
+
+/*# sourceMappingURL=breadcrumb.css.map*/

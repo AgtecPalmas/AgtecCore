@@ -1,0 +1,77 @@
+.br-accordion {
+  background: var(--bg-color);
+  border-top: 1px solid var(--color-secondary-04);
+}
+.br-accordion .item {
+  border-bottom: 1px solid var(--color-secondary-04);
+  display: flex;
+  flex-direction: column;
+}
+.br-accordion .item[active] {
+  border-bottom: 0;
+}
+.br-accordion .item[active] .header {
+  font-weight: var(--font-weight-semi-bold);
+}
+.br-accordion .item[active] + .content {
+  border-bottom: 1px solid var(--color-secondary-04);
+  display: block;
+}
+.br-accordion .header {
+  --bg-color: transparent;
+  background: var(--bg-color);
+  border: 0;
+  color: var(--interactive);
+  display: flex;
+  font-size: var(--font-size-scale-up-01);
+  justify-content: space-between;
+  outline: none;
+  padding: var(--spacing-scale-2x) 0;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+.br-accordion .header .icon {
+  margin: 0 var(--spacing-scale-2x) 0 var(--spacing-scale-baseh);
+}
+.br-accordion .header .title {
+  flex: 1;
+  margin: 0;
+}
+.br-accordion .header:focus {
+  outline: none;
+}
+.br-accordion .header.focus-visible, .br-accordion .header:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
+.br-accordion .header:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+.br-accordion .content {
+  color: var(--text-color);
+  display: none;
+  font-size: var(--font-size-scale-base);
+  margin: 0 var(--spacing-scale-base);
+  padding: var(--spacing-scale-base) var(--spacing-scale-8x) var(--spacing-scale-2x);
+}
+.br-accordion .content *:last-child {
+  margin-bottom: 0;
+}
+.br-accordion[negative] {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+  --bg-color: var(--background-dark);
+}
+
+/*# sourceMappingURL=accordion.css.map*/

@@ -1,0 +1,54 @@
+{% extends "core/index_detail.html" %}
+{% load boilerplate_base static base %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'audit/css/jsonFrill.css' %}"/>
+{% endblock extra_css %}
+{% block title %}
+    Detalhes de Auditoria
+{% endblock title %}
+<span class="text-muted font-weight-light"></span>
+{% block title_modulo %}
+    <h4 class="font-weight-bold py-3 mb-4">
+        <span class="text-muted font-weight-light">{{ model_name }} Auditoria /</span> {{ object }}
+    </h4>
+{% endblock title_modulo %}
+{% block detail %}
+    {% if has_view_permission or has_add_permission or has_change_permission or has_delete_permission %}
+        <div class="card-deck">
+            {% for field in object_list %}
+                {% if not forloop.first and forloop.counter0|divisibleby:2 %}
+                </div>
+                <div class="card-deck">
+                {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                        <strong>{{ field.0|capfirst }}:</strong>
+                        {% if not field.1 is None and field.1 != '' %}
+                            {% if field.1|is_type:"dict" or field.1|is_type:'list' %}
+                                <p class="card-text ">
+                                    <div id="target_json_{{ field.2 }}">{{ field.1 }}</div>
+                                </p>
+                            {% else %}
+                                <p class="card-text">{{ field.1|safe }}</p>
+                            {% endif %}
+                        {% else %}
+                            <p class="card-text text-danger">Não contém valor</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $('#target_json_{{ field.2 }}').jsonFrill({toolbar: false});
+                    });
+                </script>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Voce não tem permissão para acessar essa página!</h4>
+        </div>
+    {% endif %}
+{% endblock detail %}
+{% block extra_js %}
+    <script src="{% static 'audit/js/jsonFrill.js' %}"></script>
+{% endblock extra_js %}

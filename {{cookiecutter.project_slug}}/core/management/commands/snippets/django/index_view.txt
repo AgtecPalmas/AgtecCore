@@ -1,0 +1,12 @@
+from core.views.base import BaseTemplateView
+
+
+# Views Inicial $AppClass$
+class $AppClass$IndexTemplateView(BaseTemplateView):
+    # Views para renderizar a tela inicial $AppClass$
+    template_name = "$app_name$/index.html"
+    context_object_name = "$app_name$"
+
+    def get_context_data(self, **kwargs):
+        context = super($AppClass$IndexTemplateView, self).get_context_data(**kwargs)
+        return context

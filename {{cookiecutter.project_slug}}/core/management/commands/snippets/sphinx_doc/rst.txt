@@ -1,0 +1,32 @@
+$App$
+==============================================
+
+Forms
+-----------------------
+
+.. automodule:: $app$.forms
+    :members:
+
+Models
+------------------------
+
+.. automodule:: $app$.models
+    :members:
+
+Views
+------------------------
+
+.. automodule:: $app$.views
+    :members:
+
+Serializers
+-----------------------------
+
+.. automodule:: $app$.serializers
+    :members:
+
+APIViews
+-----------------------------
+
+.. automodule:: $app$.api_views
+    :members:

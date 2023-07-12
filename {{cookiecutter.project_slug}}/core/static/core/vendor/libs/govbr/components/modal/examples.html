@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Modal</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Exemplo de acionamento</p>
+      <div class="br-scrim-util foco" id="scrimutilexample" data-scrim="true">
+        <div class="br-modal">
+          <div class="br-modal-header">Modal com scrim</div>
+          <div class="br-modal-body">
+            <p>Exemplo utilizando o componente scrim com FOCO</p>
+          </div>
+          <div class="br-modal-footer justify-content-center">
+            <button class="br-button secondary" type="button" id="scrimfechar" data-dismiss="scrimexample">Cancelar
+            </button>
+            <button class="br-button primary mt-3 mt-sm-0 ml-sm-3" type="button">Retornar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="scrimutilexemplo">
+        <button class="br-button primary" type="button">Testar Efeito
+        </button>
+      </div>
+      <p class="h4 mt-5">Modal Alerta</p>
+      <div class="div br-modal medium">
+        <div class="br-modal-header">Título da modal
+          <button class="br-button close circle" type="button" data-dismiss="br-modal" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus commodi laboriosam vel sequi quam deleniti, laborum mollitia blanditiis dolores officiis nulla quos dolorem repellat in nisi alias nesciunt fugit. Similique!</p>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button secondary" type="button">Ação 1
+          </button>
+          <button class="br-button primary ml-2" type="button">Ação2
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com duas ou mais linhas de título</p>
+      <div class="div br-modal small">
+        <div class="br-modal-header">
+          <div class="modal-title">Título do modal de exemplo com uso de duas linhas, título do modal de exemplo com uso de duas linhas</div>
+          <button class="br-button close circle" type="button" data-dismiss="br-modal" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <p> Texto com duas linhas Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="br-modal-footer justify-content-center">
+          <button class="br-button secondary" type="button">Ação 1
+          </button>
+          <button class="br-button primary ml-2" type="button">Ação 2
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com Temporizador</p>
+      <div class="div br-modal xsmall">
+        <div class="br-modal-body loading medium">
+        </div>
+        <div class="br-modal-footer justify-content-around">
+          <button class="br-button secondary" type="button">Cancelar
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal sem título</p>
+      <div class="div br-modal medium">
+        <div class="br-modal-body">
+          <p>Modal de alerta sem título Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="br-modal-footer justify-content-end">
+          <button class="br-button secondary" type="button">Ação 1
+          </button>
+          <button class="br-button primary ml-2" type="button">Ação 2
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com escolha de opção</p>
+      <div class="div br-modal small">
+        <div class="br-modal-header">Título
+          <button class="br-button close circle" type="button" data-dismiss="br-modal" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-radio d-block">
+            <input id="op-fotos" type="radio" name="op" value="op-fotos"/>
+            <label for="op-fotos">Fotos</label>
+          </div>
+          <div class="br-radio d-block mt-1">
+            <input id="op-filmes" type="radio" name="op" value="op-filmes" checked="checked"/>
+            <label for="op-filmes">Filmes</label>
+          </div>
+          <div class="br-radio d-block mt-1">
+            <input id="op-audio" type="radio" name="op" value="op-audio"/>
+            <label for="op-audio">Áudio</label>
+          </div>
+          <div class="br-radio d-block mt-1">
+            <input id="op-todas" type="radio" name="op" value="op-todas"/>
+            <label for="op-todas">Todas</label>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-center">
+          <button class="br-button secondary" type="button">Ação 1
+          </button>
+          <button class="br-button primary ml-2" type="button">Ação 2
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com entrada de dados</p>
+      <div class="div br-modal large">
+        <div class="br-modal-header">Título
+          <button class="br-button close circle" type="button" data-dismiss="br-modal" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-select">
+            <div class="br-input">
+              <label for="auth-dominio">Domínio da autenticação</label>
+              <input id="auth-dominio" type="text" placeholder="Placeholder"/>
+              <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="br-list" tabindex="0">
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="opt-221" type="radio" name="value" value="opt-221"/>
+                  <label for="opt-221">GOV.BR</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="br-input">
+              <label for="auth-usuario">Usuário</label>
+              <input id="auth-usuario" type="text" placeholder="Insira um texto"/>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="br-input input-button">
+              <label for="input-password">Senha</label>
+              <input id="input-password" type="password" placeholder="Digite sua senha"/>
+              <button class="br-button" type="button" aria-label="Mostrar senha"><i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="br-modal-footer justify-content-center">
+          <button class="br-button secondary" type="button">Cancelar
+          </button>
+          <button class="br-button primary ml-2" type="button" disabled="disabled">Finalizar
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com lista de opções</p>
+      <div class="div br-modal xsmall">
+        <div class="br-modal-header">Título
+          <button class="br-button close circle" type="button" data-dismiss="br-modal" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="br-modal-body">
+          <div class="br-list"><a class="br-item" href="javascript:void(0)">
+              <div class="row align-items-center">
+                <div class="col-auto"><img class="rounded" src="https://picsum.photos/40/40" alt="imagem de exemplo 1"/></div>
+                <div class="col">Opção 1</div>
+              </div></a><span class="br-divider"></span><a class="br-item" href="javascript:void(0)">
+              <div class="row align-items-center">
+                <div class="col-auto"><img class="rounded" src="https://picsum.photos/40/40" alt="imagem de exemplo 1"/></div>
+                <div class="col">Opção 2</div>
+              </div></a><span class="br-divider"></span><a class="br-item" href="javascript:void(0)">
+              <div class="row align-items-center">
+                <div class="col-auto"><img class="rounded" src="https://picsum.photos/40/40" alt="imagem de exemplo 1"/></div>
+                <div class="col">Opção 3</div>
+              </div></a>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Modal com termo de aceite</p>
+      <div class="div br-modal large">
+        <div class="br-modal-header">Concorda com os termos?
+        </div>
+        <div class="br-modal-body">
+          <p>Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Mauris id gravida nulla. Cras sagittis dapibus felis vitae semper. Donec vel hendrerit ante. Etiam sed blandit nisi. Praesent iaculis, nisl eget rutrum vehicula, lacus tortor feugiat diam, et euismod lacus metus eget nisi. Sed fermentum, nunc nec efficitur pharetra, felis dolor feugiat massa, et semper turpis felis quis ligula. Quisque non metus at risus maximus ultrices. Nam vel massa tellus. Vestibulum lobortis dui et pellentesque porta. Cras rhoncus augue a mauris porttitor, in malesuada metus eleifend. Praesent ac lacinia lorem. Sed cursus nisl ligula, vel ultrices ex pellentesque eu. Curabitur facilisis egestas libero, non pharetra lacus ultricies quis. Mauris non finibus justo, eu varius metus. Donec nec eros semper, consequat turpis id, fermentum dolor.</p>
+          <p>Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Mauris id gravida nulla. Cras sagittis dapibus felis vitae semper. Donec vel hendrerit ante. Etiam sed blandit nisi. Praesent iaculis, nisl eget rutrum vehicula, lacus tortor feugiat diam, et euismod lacus metus eget nisi. Sed fermentum, nunc nec efficitur pharetra, felis dolor feugiat massa, et semper turpis felis quis ligula. Quisque non metus at risus maximus ultrices. Nam vel massa tellus. Vestibulum lobortis dui et pellentesque porta. Cras rhoncus augue a mauris porttitor, in malesuada metus eleifend. Praesent ac lacinia lorem. Sed cursus nisl ligula, vel ultrices ex pellentesque eu. Curabitur facilisis egestas libero, non pharetra lacus ultricies quis. Mauris non finibus justo, eu varius metus. Donec nec eros semper, consequat turpis id, fermentum dolor.</p>
+          <p>Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Mauris id gravida nulla. Cras sagittis dapibus felis vitae semper. Donec vel hendrerit ante. Etiam sed blandit nisi. Praesent iaculis, nisl eget rutrum vehicula, lacus tortor feugiat diam, et euismod lacus metus eget nisi. Sed fermentum, nunc nec efficitur pharetra, felis dolor feugiat massa, et semper turpis felis quis ligula. Quisque non metus at risus maximus ultrices. Nam vel massa tellus. Vestibulum lobortis dui et pellentesque porta. Cras rhoncus augue a mauris porttitor, in malesuada metus eleifend. Praesent ac lacinia lorem. Sed cursus nisl ligula, vel ultrices ex pellentesque eu. Curabitur facilisis egestas libero, non pharetra lacus ultricies quis. Mauris non finibus justo, eu varius metus. Donec nec eros semper, consequat turpis id, fermentum dolor.</p>
+        </div>
+        <div class="br-modal-footer justify-content-center">
+          <button class="br-button secondary" type="button">Negar
+          </button>
+          <button class="br-button primary ml-2" type="button">Aceitar
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

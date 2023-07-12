@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Upload</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Envio de 1 arquivo</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="br-upload">
+            <label class="upload-label" for="single-file"><span>Envio de arquivo</span></label>
+            <input class="upload-input" id="single-file" type="file"/>
+            <div class="upload-list"></div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5 d-block">Envio de vários arquivos</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="br-upload">
+            <label class="upload-label" for="multiple-files"><span>Envio de arquivos</span></label>
+            <input class="upload-input" id="multiple-files" type="file" multiple="multiple"/>
+            <div class="upload-list"></div>
+          </div>
+          <p class="text-base mt-1">Clique ou arraste os arquivos para cima do componente Upload.</p>
+        </div>
+      </div>
+      <p class="h4 mt-5 d-block">Upload com mensagem de feedback</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="br-upload" data-danger="data-danger">
+            <label class="upload-label" for="upload"><span>Envio de arquivo</span></label>
+            <input class="upload-input" id="upload" type="file"/>
+            <div class="upload-list"></div>
+          </div><span class="feedback danger mt-1" role="alert"><i class="fas fa-times-circle" aria-hidden="true"></i>Os arquivos devem ser no formato PNG ou JPG e ter no máximo 100MB.</span>
+        </div>
+      </div>
+      <p class="h4 mt-5 d-block">Upload desabilitado</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="br-upload" disabled="disabled">
+            <label class="upload-label" for="disabled"><span>Envio de arquivo</span></label>
+            <input class="upload-input" id="disabled" type="file"/>
+            <div class="upload-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

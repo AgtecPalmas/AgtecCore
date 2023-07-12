@@ -1,0 +1,145 @@
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+import 'dart:developer' as dev;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/user_interface/widget.dart';
+import '../../../../core/config.dart';
+import '../../../../core/util.dart';
+import '../cubit.dart';
+import '../model.dart';
+import 'update.dart';
+
+class $ModelClass$DetailPage extends StatefulWidget {
+  static const routeName = "/$ModelClassCamelCase$DetailPage";
+
+  final $ModelClass$Model $ModelClassCamelCase$Model;
+
+  const $ModelClass$DetailPage({Key? key, required this.$ModelClassCamelCase$Model})
+      : super(key: key);
+
+  @override
+  _$ModelClass$DetailPageState createState() => _$ModelClass$DetailPageState();
+}
+
+class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage> 
+  with SingleTickerProviderStateMixin{
+
+  late $ModelClass$Model _$ModelClassCamelCase$Model;
+  late AnimationController _animationController;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(vsync: this);
+    _$ModelClassCamelCase$Model = widget.$ModelClassCamelCase$Model;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+      listener: (context, state) {
+        if (state is $ModelClass$ErrorState){
+          _showMessage(state.error, error: true);
+          dev.log("Erro no BlocConsumer", name: "AgtecCore", error: state.error.toString());
+        }
+        if(state is $ModelClass$SuccessState){
+          _showMessage(state.successMessage);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          key: _scaffoldKey,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(backgroundColor: Colors.transparent),
+          body: _buildBody(),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.update,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, $ModelClass$UpdatePage.routeName, arguments: _$ModelClassCamelCase$Model);
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(
+      children: <Widget>[
+        HeadWidget(),
+        _buildPage()
+      ],
+    );
+  }
+
+  Widget _buildPage() {
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+          margin: EdgeInsets.only(
+               top: Util.getProportionScreenHeight(context, Config.marginHead)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(_$ModelClassCamelCase$Model.toString()),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Método responsável por mostrar um SnackBar com uma mensagem
+  /// com o texto passada como parâmetro
+   _showMessage(String message, {bool error = false}) {
+    if (message.isNotEmpty) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          error == false
+              ? customSuccessSnackbar(message)
+              : customErrorSnackbar(message),
+        );
+      });
+    }
+  }
+
+  /// Método responsável por mostrar um modal com o texto informado
+  void _makeToast(String texto) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(''),
+          content: Text(texto),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {},
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  /// Método para ocultar o teclado
+  _hideKeyboard(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+}

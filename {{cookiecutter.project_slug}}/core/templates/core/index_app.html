@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %} {% block content %}
+<div id="content_index_page_app" class="row mb-4 content-page h-100">
+    <div id="submenu_index_page" class="col-3 col-xl-2 h-100">
+        <!-- Menu lateral com os models das app -->
+        <div class="card menu-vertical-app h-100">
+            <div class="card-header">
+                <h3 class="card-title"><strong>{% block title_modulo %}{% endblock title_modulo %}</strong></h3>
+            </div>
+            <!-- <div class="card-body"> -->
+            <table class="table table-borderless table-hover table-sm">
+                <tbody>
+                    {% block menu_app %}
+                    {% endblock menu_app %}
+                </tbody>
+            </table>
+            <!-- </div> -->
+        </div>
+    </div>
+    <div id="content_index_page" class="col-9 col-xl-10"></div>
+</div>
+{% endblock content %}

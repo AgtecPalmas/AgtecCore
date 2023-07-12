@@ -1,0 +1,36 @@
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+FileLocked
+-->
+
+{% extends 'core/index_app.html' %}
+{% block title %}Atendimento{% endblock title %}
+{% block title_modulo %}
+    <h4 class="font-weight-bold py-3 mb-4">
+        <span class="text-muted font-weight-light"> </span> Atendimento
+    </h4>
+{% endblock title_modulo %}
+    
+{% block menu_app %}
+<div class="card-deck">
+        {% for app in apps %}
+        {% if app.real_name_app.lower == 'atendimento' %}
+        {% for model in app.models_app %}
+        <div class="card">
+            <a href="{% url model.path_url %}">
+                <div class="card-body">
+                    <div class="col-12 mb-3">
+                        <i class="fe fe-box fa-5x"></i>
+                    </div>
+                    <div class="col-12">
+                        {{ model.name_model|title }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+</div>
+{% endblock menu_app %}

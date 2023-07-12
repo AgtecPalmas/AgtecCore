@@ -1,0 +1,40 @@
+[tool.taskipy.settings]
+user_vars = true
+
+[tool.pytest.ini_options]
+addopts = "--cov={{cookiecutter.project_slug.lower()}} --cov-report=html --cov-fail-under=90 --doctest-modules --doctest-glob='*.rst' --ignore=core --ignore=docs --ignore=venv --ignore=.venv --ignore=.env"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.black]
+max-line-length = 88
+line-length = 88
+ignore = "E203, W503"
+extend-exclude = '''
+(
+  ^/core/*
+  ^/docs/*
+  ^.venv/*
+  ^.env/
+)
+'''
+
+[tool.taskipy.tasks]
+build_all = "python manage.py build --all"
+build_force = "python manage.py build --all --force"
+core_checkupdate = "python manage.py core --checkupdate"
+core_version = "python manage.py core --version"
+coverage = "coverage html"
+docs = "mkdocs serve"
+lint = "black --diff --color . && isort --check-only --diff ."
+mgt = "python manage.py migrate"
+mkm = "python manage.py makemigrations"
+post_test = "coverage html"
+pre_test = "task lint"
+run = "python manage.py runserver"
+runserver = "python manage.py runserver"
+shell = "python manage.py shell"
+startapp = "python manage.py startapp"
+test = "pytest -s -x --cov=projeto_base -vv"

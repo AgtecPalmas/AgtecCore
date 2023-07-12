@@ -1,0 +1,61 @@
+.br-card {
+  --card-padding: var(--spacing-scale-2x);
+  --card-height-fixed: 250px;
+  background: var(--background);
+  box-shadow: var(--surface-shadow-sm);
+  color: var(--color);
+  margin-bottom: var(--spacing-scale-2x);
+}
+.br-card .card-content,
+.br-card .front .content {
+  padding: var(--card-padding);
+}
+.br-card .card-content *:last-child,
+.br-card .front .content *:last-child {
+  margin-bottom: 0;
+}
+.br-card .front .header,
+.br-card .card-header {
+  padding: var(--card-padding) var(--card-padding) 0;
+}
+.br-card .front .footer,
+.br-card .card-footer {
+  padding: 0 var(--card-padding) var(--card-padding);
+}
+.br-card.h-fixed .card-content {
+  max-height: var(--card-height-fixed);
+  overflow-y: auto;
+}
+.br-card.h-fixed .card-content::-webkit-scrollbar {
+  height: var(--spacing-scale-base);
+  width: var(--spacing-scale-base);
+}
+.br-card.h-fixed .card-content::-webkit-scrollbar-track {
+  background: var(--gray-10);
+}
+.br-card.h-fixed .card-content::-webkit-scrollbar-thumb {
+  background: var(--gray-30);
+}
+.br-card.h-fixed .card-content:hover::-webkit-scrollbar-thumb {
+  background: var(--gray-40);
+}
+.br-card.h-fixed .card-footer {
+  padding-top: var(--card-padding);
+}
+.br-card.hover:hover {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
+}
+.br-card.inverted, .br-card.dark-mode {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+
+/*# sourceMappingURL=card.css.map*/

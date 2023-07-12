@@ -1,0 +1,86 @@
+/*Css para as listas */
+
+.form-group ul {
+    list-style: none;
+    padding: 0;
+}
+
+/*Fim do css para as listas */
+
+.gap-small {
+    gap: 0.5rem;
+}
+
+.gap-medium {
+    gap: 1rem;
+}
+
+.gap-large {
+    gap: 2rem;
+}
+
+.flex-buttons-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.flex-buttons-start {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.flex-buttons-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flex-buttons-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.flex-buttons-stretch {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+}
+
+@media (max-width: 991px) {
+
+    .flex-buttons-end,
+    .flex-buttons-start,
+    .flex-buttons-between,
+    .flex-buttons-center,
+    .flex-buttons-stretch {
+        flex-direction: column;
+    }
+}
+
+.white {
+    filter: brightness(0) invert(1);
+}
+
+.deleted {
+    background-color: var(--red-vivid-10);
+}
+
+.table-actions {
+    width: 9rem;
+    text-align: center !important;
+}
+
+.table-delete {
+    width: 5rem;
+    text-align: center !important;
+}
+
+.go-to-top {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 999;
+}

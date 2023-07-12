@@ -1,0 +1,7 @@
+    def test_$app_name$_index(self, init):
+        """Teste para a view index."""
+        url = reverse("$app_name$:$app_name$-index")
+        request = self.factory.get(url)
+        request.user = self.user
+        response = $App_Class$IndexTemplateView.as_view()(request)
+        assert response.status_code == 200

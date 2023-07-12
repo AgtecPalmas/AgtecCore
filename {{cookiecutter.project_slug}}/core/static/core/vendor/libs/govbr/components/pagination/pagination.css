@@ -1,0 +1,164 @@
+.br-pagination {
+  --pagination-margin: var(--spacing-scale-base);
+  --pagination-select-width: 88px;
+  --pagination-size: var(--pagination-medium);
+  --pagination-small: 24px;
+  --pagination-medium: 32px;
+  --pagination-large: 40px;
+  color: var(--color);
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: var(--font-weight);
+  justify-content: center;
+}
+.br-pagination ul {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.br-pagination li {
+  padding: 0;
+}
+.br-pagination .page {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 100em;
+  color: var(--interactive);
+  display: inline-flex;
+  justify-content: center;
+  margin: 0 calc(var(--pagination-margin) * 0.5);
+  min-height: var(--pagination-size);
+  min-width: var(--pagination-size);
+  padding: 0 var(--spacing-scale-base);
+  white-space: nowrap;
+}
+.br-pagination .page:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+.br-pagination .page.active {
+  background: var(--active);
+  color: var(--color-dark);
+  font-weight: var(--font-weight-semi-bold);
+}
+.br-pagination .pagination-ellipsis {
+  margin: 0 calc(var(--pagination-margin) * 0.5);
+  position: relative;
+}
+.br-pagination .pagination-ellipsis .br-button {
+  --button-size: var(--pagination-size);
+}
+.br-pagination .pagination-ellipsis .br-list {
+  max-height: 220px;
+  min-width: 4em;
+  overflow-y: auto;
+  z-index: var(--z-index-layer-1);
+}
+.br-pagination .pagination-ellipsis .br-list::-webkit-scrollbar {
+  height: var(--spacing-scale-base);
+  width: var(--spacing-scale-base);
+}
+.br-pagination .pagination-ellipsis .br-list::-webkit-scrollbar-track {
+  background: var(--gray-10);
+}
+.br-pagination .pagination-ellipsis .br-list::-webkit-scrollbar-thumb {
+  background: var(--gray-30);
+}
+.br-pagination .pagination-ellipsis .br-list:hover::-webkit-scrollbar-thumb {
+  background: var(--gray-40);
+}
+.br-pagination.small {
+  --pagination-size: var(--pagination-small);
+}
+.br-pagination.medium {
+  --pagination-size: var(--pagination-medium);
+}
+.br-pagination.large {
+  --pagination-size: var(--pagination-large);
+}
+.br-pagination .pagination-information {
+  align-items: center;
+  display: flex;
+}
+.br-pagination .pagination-per-page,
+.br-pagination .pagination-go-to-page {
+  align-items: center;
+  display: flex;
+}
+.br-pagination .pagination-per-page .br-input,
+.br-pagination .pagination-go-to-page .br-input {
+  align-items: center;
+  display: flex;
+}
+.br-pagination .pagination-per-page .br-input label,
+.br-pagination .pagination-go-to-page .br-input label {
+  font-weight: var(--font-weight-regular);
+  margin-bottom: 0;
+  margin-right: var(--spacing-scale-base);
+  padding-bottom: 0;
+}
+.br-pagination .pagination-per-page .br-input input,
+.br-pagination .pagination-go-to-page .br-input input {
+  --input-size: var(--pagination-medium);
+  padding-left: var(--spacing-scale-base);
+  padding-right: calc(var(--spacing-scale-baseh) + 32px);
+  text-align: right;
+  width: var(--pagination-select-width);
+}
+.br-pagination .pagination-per-page .br-input input:not(:focus),
+.br-pagination .pagination-go-to-page .br-input input:not(:focus) {
+  border-color: transparent;
+}
+.br-pagination .pagination-per-page .br-list,
+.br-pagination .pagination-go-to-page .br-list {
+  min-width: 5em;
+  right: 0;
+  width: auto;
+}
+.br-pagination .pagination-arrows {
+  align-items: center;
+  display: flex;
+}
+.br-pagination .br-select .br-input .br-button {
+  bottom: auto;
+  margin-top: 0;
+  position: absolute;
+  right: var(--spacing-scale-half);
+  top: auto;
+  transform: none;
+}
+.br-pagination .br-divider {
+  border-right-width: var(--divider-size);
+  border-top: 0;
+}
+.br-pagination.inverted, .br-pagination.dark-mode {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-pagination.inverted.inverted .br-input,
+.br-pagination.inverted.inverted .br-input label, .br-pagination.inverted.dark-mode .br-input,
+.br-pagination.inverted.dark-mode .br-input label, .br-pagination.dark-mode.inverted .br-input,
+.br-pagination.dark-mode.inverted .br-input label, .br-pagination.dark-mode.dark-mode .br-input,
+.br-pagination.dark-mode.dark-mode .br-input label {
+  --color: var(--color-dark);
+  --focus-color: var(--focus-color-dark);
+}
+.br-pagination.inverted .page.active, .br-pagination.dark-mode .page.active {
+  --interactive-rgb: var(--active-rgb);
+  background-color: var(--background-light);
+  color: var(--active);
+}
+.br-pagination .input-group .input-icon {
+  display: none;
+}
+
+/*# sourceMappingURL=pagination.css.map*/

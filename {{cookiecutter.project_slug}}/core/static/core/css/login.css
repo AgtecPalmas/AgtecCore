@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    filter: brightness(0.5) blur(2px);
+}
+
+.login-card {
+    position: relative;
+    border-radius: 1rem;
+    width: 400px;
+    margin: 2rem;
+    background: #fff;
+    padding: 3rem;
+}
+
+.link-primary:hover {
+    background: none !important;
+}
+
+.logo-sistema {
+    max-height: 100px;
+}

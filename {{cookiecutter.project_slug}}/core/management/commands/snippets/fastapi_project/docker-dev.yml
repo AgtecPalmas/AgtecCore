@@ -1,0 +1,35 @@
+version: "3.7"
+
+networks:
+  TROCAR_PELO_NOME_DO_SISTEMA_network:
+    name: TROCAR_PELO_NOME_DO_SISTEMA_network
+
+services:
+  TROCAR_PELO_NOME_DO_SISTEMA_fastapi:
+    container_name: TROCAR_PELO_NOME_DO_SISTEMA_fastapi
+    image: TROCAR_PELO_NOME_DO_SISTEMA_fastapi:1.0
+    # TODO - Set your own environment variables
+    platform: linux/amd64
+    environment:
+      - APP_NAME=TROCAR_PELO_NOME_DO_SISTEMA
+      - APP_URL=http://localhost:8005
+      - DB_DATABASE=TROCAR_PELO_NOME_DO_SISTEMA_db
+      - DB_PASSWORD=senha_padrao_deve_ser_mudada
+      - DB_USERNAME=TROCAR_PELO_NOME_DO_SISTEMA_dbmanager_2LiyBoLHeHo5yG
+      - DB_HOST=TROCAR_PELO_NOME_DO_SISTEMA_database
+      - DB_PORT=5432
+      - DB_CONNECTION=postgresql
+      - APP_SECRET=senha_padrao_deve_ser_mudada
+    build:
+      context: .
+      dockerfile: ./DockerfileDev
+    working_dir: /app
+    volumes:
+      - .:/app
+    networks:
+      - TROCAR_PELO_NOME_DO_SISTEMA_network
+    command: uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8181:8000" # TODO - Trocar a porta 8181 pela porta que o FastAPI vai rodar
+    expose:
+      - 8181

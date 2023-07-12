@@ -1,0 +1,12 @@
+from django.urls import include, path
+from rest_framework import routers
+
+from .api_views import $ModelName$ViewAPI, $ModelName$CustomViewAPI
+
+router = routers.DefaultRouter()
+
+# URL para a API $ModelName$
+router.register(r"$model_name$", $ModelName$ViewAPI, "$model_name$-api")
+router.register(r"$model_name$/custom", $ModelName$CustomViewAPI, "$model_name$-get-api")
+
+urlpatterns = router.urls

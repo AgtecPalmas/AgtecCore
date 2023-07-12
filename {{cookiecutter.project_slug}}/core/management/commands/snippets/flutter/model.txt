@@ -1,0 +1,81 @@
+/// Model do objeto $ModelClass$
+/// 
+/// Os Métodos padrões gerados são:
+///     toString() -> Sobrescreve o toString para trazer todos os atributos da classe.
+///     fromMap() -> Realiza o parser do Json para o Model.
+///     toMap()   -> Realiza o parser do Model para Json.
+///
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+/// 
+import 'dart:convert';
+import 'dart:developer' as dev;
+import '../../../core/util.dart';
+import '../../../core/exceptions/exception.dart';
+
+class $ModelClass$Model {
+  String id;
+  String nextUrl;
+  String previousUrl;
+  bool enabled;
+  bool deleted;
+  DateTime? createdOn;
+  DateTime? updatedOn;
+  $AttributeClass$
+
+  $ModelClass$Model({
+    this.id = '',
+    this.nextUrl = '',
+    this.previousUrl = '',
+    this.enabled = true,
+    this.deleted = false,
+    DateTime? createdOn,
+    DateTime? updatedOn,
+    $ConstructorModelClass$
+  });
+
+  factory $ModelClass$Model.fromMap(Map<String, dynamic> map){
+    try {
+      return $ModelClass$Model(
+      id: map.containsKey('id') ? map['id'] ?? "" : "",
+      nextUrl: map.containsKey('nextUrl') ? map['nextUrl'] ?? "" : "",
+      previousUrl: map.containsKey('previousUrl') ? map['previousUrl'] ?? "" : "",
+      enabled: map.containsKey('enabled') ? map['enabled'] ?? true : true,
+      deleted: map.containsKey('deleted') ? map['deleted'] ?? false : false,
+      $ParserfromMap$
+      );
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      ExceptionCustom.general("Ocorreu um erro no método fromMap do $ModelClass$Model", e.toString());
+      return $ModelClass$Model();
+    }
+  }
+
+  Map<String, dynamic>? toMap(){
+    try{
+      return {
+        "nextUrl": nextUrl,
+        "previousUrl": previousUrl,
+        $ParserToMap$
+      };
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      ExceptionCustom.general("Ocorreu um erro no método toMap do $ModelClass$Model", e.toString());
+      return null;
+    }
+  }
+ 
+  String toJson() => json.encode(toMap());
+
+  factory $ModelClass$Model.fromJson(String source) => $ModelClass$Model.fromMap(json.decode(source));
+
+  /// Sobscrevendo o método toString para retornar todos os atributos da classe.
+  @override
+  String toString() {
+    return "$StringReturn$";
+  }
+
+}

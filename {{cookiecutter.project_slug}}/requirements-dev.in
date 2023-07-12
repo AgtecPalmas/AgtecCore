@@ -1,0 +1,25 @@
+# requirements-dev.in
+-c requirements.txt
+
+autoflake==2.1.*
+autopep8==2.0.*
+beautifulsoup4==4.12.*
+black==23.3.*
+django-debug-toolbar==4.0.*
+django-extensions==3.2.*
+djlint==1.25.*
+Faker==18.6.*
+html5lib==1.1
+isort==5.12.*
+mkdocs==1.4.*
+mkdocs-material==9.1.*
+mkdocstrings==0.21.*
+model_bakery==1.11.*
+pytest==7.3.*
+pytest-cov==4.0.*
+pytest-django==4.5.*
+rich==13.3.*
+Sphinx==6.2.*
+sphinx_rtd_theme==1.2.*
+taskipy==1.10.*
+validate-docbr==1.10.*

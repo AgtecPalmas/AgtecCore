@@ -1,0 +1,281 @@
+@charset "UTF-8";
+.br-carousel {
+  --carousel-button-margin: var(--spacing-scale-default);
+  --carousel-buton-icon-size: var(--–icon-size-base);
+  --carousel-step-height: 40px;
+  --carousel-step-progress-min-height: 32px;
+  --carousel-full-size: 100%;
+  --carousel-min-height: 400px;
+  --carousel-button-fix-height: 52px;
+  --carousel-button-fix-width: 100px;
+  --carousel-step-progress-background: transparent;
+  display: flex;
+  height: var(--carousel-full-size);
+  min-height: var(--carousel-min-height);
+  position: relative;
+  width: var(--carousel-full-size);
+}
+.br-carousel .carousel-stage {
+  display: block;
+  flex-wrap: nowrap;
+  height: var(--carousel-step-height);
+  overflow: hidden;
+  position: relative;
+  width: var(--carousel-full-width);
+  z-index: 0;
+}
+.br-carousel .carousel-stage .carousel-page {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: var(--carousel-full-size);
+  justify-content: center;
+  left: var(--carousel-full-size);
+  margin-bottom: var(--spacing-scale-4x);
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  visibility: hidden;
+  width: var(--carousel-full-size);
+}
+.br-carousel .carousel-stage .carousel-page[active] {
+  height: var(--carousel-full-size);
+  left: 0 !important;
+  opacity: 1;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  visibility: visible;
+}
+.br-carousel .carousel-stage .carousel-page .carousel-content {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: var(--carousel-full-size);
+  justify-content: center;
+  width: var(--carousel-full-size);
+}
+.br-carousel .carousel-stage .carousel-page .carousel-content .carousel-title {
+  position: absolute;
+}
+.br-carousel .carousel-step {
+  bottom: 8px;
+  height: var(--carousel-step-height);
+  position: absolute;
+  width: var(--carousel-full-size);
+}
+.br-carousel .carousel-step .br-step[data-type=simple] .step-progress,
+.br-carousel .carousel-step .br-step[data-type=text] .step-progress {
+  background: var(--carousel-step-progress-background);
+  min-height: var(--carousel-step-progress-min-height);
+}
+.br-carousel .carousel-step .br-step[data-type=simple] .step-progress .step-progress-btn,
+.br-carousel .carousel-step .br-step[data-type=text] .step-progress .step-progress-btn {
+  top: 0;
+}
+.br-carousel .carousel-step .br-step[data-type=simple] .step-progress .step-progress-btn:hover:not([disabled])::before,
+.br-carousel .carousel-step .br-step[data-type=text] .step-progress .step-progress-btn:hover:not([disabled])::before {
+  background-image: none;
+}
+.br-carousel .carousel-step .br-step[data-type=text] .step-progress .step-progress-btn {
+  cursor: default;
+  margin: 0;
+}
+.br-carousel .carousel-step .br-step[data-type=text] .step-progress .step-progress-btn.focus-visible::before {
+  outline-color: transparent !important;
+}
+.br-carousel .carousel-button {
+  align-items: center;
+  display: flex;
+  height: var(--carousel-full-size);
+  left: unset;
+  position: absolute;
+  right: 0;
+  width: fit-content;
+  z-index: 1;
+}
+.br-carousel .carousel-button:first-child {
+  left: 0;
+  right: unset;
+}
+.br-carousel .carousel-button .carousel-btn-next,
+.br-carousel .carousel-button .carousel-btn-prev {
+  margin: var(--carousel-button-margin);
+  padding: 0;
+}
+.br-carousel .carousel-button .carousel-btn-next i.fas,
+.br-carousel .carousel-button .carousel-btn-prev i.fas {
+  font-size: var(--carousel-buton-icon-size);
+}
+.br-carousel[data-stage=in] .carousel-button {
+  height: var(--carousel-full-size);
+}
+.br-carousel[data-stage=in] .carousel-button .carousel-btn-next,
+.br-carousel[data-stage=in] .carousel-button .carousel-btn-prev {
+  border-radius: 0;
+  height: var(--carousel-full-size);
+  margin: 0;
+  padding: 0 var(--spacing-scale-default);
+}
+.br-carousel[data-stage=in] .carousel-stage {
+  height: var(--carousel-full-size);
+  left: 0;
+  width: var(--carousel-full-size);
+}
+.br-carousel[data-stage=out] .carousel-button, .br-carousel .carousel-button {
+  height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+}
+.br-carousel[data-stage=out] .carousel-stage, .br-carousel .carousel-stage {
+  height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+  left: 50px;
+  width: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-width)
+      );
+}
+.br-carousel[data-stage=hibh] .carousel-button {
+  height: var(--carousel-full-size);
+}
+.br-carousel[data-stage=hibh] .carousel-stage {
+  height: var(--carousel-full-size);
+  left: 50px;
+  width: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-width)
+      );
+}
+.br-carousel[data-stage=hibw] .carousel-button {
+  height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+}
+.br-carousel[data-stage=hibw] .carousel-button .carousel-btn-next,
+.br-carousel[data-stage=hibw] .carousel-button .carousel-btn-prev {
+  border-radius: 0;
+  height: var(--carousel-full-size);
+  margin: 0;
+  padding: 0 var(--spacing-scale-default);
+}
+.br-carousel[data-stage=hibw] .carousel-stage {
+  height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+  left: 0;
+  width: var(--carousel-full-size);
+}
+@media (max-width: 991px) {
+  .br-carousel {
+    max-width: var(--carousel-full-size);
+    width: var(--carousel-full-size);
+  }
+  .br-carousel .carousel-button {
+    height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+  }
+  .br-carousel .carousel-button .carousel-btn-next,
+  .br-carousel .carousel-button .carousel-btn-prev {
+    border-radius: 0;
+    display: none;
+    height: var(--carousel-full-size);
+    margin: 0;
+    padding: 0 var(--spacing-scale-default);
+  }
+  .br-carousel[data-mobile-nav] .carousel-button .carousel-btn-next,
+  .br-carousel[data-mobile-nav] .carousel-button .carousel-btn-prev {
+    display: flex;
+  }
+  .br-carousel .carousel-stage {
+    height: calc(
+        var(--carousel-full-size) - var(--carousel-button-fix-height)
+      );
+    left: 0;
+    width: var(--carousel-full-size);
+  }
+  .br-carousel .carousel-step .br-step[data-type=simple] .step-progress,
+  .br-carousel .carousel-step .br-step[data-type=text] .step-progress {
+    padding-top: 0 !important;
+  }
+}
+.br-carousel.inverted, .br-carousel.dark-mode {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-carousel.inverted .br-step, .br-carousel.dark-mode .br-step {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=success], .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=success] {
+  color: var(--success-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=success] .step-info, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=success] .step-info {
+  color: var(--success-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=success] .step-alert::after, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=success] .step-alert::after {
+  content: var(--step-alert-success-icon);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=info], .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=info] {
+  color: var(--info-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=info] .step-info, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=info] .step-info {
+  color: var(--info-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=info] .step-alert::after, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=info] .step-alert::after {
+  content: var(--step-alert-info-icon);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=warning] .step-alert::after, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=warning] .step-alert::after {
+  content: var(--step-alert-warning-icon);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=danger], .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=danger] {
+  color: var(--danger-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=danger] .step-info, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=danger] .step-info {
+  color: var(--danger-alternative);
+}
+.br-carousel.inverted .br-step .step-progress-btn[data-alert=danger] .step-alert::after, .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=danger] .step-alert::after {
+  content: var(--step-alert-danger-icon);
+}
+.br-carousel.inverted .br-step .step-progress-btn.active, .br-carousel.inverted .br-step .step-progress-btn[active], .br-carousel.dark-mode .br-step .step-progress-btn.active, .br-carousel.dark-mode .br-step .step-progress-btn[active] {
+  color: var(--color-dark);
+}
+.br-carousel.inverted .br-step .step-progress-btn.active::before, .br-carousel.inverted .br-step .step-progress-btn[active]::before, .br-carousel.dark-mode .br-step .step-progress-btn.active::before, .br-carousel.dark-mode .br-step .step-progress-btn[active]::before {
+  background-color: var(--background-light);
+  border-color: var(--background-light);
+  color: var(--active);
+}
+.br-carousel.inverted .br-step .step-progress-btn.active .step-icon, .br-carousel.inverted .br-step .step-progress-btn[active] .step-icon, .br-carousel.dark-mode .br-step .step-progress-btn.active .step-icon, .br-carousel.dark-mode .br-step .step-progress-btn[active] .step-icon {
+  color: var(--active);
+}
+.br-carousel.inverted .br-step[data-type=void] .step-progress-btn.active .step-alert, .br-carousel.inverted .br-step[data-type=void] .step-progress-btn[active] .step-alert, .br-carousel.dark-mode .br-step[data-type=void] .step-progress-btn.active .step-alert, .br-carousel.dark-mode .br-step[data-type=void] .step-progress-btn[active] .step-alert {
+  border-color: var(--color-dark);
+}
+.br-carousel.inverted .br-step[data-type=text] .step-progress-btn::before, .br-carousel.dark-mode .br-step[data-type=text] .step-progress-btn::before {
+  background-color: transparent;
+  color: var(--color);
+}
+
+/*# sourceMappingURL=carousel.css.map*/

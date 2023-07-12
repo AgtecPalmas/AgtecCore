@@ -1,0 +1,14 @@
+{% if messages %}
+  {% for message in messages %}
+    <div class="br-message {{ message.tags }} rounder-md" role="alert">
+      <div class="content">
+        <span class="message-title">{{ message|safe }}</span><span class="message-body"></span>
+      </div>
+      <div class="close">
+        <button class="br-button circle small" type="button" aria-label="Fechar">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}

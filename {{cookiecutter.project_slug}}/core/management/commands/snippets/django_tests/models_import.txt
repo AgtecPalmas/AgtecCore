@@ -1,0 +1,5 @@
+import pytest
+from faker import Faker
+from model_bakery import baker
+
+from $app_name$.models import $ModelClass$

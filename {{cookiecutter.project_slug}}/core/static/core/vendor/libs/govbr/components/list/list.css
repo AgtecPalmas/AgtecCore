@@ -1,0 +1,115 @@
+.br-list {
+  background-color: var(--background);
+}
+.br-list.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+}
+.br-list.horizontal > .header {
+  flex-grow: 1;
+  width: 100%;
+}
+.br-list.horizontal > .header + .br-divider {
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+}
+.br-list.horizontal > .br-item,
+.br-list.horizontal > .group {
+  flex: 1;
+  height: auto;
+  min-height: 56px;
+  width: auto;
+}
+.br-list.horizontal > .br-item + .br-divider,
+.br-list.horizontal > .group + .br-divider {
+  border-width: 0 1px 0 0;
+  width: 1px;
+}
+.br-list.horizontal > .br-item.one-line > .content,
+.br-list.horizontal > .group.one-line > .content {
+  height: 56px;
+}
+.br-list.horizontal > .br-item.two-lines > .content,
+.br-list.horizontal > .group.two-lines > .content {
+  height: 72px;
+}
+.br-list.horizontal > .br-item.three-lines > .content,
+.br-list.horizontal > .group.three-lines > .content {
+  height: 6em;
+}
+.br-list.horizontal[data-toggle] > .br-item, .br-list.horizontal.toggle > .br-item {
+  display: block;
+}
+.br-list .br-item {
+  text-align: left;
+  width: 100%;
+}
+.br-list .br-item .svg-inline--fa,
+.br-list .br-item .fa,
+.br-list .br-item .fab,
+.br-list .br-item .fad,
+.br-list .br-item .fal,
+.br-list .br-item .far,
+.br-list .br-item .fas {
+  text-align: center;
+}
+.br-list .br-item > .content {
+  align-items: var(--spacing-vertical-top);
+  display: flex;
+}
+.br-list .br-item > .content > .content {
+  flex: 1;
+}
+.br-list .br-item .content:hover button.br-button {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+.br-list .br-item[data-toggle] {
+  cursor: pointer;
+}
+.br-list .br-item[data-toggle] ~ .br-list .br-item {
+  padding: var(--spacing-scale-base) var(--spacing-scale-3x);
+}
+.br-list .br-list {
+  overflow: hidden;
+  transition: all 400ms ease-in-out;
+}
+.br-list .header {
+  align-items: var(--spacing-vertical-center);
+  display: flex;
+  font-size: var(--font-size-scale-base);
+  font-weight: var(--font-weight-bold);
+  justify-content: space-between;
+  padding: var(--spacing-scale-base) var(--spacing-scale-2x);
+}
+.br-list[data-one-line] .br-item, .br-list[data-one-line] .br-list .br-item {
+  height: 2em;
+}
+.br-list[data-one-line] .br-item .content, .br-list[data-one-line] .br-list .br-item .content {
+  height: auto;
+  overflow: hidden;
+  padding: 0 var(--spacing-scale-2x);
+  text-overflow: unset;
+  white-space: initial;
+}
+.br-list[data-two-lines] .br-item, .br-list[data-two-lines] .br-list .br-item {
+  height: 4em;
+}
+.br-list[data-two-lines] .br-item .content, .br-list[data-two-lines] .br-list .br-item .content {
+  height: auto;
+  overflow: hidden;
+  padding: 0 var(--spacing-scale-2x);
+  text-overflow: unset;
+  white-space: initial;
+}
+.br-list[data-three-lines] .br-item, .br-list[data-three-lines] .br-list .br-item {
+  height: 6em;
+}
+.br-list[data-three-lines] .br-item .content, .br-list[data-three-lines] .br-list .br-item .content {
+  height: auto;
+  overflow: hidden;
+  padding: 0 var(--spacing-scale-2x);
+  text-overflow: unset;
+  white-space: initial;
+}
+
+/*# sourceMappingURL=list.css.map*/

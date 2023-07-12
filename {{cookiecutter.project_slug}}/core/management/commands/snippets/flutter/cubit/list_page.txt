@@ -1,0 +1,205 @@
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/user_interface/widget.dart';
+import '../../../../core/util.dart';
+import '../cubit.dart';
+import '../model.dart';
+import 'create.dart';
+import 'detail.dart';
+
+class $ModelClass$ListPage extends StatefulWidget {
+  static const routeName = "/$ModelClassCamelCase$ListPage";
+
+  @override
+  $ModelClass$ListPageState createState() => $ModelClass$ListPageState();
+}
+
+class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
+  with SingleTickerProviderStateMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  late AnimationController? _animationController;
+  List<$ModelClass$Model> _$Model$List = <$ModelClass$Model>[];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(vsync: this);
+    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+      _loadData();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: _buildBody(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, $ModelClass$AddPage.routeName);
+        },
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(
+      children: <Widget>[
+        HeadWidget(),
+        _buildPage()
+      ],
+    );
+  }
+
+  Widget _buildPage() {
+    return Container(
+      alignment: FractionalOffset.topLeft,
+      child: RefreshIndicator(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _listBuilder(),
+            ],
+          ),
+        ),
+        onRefresh: _refresh,
+      ),
+    );
+  }
+
+  /// Método responsável por criar o GridView com os 
+  /// dados retornados da API
+  Widget _listBuilder() {
+    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+      listener: (context, state) {
+        if (state is $ModelClass$ErrorState){
+          _showMessage(state.error, error: true);
+        }
+        if(state is $ModelClass$SuccessState){
+          _showMessage(state.successMessage);
+        }
+      },
+      builder: (context, state) {
+        if (state is $ModelClass$ProcessState) {
+          return customProcessingCardModalCenter(context);
+        }
+        if (state is $ModelClass$SuccessState){
+            if(state.$ModelClassCamelCase$List  == null) {
+              return Container(
+                child: Center(
+                  child: Text("Nenhum Item Retornado"),
+                ),
+              );
+            }
+            if (state.$ModelClassCamelCase$List.length > 0){
+              return Container(
+                margin: EdgeInsets.only(top: Util.getHeightSystemBar(context)),
+                height: Util.getProportionScreenHeight(context, 0.8),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: MediaQuery.of(context).size.height / 380,
+                  crossAxisSpacing: 2.0,
+                  mainAxisSpacing: 4.0,
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
+                  children:
+                    List.generate(state.$ModelClassCamelCase$List.length, (index) {
+                      return InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, $ModelClass$DetailPage.routeName, arguments: state.$ModelClassCamelCase$List[index]);
+                        },
+                        child: Card(
+                        child: Container(
+                            child: Center(
+                              child: Text(state.$ModelClassCamelCase$List[index].toString()),
+                            ),
+                          ),
+                        )
+                      );
+                    }),
+                ),
+              );
+            }
+            return Container(
+                child: Center(
+                    child: Text("Nenhum Item Retornado"),
+                ),
+            );
+        }
+        return Container();
+      },
+    );
+  }
+
+  /// Método para recarregar os dados da API, quando o usuário
+  /// realizar o movimento de puxar a tela para baixa e soltar
+  Future<void> _refresh() async {
+    try {
+    // TODO implementar o método de refresh da tela
+    } catch (error) {
+
+    }
+  }
+
+  /// Método responsável por mostrar um SnackBar com uma mensagem
+  /// com o texto passada como parâmetro
+   _showMessage(String message, {bool error = false}) {
+    if (message.isNotEmpty) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          error == false
+              ? customSuccessSnackbar(message)
+              : customErrorSnackbar(message),
+        );
+      });
+    }
+  }
+
+  /// Método responsável por mostrar um modal com o texto informado
+  void _makeToast(String texto) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(''),
+          content: Text(texto),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {},
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  /// Método para ocultar o teclado
+  _hideKeyboard(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  /// Método responsável por carregar os dados da API
+  Future<void> _loadData() async {
+    final _$ModelClassCamelCase$Cubit = context.read<$ModelClass$Cubit>();
+    await _$ModelClassCamelCase$Cubit.fetch();
+  }
+}

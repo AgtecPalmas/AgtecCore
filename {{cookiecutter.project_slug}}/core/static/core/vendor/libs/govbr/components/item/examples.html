@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Item</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Exemplos de itens</p>
+      <div class="row flex-column">
+        <div class="col-sm-6 mt-5 mt-sm-0">
+          <div class="br-item">
+            <div class="row">
+              <div class="col-auto"><img class="rounded" src="https://picsum.photos/40" alt="Imagem de exemplo do item sem interação"/></div>
+              <div class="col"><span>Sint ipsum est excepteur qui. Aute Lorem cillum duis reprehenderit. Ut aute cillum esse dolor.</span></div>
+            </div>
+          </div><span class="br-divider"></span>
+          <div class="br-item">
+            <div class="row align-items-center">
+              <div class="col">Lorem ipsum <a href="javascript:void(0);">dolor</a>, sit amet consectetur <a href="javascript:void(0);">adipisicing</a> elit.</div>
+              <div class="col-auto">
+                <button class="br-button circle" type="button" aria-label="Interagir com item"><i class="fas fa-city" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div><span class="br-divider"></span><a class="br-item" href="javascript: void(0)">Item link</a><span class="br-divider"></span>
+          <button class="br-item" type="button">Item botão
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Item com seleção</p>
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mt-5 mt-sm-0">
+          <div class="br-item" data-toggle="selection">
+            <div class="br-checkbox">
+              <input id="check-01" name="check-01" type="checkbox"/>
+              <label for="check-01">Rótulo do Checkbox 01</label>
+            </div>
+          </div>
+          <div class="br-item" data-toggle="selection">
+            <div class="br-checkbox">
+              <input id="check-02" name="check-02" type="checkbox"/>
+              <label for="check-02">Rótulo do Checkbox 02</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 mt-5 mt-sm-0">
+          <div class="br-item" data-toggle="selection">
+            <div class="br-radio">
+              <input id="radio-01" type="radio" name="radio" value="radio-01"/>
+              <label for="radio-01">Rótulo do Radio 01</label>
+            </div>
+          </div>
+          <div class="br-item" data-toggle="selection">
+            <div class="br-radio">
+              <input id="radio-02" type="radio" name="radio" value="radio-02"/>
+              <label for="radio-02">Rótulo do Radio 02</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Item desativado</p>
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mt-5 mt-sm-0">
+          <div class="br-item" disabled="disabled">
+            <div class="row align-items-center">
+              <div class="col-auto"><img class="rounded" src="https://picsum.photos/40/40" alt="imagem de exemplo 1"/></div>
+              <div class="col"><span>Lorem ipsum dolor sit amet consectetur adipisicing elit</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

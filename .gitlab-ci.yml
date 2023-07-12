@@ -1,0 +1,27 @@
+stages:
+  - build
+
+build-docs:
+  stage: build
+  tags:
+    - python3
+    - python-runner
+  image: python:3.9-slim
+  before_script:
+    - pip install -r {{cookiecutter.project_slug}}/requirements-dev.txt
+    - apt-get update -y
+    - apt-get install git -y
+    - git config --global user.email "${ENV_USER}"
+    - git config --global user.name "${ENV_USER}"
+  script:
+    - git clone -b master https://${ENV_USER}:${ENV_PASSWORD}
+    - cd {{cookiecutter.project_slug}}
+    - mkdocs build -d sites
+    - cp -r sites/* ../documentacao-agtec-core/
+    - cd ../documentacao-agtec-core/
+    - git add .
+    - git commit -m 'atualizando documentacao remotamente'
+    - git push https://${ENV_USER}:${ENV_PASSWORD} --all
+
+  only:
+    - master

@@ -1,0 +1,26 @@
+site_name: AGTEC Core
+repo_url: https://github.com/AgtecPalmas/AgtecCore
+repo_name: AGTEC Core
+
+theme:
+  name: material
+  language: pt-BR
+  logo: assets/logo_agtec.svg
+  favicon: assets/logo_agtec.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - attr_list
+
+extra_css:
+  - stylesheets/extra.css

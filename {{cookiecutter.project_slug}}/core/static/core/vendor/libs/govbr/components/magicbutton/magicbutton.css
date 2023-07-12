@@ -1,0 +1,57 @@
+.br-magic-button {
+  --magic-size: var(--magic-medium);
+  --magic-small: var(--spacing-scale-4xh);
+  --magic-medium: var(--spacing-scale-5xh);
+  --magic-large: var(--spacing-scale-6xh);
+  --magic-support-size: var(--magic-support-medium);
+  --magic-support-small: var(--spacing-scale-7x);
+  --magic-support-medium: var(--spacing-scale-8x);
+  --magic-support-large: var(--spacing-scale-9x);
+  --magic-z-index: var(--z-index-layer-1);
+  align-items: center;
+  background-color: var(--gray-5);
+  border-radius: 100em;
+  box-shadow: var(--surface-shadow-md);
+  display: inline-flex;
+  height: var(--magic-support-size);
+  padding: calc((var(--magic-support-size) - var(--magic-size)) * 0.5);
+}
+.br-magic-button.small {
+  --magic-size: var(--magic-small);
+  --magic-support-size: var(--magic-support-small);
+}
+.br-magic-button.medium {
+  --magic-size: var(--magic-medium);
+  --magic-support-size: var(--magic-support-medium);
+}
+.br-magic-button.large {
+  --magic-size: var(--magic-large);
+  --magic-support-size: var(--magic-support-large);
+}
+.br-magic-button .svg-inline--fa,
+.br-magic-button .fa,
+.br-magic-button .fab,
+.br-magic-button .fad,
+.br-magic-button .fal,
+.br-magic-button .far,
+.br-magic-button .fas {
+  --icon-size: var(--icon-size-lg);
+}
+.br-magic-button .br-button {
+  --focus-offset: calc(
+    (var(--magic-support-size) - var(--magic-size)) * 0.5 + 4px
+  );
+  --button-size: var(--magic-size);
+  background-color: var(--interactive-alternative);
+  color: var(--color-dark);
+  font-size: var(--font-size-scale-up-02);
+  font-weight: var(--font-weight-semi-bold);
+}
+.br-magic-button .br-button:not(:disabled):not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--color-dark-rgb), var(--hover)), rgba(var(--color-dark-rgb), var(--hover)));
+}
+.br-magic-button .br-button:not(:disabled):not(:disabled):active {
+  background-image: linear-gradient(rgba(var(--color-dark-rgb), var(--pressed)), rgba(var(--color-dark-rgb), var(--pressed)));
+}
+
+/*# sourceMappingURL=magicbutton.css.map*/

@@ -1,0 +1,293 @@
+import 'dart:convert';
+import 'dart:developer' as dev;
+
+import 'package:dio/dio.dart';
+
+import '../../../core/dio/custom_dio.dart';
+import '../../../core/config.dart';
+import '../../core/config.dart';
+import '../../core/util.dart';
+import '../auth/data.dart';
+import '../usuario/usuario/model.dart';
+import 'model.dart';
+
+class AuthService {
+  AuthModel auth = AuthModel();
+
+  Future<void> signUpUser(int typeUser) async {
+    String _uri = "";
+    switch (typeUser) {
+      case 0:
+        _uri = "${Config.uri}usuario/cliente/";
+        break;
+      default:
+        _uri = "${Config.uri}usuario/profissional/";
+    }
+    try {
+      final CustomDio _dio = CustomDio(_uri);
+      FormData _data = FormData.fromMap({
+        "cpf": auth.cpf,
+        "nome": auth.name,
+        "email": auth.email,
+        "telefone": auth.phoneNumber,
+        "password": auth.password,
+        "firebase": auth.firebaseId
+      });
+      final data = await _dio.postHttp(_data, uri: _uri);
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+  }
+
+  Future<void> signUpUserFirebase(String url) async {
+    try {
+      final CustomDio _dio = CustomDio(url);
+      var _dataPost = json.encode({'email': auth.email, 'password': auth.password, 'returnSecureToken': true});
+      final data = await _dio.postHttp(_dataPost, uri: url);
+      if (data != null) {
+        auth.firebaseId = data['localId'];
+        signUpUser(0);
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+  }
+
+  Future<AuthModel> signIn(String login, String password) async {
+    String _uri = "${Config.uriAuth}token/";
+    AuthModel _authModel = AuthModel();
+    try {
+      CustomDio _dio = CustomDio(_uri);
+      FormData _data = FormData.fromMap({"username": login, "password": password});
+      var dataResponse = await _dio.postHttp(_data, uri: _uri);
+      if (dataResponse != null) {
+        _authModel.token = dataResponse['access'];
+        _success("Usuário logado com sucesso", statusCode: 200);
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return _authModel;
+  }
+
+  Future<int?> checkDjangoUserTypeClient(String login) async {
+    String _uri = "${Config.uri}usuario/cliente/?email=$login";
+    try {
+      CustomDio _dio = CustomDio(_uri);
+      var dataResponse = await _dio.getHttp(uri: _uri);
+      if (dataResponse != null) {
+        if (dataResponse["count"] != 0) {
+          return 0;
+        }
+        return 1;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return null;
+  }
+
+  Future<String?> signUp(AuthModel authModel) async {
+    String _uri = "";
+    final bool result = await this.verifyingEmailAlreadyExists(authModel.email);
+    if (result == true) {
+      throw new Exception("Já existe um usuário com o email informado");
+    }
+    _uri = "${Config.uri}usuario/usuario/";
+    try {
+      final CustomDio _dio = CustomDio(_uri);
+      final _data = json.encode({
+        "cpf": authModel.cpf,
+        "nome": authModel.name,
+        "email": authModel.email,
+        "telefone": authModel.phoneNumber,
+        "password": authModel.password,
+        "firebase": authModel.firebaseId,
+        "device_id": authModel.idToken,
+        "jwt_token": authModel.accessToken
+      });
+      final data = await _dio.postHttp(_data, uri: _uri);
+      if (data != null) {
+        _success("Usuário criado com sucesso", statusCode: Process.statusCode);
+        return data["id"];
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return null;
+  }
+
+  Future<AuthModel?> login(AuthModel auth) async {
+    String _uri = "${Config.uriAuth}";
+    try {
+      CustomDio _dio = CustomDio(_uri);
+      final _data = json.encode({"username": auth.login, "password": auth.password});
+      final userType = await checkDjangoUserTypeClient(auth.login);
+      var dataResponse = await _dio.postHttp(_data, uri: _uri);
+      if (dataResponse != null && userType != null) {
+        final authData = AuthData();
+        auth.token = dataResponse['access'];
+        final djangoUser = await signInDjangoUser(auth.login, userType);
+        if (djangoUser != null) {
+          auth.id = djangoUser.id;
+          auth.cpf = djangoUser.cpf;
+          auth.uuid = djangoUser.id;
+          auth.name = djangoUser.nome;
+          auth.login = djangoUser.email;
+          auth.email = djangoUser.email;
+          auth.firebaseId = djangoUser.firebase;
+          auth.phoneNumber = djangoUser.telefone;
+          authData.save(auth);
+          return auth;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+  }
+
+  Future<bool> verifyingEmailAlreadyExists(String email) async {
+    bool result = false;
+    String _uri = "";
+    try {
+      _uri = "${Config.uri}usuario/usuario/?email=$email";
+      final CustomDio _dio = CustomDio(_uri);
+      final dataResult = await _dio.getHttp(uri: _uri);
+      if (dataResult != null) {
+        result = dataResult['count'] != 0;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return result;
+  }
+
+  Future<UsuarioModel?> signInDjangoUser(String login, int userType) async {
+    String _uri = "${Config.uri}usuario/usuario/?email=$login";
+    int typeException = 0;
+    try {
+      CustomDio _dio = CustomDio(_uri);
+      var dataResponse = await _dio.getHttp(uri: _uri);
+      if (dataResponse != null) {
+        if (dataResponse["count"] == 0) {
+          return null;
+        }
+        if (dataResponse["results"][0]["aprovado"] == false) {
+          final _cpf = dataResponse["results"][0]["cpf"];
+          typeException = 0;
+          if (_cpf == null || _cpf == "") {
+            typeException = 1;
+          }
+        } else {
+          _success("Usuário logado com sucesso", statusCode: 200);
+          return UsuarioModel.fromMap(dataResponse["results"][0]);
+        }
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    if (typeException == 0) {
+      throw ("Seu cadastro ainda não foi aprovado.");
+    } else if (typeException == 1) {
+      throw ("Dados Incompletos");
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> logout() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return false;
+  }
+
+  Future<bool> changePassword() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return false;
+  }
+
+  Future<bool> recoverPassword() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return false;
+  }
+
+  Future<AuthModel?> createAccount() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return AuthModel.fromMap(data);
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return null;
+  }
+
+  Future<bool> disableAccount() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return false;
+  }
+
+  Future<bool> excludeAccount() async {
+    String _url = "";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+    return false;
+  }
+
+  void _success(String message, {int statusCode = 200}) async {
+    try {
+      dev.log(message, name: "AgtecCore");
+    } catch (e, s) {
+      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+  }
+}

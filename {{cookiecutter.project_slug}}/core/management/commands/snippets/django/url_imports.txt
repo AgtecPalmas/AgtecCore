@@ -1,0 +1,10 @@
+from django.urls import path, include
+from .views import (
+    $ModelClass$CreateView,
+    $ModelClass$DetailView,
+    $ModelClass$DeleteView,
+    $ModelClass$ListView,
+    $ModelClass$RestoreView,
+    $ModelClass$UpdateView,
+    $AppIndexTemplate$,
+)

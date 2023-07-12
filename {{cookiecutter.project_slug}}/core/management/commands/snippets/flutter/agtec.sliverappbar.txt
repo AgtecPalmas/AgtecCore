@@ -1,0 +1,71 @@
+import 'dart:developer' as dev;
+
+import 'package:flutter/material.dart';
+
+import '../utils/config.dart';
+import 'custom.colors.dart';
+import 'widget.dart';
+
+/// Classe para renderizar o "bloco" cabeçalho das telas
+///
+/// Parameters:
+///   [title]: String - Titulo da tela
+///
+/// Return:
+///   [SliverAppBar] - Widget cabeçalho da tela
+class CustomSliverAppBar extends StatefulWidget {
+  final String title;
+  final String? subTitle;
+  final bool? showBackButton;
+  CustomSliverAppBar({
+    Key? key,
+    required this.title,
+    this.subTitle,
+    this.showBackButton,
+  }) : super(key: key);
+
+  @override
+  State<CustomSliverAppBar> createState() => _CustomSliverAppBarState();
+}
+
+class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
+  String _title = "";
+  String _subTitle = "";
+  bool _showBackChevron = true;
+  @override
+  void initState() {
+    super.initState();
+    _title = widget.title;
+    _subTitle = widget.subTitle?.toString() ?? "";
+    _showBackChevron = widget.showBackButton ?? true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    try {
+      return SliverAppBar(
+        backgroundColor: customBackgroundColorPage,
+        elevation: 0,
+        pinned: true,
+        automaticallyImplyLeading: false,
+        excludeHeaderSemantics: true,
+        collapsedHeight: heightSliverAppBarDefault,
+        expandedHeight: heightSliverAppBarDefault,
+        flexibleSpace: FlexibleSpaceBar(
+          background: Stack(
+            children: [
+              HeadWidget(showBackChevron: _showBackChevron,),
+              CardHeader(
+                title: _title,
+                subtitle: _subTitle,
+              ),
+            ],
+          ),
+        ),
+      );
+    } catch (error, stackTrace) {
+      dev.log("Erro ao chamar o build do CustomSliverAppbar", name: "AgtecCore", error: error, stackTrace: stackTrace);
+      return SizedBox.shrink();
+    }
+  }
+}

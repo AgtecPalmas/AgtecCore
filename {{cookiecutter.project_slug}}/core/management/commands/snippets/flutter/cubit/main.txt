@@ -1,0 +1,105 @@
+/// Página inicial da APP.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'routers.dart';
+
+import 'apps/configuracao/cubit.dart';
+import 'home.page.dart';
+import 'core/config.dart';
+import 'core/localization.dart';
+
+$ImportCubit$
+
+String currentLanguage = "";
+
+void main() async {
+  /// TODO
+  /// 1 - Adicionar o multiDexEnabled para poder trabalhar com pacotes maiores de 64K no arquivo
+  ///     build.gradle no caminho android/app/build.gradle e alterar as constantes 
+  ///    defaultConfig {
+  ///      ...
+  ///      multiDexEnabled true
+  ///      minSdkVersion flutter.minSdkVersion -> minSdkVersion 19
+  ///      targetSdkVersion flutter.targetSdkVersion -> targetSdkVersion 30
+  ///      ...
+  ///    }
+  /// 2 - Criar o projeto no Firebase [https://firebase.google.com/]
+  /// 3 - Ativar a funcionalidade de autenticacao
+  /// 4 - Baixar o arquivo google
+  /// 5 - Configurar o projeto no Android e iOS para trabalhar com a autenticação
+  /// 6 - Adicionar no método main o async
+  /// 7 - Descomentar as linhas abaixo
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent
+    ));
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent
+    ));
+    
+    return MultiBlocProvider(
+      providers: [
+        $RegisterProviders$
+      ], child: MaterialAppWidget()  
+    );
+  }
+}
+
+class MaterialAppWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SettingsCubit, SettingsState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return MaterialApp(
+          title: Config.app_title,
+          theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
+          home: MyHomePage(title: '${Config.app_title}'),
+          onGenerateRoute: RouteGenerator.generateRoute,
+          supportedLocales: [
+            const Locale('en', 'US'),
+            const Locale('pt', 'BR'),
+          ],
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (var supportedLocale in supportedLocales) {
+              if (locale != null) {
+                if (supportedLocale.languageCode == locale.languageCode &&
+                    supportedLocale.countryCode == locale.countryCode) {
+                  currentLanguage = supportedLocale.toString();
+                  return supportedLocale;
+                }
+              }
+            }
+            return supportedLocales.first;
+          },
+          debugShowCheckedModeBanner: false,
+        );
+      },
+    );
+  }
+}

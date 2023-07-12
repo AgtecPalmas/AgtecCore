@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="row mb-4 content-page">
+    <div class="card menu-vertical-app" style="background-color: transparent !important;">
+        <div class="card-header">
+            <h3 class="card-title"><strong>{% block title_modulo %}{% endblock title_modulo %}</strong></h3>
+        </div>
+        <div class="card-body">
+            {% block menu_app %}
+            {% endblock menu_app %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

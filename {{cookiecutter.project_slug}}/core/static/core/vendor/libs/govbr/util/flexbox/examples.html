@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Utilitário de Flexbox</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <style>
+      .height-120 {
+        height: 120px;
+      }
+      .height-540 {
+        height: 540px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Direction</p>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-row</div>
+      <div class="d-flex border-solid-sm mt-1 flex-row">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-row-reverse</div>
+      <div class="d-flex border-solid-sm mt-1 flex-row-reverse">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-column</div>
+      <div class="d-flex border-solid-sm mt-1 flex-column">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-column-reverse</div>
+      <div class="d-flex border-solid-sm mt-1 flex-column-reverse">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <p class="h4 mt-5">Justify content</p>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-start</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-start">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-end</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-end">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-center</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-center">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-between</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-between">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-around</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-around">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.justify-content-evenly</div>
+      <div class="d-flex border-solid-sm mt-1 justify-content-evenly">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <p class="h4 mt-5">Align items</p>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-items-start</div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-items-start">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-items-end</div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-items-end">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-items-center</div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-items-center">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-items-baseline</div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-items-baseline">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-items-stretch</div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-items-stretch">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <p class="h4 mt-5">Align self</p>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-self-start">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1 align-self-start">
+          <div class="d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-self-start</div>
+        </div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-self-end">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1 align-self-end">
+          <div class="d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-self-end</div>
+        </div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-self-center">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1 align-self-center">
+          <div class="d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-self-center</div>
+        </div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-self-baseline">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1 align-self-baseline">
+          <div class="d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-self-baseline</div>
+        </div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1 height-120 align-self-stretch">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1 align-self-stretch">
+          <div class="d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-self-stretch</div>
+        </div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+      </div>
+      <p class="h4 mt-5">Fill, grow e shrink</p>
+      <div class="d-flex border-solid-sm mt-1">
+        <div class="m-half border-dashed-sm p-1">
+          <p class="mt-3">Children 1</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1">
+          <p class="mt-3">Children 2</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1">
+          <p class="mt-3">Children 3</p>
+        </div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1">
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 1</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 2</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 3</p>
+        </div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1">
+        <div class="m-half border-dashed-sm p-1 flex-grow-1">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-grow-1</div>
+          <p class="mt-3">Children 1</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 2</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 3</p>
+        </div>
+      </div>
+      <div class="d-flex border-solid-sm mt-1">
+        <div class="m-half border-dashed-sm p-1 flex-shrink-1">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-shrink-1</div>
+          <p class="mt-3">Children 1</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 2</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 flex-fill">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-fill</div>
+          <p class="mt-3">Children 3</p>
+        </div>
+      </div>
+      <p class="h4 mt-5">Wrap</p>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-wrap</div>
+      <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-1">
+        <div class="d-flex border-solid-sm mt-1 flex-wrap">
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 1</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 2</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 3</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 4</div>
+        </div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-nowrap</div>
+      <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-1">
+        <div class="d-flex border-solid-sm mt-1 flex-nowrap">
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 1</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 2</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 3</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 4</div>
+        </div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.flex-wrap-reverse</div>
+      <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-1">
+        <div class="d-flex border-solid-sm mt-1 flex-wrap-reverse">
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 1</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 2</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 3</div>
+          <div class="m-half border-dashed-sm p-1 text-nowrap">children 4</div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Order</p>
+      <div class="d-flex flex-wrap border-solid-sm mt-1">
+        <div class="m-half border-dashed-sm p-1 order-3">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-3</div>
+          <p class="mt-3">children 1</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-0">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-0</div>
+          <p class="mt-3">children 2</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-9">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-9</div>
+          <p class="mt-3">children 3</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-5">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-5</div>
+          <p class="mt-3">children 4</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-1">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-1</div>
+          <p class="mt-3">children 5</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-11">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-11</div>
+          <p class="mt-3">children 6</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-4">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-4</div>
+          <p class="mt-3">children 7</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-8">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-8</div>
+          <p class="mt-3">children 8</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-2">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-2</div>
+          <p class="mt-3">children 9</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-6">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-6</div>
+          <p class="mt-3">children 10</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-12">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-12</div>
+          <p class="mt-3">children 11</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-10">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-10</div>
+          <p class="mt-3">children 12</p>
+        </div>
+        <div class="m-half border-dashed-sm p-1 order-7">
+          <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.order-7</div>
+          <p class="mt-3">children 13</p>
+        </div>
+      </div>
+      <p class="h4 mt-5">Align content</p>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-start flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-start flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-end flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-end flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-center flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-center flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-around flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-around flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-evenly flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-evenly flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+      <div class="mt-3 d-inline-block bg-support-02 px-half rounder-sm text-weight-bold">.align-content-stretch flex-wrap</div>
+      <div class="d-flex border-solid-sm mt-1 height-540 align-content-stretch flex-wrap">
+        <div class="m-half border-dashed-sm p-1">children 1</div>
+        <div class="m-half border-dashed-sm p-1">children 2</div>
+        <div class="m-half border-dashed-sm p-1">children 3</div>
+        <div class="m-half border-dashed-sm p-1">children 4</div>
+        <div class="m-half border-dashed-sm p-1">children 5</div>
+        <div class="m-half border-dashed-sm p-1">children 6</div>
+        <div class="m-half border-dashed-sm p-1">children 7</div>
+        <div class="m-half border-dashed-sm p-1">children 8</div>
+        <div class="m-half border-dashed-sm p-1">children 9</div>
+        <div class="m-half border-dashed-sm p-1">children 10</div>
+        <div class="m-half border-dashed-sm p-1">children 11</div>
+        <div class="m-half border-dashed-sm p-1">children 12</div>
+        <div class="m-half border-dashed-sm p-1">children 13</div>
+        <div class="m-half border-dashed-sm p-1">children 14</div>
+        <div class="m-half border-dashed-sm p-1">children 15</div>
+        <div class="m-half border-dashed-sm p-1">children 16</div>
+        <div class="m-half border-dashed-sm p-1">children 17</div>
+        <div class="m-half border-dashed-sm p-1">children 18</div>
+        <div class="m-half border-dashed-sm p-1">children 19</div>
+        <div class="m-half border-dashed-sm p-1">children 20</div>
+        <div class="m-half border-dashed-sm p-1">children 21</div>
+        <div class="m-half border-dashed-sm p-1">children 22</div>
+        <div class="m-half border-dashed-sm p-1">children 23</div>
+        <div class="m-half border-dashed-sm p-1">children 24</div>
+        <div class="m-half border-dashed-sm p-1">children 25</div>
+        <div class="m-half border-dashed-sm p-1">children 26</div>
+        <div class="m-half border-dashed-sm p-1">children 27</div>
+        <div class="m-half border-dashed-sm p-1">children 28</div>
+        <div class="m-half border-dashed-sm p-1">children 29</div>
+        <div class="m-half border-dashed-sm p-1">children 30</div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

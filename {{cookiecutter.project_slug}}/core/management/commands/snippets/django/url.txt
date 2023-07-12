@@ -1,0 +1,14 @@
+from rest_framework import routers
+
+app_name = "$app_name$"
+
+# URLs do Models $ModelClass$
+urlpatterns = [
+    path("$app_name$/", $app_title$IndexTemplateView.as_view(), name="$app_name$-index"),
+    path("$app_name$/$model_name$/", $ModelClass$ListView.as_view(), name="$model_name$-list"),
+    path("$app_name$/$model_name$/create/", $ModelClass$CreateView.as_view(), name="$model_name$-create"),
+    path("$app_name$/$model_name$/<uuid:pk>/", $ModelClass$DetailView.as_view(), name="$model_name$-detail"),
+    path("$app_name$/$model_name$/update/<uuid:pk>/", $ModelClass$UpdateView.as_view(), name="$model_name$-update"),
+    path("$app_name$/$model_name$/delete/<uuid:pk>/", $ModelClass$DeleteView.as_view(), name="$model_name$-delete"),
+    path("$app_name$/$model_name$/restore/<uuid:pk>/", $ModelClass$RestoreView.as_view(), name="$model_name$-restore"),
+]

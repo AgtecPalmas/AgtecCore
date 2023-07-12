@@ -1,0 +1,157 @@
+/// Cubit do model Auth
+
+/// As regras de negócio devem ser implementadas nesse arquivo evitando ao máximo
+/// de serem implementadas nos arquivos das views/pages.
+///
+/// Os métodos de acesso à API devem ser implementados no Service.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import 'model.dart';
+import 'service.dart';
+import 'dart:developer' as dev;
+
+part 'state.dart';
+
+class AuthCubit extends Cubit<AuthState> {
+  late AuthService _service;
+  AuthModel user = AuthModel();
+
+  AuthCubit() : super(AuthInitial()) {
+    _service = AuthService();
+  }
+
+  Future<void> signUpUser(int typeUser) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> signUpUserFirebase(String url) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> signUp(AuthModel user) async {
+    try {
+      emit(AuthProcessState());
+      final result = await _service.signUp(user);
+      if (result != null) {
+        user.id = result;
+        emit(AuthSuccessState(
+          successMessage: "Usuário cadastrado com sucesso",
+          user: user,
+        ));
+      } else {
+        emit(AuthErrorState("Ocorreu um erro ao tentar criar o usuário"));
+      }
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> signIn(String login, String password) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> login(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> logout(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> changePassword(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> recoverPassword(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> createAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> disableAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+
+  Future<void> excludeAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ""));
+    } catch (e, s) {
+      dev.log("Auth App", name: "AgtecCoreCore", error: e.toString(), stackTrace: s);
+      emit(AuthErrorState(e.toString()));
+    }
+  }
+}

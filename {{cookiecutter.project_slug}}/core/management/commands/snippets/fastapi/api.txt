@@ -1,0 +1,115 @@
+import uuid
+from typing import Any
+
+from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy.orm import Session
+
+from core.database import get_db
+from authentication import security
+from core.schemas import PaginationBase
+
+from . import schemas, cruds
+
+router = APIRouter()
+
+router_$model$ = APIRouter(
+    prefix="/$model$",
+    tags=['$model$'],
+    dependencies=[Depends(security.get_current_active_user)]
+)
+
+
+@router_$model$.get(
+    "/", 
+    response_model=PaginationBase, 
+    dependencies=[Depends(security.has_permission("$app$.view_$model$"))]
+)
+def read_$model$s(
+    request: Request,
+    db: Session = Depends(get_db),
+    offset: int = 0,
+    limit: int = 25
+) -> Any:
+    """
+    Retrieve $model$s.
+    """
+    $model$s = cruds.$model$.get_paginate(db, request=request, offset=offset, limit=limit)
+    return $model$s
+
+
+@router_$model$.post("/", dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
+def create_$model$(
+    *,
+    db: Session = Depends(get_db),
+    $model$_in: schemas.$ModelClass$Create,
+) -> Any:
+    """
+    Create new $model$.
+    """
+    $model$ = cruds.$model$.create(db, obj_in=$model$_in)
+    return $model$
+
+
+@router_$model$.get("/{$model$_id}", dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+def read_$model$_by_id(
+    $model$_id: str,
+    db: Session = Depends(get_db)
+) -> Any:
+    """
+    Get a specific $model$ by id.
+    """
+    try:
+        $model$_id = uuid.UUID($model$_id)
+    except ValueError as value_error:
+        raise HTTPException(
+            status_code=404,
+            detail="Item $model$ inexistente no sistema",
+        ) from value_error
+    $model$ = cruds.$model$.get(db, id=$model$_id)
+    if not $model$:
+      raise HTTPException(
+          status_code=404,
+          detail="Item $model$ inexistente no sistema",
+      )
+    return $model$
+
+
+@router_$model$.put("/{$model$_id}", dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
+def update_$model$(
+    *,
+    db: Session = Depends(get_db),
+    $model$_id: str,
+    $model$_in: schemas.$ModelClass$Update
+) -> Any:
+    """
+    Update a $model$.
+    """
+    $model$ = cruds.$model$.get(db, id=$model$_id)
+    if not $model$:
+        raise HTTPException(
+            status_code=404,
+            detail="Modelo $model$ inexistente no sistema",
+        )
+    $model$ = cruds.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
+    return $model$
+
+@router_$model$.delete("/{id}", dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
+def delete_$model$(
+    *,
+    db: Session = Depends(get_db),
+    id: str
+) -> Any:
+    """
+    Delete an note.
+    """
+    $model$ = cruds.$model$.get(db=db, id=id)
+    if not $model$:
+      raise HTTPException(
+        status_code=404,
+        detail="Modelo $model$ inexistente no sistema",
+      )
+    $model$ = cruds.$model$.remove(db=db, id=id)
+    return $model$
+
+
+router.include_router(router_$model$)

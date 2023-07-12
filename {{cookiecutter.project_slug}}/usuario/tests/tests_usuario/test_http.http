@@ -1,0 +1,33 @@
+###
+GET http://127.0.0.1:8000/core/api/usuario/usuario
+
+###
+GET http://127.0.0.1:8000/core/api/usuario/usuario/f91b3f57-8ebb-4100-b7ba-bcbea37573e4/
+
+###
+POST http://127.0.0.1:8000/core/api/usuario/usuario/
+Content-Type: application/json
+
+{
+"cpf": "14221412589",
+"nome": "Xpto",
+"email": "xpto@xpto.com.br",
+"telefone": "+55 (061) 9161 4141",
+"latitude": 125.6985,
+"longitude": 12.58965,
+"endereco": "Aeroporto Gustavo Rezende, 316\nSerrano\n00386040 Lima da Praia / AC"
+}
+
+###
+PUT http://127.0.0.1:8000/core/api/usuario/usuario/49cb0198-7e54-4139-b98a-12d6c1915d78/
+Content-Type: application/json
+
+{
+"cpf": "00000000022",
+"nome": "Modificado",
+"email": "modificado@xpto.com.br",
+"telefone": "+55 (061) 9161 4141",
+"latitude": 125.6985,
+"longitude": 12.58965,
+"endereco": "Aeroporto Gustavo Rezende, 316\nSerrano\n00386040 Lima da Praia / AC"
+}

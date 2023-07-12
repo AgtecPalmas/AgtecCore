@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+{% load base %}
+{% block title %}
+    {{ system_name }}
+{% endblock title %}
+{% block content %}
+    <div class="row clearfix">
+        {% for app in apps %}
+            {% comment %} Verificando permissão ao App {% endcomment %}
+            {% if app.real_name_app.lower in perms %}
+                {% if not app_name or app_name and app.real_name_app.lower == '$app_name$' %}
+                    {% if not forloop.first and forloop.counter0|divisibleby:2 %}
+                        <div class="w-100"></div>
+                    {% endif %}
+                    <div class="col-md-6 col-sm-12 mb-5">
+                        <div class="p-3 bg-white rounded shadow-sm h-100">
+                            <h4 class="mb-15 text-blue">{{ app.name_app }}</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for model in app.models_app %}
+                                        {% comment %} Checa permissão de view {% endcomment %}
+                                        {% if model|has_view_permission:request %}
+                                            {% comment %} Quantidade impar de modelos usa largura total {% endcomment %}
+                                            <div class="col-{% if forloop.revcounter0|divisibleby:2 and forloop.first %}md-12 {% else %}md-6 {% endif %} mb-3">
+                                                <a class="br-button secondary block large text-wrap"
+                                                   href="{% url model.path_url %}">{{ model.name_model }}</a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

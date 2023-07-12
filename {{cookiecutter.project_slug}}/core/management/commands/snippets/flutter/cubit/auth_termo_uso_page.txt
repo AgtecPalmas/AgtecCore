@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import '../../../core/config.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+class TermoUso extends StatelessWidget {
+  late WebViewController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: CustomTheme.defaultColor,
+        title: Text("Termos de Uso"),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: _buildBody(context),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return WebView(
+      initialUrl: urlTermoUso,
+      javascriptMode: JavascriptMode.unrestricted,
+      onWebViewCreated: (WebViewController webViewController) {
+        _controller = webViewController;
+      },
+    );
+  }
+}

@@ -1,0 +1,152 @@
+/// Service do model $ModelClass$
+/// 
+/// Os Métodos padrões gerados são:
+///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
+///     detail()   -> Recupera os detalhes de $ModelClass$ da API.
+///     post()     -> Salva os dados de uma instância do $ModelClass$ na API.
+///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
+///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
+///
+/// Os métodos de acesso à API devem ser implementados no nessa classe.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'dart:convert';
+
+import '../../../core/dio/custom_dio.dart';
+import '../../../core/exceptions/exception.dart';
+import '../../../core/config.dart';
+import 'model.dart';
+
+
+class $ModelClass$Service {
+  String _uri = "${Config.uri}$App$/api/v1/$Model$/";
+  $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model();
+  List<$ModelClass$Model> _$ModelClassCamelCase$List = [];
+
+  $ModelClass$Service({required $ModelClass$Model $ModelClassCamelCase$, List<$ModelClass$Model>? $ModelClassCamelCase$List}) {
+    _$ModelClassCamelCase$ = $ModelClassCamelCase$;
+  }
+
+  Future<List<$ModelClass$Model>> fetch({String? url}) async {
+    try {
+      final _url = "$_uri";
+      _$ModelClassCamelCase$List.clear();
+      final CustomDio _dio = CustomDio(_url);
+      final dataResponse = await _dio.getHttp(uri: _url);
+      if (dataResponse != null) {
+        final String _next = dataResponse["next"] ?? "";
+        final String _previous = dataResponse["previous"] ?? "";
+        final _dataItems = dataResponse["results"] ?? "";
+        for (var data in _dataItems) {
+          $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+          _$ModelClassCamelCase$.nextUrl = _next;
+          _$ModelClassCamelCase$.previousUrl = _previous;
+          _$ModelClassCamelCase$List.add(_$ModelClassCamelCase$);
+        }
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$List;
+  }
+
+  Future<List<$ModelClass$Model>> getMore(String uri) async {
+    try {
+      final CustomDio _dio = CustomDio(uri);
+      final dataResponse = await _dio.getHttp(uri: uri);
+      if (dataResponse != null) {
+        final String _next = dataResponse["next"] ?? "";
+        final String _previous = dataResponse["previous"] ?? "";
+        final _dataItems = dataResponse["results"] ?? "";
+        for (var data in _dataItems) {
+          $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+          _$ModelClassCamelCase$.nextUrl = _next;
+          _$ModelClassCamelCase$.previousUrl = _previous;
+          _$ModelClassCamelCase$List.add(_$ModelClassCamelCase$);
+        }
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$List;
+  }
+
+  Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+      final CustomDio _dio = CustomDio(_url);
+      final data = await _dio.getHttp(uri: _url);
+      if (data != null) {
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  Future<$ModelClass$Model> post($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final _url = "$_uri";
+      final CustomDio _dio = CustomDio(_url);
+      final _data = json.encode($ModelClassCamelCase$.toMap());
+      final data = await _dio.postHttp(_data);
+      if (data != null) {
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$) async {
+    final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final _data = json.encode($ModelClassCamelCase$.toMap());
+      final data = await _dio.putHttp(_data, $ModelClassCamelCase$.id.toString(), uri: _url);
+      if (data != null) {
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+      final CustomDio _dio = CustomDio(_url);
+      final _data = json.encode($ModelClassCamelCase$.toMap());
+      final data = await _dio.patchHttp(_data, uri: _url);
+      if (data != null) {
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(data);
+      }
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  Future<bool> delete($ModelClass$Model $ModelClassCamelCase$) async {
+    final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+    try {
+      final CustomDio _dio = CustomDio(_url);
+      final _data = json.encode($ModelClassCamelCase$.toMap());
+      final data = await _dio.deleteHttp(_data, $ModelClassCamelCase$.id.toString(), uri: _url);
+      if (data != null) {
+        return true;
+      }
+      return false;
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      return false;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+/// Mixin para facilitar a exibição de um modal de loading na tela.
+/// Para utilizar o mixin, basta adicionar o código [with CustomModalLoading]
+/// na classe que deseja utilizar o mixin, Lembrando que a
+/// classe deve extender de [StatefulWidget].e o comando
+/// deve ser adicionado na class State<T> da classe
+/// Ex:. [class _SplashScreenPageState extends State<SplashScreenPage> with CustomModalLoading {]
+/// Para exibir o modal, basta chamar o método [showHideModal] passando o parâmetro [show] como true.
+/// Para esconder o modal, basta chamar o método [showHideModal] passando o parâmetro [show] como false.
+mixin ModalLoadingMixin<T extends StatefulWidget> on State<T> {
+  Widget showHideModal({bool show = true}) {
+    if (show == false) return SizedBox.shrink();
+    return Container(
+      color: Colors.black.withOpacity(0.5),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height,
+      child: Center(
+        child: LoadingAnimationWidget.twistingDots(
+          leftDotColor: Colors.blueAccent,
+          rightDotColor: Colors.white,
+          size: 120,
+        ),
+      ),
+    );
+  }
+}

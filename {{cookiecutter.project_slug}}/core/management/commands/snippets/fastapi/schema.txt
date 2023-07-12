@@ -1,0 +1,36 @@
+import datetime
+from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, EmailStr
+
+$auth_import$
+
+# $ModelClass$
+class $ModelClass$Base(BaseModel):
+$fields$
+
+class $ModelClass$Create($ModelClass$Base):
+    pass
+
+class $ModelClass$Update($ModelClass$Base):
+    pass
+
+class $ModelClass$InDBBase($ModelClass$Base):
+    id: UUID
+    deleted: bool
+    created_on: datetime.datetime
+    updated_on: datetime.datetime
+
+    class Config:
+        orm_mode = True
+
+
+# Additional properties to return via API
+class $ModelClass$($ModelClass$InDBBase):
+    pass
+
+
+# Additional properties stored in DB
+class $ModelClass$InDB($ModelClass$InDBBase):
+    pass

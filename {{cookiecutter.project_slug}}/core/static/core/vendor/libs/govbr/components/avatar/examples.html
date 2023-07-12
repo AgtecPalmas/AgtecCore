@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Avatar</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <style>
+      #avatar-dropdown-trigger {
+        height: auto;
+        padding: var(--spacing-scale-base);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Tipos e densidades</p>
+      <div id="sizes">
+        <div class="mb-3" id="icon"><span class="br-avatar mr-3" title="Fulano da Silva"><span class="content"><i class="fas fa-user" aria-hidden="true"></i></span></span><span class="br-avatar medium mr-3" title="Fulano da Silva"><span class="content"><i class="fas fa-user" aria-hidden="true"></i></span></span><span class="br-avatar large mr-3" title="Fulano da Silva"><span class="content"><i class="fas fa-user" aria-hidden="true"></i></span></span>
+        </div>
+        <div class="mb-3" id="image"><span class="br-avatar mr-3" title="Fulano da Silva"><span class="content"><img src="https://picsum.photos/id/1005/400" alt="Avatar"/></span></span><span class="br-avatar medium mr-3" title="Fulano da Silva"><span class="content"><img src="https://picsum.photos/id/287/400" alt="Avatar"/></span></span><span class="br-avatar large mr-3" title="Fulano da Silva"><span class="content"><img src="https://picsum.photos/id/357/400" alt="Avatar"/></span></span>
+        </div>
+        <div class="mb-3" id="letter"><span class="br-avatar mr-3" title="Fulano da Silva"><span class="content bg-violet-50 text-pure-0">W</span></span><span class="br-avatar medium mr-3" title="Fulano da Silva"><span class="content bg-orange-50 text-pure-0">A</span></span><span class="br-avatar large mr-3" title="Fulano da Silva"><span class="content bg-green-50 text-pure-0">H</span></span>
+        </div>
+      </div>
+      <p class="h4 mt-5">Avatar com dropdown</p>
+      <div>
+        <button class="br-sign-in" type="button" id="avatar-dropdown-trigger" data-toggle="dropdown" data-target="avatar-menu" aria-label="Avatar com dropdown"><span class="br-avatar" title="Fulano da Silva"><span class="content bg-orange-vivid-30 text-pure-0">F</span></span><span class="ml-2 text-gray-80 text-weight-regular">Olá, <span class="text-weight-semi-bold">Fulano</span></span><i class="fas fa-caret-down" aria-hidden="true"></i>
+        </button>
+        <div class="br-list" id="avatar-menu" hidden="hidden"><a class="br-item" href="javascript:void(0)">Dados pessoais</a><a class="br-item" href="javascript:void(0)">Privacidade</a><a class="br-item" href="javascript:void(0)">Notificações</a><a class="br-item" href="javascript:void(0)">Perguntas frequentes</a>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

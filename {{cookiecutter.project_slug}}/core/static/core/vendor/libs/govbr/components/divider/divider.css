@@ -1,0 +1,79 @@
+.br-divider,
+hr {
+  --divider-size: var(--surface-width-sm);
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 0;
+  border-top-width: var(--divider-size);
+  display: block;
+}
+.br-divider.content,
+hr.content {
+  align-items: center;
+  border: 0;
+  display: flex;
+  justify-content: center;
+}
+.br-divider.content::after, .br-divider.content::before,
+hr.content::after,
+hr.content::before {
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 0;
+  border-top-width: var(--divider-size);
+  content: "";
+  flex: 1;
+}
+.br-divider.content::after,
+hr.content::after {
+  margin-left: var(--spacing-scale-base);
+}
+.br-divider.content::before,
+hr.content::before {
+  margin-right: var(--spacing-scale-base);
+}
+.br-divider.vertical,
+hr.vertical {
+  align-self: stretch;
+  border-right-width: var(--divider-size);
+  border-top-width: 0;
+}
+.br-divider.vertical.content,
+hr.vertical.content {
+  flex-direction: column;
+}
+.br-divider.vertical.content::after, .br-divider.vertical.content::before,
+hr.vertical.content::after,
+hr.vertical.content::before {
+  border-right-width: var(--divider-size);
+  border-top-width: 0;
+  margin: 0;
+}
+.br-divider.inverted, .br-divider.dark-mode,
+hr.inverted,
+hr.dark-mode {
+  --border-color: var(--pure-0);
+}
+.br-divider.dashed,
+hr.dashed {
+  border-style: dashed;
+}
+.br-divider.sm,
+hr.sm {
+  --divider-size: var(--surface-width-sm);
+}
+.br-divider.md,
+hr.md {
+  --divider-size: var(--surface-width-md);
+}
+.br-divider.lg,
+hr.lg {
+  --divider-size: var(--surface-width-lg);
+}
+
+hr {
+  --divider-padding: var(--spacing-scale-2x);
+  margin: var(--divider-padding) 0;
+}
+
+/*# sourceMappingURL=divider.css.map*/

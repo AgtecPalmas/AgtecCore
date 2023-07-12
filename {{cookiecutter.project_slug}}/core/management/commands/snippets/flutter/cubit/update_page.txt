@@ -1,0 +1,227 @@
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'dart:developer' as dev;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/user_interface/font.dart';
+import '../../../../core/user_interface/widget.dart';
+import '../../../../core/config.dart';
+import '../../../../core/util.dart';
+import '../cubit.dart';
+import '../model.dart';
+
+class $ModelClass$UpdatePage extends StatefulWidget {
+  static const routeName = "/$ModelClassCamelCase$Update";
+
+  final $ModelClass$Model $ModelClassCamelCase$Model;
+
+  const $ModelClass$UpdatePage({Key? key, required this.$ModelClassCamelCase$Model}) : super(key: key);
+
+  @override
+  _$ModelClass$AddPageState createState() => _$ModelClass$AddPageState();
+}
+
+class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
+  with SingleTickerProviderStateMixin{
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _form$ModelClass$ = GlobalKey<FormState>();
+
+  late AnimationController _animationController;
+  $ModelClass$Model _$Model$Model = $ModelClass$Model();
+
+  $Attributes$
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(vsync: this);
+    _$ModelClassCamelCase$Model = widget.$ModelClassCamelCase$Model;
+    _loadData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent
+      ),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+      listener: (context, state) {
+        if (state is $ModelClass$ErrorState){
+          _showMessage(state.error, error: true);
+        }
+        if(state is $ModelClass$SuccessState){
+          _showMessage(state.successMessage);
+        }
+      },
+      builder: (context, state) {
+        return Stack(
+          children: <Widget>[
+            HeadWidget(),
+            _buildPage(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildPage() {
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: new BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+            margin: EdgeInsets.only(
+               top: Util.getProportionScreenHeight(
+                    context, Config.marginHead),
+             ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
+                  child: customTitlePage(context,
+                    'Atualizar $ModelClass$',
+                  ),
+                ),
+                 Stack(
+                  children : <Widget>[
+                    Column(
+                      children: <Widget>[
+                        _createForm(context),
+                        _createButton(context),
+                      ]
+                    ),
+                  ]
+                )
+              ],
+            ),
+        ),
+      ),
+    );
+  }
+
+  Widget _createForm(context){
+    return Form(
+      key: _form$ModelClass$,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          $Form$
+        ],
+      ),
+    );
+  }
+
+  Widget _createButton(context){
+    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is $ModelClass$ProcessState) {
+          return customProcessingWidget(context, isCircularIndicator: false);
+        }
+      return  Padding(
+        padding: const EdgeInsets.only(top: 24.0),
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: customRaisedButton(
+              label: 'Salvar',
+              context: context,
+              onPress: () {
+                if (_form$ModelClass$.currentState?.validate() ?? false) {
+                  setState(() {
+                    $AttributesData$
+                    _put();
+                  });
+                }
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _clearForm(){
+    $ClearData$
+  }
+
+  void _put() async {
+    final _$Model$Cubit = context.read<$ModelClass$Cubit>();
+    try{
+       $GetValuesControllers$
+
+      await _$Model$Cubit.put(_$Model$Model);
+    }catch (e){
+    }
+  }
+
+  void _loadData() {
+    try{
+      $EditedAttributes$
+    }catch (e, s){
+      dev.log("UpdatePage", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }
+  }
+
+  /// Método responsável por mostrar um SnackBar com uma mensagem
+  /// com o texto passada como parâmetro
+   _showMessage(String message, {bool error = false}) {
+    if (message.isNotEmpty) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          error == false
+              ? customSuccessSnackbar(message)
+              : customErrorSnackbar(message),
+        );
+      });
+    }
+  }
+  
+  _hideKeyboard(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+  _makeToast(String texto) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(''),
+          content: Text(texto),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {},
+            )
+          ],
+        );
+      },
+    );
+  }
+}

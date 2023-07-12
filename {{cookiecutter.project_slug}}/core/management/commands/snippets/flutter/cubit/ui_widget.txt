@@ -1,0 +1,903 @@
+/// Arquivo contendo os Widgets componentizados da aplicação
+import 'dart:developer' as dev;
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../core/config.dart';
+import '../../core/localization.dart';
+import '../../core/util.dart';
+import 'custom.colors.dart';
+import 'custom.style.dart';
+
+
+// Constante contendo o valor da proporção da tela padrão
+// utilizado para calcular altura do Head da página e da
+// margem superior da barra de botões
+const double _proportionScreenDefault = 0.55;
+
+/// Widget para gerar os "botões" da tela inicial de acesso rápido
+Widget customMainCardButton(icon, label,
+    {iconColor,
+    textColor,
+    cardBackgroundColorBegin,
+    cardBackgroundColorEnd,
+    boxShadowColor,
+    cardBorderColor,
+    image,
+    double textSize = 14,
+    textWeight = FontWeight.w600}) {
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+    decoration: BoxDecoration(
+      border: Border.all(color: cardBorderColor),
+      boxShadow: [
+        BoxShadow(
+          color: boxShadowColor,
+          offset: Offset(2.0, 2.0),
+          blurRadius: 3.0,
+        )
+      ],
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [0.0, 0.9],
+        colors: [
+          cardBackgroundColorBegin,
+          cardBackgroundColorEnd,
+        ],
+      ),
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6),
+          child: Center(
+            child: icon != null ? Icon(icon, color: iconColor, size: 42) : image,
+          ),
+        ),
+        Center(
+          child: Text(
+            '$label',
+            style: TextStyle(color: textColor, fontWeight: textWeight, fontSize: textSize),
+            textAlign: TextAlign.center,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+/// Componente CircleAvatarAppBar
+/// testando o componente com tamanho reduzido para ser mostrado na Appbar.
+Widget customAvatarAppBar() {
+  return AspectRatio(
+    aspectRatio: 1,
+    child: Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: CachedNetworkImageProvider('https://picsum.photos/200'),
+          fit: BoxFit.fill,
+        ),
+      ),
+    ),
+  );
+}
+
+/// Componente ImageCircular
+///
+///    Parameters:
+///     context -> BuildContext
+///     path -> String com o caminho da image
+///     size (default = 22) -> Double com o tamanho do elemento.
+///     example (default = false) -> Bool para determinar se utilizará uma imagem aleatória de exemplo
+///     networkImage (default = false) -> Bool para determinar se a imagem é da web ou dos assets
+///
+Widget customImageCircular(BuildContext context, String path,
+    {double size = 22, bool example = false, bool networkImage = false, BoxFit boxFit = BoxFit.cover}) {
+  try {
+    if (example == true) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(50),
+        child: CachedNetworkImage(
+          imageUrl: 'https://picsum.photos/600',
+          width: size,
+          height: size,
+          fit: boxFit,
+        ),
+      );
+    } else {
+      if (networkImage == true && path.isNotEmpty) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: CachedNetworkImage(
+            imageUrl: path,
+            width: size,
+            height: size,
+            fit: boxFit,
+          ),
+        );
+      } else {
+        if (path.isNotEmpty) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.asset(path, width: size, height: size),
+          );
+        }
+        return Container();
+      }
+    }
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente Card
+///
+///    Parameters:
+///     context -> BuildContext
+///     child -> Widget filho do card
+///     backgroundColor (opcional) -> Color com a cor do card
+///     elevation (default = 6.0) -> Double com a altura da elevação.
+///     radius (default = 4.0) -> Double com o raio a ser aplicado nas quinas do card.
+///     width (opcional) -> Double para determinar a largura do card.
+///
+///
+Widget customCard(
+    {required BuildContext context,
+    required Widget child,
+    Color? backgroundColor,
+    double elevation = 2.0,
+    double radius = 4.0,
+    double? width}) {
+  try {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
+      child: Container(),
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente Card com imagem
+///
+///    Parameters:
+///     context -> BuildContext
+///     child -> Widget filho do card
+///     path -> String com o caminho da imagem
+///     positionImage -> String com as opções de posicionamento da image (t = top, b = bottom, l = left, r = right, bg = background)
+///     networkImage -> Bool para determinar se a imagem é da web ou local.
+///     backgroundColor -> Color com a cor a ser aplicada no background do Card.
+///     elevation (default = 6.0) -> Double com a altura da elevação.
+///     radius (default = 4.0) -> Double com o raio a ser aplicado nas quinas do card.
+///     width (opcional) -> Double para determinar a largura do card.
+///
+Widget customCardWithImage(
+    {required BuildContext context,
+    required Widget child,
+    required String path,
+    required bool networkImage,
+    String positionImage = "t",
+    double elevation = 6.0,
+    double radius = 4.0,
+    double height = 200,
+    Color? backgroundColor,
+    double? width,
+    double? widthImage,
+    double? heightImage}) {
+  try {
+    Widget _childCard = Container();
+    List<String> _positionImageValues = ["t", "r", "b", "l", "bg"];
+    // Caso o valor passado não seja nenhuma das opções possíveis
+    // retorno null
+    if (!_positionImageValues.contains(positionImage)) return Container();
+    // Verificando o posicionamento da imagem
+    switch (positionImage) {
+      case "t":
+        // Posicionar a imagem no top utilizando Column
+        _childCard =
+            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            height: heightImage ?? height * 0.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(radius),
+                topRight: Radius.circular(radius),
+              ),
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(path.isNotEmpty ? path: "https://picsum.photos/600"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(height: 8),
+          child
+        ]);
+        break;
+      case "r":
+        // Posicionar a imagem na direita utilizando Row
+        _childCard = Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              child,
+              SizedBox(height: 8),
+              Container(
+                width: width ?? MediaQuery.of(context).size.width * 0.5,
+                height: height,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(radius),
+                    bottomRight: Radius.circular(radius),
+                  ),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ]);
+        break;
+      case "b":
+        // Posicionar a imagem no bottom utilizando Column
+        _childCard =
+            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child,
+          SizedBox(height: 8),
+          Container(
+            height: heightImage ?? height * 0.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(radius),
+                bottomRight: Radius.circular(radius),
+              ),
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ]);
+        break;
+      case "l":
+        // Posicionar a imagem na esquerda utilizando Row
+        _childCard =
+            Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            width: width ?? MediaQuery.of(context).size.width * 0.5,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(radius),
+                bottomLeft: Radius.circular(radius),
+              ),
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(height: 8),
+          child
+        ]);
+        break;
+      case "bg":
+        // Posicionar a imagem no background
+        _childCard = Stack(children: [
+          Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(radius),
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              color: Theme.of(context).accentColor.withOpacity(0.45),
+              child: child,
+            ),
+          )
+        ]);
+        break;
+      default:
+    }
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius),
+      ),
+      color: backgroundColor ?? Theme.of(context).accentColor.withAlpha(80),
+      elevation: elevation,
+      child: _childCard,
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente TextButton
+///
+///    Parameters:
+///     label -> String com o texto a ser mostrado no botão
+///     onPress -> Função a ser executada ao clicar no botão
+///     textColor (opcional) -> Color com a cor do texto
+///     iconButton (opcional) -> Icon a ser mostrado à esquerda do botão
+///
+/// O método onPress deve seguir o exemplo abaixo:
+/// ```dart
+/// onPress: (() {
+///   // Coloque a função que deseja executar aqui
+/// }),
+/// ```
+///
+Widget customFlatButton(
+    {required String label,
+    required VoidCallback onPress,
+    required BuildContext context,
+    Color? textColor,
+    Icon? iconButton}) {
+  try {
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
+      ),
+      onPressed: onPress,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          iconButton ?? Container(),
+          SizedBox(width: 4.0),
+          Text(
+            label,
+            style: TextStyle(color: textColor),
+          ),
+        ],
+      ),
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente RaisedButton
+///
+///    Parameters:
+///     label -> String com o texto a ser mostrado no botão
+///     onPress -> Função a ser executada ao clicar no botão
+///     color (opcional) -> Color contendo a cor de background do botão
+///     textColor (opcional) -> Color contendo a cor do text
+///     iconButton (opcional) -> Icon a ser mostrado à esquerda do botão
+///     rounded (default = false) -> Bool que determina se o botão é arredondado ou não
+///     elevation (default = 2.0) -> Double contendo a altura da elevação do botão
+///
+/// O método onPress deve seguir o exemplo abaixo:
+/// ```dart
+/// onPress: (() {
+///   // Coloque a função que deseja executar aqui
+/// }),
+/// ```
+///
+Widget customRaisedButton(
+    {required String label,
+    required VoidCallback onPress,
+    required BuildContext context,
+    Color? color,
+    Color? textColor,
+    Icon? iconButton,
+    bool rounded = false,
+    double elevation: 2.0}) {
+  try {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        primary: color ?? Theme.of(context).colorScheme.secondary,
+        elevation: elevation,
+        shape: rounded
+            ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
+            : RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+      ),
+      onPressed: onPress,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          iconButton ?? Container(),
+          SizedBox(width: 4.0),
+          Text(
+            label,
+            style: TextStyle(color: textColor ?? Theme.of(context).primaryColor),
+          ),
+        ],
+      ),
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente OutlineButton
+///
+///    Parameters:
+///     label -> String com o texto a ser mostrado no botão
+///     onPress -> Função a ser executada ao clicar no botão
+///     borderSize (default = 1.12) -> Double com a expessura da borda
+///     textColor (opcional) -> Color contendo a cor do texto
+///     borderColor (opcional) -> Color contendo a bor da borda do botão
+///     iconButton (opcional) -> Icon a ser mostrado à esquerda do botão
+///     rounded (default = false) -> Bool que determina se o botão é arredondado ou não
+///
+/// O método onPress deve seguir o exemplo abaixo:
+/// ```dart
+/// onPress: (() {
+///   // Coloque a função que deseja executar aqui
+/// }),
+/// ```
+///
+Widget customButtonOutline(
+    {required String label,
+    required VoidCallback onPress,
+    required BuildContext context,
+    double borderSize = 1.12,
+    Color? textColor,
+    Color? borderColor,
+    Icon? iconButton,
+    bool rounded = false,
+    bool processing = false,
+    double circularProgressIndicatorSize = 28,
+    double circularProgressIndicatorStrokeWidth = 4.0,
+    Color circularProgressIndicatorBgColor = Colors.blue}) {
+  try {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          shape: rounded
+              ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
+              : RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+          side: BorderSide(
+            width: borderSize,
+            color: borderColor ?? Theme.of(context).primaryColor,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            iconButton != null ? iconButton : Container(),
+            SizedBox(
+              width: 4.0,
+            ),
+            processing
+                ? Container(
+                    height: circularProgressIndicatorSize,
+                    width: circularProgressIndicatorSize,
+                    child: CircularProgressIndicator(
+                      strokeWidth: circularProgressIndicatorStrokeWidth,
+                      valueColor: new AlwaysStoppedAnimation<Color>(circularProgressIndicatorBgColor),
+                    ))
+                : Text(
+                    label,
+                    style: TextStyle(color: textColor ?? Theme.of(context).primaryColor),
+                  ),
+          ],
+        ),
+        onPressed: onPress,
+      ),
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente TextFormField
+///
+///    Parameters:
+///     labelText -> String com o texto a ser mostrado no label do TextField
+///     hintText -> String com o texto a ser mostrado como help dentro do TextField
+///     controller -> TextEditController do TextField
+///     validator (opcional) -> Função de validação dos dados do TextField
+///     outline (default = false) -> Bool para determinar se o TextField terá bordas do tipo Outline
+///
+/// Caso seja necessário passar o validator para o construtor deve-se seguir o exemplo abaixo:
+/// ```dart
+/// validator: ((value) {
+///   if (value.isEmpty) {
+///     return 'Campo Obrigatório';
+///   }
+///   return null;
+/// }),
+/// ```
+///
+Widget customTextFormField({
+  required String labelText,
+  required String hintText,
+  required TextEditingController controller,
+  required BuildContext context,
+  final String? Function(String?)? customValidator,
+  bool outline = false,
+  bool obscure = false,
+  TextInputType keyBoardType = TextInputType.text,
+  Color textColor = Colors.black54,
+  bool lowerCase = false,
+}) {
+  try {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyBoardType,
+        obscureText: obscure,
+        decoration: InputDecoration(
+          labelText: labelText,
+          hintText: hintText,
+          labelStyle: TextStyle(color: CustomTheme.lightPrimary),
+          hintStyle: TextStyle(color: CustomTheme.defaultColor),
+          border: outline == true
+              ? OutlineInputBorder(
+                  borderSide: BorderSide(
+                  color: CustomTheme.defaultColor,
+                ))
+              : null,
+          enabledBorder: outline == true
+              ? OutlineInputBorder(
+                  borderSide: BorderSide(
+                  color: CustomTheme.defaultColor,
+                ))
+              : null,
+        ),
+        validator: customValidator ?? null,
+      ),
+    );
+  } catch (e, s) {
+    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    return Container();
+  }
+}
+
+/// Componente visual para mostrar um card enquando o usuário aguarda
+/// o processamento da operação.
+///
+///    Parameters:
+///
+///      context -> BuildContext contendo o contexto do App
+Widget customProcessingCardModal(BuildContext context) {
+  return Container(
+    child: Align(
+      alignment: Alignment.center,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8.0),
+          child: Column(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16,),
+              Text(
+                AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+
+/// Componente visual para mostrar um card centralizado enquando o usuário aguarda
+/// o processamento da operação.
+///
+///    Parameters:
+///
+///      context -> BuildContext contendo o contexto do App
+Widget customProcessingCardModalCenter(BuildContext context) {
+  return Container(
+    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2),
+    child: Align(
+      alignment: Alignment.center,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
+          child: Column(
+            children: [
+              const CircularProgressIndicator(),
+              SizedBox(height: 16,),
+              Text(
+                AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+
+/// Componente para mostrar a mensagem de erro para o usuário na UI
+Widget customErrorMessage(BuildContext context,
+    {String? title, required String message}) {
+  return Center(child: Text(message));
+}
+
+/// Componente para mostrar mensagens aos usuário de
+/// ações que retornaram com sucesso
+customSuccessSnackbar(String message, {int secondsDuration = 4}) {
+  return SnackBar(
+    content: Text(message),
+    backgroundColor: Color(0xFFF799FCB),
+    duration: Duration(seconds: secondsDuration),
+  );
+}
+
+
+/// Componente visual para mostrar um elemento de loading customizado
+///     Parameters:
+///       context -> BuildContext contendo o contexto do App
+///       isCircularIndicator -> bool indicando se o widget é CircularProgressIndicator
+///       lineHeigth -> double contendo a espesura da linha
+///       lineColor -> Color contendo a cor de foreground
+///       backgroundColor -> Color contendo a cor de background
+Widget customProcessingWidget(
+  BuildContext context, {
+  bool isCircularIndicator = true,
+  double lineHeigth = 0.0,
+  Color backgroundColor = Colors.white,
+}) {
+  if (isCircularIndicator == true) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: CircularProgressIndicator(),
+    );
+  }
+  return Container(
+    padding: const EdgeInsets.symmetric(vertical: 12.0),
+    child: LinearProgressIndicator(
+      backgroundColor: backgroundColor,
+    ),
+  );
+}
+
+/// Componente para mostrar mensagens aos usuário de
+/// ações que retornaram com sucesso
+customErrorSnackbar(String message, {int secondsDuration = 4}) {
+  return SnackBar(
+    content: Text(message),
+    backgroundColor: Color(0xfffFF6961),
+    duration: Duration(seconds: secondsDuration),
+  );
+}
+
+///
+/// [Área para os widgets do cabeçalho da página/views e da barra de botões]
+///
+
+class HeadWidget extends StatefulWidget {
+  final String assetImageHeadBackground;
+  final String webImageHeadBackground;
+  final double marginTitleTop;
+  final double marginTitleBottom;
+  final double marginTitleRight;
+  final double marginTitleLeft;
+
+  HeadWidget(
+      {this.assetImageHeadBackground = "",
+      this.webImageHeadBackground = "",
+      this.marginTitleTop = 80,
+      this.marginTitleBottom = 12,
+      this.marginTitleLeft = 12,
+      this.marginTitleRight = 45});
+
+  @override
+  _HeadWidgetState createState() => _HeadWidgetState();
+}
+
+/// Head da tela inicial
+class _HeadWidgetState extends State<HeadWidget> {
+  /// Variável contendo o tipo da imagem a ser renderizada como background
+  /// iniciado com zero para o caso de não ter sido informada nenhuma imagem
+  /// no construtor do Widget. Valor 1 -> AssetsImage, 2 -> WebImage
+  int imageType = 0;
+  double marginTitleTop = 0.0;
+  double marginTitleLef = 0.0; 
+  double marginTitleBottom = 0.0;
+  double marginTitleRight = 0.0;
+
+  /// String contendo o caminho a ser renderizado como background do cabeçalho
+  String _urlPath = "";
+
+  @override
+  void initState() {
+    // Verificando se foi passado algum valor para o assetImageHeadBackgroud ou webImageHeadBackground
+    if (widget.assetImageHeadBackground.isNotEmpty) {
+      _urlPath = widget.assetImageHeadBackground;
+      imageType = 1;
+    } else if (widget.webImageHeadBackground.isNotEmpty) {
+      _urlPath = widget.webImageHeadBackground;
+      imageType = 2;
+    }
+    marginTitleTop = widget.marginTitleTop;
+    marginTitleBottom = widget.marginTitleBottom;
+    marginTitleLef = widget.marginTitleLeft;
+    marginTitleRight = widget.marginTitleRight;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: Util.getProportionScreenWidth(context, _proportionScreenDefault),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).accentColor,
+          ],
+        ),
+      ),
+      child: Stack(
+        children: <Widget>[
+          imageType == 1
+              ? Image.asset(
+                  _urlPath,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                )
+              : Container(),
+          Container(
+            color: Colors.black.withOpacity(0.22),
+            width: double.infinity,
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              top: marginTitleTop,
+              bottom: marginTitleBottom,
+              left: marginTitleLef,
+              right: marginTitleRight,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(
+                  "",
+                  style: Theme.of(context).textTheme.headline5?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      wordSpacing: 0.08,
+                      color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Barra de botões da tela inicial
+class ContentWidget extends StatefulWidget {
+  final widgetChild = Container();
+  ContentWidget({
+    Key? key,
+    Widget? widgetChild,
+  });
+
+  @override
+  _ContentWidgetState createState() => _ContentWidgetState();
+}
+
+class _ContentWidgetState extends State<ContentWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: Util.getProportionScreenWidth(context, _proportionScreenDefault) - 125),
+      child: widget.widgetChild,
+    );
+  }
+}
+
+
+/// [Área para o CustomTextFormFieldLabel]
+///
+class CustomTextFormFieldLabel extends StatelessWidget {
+  final String labelText;
+
+  const CustomTextFormFieldLabel({Key? key, required this.labelText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        bottom: 8,
+        left: 4,
+      ),
+      child: Text(
+        labelText,
+        style: TextStyle(
+          color: customLabelTextFormField,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+/// [Área para o CustomTextFormFieldWidget Class]
+/// 
+
+class CustomTextFormField extends StatelessWidget {
+  final String labelText;
+  final String hintText;
+  final FormFieldValidator<String>? customValidator;
+  final ValueChanged<String>? customOnChanged;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
+  final TextInputType keyBoardType;
+  final bool obscureValue;
+  final bool readOnly;
+  final int? maxLineField;
+  final int? maxLengthCharacter;
+  final TextEditingController controller;
+  final bool hiddenCounter;
+
+  const CustomTextFormField(
+      {Key? key,
+      required this.labelText,
+      required this.hintText,
+      required this.controller,
+      this.customValidator,
+      this.customOnChanged,
+      this.inputFormatters,
+      this.focusNode,
+      this.keyBoardType = TextInputType.text,
+      this.obscureValue = false,
+      this.readOnly = false,
+      this.maxLineField = null,
+      this.maxLengthCharacter = null,
+      this.hiddenCounter = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        CustomTextFormFieldLabel(labelText: labelText),
+        Container(
+          margin: const EdgeInsets.only(bottom: 18),
+          child: TextFormField(
+            controller: controller,
+            validator: customValidator,
+            onChanged: customOnChanged,
+            inputFormatters: inputFormatters,
+            keyboardType: keyBoardType,
+            obscureText: obscureValue,
+            readOnly: readOnly,
+            maxLines: maxLineField,
+            focusNode: this.focusNode,
+            maxLength: maxLengthCharacter ?? null,
+            decoration: CustomTextFormFieldStyle.textFieldStyle(hintText: hintText, hiddenCounter: hiddenCounter),
+          ),
+        )
+      ],
+    );
+  }
+}

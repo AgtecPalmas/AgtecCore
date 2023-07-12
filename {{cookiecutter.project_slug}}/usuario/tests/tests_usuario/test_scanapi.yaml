@@ -1,0 +1,25 @@
+# http://127.0.0.1:8000/core/api/usuario/usuario
+
+
+endpoints:
+  - name: Servico #Nome do Teste
+    path: http://127.0.0.1:8000/core/api/ # Caminho Raiz da API
+    requests:
+      - name: Nome da Requisição # Criando o Primeiro Request
+        path: usuario/usuario/ # Informando qual o caminho do endpoint, esse será concatenado com o path anterior
+        method: get #Informando qual o verbo HTTP
+        headers: # Configurando o head da requisição
+          Accept: application/json
+          Contenty-Type: application/json
+        tests: # Area para os testes
+          - name: status_code # Nome do Teste
+            assert: ${{ response.status_code == 200 }}
+          - name: count
+            assert: ${{ response.json()["count"] == 40 }}
+      - name: Detalhamento de um usuario
+        path: usuario/usuario/f91b3f57-8ebb-4100-b7ba-bcbea37573e4/
+        tests:
+          - name: status_code # Nome do Teste
+            assert: ${{ response.status_code == 200 }}
+          - name: count
+            assert: ${{ response.json()["cpf"] == "36150411192" }}

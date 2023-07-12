@@ -1,0 +1,138 @@
+{% load static %}
+{% load base %}
+<!DOCTYPE html>
+<html lang="pt-br" class="default-style">
+      <head>
+            <title>
+                  {% block title %}
+                  {% endblock title %}
+            </title>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1" />
+            <meta name="description" content="" />
+            <meta name="viewport"
+                  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+            <link rel="icon"
+                  type="image/x-icon"
+                  href="{{ imagens_sistema.favicon }}" />
+            {% block extra_head %}
+            {% endblock extra_head %}
+            <!-- A Definir -->
+            <!--
+                  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap" />
+                  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/fonts/ionicons.css' %}" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/fonts/linearicons.css' %}" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/fonts/open-iconic.css' %}" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/fonts/pe-icon-7-stroke.css' %}" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/css/rtl/theme-corporate.css' %}" class="theme-settings-theme-css" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/css/rtl/colors.css' %}" class="theme-settings-colors-css" />
+                  <link rel="stylesheet" href="{% static 'core/vendor/css/rtl/uikit.css' %}" />
+            -->
+            <!-- Usados -->
+            <!-- Icon fonts -->
+            <link rel="stylesheet"
+                  href="{% static 'core/vendor/libs/fontawesome/css/fontawesome.min.css' %}" />
+            <!-- Core Antigo -->
+            <link rel="stylesheet"
+            href="{% static 'core/vendor/css/rtl/appwork.css' %}"
+            class="theme-settings-appwork-css" />
+            <!-- Bootstrap -->
+            <link rel="stylesheet"
+            href="{% static 'core/vendor/libs/bootstrap/css/bootstrap.min.css' %}" />
+            <!-- Core Antigo -->
+            <link rel="stylesheet"
+                  href="{% static 'core/vendor/css/rtl/bootstrap.css' %}"
+                  class="theme-settings-bootstrap-css" />
+            <!-- Fonte Rawline-->
+            <link rel="stylesheet"
+                  href="{% static 'core/vendor/fonts/rawline/css/rawline.css' %}" />
+            <!-- Design System de Governo-->
+            <link rel="stylesheet"
+                  href="{% static 'core/vendor/libs/govbr/core.min.css' %}" />
+            <!-- Custom CSS -->
+            <link rel="stylesheet" href="{% static 'core/css/custom.css' %}" />
+            <!-- JQuery -->
+            <script src="{% static 'core/vendor/libs/jquery/js/jquery.min.js' %}"></script>
+            {% block extra_css %}
+            {% endblock extra_css %}
+      </head>
+      <body>
+            <div class="layout-wrapper layout-2">
+                  <div class="layout-inner">
+                        <div class="layout-container">
+                              {% include "./block/header_menu.html" %}
+                              <div class="layout-content">
+                                    <div class="container flex-grow-1 container-p-y">
+                                          {% include "./block/bread_cumbs.html" %}
+                                          {% block content %}
+                                          {% endblock content %}
+                                    </div>
+                                    <nav class="layout-footer footer bg-footer-theme">
+                                          {% include "./block/footer.html" %}
+                                    </nav>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+            <div class="go-to-top">
+                  <button href="#" title="Ir para o topo" class="br-button primary circle">
+                        <span class="fas fa-chevron-up"></span>
+                  </button>
+            </div>
+            <!-- A Definir -->
+            <!--
+                  <script src="{% static 'core/vendor/js/material-ripple.js' %}"></script>
+                  <script src="{% static 'core/vendor/js/layout-helpers.js' %}"></script>
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                  <script src="{% static 'core/vendor/js/pace.js' %}"></script>
+                  <script src="{% static 'core/vendor/libs/popper/popper.js' %}"></script>
+                  <script src="{% static 'core/vendor/js/sidenav.js' %}"></script>
+                  <script src="{% static 'core/js/demo.js' %}"></script>
+                  <script src="{% static 'core/js/core.js' %}"></script>
+                  <script src="{% static 'core/plugins/input-mask/plugin.js' %}"></script>
+                  <script src="{% static 'core/vendor/js/bootstrap.js' %}"></script>
+            -->
+            <!-- Usados -->
+            <!-- Bootstrap 5 -->
+            <script src="{% static 'core/vendor/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+            <!-- Input Mask Plugin -->
+            <script src="{% static 'core/plugins/input-mask/js/jquery.mask.min.js' %}"></script>
+            <!-- JQuery Formset e Inline -->
+            <script src="{% static 'core/js/jquery.formset.js' %}"></script>
+            <script src="{% static 'core/js/inline.js' %}"></script>
+            <!-- Design System do Governo Federal -->
+            <script src="{% static 'core/vendor/libs/govbr/core-init.min.js' %}"></script>
+            <!-- Remover Alert -->
+            <script src="{% static 'core/js/notificacao.js' %}"></script>
+            <!-- Bloqueia Submits -->
+            <script src="{% static 'core/js/block_submits.js' %}"></script>
+            <!-- Bloqueia Resend Form -->
+            <script src="{% static 'core/js/block_resend_form.js' %}"></script>
+            <!-- Go to Top -->
+            <script src="{% static 'core/js/go_to_top.js' %}"></script>
+            {% if debug %}
+                  <!-- Desenvolvimento -->
+                  <script src="{% static 'core/js/desenvolvimento.js' %}"></script>
+            {% endif %}
+            <!-- Google Analytics -->
+            <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-47831155-1', 'auto');
+        ga('send', 'pageview');
+            </script>
+            <!-- Fim do Google Analytics -->
+            {% block extra_js %}
+            {% endblock extra_js %}
+      </body>
+</html>

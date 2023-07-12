@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Select</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-center mb-5">
+        <div class="col">
+          <div class="br-select">
+            <div class="br-input">
+              <label for="select-simple">Label</label>
+              <input id="select-simple" type="text" placeholder="Selecione o item"/>
+              <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="br-list" tabindex="0">
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb0" type="radio" name="estados-simples" value="rb0"/>
+                  <label for="rb0">Acre</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb1" type="radio" name="estados-simples" value="rb1"/>
+                  <label for="rb1">Alagoas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb2" type="radio" name="estados-simples" value="rb2"/>
+                  <label for="rb2">Amapá</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb3" type="radio" name="estados-simples" value="rb3"/>
+                  <label for="rb3">Amazonas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb4" type="radio" name="estados-simples" value="rb4"/>
+                  <label for="rb4">Bahia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb5" type="radio" name="estados-simples" value="rb5"/>
+                  <label for="rb5">Ceará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb6" type="radio" name="estados-simples" value="rb6"/>
+                  <label for="rb6">Distrito Federal</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb7" type="radio" name="estados-simples" value="rb7"/>
+                  <label for="rb7">Espírito Santo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb8" type="radio" name="estados-simples" value="rb8"/>
+                  <label for="rb8">Goiás</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb9" type="radio" name="estados-simples" value="rb9"/>
+                  <label for="rb9">Maranhão</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb10" type="radio" name="estados-simples" value="rb10"/>
+                  <label for="rb10">Mato Grosso</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb11" type="radio" name="estados-simples" value="rb11"/>
+                  <label for="rb11">Mato Grosso do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb12" type="radio" name="estados-simples" value="rb12"/>
+                  <label for="rb12">Minas Gerais</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb13" type="radio" name="estados-simples" value="rb13"/>
+                  <label for="rb13">Pará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb14" type="radio" name="estados-simples" value="rb14"/>
+                  <label for="rb14">Paraíba</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb15" type="radio" name="estados-simples" value="rb15"/>
+                  <label for="rb15">Paraná</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb16" type="radio" name="estados-simples" value="rb16"/>
+                  <label for="rb16">Pernambuco</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb17" type="radio" name="estados-simples" value="rb17"/>
+                  <label for="rb17">Piauí</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb18" type="radio" name="estados-simples" value="rb18"/>
+                  <label for="rb18">Rio de Janeiro</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb19" type="radio" name="estados-simples" value="rb19"/>
+                  <label for="rb19">Rio Grande do Norte</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb20" type="radio" name="estados-simples" value="rb20"/>
+                  <label for="rb20">Rio Grande do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb21" type="radio" name="estados-simples" value="rb21"/>
+                  <label for="rb21">Rondônia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb22" type="radio" name="estados-simples" value="rb22"/>
+                  <label for="rb22">Santa Catarina</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb23" type="radio" name="estados-simples" value="rb23"/>
+                  <label for="rb23">São Paulo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb24" type="radio" name="estados-simples" value="rb24"/>
+                  <label for="rb24">Sergipe</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb25" type="radio" name="estados-simples" value="rb25"/>
+                  <label for="rb25">Tocantins</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rb27" type="radio" name="estados-simples" value="rb27"/>
+                  <label for="rb27">Exterior</label>
+                </div>
+              </div>
+            </div>
+          </div><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Texto auxiliar Função de prevenir erros.</span>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-5">
+        <div class="col">
+          <div class="br-select" multiple="multiple">
+            <div class="br-input">
+              <label for="select-multtiple">Label</label>
+              <input id="select-multtiple" type="text" placeholder="Selecione os itens"/>
+              <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="br-list" tabindex="0">
+              <div class="br-item highlighted" data-all="data-all" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cb" name="cb" type="checkbox"/>
+                  <label for="cb">Selecionar todos</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs0" name="cbs0" type="checkbox"/>
+                  <label for="cbs0">Acre</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs1" name="cbs1" type="checkbox"/>
+                  <label for="cbs1">Alagoas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs2" name="cbs2" type="checkbox"/>
+                  <label for="cbs2">Amapá</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs3" name="cbs3" type="checkbox"/>
+                  <label for="cbs3">Amazonas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs4" name="cbs4" type="checkbox"/>
+                  <label for="cbs4">Bahia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs5" name="cbs5" type="checkbox"/>
+                  <label for="cbs5">Ceará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs6" name="cbs6" type="checkbox"/>
+                  <label for="cbs6">Distrito Federal</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs7" name="cbs7" type="checkbox"/>
+                  <label for="cbs7">Espírito Santo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs8" name="cbs8" type="checkbox"/>
+                  <label for="cbs8">Goiás</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs9" name="cbs9" type="checkbox"/>
+                  <label for="cbs9">Maranhão</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs10" name="cbs10" type="checkbox"/>
+                  <label for="cbs10">Mato Grosso</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs11" name="cbs11" type="checkbox"/>
+                  <label for="cbs11">Mato Grosso do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs12" name="cbs12" type="checkbox"/>
+                  <label for="cbs12">Minas Gerais</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs13" name="cbs13" type="checkbox"/>
+                  <label for="cbs13">Pará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs14" name="cbs14" type="checkbox"/>
+                  <label for="cbs14">Paraíba</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs15" name="cbs15" type="checkbox"/>
+                  <label for="cbs15">Paraná</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs16" name="cbs16" type="checkbox"/>
+                  <label for="cbs16">Pernambuco</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs17" name="cbs17" type="checkbox"/>
+                  <label for="cbs17">Piauí</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs18" name="cbs18" type="checkbox"/>
+                  <label for="cbs18">Rio de Janeiro</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs19" name="cbs19" type="checkbox"/>
+                  <label for="cbs19">Rio Grande do Norte</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs20" name="cbs20" type="checkbox"/>
+                  <label for="cbs20">Rio Grande do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs21" name="cbs21" type="checkbox"/>
+                  <label for="cbs21">Rondônia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs22" name="cbs22" type="checkbox"/>
+                  <label for="cbs22">Santa Catarina</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs23" name="cbs23" type="checkbox"/>
+                  <label for="cbs23">São Paulo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs24" name="cbs24" type="checkbox"/>
+                  <label for="cbs24">Sergipe</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbs25" name="cbs25" type="checkbox"/>
+                  <label for="cbs25">Tocantins</label>
+                </div>
+              </div>
+            </div>
+          </div><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Texto auxiliar Função de prevenir erros.</span>
+        </div>
+      </div>
+      <div class="row justify-content-center mb-5">
+        <div class="col">
+          <div class="br-select">
+            <div class="br-input">
+              <label for="select-simple-checked">Select Simples com Item selecionado</label>
+              <input id="select-simple-checked" type="text" placeholder="Selecione o item"/>
+              <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="br-list" tabindex="0">
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs0" type="radio" name="estados-checked" value="rbs0"/>
+                  <label for="rbs0">Acre</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs1" type="radio" name="estados-checked" value="rbs1"/>
+                  <label for="rbs1">Alagoas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs2" type="radio" name="estados-checked" value="rbs2"/>
+                  <label for="rbs2">Amapá</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs3" type="radio" name="estados-checked" value="rbs3"/>
+                  <label for="rbs3">Amazonas</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs4" type="radio" name="estados-checked" value="rbs4"/>
+                  <label for="rbs4">Bahia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs5" type="radio" name="estados-checked" value="rbs5"/>
+                  <label for="rbs5">Ceará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs6" type="radio" name="estados-checked" value="rbs6"/>
+                  <label for="rbs6">Distrito Federal</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs7" type="radio" name="estados-checked" value="rbs7"/>
+                  <label for="rbs7">Espírito Santo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs8" type="radio" name="estados-checked" value="rbs8"/>
+                  <label for="rbs8">Goiás</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs9" type="radio" name="estados-checked" value="rbs9"/>
+                  <label for="rbs9">Maranhão</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs10" type="radio" name="estados-checked" value="rbs10"/>
+                  <label for="rbs10">Mato Grosso</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs11" type="radio" name="estados-checked" value="rbs11"/>
+                  <label for="rbs11">Mato Grosso do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs12" type="radio" name="estados-checked" value="rbs12"/>
+                  <label for="rbs12">Minas Gerais</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs13" type="radio" name="estados-checked" value="rbs13"/>
+                  <label for="rbs13">Pará</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs14" type="radio" name="estados-checked" value="rbs14"/>
+                  <label for="rbs14">Paraíba</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs15" type="radio" name="estados-checked" value="rbs15"/>
+                  <label for="rbs15">Paraná</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs16" type="radio" name="estados-checked" value="rbs16"/>
+                  <label for="rbs16">Pernambuco</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs17" type="radio" name="estados-checked" value="rbs17"/>
+                  <label for="rbs17">Piauí</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs18" type="radio" name="estados-checked" value="rbs18"/>
+                  <label for="rbs18">Rio de Janeiro</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs19" type="radio" name="estados-checked" value="rbs19"/>
+                  <label for="rbs19">Rio Grande do Norte</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs20" type="radio" name="estados-checked" value="rbs20"/>
+                  <label for="rbs20">Rio Grande do Sul</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs21" type="radio" name="estados-checked" value="rbs21"/>
+                  <label for="rbs21">Rondônia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs22" type="radio" name="estados-checked" value="rbs22"/>
+                  <label for="rbs22">Santa Catarina</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs23" type="radio" name="estados-checked" value="rbs23"/>
+                  <label for="rbs23">São Paulo</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs24" type="radio" name="estados-checked" value="rbs24"/>
+                  <label for="rbs24">Sergipe</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs25" type="radio" name="estados-checked" value="rbs25"/>
+                  <label for="rbs25">Tocantins</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-radio">
+                  <input id="rbs27" type="radio" name="estados-checked " value="rbs27" checked="checked"/>
+                  <label for="rbs27">Exterior</label>
+                </div>
+              </div>
+            </div>
+          </div><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Texto auxiliar Função de prevenir erros.</span>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col">
+          <div class="br-select" multiple="multiple">
+            <div class="br-input">
+              <label for="select-multtiple-checked">Select Múltiplo com itens selecionados</label>
+              <input id="select-multtiple-checked" type="text" placeholder="Selecione os itens"/>
+              <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="br-list" tabindex="0">
+              <div class="br-item highlighted" data-all="data-all" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="cbsm" name="cbsm" type="checkbox"/>
+                  <label for="cbsm">Selecionar todos</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="paraguai1" name="paraguai1" type="checkbox" checked="checked"/>
+                  <label for="paraguai1">Paraguai</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="argentina2" name="argentina2" type="checkbox"/>
+                  <label for="argentina2">Argentina</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="uruguai3" name="uruguai3" type="checkbox"/>
+                  <label for="uruguai3">Uruguai</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="chile4" name="chile4" type="checkbox"/>
+                  <label for="chile4">Chile</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="colombia5" name="colombia5" type="checkbox"/>
+                  <label for="colombia5">Colombia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="equador6" name="equador6" type="checkbox"/>
+                  <label for="equador6">Equador</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="portugal7" name="portugal7" type="checkbox"/>
+                  <label for="portugal7">Portugal</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="espanha8" name="espanha8" type="checkbox"/>
+                  <label for="espanha8">Espanha</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="franca9" name="franca9" type="checkbox"/>
+                  <label for="franca9">França</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="alemanha10" name="alemanha10" type="checkbox"/>
+                  <label for="alemanha10">Alemanha</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="italia11" name="italia11" type="checkbox"/>
+                  <label for="italia11">Italia</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="inglaterra12" name="inglaterra12" type="checkbox"/>
+                  <label for="inglaterra12">Inglaterra</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="holanda13" name="holanda13" type="checkbox"/>
+                  <label for="holanda13">Holanda</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="estados-unidos14" name="estados-unidos14" type="checkbox"/>
+                  <label for="estados-unidos14">Estados Unidos</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="canada15" name="canada15" type="checkbox"/>
+                  <label for="canada15">Canada</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="mexico16" name="mexico16" type="checkbox"/>
+                  <label for="mexico16">México</label>
+                </div>
+              </div>
+              <div class="br-item" tabindex="-1">
+                <div class="br-checkbox">
+                  <input id="costa-rica17" name="costa-rica17" type="checkbox"/>
+                  <label for="costa-rica17">Costa Rica</label>
+                </div>
+              </div>
+            </div>
+          </div><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Texto auxiliar Função de prevenir erros.</span>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

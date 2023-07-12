@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Scrim</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <style>
+      .legibilidade .content {
+        position: relative;
+      }
+      .legibilidade .effect {
+        background: rgba(var(--rgb-secondary-09), 0.45);
+        color: var(--color-secondary-01);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="br-scrim-util foco" id="scrimutilexample" data-scrim="true">
+        <div class="br-modal medium">
+          <div class="br-modal-dialog">
+            <div class="br-modal-content">
+              <div class="br-modal-header">
+                <h1 class="br-modal-title">Scrim com Foco</h1>
+              </div>
+              <div class="br-modal-body">
+                <p>Exemplo utilizando o componente scrim com FOCO</p>
+              </div>
+              <div class="br-modal-footer justify-content-center">
+                <button class="br-button secondary" type="button" id="scrimfechar" data-dismiss="scrimexample">Cancelar
+                </button>
+                <button class="br-button primary mt-3 mt-sm-0 ml-sm-3" type="button">Retornar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Foco</p>
+      <div class="row">
+        <div class="scrimexemplo">
+          <button class="br-button primary" type="button">Testar Efeito
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Foco com com modal com conteudo grande</p>
+      <div class="row">
+        <div class="br-scrim foco" id="scrimutilfocobig" data-trigger="scrim">
+          <div class="br-modal medium">
+            <div class="br-modal-dialog">
+              <div class="br-modal-content">
+                <div class="br-modal-header">
+                  <h1 class="br-modal-title">Scrim com Foco</h1>
+                </div>
+                <div class="br-modal-body">
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                  <p>Exemplo utilizando o componente scrim com FOCO</p>
+                </div>
+                <div class="br-modal-footer justify-content-center">
+                  <button class="br-button secondary" type="button" data-dismiss="scrimfocobig">Cancelar
+                  </button>
+                  <button class="br-button primary mt-3 mt-sm-0 ml-sm-3" type="button">Retornar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="scrimexemplo-big">
+          <button class="br-button primary" type="button">Testar Efeito
+          </button>
+        </div>
+      </div>
+      <p class="h4 mt-5">Legibilidade</p>
+      <div class="row">
+        <div class="col-auto">
+          <div class="br-card legibilidade">
+            <div class="front">
+              <div class="content p-0"><img src="https://picsum.photos/400" alt="imagem aleatória"/>
+                <div class="effect">
+                  <div class="p-3">Scrim - Legibilidade</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

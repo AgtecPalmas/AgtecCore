@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>List</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Lista Vertical</p>
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Título (opcional)</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mt-4 mt-sm-0">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Itens selecionáveis</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">
+                  <div class="br-checkbox hidden-label">
+                    <input id="check-01" name="check-01" type="checkbox" aria-label="selecione"/>
+                    <label for="check-01"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">
+                  <div class="br-checkbox hidden-label">
+                    <input id="check-02" name="check-02" type="checkbox" aria-label="selecione"/>
+                    <label for="check-02"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">
+                  ITEM
+                  Texto principal
+                </div>
+                <div class="col-auto">
+                  <div class="br-checkbox hidden-label">
+                    <input id="check-03" name="check-03" type="checkbox" aria-label="selecione"/>
+                    <label for="check-03"></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Densidades</p>
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Densidade alta (padrão)</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mt-4 mt-sm-0">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Densidade média</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-3" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-3" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-3" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mt-4 mt-sm-0">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Densidade baixa</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-4" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-4" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item py-4" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Texto principal</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Agrupamentos</p>
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Por rótulo</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">RÓTULO 01
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">RÓTULO 02
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mt-4 mt-sm-0">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Por separador</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+                <div class="col-auto">META</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 mt-4 mt-sm-0">
+          <div class="br-list" role="list">
+            <div class="header">
+              <div class="title">Por expansão</div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem" data-toggle="collapse" data-target="l1">
+              <div class="content">
+                <div class="flex-fill">RÓTULO 01</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="br-list" id="l1" role="list" hidden="hidden">
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+            </div>
+            <div class="br-item" role="listitem" data-toggle="collapse" data-target="l2">
+              <div class="content">
+                <div class="flex-fill">RÓTULO 02</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="br-list" id="l2" role="list" hidden="hidden">
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+            </div>
+            <div class="br-item" role="listitem" data-toggle="collapse" data-target="l3">
+              <div class="content">
+                <div class="flex-fill">RÓTULO 03</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="br-list" id="l3" role="list" hidden="hidden">
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+              <div class="br-item" role="listitem">
+                <div class="row align-items-center">
+                  <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                  </div>
+                  <div class="col">Sub-item</div>
+                </div>
+              </div><span class="br-divider"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="mt-5 h4">Lista Horizontal</p>
+      <div class="br-list horizontal" role="list">
+        <div class="header">
+          <div class="title">Separadores são opcionais</div>
+        </div><span class="br-divider"></span>
+        <div class="br-item" role="listitem">
+          <div class="row align-items-center">
+            <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+            </div>
+            <div class="col">
+              ITEM
+              Texto principal
+            </div>
+            <div class="col-auto">META</div>
+          </div>
+        </div><span class="br-divider"></span>
+        <div class="br-item" role="listitem">
+          <div class="row align-items-center">
+            <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+            </div>
+            <div class="col">
+              ITEM
+              Texto principal
+            </div>
+            <div class="col-auto">META</div>
+          </div>
+        </div><span class="br-divider"></span>
+        <div class="br-item" role="listitem">
+          <div class="row align-items-center">
+            <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+            </div>
+            <div class="col">
+              ITEM
+              Texto principal
+            </div>
+            <div class="col-auto">META</div>
+          </div>
+        </div>
+      </div>
+      <div class="br-list horizontal mt-5" role="list">
+        <div class="header">
+          <div class="title">Versão com expansão</div>
+        </div><span class="br-divider"></span>
+        <div class="group">
+          <div class="br-item" role="listitem" data-toggle="collapse" data-target="h1">
+            <div class="content">
+              <div class="flex-fill">RÓTULO 01</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="br-list" id="h1" role="list" hidden="hidden">
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+        <div class="group">
+          <div class="br-item" role="listitem" data-toggle="collapse" data-target="h2">
+            <div class="content">
+              <div class="flex-fill">RÓTULO 02</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="br-list" id="h2" role="list" hidden="hidden">
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+        <div class="group">
+          <div class="br-item" role="listitem" data-toggle="collapse" data-target="h3">
+            <div class="content">
+              <div class="flex-fill">RÓTULO 03</div><i class="fas fa-angle-down" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="br-list" id="h3" role="list" hidden="hidden">
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+            <div class="br-item" role="listitem">
+              <div class="row align-items-center">
+                <div class="col-auto"><i class="fas fa-heartbeat" aria-hidden="true"></i>
+                </div>
+                <div class="col">Sub-item</div>
+              </div>
+            </div><span class="br-divider"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

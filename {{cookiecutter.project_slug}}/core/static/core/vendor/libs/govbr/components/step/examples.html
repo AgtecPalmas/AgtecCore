@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Step</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <style>
+      .step-sample-4 {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="h4 mt-5">Layout Vertical - Alinhamento a Direita</p>
+          <div class="row">
+            <div class="col-auto">
+              <div class="p-3">
+                <div class="br-step vertical" data-initial="1" data-label="right">
+                  <div class="step-progress">
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="p-3 bg-blue-80">
+                <div class="br-step vertical dark-mode" data-initial="1" data-label="right">
+                  <div class="step-progress">
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <p class="h4 mt-5">Layout Vertical - Alinhamento a Esquerda</p>
+          <div class="row">
+            <div class="col-auto">
+              <div class="p-3">
+                <div class="br-step vertical" data-initial="1" data-label="left">
+                  <div class="step-progress">
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="p-3 bg-blue-80">
+                <div class="br-step vertical dark-mode" data-initial="1" data-label="left">
+                  <div class="step-progress">
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                    <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Layout Horizontal - Alinhamento Abaixo</p>
+      <div class="p-3">
+        <div class="br-step" data-initial="1" data-label="bottom">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode" data-initial="1" data-label="bottom">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Layout Horizontal - Alinhamento Acima</p>
+      <div class="p-3">
+        <div class="br-step" data-initial="1" data-label="top">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode" data-initial="1" data-label="top">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Layout Horizontal - Alinhamento Direita</p>
+      <div class="p-3">
+        <div class="br-step" data-initial="1" data-label="right" data-scroll="data-scroll">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode" data-initial="1" data-label="right" data-scroll="data-scroll">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Layout Horizontal - Alinhamento Esquerda</p>
+      <div class="p-3">
+        <div class="br-step" data-initial="1" data-label="left">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode" data-initial="1" data-label="left">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Step com icone</p>
+      <div class="p-3">
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-label="right" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-label="left" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-label="top" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-label="bottom" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-label="right" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-label="left" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-label="top" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-label="bottom" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button"><span class="step-info">Acesse sua Conta</span><i class="step-icon fas fa-lock" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados da entrega</span><i class="step-icon fas fa-truck" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button"><span class="step-info">Dados de Pagamento</span><i class="step-icon far fa-credit-card" aria-hidden="true"></i></button>
+              <button class="step-progress-btn" type="button" disabled="disabled"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Step com alert</p>
+      <div class="p-3">
+        <div class="mb-3">
+          <div class="br-step" data-initial="2" data-label="right" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="2" data-label="left" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="2" data-label="top" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step" data-initial="2" data-label="bottom" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="2" data-label="right" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="2" data-label="left" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="2" data-label="top" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="2" data-label="bottom" data-scroll="data-scroll">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Step Indicador Vazio</p>
+      <div class="p-3">
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-type="void">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="br-step" data-initial="1" data-type="void">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-tooltip-text="Acesse sua Conta" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Dados da entrega" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Dados de Pagamento" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Finalizar" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-type="void">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="br-step dark-mode" data-initial="1" data-type="void">
+            <div class="step-progress">
+              <button class="step-progress-btn" type="button" data-tooltip-text="Acesse sua Conta" data-alert="success"><span class="step-info">Acesse sua Conta</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Dados da entrega" data-alert="info"><span class="step-info">Dados da entrega</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Dados de Pagamento" data-alert="danger"><span class="step-info">Dados de Pagamento</span><span class="step-alert"></span></button>
+              <button class="step-progress-btn" type="button" data-tooltip-text="Finalizar" disabled="disabled" data-alert="warning"><span class="step-info">Finalizar</span><i class="step-icon fas fa-check" aria-hidden="true"></i><span class="step-alert"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Step Simples</p>
+      <div class="p-3">
+        <div class="br-step mx-3" data-initial="1" data-type="simple">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 4"><span class="step-info">Exemplo de Rótulo 4</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 5"><span class="step-info">Exemplo de Rótulo 5</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode mx-3" data-initial="1" data-type="simple">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 4"><span class="step-info">Exemplo de Rótulo 4</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 5"><span class="step-info">Exemplo de Rótulo 5</span></button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Step Textual</p>
+      <div class="p-3">
+        <div class="br-step mx-3" data-initial="3" data-type="text">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 4"><span class="step-info">Exemplo de Rótulo 4</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 5"><span class="step-info">Exemplo de Rótulo 5</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 bg-blue-80">
+        <div class="br-step dark-mode mx-3" data-initial="3" data-type="text">
+          <div class="step-progress">
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 1"><span class="step-info">Exemplo de Rótulo 1</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 2"><span class="step-info">Exemplo de Rótulo 2</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 3"><span class="step-info">Exemplo de Rótulo 3</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 4"><span class="step-info">Exemplo de Rótulo 4</span></button>
+            <button class="step-progress-btn" type="button" data-tooltip-text="Exemplo de Rótulo 5"><span class="step-info">Exemplo de Rótulo 5</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+/// View/Page inicial de um $ModelClass$
+/// Caso seja necessário criar uma página anterior à da listagem
+/// deve ser alterado o código abaixo e depois alterar a URL de
+/// navegação vinda da main.dart
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'package:flutter/material.dart';
+
+import '../../../../core/user_interface/widget.dart';
+import '../model.dart';
+
+class $ModelClass$IndexPage extends StatefulWidget {
+  static const routeName = "/$ModelClassCamelCase$Index";
+
+  @override
+  _$ModelClass$IndexPageState createState() => _$ModelClass$IndexPageState();
+}
+
+class _$ModelClass$IndexPageState extends State<$ModelClass$IndexPage>
+  with SingleTickerProviderStateMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        key: _scaffoldKey,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent
+        ),
+        body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(
+      children: <Widget>[
+        HeadWidget(),
+        ContentWidget()
+      ],
+    );
+  }
+
+  /// Método responsável por mostrar um SnackBar com uma mensagem
+  /// com o texto passada como parâmetro
+   _showMessage(String message, {bool error = false}) {
+    if (message.isNotEmpty) {
+      setState(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          error == false
+              ? customSuccessSnackbar(message)
+              : customErrorSnackbar(message),
+        );
+      });
+    }
+  }
+
+  /// Método responsável por mostrar um modal com o texto informado
+  void _makeToast(String texto) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(''),
+          content: Text(texto),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text('Excluir'),
+              onPressed: () {},
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  /// Método para ocultar o teclado
+  _hideKeyboard(BuildContext context){
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
+}

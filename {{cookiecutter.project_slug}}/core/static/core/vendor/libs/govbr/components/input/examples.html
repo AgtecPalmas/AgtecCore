@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Input</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Input padrão</p>
+      <div class="row">
+        <div class="col-sm-8 col-lg-5">
+          <div class="br-input">
+            <label for="input-default">Label / Rótulo</label>
+            <input id="input-default" type="text" placeholder="Placeholder"/>
+            <p>Texto auxiliar. Função de previnir erros.</p>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Densidades</p>
+      <div class="row mb-1">
+        <div class="col-sm-4 col-lg-3">
+          <div class="br-input">
+            <label for="input-medium">Densidade padrão</label>
+            <input id="input-medium" type="text" placeholder="Placeholder"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-4 col-lg-3">
+          <div class="br-input small">
+            <label for="input-small">Alta densidade</label>
+            <input id="input-small" type="text" placeholder="Placeholder"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-4 col-lg-3">
+          <div class="br-input large">
+            <label for="input-large">Baixa densidade</label>
+            <input id="input-large" type="text" placeholder="Placeholder"/>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Input com ícones</p>
+      <div class="row mb-1">
+        <div class="col-sm-6 col-lg-4">
+          <div class="br-input">
+            <label for="input-icon">Login</label>
+            <div class="input-group">
+              <div class="input-icon"><i class="fas fa-user-tie" aria-hidden="true"></i>
+              </div>
+              <input id="input-icon" type="text" placeholder="Placeholder"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-6 col-lg-4">
+          <div class="br-input small">
+            <label for="input-icon-small">Nome</label>
+            <div class="input-group">
+              <div class="input-icon"><i class="fas fa-user" aria-hidden="true"></i>
+              </div>
+              <input class="small" id="input-icon-small" type="text" placeholder="Placeholder"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-6 col-lg-4">
+          <div class="br-input large">
+            <label for="input-icon-large">Grupo</label>
+            <div class="input-group">
+              <div class="input-icon"><i class="fas fa-users" aria-hidden="true"></i>
+              </div>
+              <input class="large" id="input-icon-large" type="text" placeholder="Placeholder"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Input com botões</p>
+      <div class="row mb-1">
+        <div class="col-sm-5 col-lg-3">
+          <div class="br-input input-button">
+            <label for="input-password">Senha</label>
+            <input id="input-password" type="password" placeholder="Digite sua senha"/>
+            <button class="br-button" type="button" aria-label="Mostrar senha"><i class="fas fa-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-5 col-lg-3">
+          <div class="br-input small input-button">
+            <label for="input-login-small">Logar</label>
+            <input id="input-login-small" type="text" placeholder="Digite seu usuário"/>
+            <button class="br-button" type="button" aria-label="Botão de ação"><i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-5 col-lg-3">
+          <div class="br-input large input-button">
+            <label for="input-search-large">Buscar</label>
+            <input id="input-search-large" type="search" placeholder="Digite uma palavra"/>
+            <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Rótulo lateral</p>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-7">
+          <div class="br-input input-inline">
+            <div class="input-label">
+              <label class="text-nowrap" for="lateral">Label / Rótulo</label>
+            </div>
+            <div class="input-content">
+              <input id="lateral" type="text" placeholder="Placeholder"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-7">
+          <div class="br-input input-inline">
+            <div class="input-label">
+              <label class="text-nowrap" for="lateral-icon">Com ícone</label>
+            </div>
+            <div class="input-content">
+              <div class="input-group">
+                <div class="input-icon"><i class="fas fa-edit" aria-hidden="true"></i>
+                </div>
+                <input id="lateral-icon" type="text" placeholder="Placeholder"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-7">
+          <div class="br-input input-inline input-button">
+            <div class="input-label">
+              <label class="text-nowrap" for="input-button">Com botão</label>
+            </div>
+            <div class="input-content">
+              <input id="input-button" type="text" placeholder="Placeholder"/>
+              <button class="br-button" type="button" aria-label="Botão de ação"><i class="fas fa-heart" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Input Destaque</p>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-8">
+          <div class="br-input input-highlight">
+            <label class="sr-only" for="input-highlight-labeless">Label / Rótulo</label>
+            <input id="input-highlight-labeless" type="text" placeholder="Placeholder"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-8">
+          <div class="br-input input-button input-highlight">
+            <label class="sr-only" for="input-highlight-search-labeless">Label / Rótulo</label>
+            <input id="input-highlight-search-labeless" type="search" placeholder="Placeholder"/>
+            <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-sm-10 col-lg-8">
+          <div class="br-input input-button input-highlight">
+            <label class="sr-only" for="input-highlight-icon-search-labeless">Label / Rótulo</label>
+            <div class="input-group">
+              <div class="input-icon"><i class="fas fa-user" aria-hidden="true"></i>
+              </div>
+              <input class="input-button input-highlight" id="input-highlight-icon-search-labeless" type="search" placeholder="Placeholder"/>
+            </div>
+            <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Validação e estados</p>
+      <div class="row">
+        <div class="col-sm-4 mb-1">
+          <div class="br-input success">
+            <label for="input-success">Label / Rótulo</label>
+            <input id="input-success" type="text" placeholder="Digite somente números"/><span class="feedback success" role="alert"><i class="fas fa-check-circle" aria-hidden="true"></i>Mensagem de Sucesso</span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-1">
+          <div class="br-input danger">
+            <label for="input-danger">Label / Rótulo</label>
+            <input id="input-danger" type="text" placeholder="Digite somente números"/><span class="feedback danger" role="alert"><i class="fas fa-times-circle" aria-hidden="true"></i>Mensagem de Erro</span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-1">
+          <div class="br-input info">
+            <label for="input-info">Label / Rótulo</label>
+            <input id="input-info" type="text" placeholder="Digite somente números"/><span class="feedback info" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>Mensagem informativa</span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-1">
+          <div class="br-input warning">
+            <label for="input-warning">Label / Rótulo</label>
+            <input id="input-warning" type="text" placeholder="Digite somente números"/><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Mensagem de alerta</span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-1">
+          <div class="br-input">
+            <label for="input-disabled">Label / Rótulo</label>
+            <input id="input-disabled" type="text" placeholder="Digite somente números" disabled="disabled"/><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Campo Desabilitado</span>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Em fundo escuro</p>
+      <div class="bg-primary-darken-02 p-3">
+        <div class="row">
+          <div class="col-sm-4 mb-1">
+            <div class="br-input dark-mode success">
+              <label for="input-success-dark">Label / Rótulo</label>
+              <input id="input-success-dark" type="text" placeholder="Digite somente números"/><span class="feedback success" role="alert"><i class="fas fa-check-circle" aria-hidden="true"></i>Mensagem de Sucesso</span>
+            </div>
+          </div>
+          <div class="col-sm-4 mb-1">
+            <div class="br-input dark-mode danger">
+              <label for="input-danger-dark">Label / Rótulo</label>
+              <input id="input-danger-dark" type="text" placeholder="Digite somente números"/><span class="feedback danger" role="alert"><i class="fas fa-times-circle" aria-hidden="true"></i>Mensagem de Erro</span>
+            </div>
+          </div>
+          <div class="col-sm-4 mb-1">
+            <div class="br-input dark-mode info">
+              <label for="input-info-dark">Label / Rótulo</label>
+              <input id="input-info-dark" type="text" placeholder="Digite somente números"/><span class="feedback info" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>Mensagem informativa</span>
+            </div>
+          </div>
+          <div class="col-sm-4 mb-1">
+            <div class="br-input dark-mode warning">
+              <label for="input-warning-dark">Label / Rótulo</label>
+              <input id="input-warning-dark" type="text" placeholder="Digite somente números"/><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Mensagem de alerta</span>
+            </div>
+          </div>
+          <div class="col-sm-4 mb-1">
+            <div class="br-input">
+              <label for="input-disabled-dark">Label / Rótulo</label>
+              <input id="input-disabled-dark" type="text" placeholder="Digite somente números" disabled="disabled"/><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>Campo Desabilitado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

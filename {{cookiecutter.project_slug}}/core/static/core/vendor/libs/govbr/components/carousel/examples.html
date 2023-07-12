@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Carousel</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Carousel OUT (padrão)</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="simple">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h5 mt-5">Carousel Circular</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel" data-circular="true">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="simple">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h5 mt-5">Carousel IN</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel" data-stage="in" data-mobile-nav="">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="simple">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Carousel Híbrido Horizontal</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel" data-stage="hibw" data-mobile-nav="">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="simple">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Carousel Híbrido Vertical</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel" data-stage="hibh" data-mobile-nav="">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="simple">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h5 mt-5">Carousel Text</p>
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="br-carousel">
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-prev terciary circle" type="button" aria-label="Anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-stage">
+              <div class="carousel-page" active="active">
+                <div class="carousel-content bg-blue-10">
+                  <div class="h3 carousel-title">Página 1</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-violet-warm-10">
+                  <div class="h3 carousel-title">Página 2</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-yellow-5">
+                  <div class="h3 carousel-title">Página 3</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-green-cool-10">
+                  <div class="h3 carousel-title">Página 4</div>
+                </div>
+              </div>
+              <div class="carousel-page">
+                <div class="carousel-content bg-orange-vivid-10">
+                  <div class="h3 carousel-title">Página 5</div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-button">
+              <button class="br-button carousel-btn-next terciary circle" type="button" aria-label="Próximo"><i class="fas fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="carousel-step">
+              <div class="br-step" data-initial="1" data-type="text">
+                <div class="step-progress">
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 1</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 2</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 3</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 4</span></button>
+                  <button class="step-progress-btn" type="button"><span class="step-info">Exemplo de Rótulo 5</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

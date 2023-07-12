@@ -1,0 +1,77 @@
+.br-notification {
+  --notification-padding: var(--spacing-scale-2x) var(--spacing-scale-4x);
+  --notification-width: 50vw;
+  --notification-height: calc(100vh - 86px);
+  background: var(--background);
+  box-shadow: var(--surface-shadow-md);
+  max-height: var(--notification-height);
+  max-width: var(--notification-width);
+  overflow: auto;
+  z-index: 1;
+}
+@media (max-width: 576px) {
+  .br-notification {
+    --item-padding-x: var(--spacing-scale-2x);
+    --item-padding-y: var(--spacing-scale-base);
+    --item-padding: var(--item-padding-y) var(--item-padding-x);
+    --notification-padding: var(--item-padding);
+    --notification-width: 100vw;
+    min-height: var(--notification-height);
+    overflow: hidden;
+  }
+  .br-notification .br-tab {
+    --tab-size: var(--tab-small);
+  }
+  .br-notification .br-tab .tab-content {
+    --notification-height: calc(100vh - 86px);
+    height: var(--notification-height);
+    overflow-x: auto;
+  }
+  .br-notification .status {
+    left: var(--spacing-scale-half) !important;
+    top: var(--spacing-scale-2x) !important;
+  }
+  .br-notification.close {
+    display: none;
+  }
+}
+@media (max-width: 992px) {
+  .br-notification.close {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  .br-notification div.close {
+    display: none;
+  }
+}
+.br-notification .notification-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--notification-padding);
+}
+.br-notification .notification-header *:last-child {
+  margin-bottom: 0;
+}
+.br-notification .notification-body .br-tab .tab-item {
+  padding: 0;
+}
+.br-notification .notification-body .br-tab .tab-content {
+  overflow-y: auto;
+}
+.br-notification .notification-body .br-tab .tab-content .br-item {
+  --interactive-rgb: var(--rgb-secondary-08);
+  --item-color: var(--text-color);
+  padding: var(--notification-padding);
+  position: relative;
+  white-space: normal;
+}
+.br-notification .notification-body .br-tab .tab-content .br-item .status {
+  left: var(--spacing-scale-base);
+  position: absolute;
+  top: var(--spacing-scale-3x);
+}
+.br-notification .notification-body .br-tab .tab-content .br-item span {
+  display: block;
+}
+
+/*# sourceMappingURL=notification.css.map*/

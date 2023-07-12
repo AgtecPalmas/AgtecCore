@@ -1,0 +1,67 @@
+name: $AppPackage$
+description: $AppDescription$
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+# TODO Verificar as versões do pacotes.
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: 1.0.4
+  dio: 4.0.6 #Lib para acesso HTTP para consumir APIRest.
+  intl: 0.17.0 #Lib para formatação de dados como Date e DateTime.
+  date_format: 2.0.5 #Lib para formatação trabalhando apenas com Data.
+  url_launcher: 6.0.20 #Lib para invocar intents dos devices como por exemplo envio de email.
+  transparent_image: 2.0.0 #Lib que disponibiliza uma imagem transparente, usada para auxiliar o download de imagens da web funcionando como placeholder.
+  cached_network_image: 3.2.0 #Lib para realizar cache das imagens baixadas da WEB.
+  connectivity_plus: 2.2.1 #Lib para auxiliar a checagem de conectividade do device.
+  google_sign_in: 5.2.4 #Lib para autenticação com contas Google.
+  image_picker: 0.8.4+11 #Lib para realizar crop e rotação em imagens.
+  shared_preferences: 2.0.13 #Lib para acessar o SharedPreferences do device.
+  location: 4.4.0 #Lib para localização do usuário e utilização de mapa se necessário.
+  flutter_keyboard_visibility: 5.2.0
+  path_provider: 2.0.9
+  webview_flutter: 3.0.1
+  flutter_launcher_icons: 0.9.2 #Lib para gerar o ícone do aplicativo para quando for submetido para as lojas.
+  font_awesome_flutter: 9.0.0 #Lib para utilização dos ícones do site Font Awesome.
+  flutter_signin_button: 2.0.0
+  sembast: 3.2.0 #Banco de dados NoSQL
+  flutter_screenutil: 5.5.3+2 #Lib para auxiliar no cálculo de densidade da tela
+  top_snackbar_flutter: ^3.0.0+1
+  loading_animation_widget: ^1.2.0+4
+
+  # Libs do Cubit
+  equatable: 2.0.3
+  bloc: 8.0.3
+  flutter_bloc: 8.0.1
+
+  # Firebase
+  firebase_messaging: 12.0.1 #Lib para recebimento de mensagens push.
+  firebase_auth: 3.6.2 #Lib para autenticação com contas Firebase.
+  firebase_core: 1.20.1 #lib para trabalhar com o Firebase
+  firebase_crashlytics: 2.8.7 #Lib para capturar os erros da aplicação.
+
+  # Sentry Plataforma de monitoramento de bugs
+  sentry_flutter: 6.8.0
+
+  # Pacote para auxiliar a geração de logs no terminal
+  logger: ^1.1.0
+
+  flutter_localizations: #Lib para trabalhar com internacionalização dos textos fixos da app. Ex:. Label de um button
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Arquivos de idioma em formato Json utilizados na internacionalização da APP
+    - lang/en.json
+    - lang/pt.json

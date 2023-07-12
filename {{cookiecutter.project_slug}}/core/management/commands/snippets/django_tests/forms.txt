@@ -1,0 +1,19 @@
+class Test$ModelClass$Forms:
+    """Testes para os formulários de $ModelClass$"""
+
+    @pytest.fixture
+    def init(self, db):
+        self.faker = Faker()
+        # TODO - Adicione campos
+        self.valid_data = {}
+        self.invalid_data = {}
+
+    def test_$model_name$_create(self, init):
+        """Teste para criação de $ModelClass$"""
+        form = $ModelClass$Form(data=self.valid_data)
+        assert form.is_valid() is True
+
+    def teste_$model_name$_form_invalid(self, init):
+        """Teste para formulário inválido de $ModelClass$"""
+        form = $ModelClass$Form(data=self.invalid_data)
+        assert form.is_valid() is False

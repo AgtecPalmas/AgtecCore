@@ -1,0 +1,149 @@
+.br-tab {
+  --tab-padding: var(--spacing-scale-3x);
+  --tab-size: var(--tab-medium);
+  --tab-large: var(--spacing-scale-3x);
+  --tab-medium: var(--spacing-scale-2x);
+  --tab-small: var(--spacing-scale-base);
+}
+.br-tab .tab-nav {
+  overflow-x: auto;
+  width: 100%;
+}
+.br-tab .tab-nav::-webkit-scrollbar {
+  height: var(--spacing-scale-base);
+  width: var(--spacing-scale-base);
+}
+.br-tab .tab-nav::-webkit-scrollbar-track {
+  background: var(--gray-10);
+}
+.br-tab .tab-nav::-webkit-scrollbar-thumb {
+  background: var(--gray-30);
+}
+.br-tab .tab-nav:hover::-webkit-scrollbar-thumb {
+  background: var(--gray-40);
+}
+@media (max-width: 991px) {
+  .br-tab .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+  }
+  .br-tab .tab-nav::-webkit-scrollbar {
+    height: var(--spacing-scale-base);
+    width: var(--spacing-scale-base);
+  }
+  .br-tab .tab-nav::-webkit-scrollbar-track {
+    background: var(--gray-10);
+  }
+  .br-tab .tab-nav::-webkit-scrollbar-thumb {
+    background: var(--gray-30);
+  }
+  .br-tab .tab-nav:hover::-webkit-scrollbar-thumb {
+    background: var(--gray-40);
+  }
+}
+.br-tab .tab-nav ul {
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
+  width: 100%;
+}
+.br-tab .tab-item {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  white-space: nowrap;
+}
+.br-tab .tab-item button,
+.br-tab .tab-item a {
+  --focus-offset: calc(var(--spacing-scale-half) * -1);
+  background-color: transparent;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  color: var(--color);
+  display: inline-block;
+  font-size: var(--font-size-scale-up-02);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  padding: var(--tab-size) var(--tab-padding);
+  text-align: center;
+  white-space: nowrap;
+}
+.br-tab .tab-item button:focus,
+.br-tab .tab-item a:focus {
+  outline: none;
+}
+.br-tab .tab-item button.focus-visible, .br-tab .tab-item button:focus-visible,
+.br-tab .tab-item a.focus-visible,
+.br-tab .tab-item a:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
+.br-tab .tab-item button:not(:disabled):hover,
+.br-tab .tab-item a:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
+}
+.br-tab .tab-item:first-child {
+  padding-left: 0;
+}
+.br-tab .tab-item:last-child {
+  padding-right: 0;
+}
+.br-tab .tab-item.is-active button, .br-tab .tab-item.active button {
+  border-bottom: 4px solid var(--active);
+  color: var(--active);
+}
+.br-tab .tab-item.is-active .results, .br-tab .tab-item.active .results {
+  --font-weight: var(--font-weight-semi-bold);
+  color: var(--active);
+}
+.br-tab .results {
+  display: flex;
+  font-weight: var(--font-weight);
+  justify-content: center;
+  margin-top: var(--spacing-scale-2x);
+  position: absolute;
+  top: 100%;
+}
+.br-tab[data-counter=true] .tab-nav ul {
+  margin-bottom: calc(var(--spacing-scale-2x) + var(--font-size-scale-up-02) + var(--spacing-scale-base));
+}
+.br-tab .tab-content .tab-panel {
+  color: var(--text-color);
+  display: none;
+}
+.br-tab .tab-content .tab-panel.is-active, .br-tab .tab-content .tab-panel.active {
+  display: block;
+}
+.br-tab.small, .br-tab[small], .br-tab.is-small {
+  --tab-size: var(--tab-small);
+}
+.br-tab.medium, .br-tab[medium], .br-tab.is-medium {
+  --tab-size: var(--tab-medium);
+}
+.br-tab.large, .br-tab[large], .br-tab.is-large {
+  --tab-size: var(--tab-large);
+}
+.br-tab.inverted, .br-tab.dark-mode {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-tab.inverted .tab-item.active button, .br-tab.dark-mode .tab-item.active button {
+  border-bottom-color: var(--background-light);
+  color: var(--color);
+}
+
+/*# sourceMappingURL=tab.css.map*/

@@ -1,0 +1,29 @@
+{
+  "project_name": "Projeto Base",
+  "project_slug": "{{ cookiecutter.project_name|slugify|replace('-', '_') }}",
+  "main_app": "{{ cookiecutter.project_name|slugify|replace('-', '_') }}",
+  "client_name": "Nome do Cliente",
+  "docker_port": "8000",
+  "postgre_port": "5432",
+  "created_date_project": "{% now 'utc', '%d/%m/%Y' %}",
+  "description": "Projeto base para os novos projetos",
+  "author_name": "Informe seu nome",
+  "domain_name": "palmas.to.gov.br",
+  "email": "agtec@palmas.to.gov.br",
+  "django_version": "4.2",
+  "python_version": "3.10",
+  "postgresql_version": "14.2",
+  "_copy_without_render": [
+    "core/**",
+    "usuario/**",
+    "atendimento/**",
+    "configuracao_core/**",
+    "scanapi_exemplo.yaml",
+    "docs/**",
+    "contrib/**",
+    ".env.example",
+    ".flake8",
+    ".coveragerc",
+    ".prospector.yaml"
+  ]
+}

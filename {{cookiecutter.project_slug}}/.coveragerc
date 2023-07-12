@@ -1,0 +1,9 @@
+[run]
+omit =
+    */.venv/*
+    */venv/*
+    */.env/*
+    */env/*
+    base/*
+    core/*
+    */migrations/*

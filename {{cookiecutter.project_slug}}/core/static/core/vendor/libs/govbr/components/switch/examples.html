@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Switch</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <p class="h4 mt-5">Switch padrão</p>
+          <div class="br-switch">
+            <input id="switch-default" type="checkbox" checked="checked"/>
+            <label for="switch-default">Label</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Switch Desabilitado</p>
+          <div class="br-switch disabled">
+            <input id="switch-disabled" type="checkbox" checked="checked" disabled="disabled"/>
+            <label for="switch-disabled">switch desativado</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="h4 mt-5">Densidade Alta</p>
+          <div class="br-switch small mr-5">
+            <input id="switch-small" type="checkbox" checked="checked"/>
+            <label for="switch-small">Densidade Alta</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Densidade Média (Padrão)</p>
+          <div class="br-switch medium">
+            <input id="switch-medium" type="checkbox" checked="checked"/>
+            <label for="switch-medium">Densidade Média (Padrão)</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Densidade Baixa</p>
+          <div class="br-switch large mr-5">
+            <input id="switch-large" type="checkbox" checked="checked"/>
+            <label for="switch-large">Densidade Baixa</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="h4 mt-5">Switch Com Rótulo(Ligado/Desligado)</p>
+          <div class="br-switch medium">
+            <input id="switch-label-01" type="checkbox" checked="checked"/>
+            <label for="switch-label-01">Label do switch</label>
+            <div class="switch-data" data-enabled="Ligado" data-disabled="Desligado"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Switch Com Rótulo(Concordo/Discordo)</p>
+          <div class="br-switch medium">
+            <input id="switch-label-02" type="checkbox" checked="checked"/>
+            <label for="switch-label-02">Label do switch</label>
+            <div class="switch-data" data-enabled="Concordo" data-disabled="Discordo"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="h4 mt-5">Label Alinhado à Esquerda</p>
+          <div class="br-switch mr-5">
+            <input id="switch-left" type="checkbox" checked="checked"/>
+            <label for="switch-left">Label na esquerda</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Label Alinhado à Direita</p>
+          <div class="br-switch right mr-5">
+            <input id="switch-right" type="checkbox" checked="checked"/>
+            <label for="switch-right">Label na direita</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p class="h4 mt-5">Label Alinhado ao Topo</p>
+          <div class="br-switch top mr-5">
+            <input id="switch-top" type="checkbox" checked="checked"/>
+            <label for="switch-top">Label no topo</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="h4 mt-5">Switch Com Ícone</p>
+          <div class="br-switch icon">
+            <input id="switch-icon" type="checkbox" checked="checked"/>
+            <label for="switch-icon">Label</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

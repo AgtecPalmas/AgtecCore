@@ -1,0 +1,6 @@
+
+class $ModelClass$Form(BaseForm):
+    """ Form padrão para o model $ModelClass$ """
+    class Meta:
+        exclude = ["deleted", "enabled"]
+        model = $ModelClass$

@@ -1,0 +1,8 @@
+class FormValidators {
+  static String? validatorRequired(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Campo obrigatório';
+    }
+    return null;
+  }
+}

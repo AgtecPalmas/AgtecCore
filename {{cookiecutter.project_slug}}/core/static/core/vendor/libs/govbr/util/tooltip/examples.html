@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Tooltip</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="container-lg">
+        <hr/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="br-list condensed">
+              <div class="header">
+                <div class="title">Tooltip</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Tipo:</strong>texto auxiliar</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Comportamento:</strong>mouseOver</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Permanência:</strong>por evento mouseOver</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Direção:</strong>em cima, à esquerda, à direita e em baixo</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Semântica:</strong>informação, sucesso, erro e advertência</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 text-center">
+            <div class="mb-3"><a class="h5" href="javascript:void(0);" data-tooltip-target="#sample-info-top">Informação</a>
+              <div class="br-tooltip utilities" id="sample-info-top" role="tooltip" data-toggle="tooltip" info="info" place="top"><span class="text" role="tooltip">Fulano de Tal da Silva</span><span class="subtext">Diretor Presidente</span>
+              </div>
+            </div>
+            <div class="mb-3"><a class="h5" href="javascript:void(0);" data-tooltip-target="#sample-success-left">Sucesso</a>
+              <div class="br-tooltip utilities" id="sample-success-left" role="tooltip" data-toggle="tooltip" success="success" place="left"><span class="text" role="tooltip">Incluído com Sucesso!</span><span class="subtext">Protocolo 000.22-11</span>
+              </div>
+            </div>
+            <div class="mb-3"><a class="h5" href="javascript:void(0);" data-tooltip-target="#sample-erro-right">Erro</a>
+              <div class="br-tooltip utilities" id="sample-erro-right" role="tooltip" data-toggle="tooltip" error="error" place="right"><span class="text" role="tooltip">Não foi possível logar!</span><span class="subtext">Verifique seus dados</span>
+              </div>
+            </div>
+            <div class="mb-3"><a class="h5" href="javascript:void(0);" data-tooltip-target="#sample-warning-bottom">Advertência</a>
+              <div class="br-tooltip utilities" id="sample-warning-bottom" role="tooltip" data-toggle="tooltip" warning="warning" place="bottom"><span class="text" role="tooltip">O Caps Lock está ligadoo!</span><span class="subtext">Desabilite antes de digitar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="br-list condensed">
+              <div class="header">
+                <div class="title">Tooltip</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Tipo:</strong>texto simples</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Comportamento:</strong>mouseOver</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Permanência:</strong>por evento mouseOver</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Direção:</strong>padrão (em cima)</div>
+              </div>
+              <div class="br-item">
+                <div class="content"><strong>Semântica:</strong>padrão (informação)</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 text-center"><a href="javascript:void(0);" data-tooltip-text="Texto de Informação!"><img src="https://picsum.photos/50" alt="Avatar"/></a></div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

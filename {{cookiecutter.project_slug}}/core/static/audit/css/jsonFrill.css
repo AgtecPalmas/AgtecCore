@@ -1,0 +1,129 @@
+/*!
+ * CSS for jQuery jsonFrill plugin v0.1
+ * https://github.com/sparuvu/jsonFrill
+ *
+ * Released under the MIT license
+ * https://raw.github.com/sparuvu/jsonFrill/master/LICENSE
+ *
+ * Date: 2014-1-9
+ */
+
+
+#jf-formattedJSON {
+  cursor: default;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+#jf-formattedJSON .jf-open-brace, #jf-formattedJSON .jf-close-brace {
+  font-weight: normal;
+  font-family: "helvetica neue", sans-serif;
+}
+
+.jf-close-brace {
+  padding-left: 2px;
+}
+
+.jf-string {
+  color: #C6B22B;
+}
+
+.jf-number {
+  color: #5C8A49;
+}
+
+.jf-date {
+  color: #CD5665;
+}
+
+.jf-boolean {
+  color: #CC6218;
+}
+
+#jf-formattedJSON .jf-collapsible-title .jf-key, #jf-formattedJSON .jf-parent-brace{
+  cursor: pointer;
+}
+
+.jf-collapsible-title .jf-key:hover, .jf-parent-brace:hover {
+  font-weight: bold;
+  background-color: #ECECEC;
+  padding: 2px;
+  border-radius: 4px;
+  border-color: transparent;
+}
+
+.jf-indents {
+  color: #444943;
+}
+
+.jf-collapsible {
+  margin-top: 2px;
+}
+
+.jf-hide {
+  display: none;
+}
+
+.jf-ellipses {
+  color: #AC382D;
+}
+
+.jf-highlight {
+  background-color:#EBF0FB;
+  border-radius: 5px;
+}
+
+
+.jf-prop span {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.jf-value {
+  word-wrap: break-word;
+  max-width: 550px;
+}
+
+.jf-collapsible-title .jf-key:before {
+ content: "+";
+}
+
+.jf-collapsible-title .jf-collapse:before {
+ content: "-";
+}
+
+.jf-collapsible-title .jf-collapse:before, .jf-collapsible-title .jf-key:before {
+    color: #8A008B;
+    font-weight: bold;
+    border: 1px solid #444943;
+    margin-right: 5px;
+    border-radius: 2px;
+    font-size: 8px;
+    padding: 1px;
+    display: inline-block;
+    line-height: 5px;
+}
+
+#jf-toolbar{
+  margin-bottom: 5px;
+  background-color: #C3CD88;
+  display: inline-block;
+  border: 2px solid #000;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+#jf-expand-all, #jf-collapse-all{
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  font-size: 10px;
+}
+
+#jf-collapse-all {
+  border-right: 1px solid #000;
+}
+
+#jf-expand-all {
+  padding-left: 10px;
+}

@@ -1,0 +1,7 @@
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
+from .serializers import $ModelName$Serializer, $ModelName$GETSerializer
+
+from $app_name$.models import $ModelName$

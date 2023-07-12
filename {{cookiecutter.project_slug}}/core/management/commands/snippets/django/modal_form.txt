@@ -1,0 +1,74 @@
+{% if form.$field_name$.field.queryset.model|has_add_permission:request %}
+    {# MODAL $ModelName$ #}
+    <div class="modal fade"
+         id="form$ModelName$Modal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Adicionar $ModelName$</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="fas fa-times"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post"
+                          id="form-$model_name$"
+                          novalidate
+                          class="needs-validation was-validated">
+                        {% csrf_token %}
+                        {% for hidden in form_$model_name$.hidden_fields %}{{ hidden }}{% endfor %}
+                        {% for field in form_$model_name$.visible_fields %}
+                            <div class="form-group">
+                                {% if field.field.widget.input_type == 'checkbox' %}
+                                    <div class="br-switch icon top mr-5">{{ field }} {{ field.label_tag }}</div>
+                                {% else %}
+                                    {{ field.label_tag }} {{ field }}
+                                {% endif %}
+                                {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+                                {% if field.field.required %}<div class="invalid-feedback">Campo Obrigatorio.</div>{% endif %}
+                                {% if field.errors %}{{ field.errors }}{% endif %}
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="modal-footer flex-buttons-end gap-small">
+                    <div>
+                        <button type="button" class="br-button block" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                    <div>
+                        <button type="button" class="br-button primary block" id="btn-gravar-$model_name$">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $("#btn-gravar-$model_name$").on("click", function (event) {
+        event.preventDefault();
+        var url = window.location.href;
+        $.ajax({
+            url: '/$app_name$/api/v1/$model_name$/',
+            method: 'POST',
+            data: $("#form-$model_name$").serialize(),
+            dataType: 'json',
+            success: function (data){
+                // Adicionando o item retornado no select.
+                $("#id_$field_name$").load( url + " #id_$field_name$ option" );
+                // Ocultando o form.
+                $("#form$ModelName$Modal").hide();
+                $(".modal-backdrop").hide();
+                $("body").removeClass("modal-open");
+                //Limpar o form do modal
+                $('#form-$model_name$').trigger("reset");
+            },
+            error: function(error){
+                console.log(error);
+            }
+        })
+    });
+    </script>
+{% endif %}

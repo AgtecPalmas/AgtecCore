@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div id="content_restore_page_app" class="row">
+    <div id="restore_card" class="col-md-12">
+        <div class="card">
+            <div class="card-header m-0 p-0">
+                {% block titlerestore_app %}{% endblock titlerestore_app %}
+            </div>
+            <div class="card-body">
+                {% block restore_app %}{% endblock restore_app %}
+            </div>
+            <div class="card-footer">
+                <span class="h6">
+                    Atenção, itens relacionados podem não ser restaurados.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

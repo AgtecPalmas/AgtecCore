@@ -1,0 +1,43 @@
+{% load base %}
+{% load static %}
+<footer class="br-footer pt-4">
+    <div class="container d-flex flex-md-row flex-column gap-large align-items-center justify-content-center">
+        {% for imagem in imagens_sistema.footer %}
+            <div class="w-100 text-center">
+                <img height="80vh"
+                     width="auto"
+                     src="{{ imagem.imagem }}"
+                     alt="{{ imagem.titulo }}"
+                     title="{{ imagem.titulo }}" />
+            </div>
+        {% endfor %}
+        {% if social_media %}
+            <div class="w-100 text-center">
+                <div class="d-flex gap-small flex-wrap justify-content-center">
+                    {% for rede_social in social_media %}
+                        <div>
+                            <a href="{{ rede_social.link }}"
+                               target="_blank"
+                               class="br-button"
+                               title="{{ rede_social.nome }}">
+                                <i class="{{ rede_social.icone }}"></i>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <span class="br-divider my-4"></span>
+    <div class="container-lg pb-1 text-center">
+        <div class="pb-3">
+            <img width="auto"
+                 height="80vh"
+                 src="{{ imagens_sistema.footer_principal.imagem }}"
+                 alt="{{ imagens_sistema.footer_principal.titulo }}"
+                 title="{{ imagens_sistema.footer_principal.titulo }}" />
+        </div>
+        <p class="small m-0">© {% now "Y" %} {{ copy_right }}</p>
+        <p class="small">Todos os direitos reservados</p>
+    </div>
+</footer>

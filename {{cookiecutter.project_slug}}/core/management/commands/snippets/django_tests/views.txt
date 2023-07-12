@@ -1,0 +1,83 @@
+class Test$ModelClass$Views:
+    """Teste para as views do model $ModelClass$"""
+
+    @pytest.fixture
+    def init(self, db):
+        self.faker = Faker("pt_BR")
+        self.factory = RequestFactory()
+        self.user = User.objects.create_superuser(
+            username="teste", email="teste@email.com.br", password="senha_padrao_deve_ser_mudada"
+        )
+        self.$model_name$ = baker.make($ModelClass$)
+
+    def test_$model_name$_list(self, init):
+        """Teste para a view list."""
+        url = reverse("$app_name$:$model_name$-list")
+        request = self.factory.get(url)
+        request.user = self.user
+        response = $ModelClass$ListView.as_view()(request)
+        assert response.status_code == 200
+
+    def test_$model_name$_detail(self, init):
+        """Teste para a view detail."""
+        url = reverse("$app_name$:$model_name$-detail", args={self.$model_name$.pk})
+        request = self.factory.get(url)
+        request.user = self.user
+        response = $ModelClass$DetailView.as_view()(request, pk=self.$model_name$.pk)
+        assert response.status_code == 200
+
+    def test_$model_name$_create(self, init):
+        """Teste para a view create."""
+        url = reverse("$app_name$:$model_name$-create")
+        request = self.factory.get(url)
+        request.user = self.user
+        response = $ModelClass$CreateView.as_view()(request)
+        assert response.status_code == 200
+
+    def test_$model_name$_create_post(self, init):
+        """Teste para a view create usando Post."""
+
+        # TODO - Adicione campos
+        data = {}
+        url = reverse("$app_name$:$model_name$-create")
+        request = self.factory.post(url)
+        request.user = self.user
+        response = $ModelClass$CreateView.as_view()(request, data=data)
+        assert response.status_code == 200
+
+    def test_$model_name$_update(self, init):
+        """Teste para a view update."""
+        url = reverse("$app_name$:$model_name$-update", args={self.$model_name$.pk})
+        request = self.factory.put(url)
+        request.user = self.user
+        response = $ModelClass$UpdateView.as_view()(request, pk=self.$model_name$.pk)
+        assert response.status_code == 200
+
+    def test_$model_name$_delete(self, init):
+        """Teste para a view delete."""
+        url = reverse("$app_name$:$model_name$-delete", args={self.$model_name$.pk})
+        request = self.factory.delete(url)
+        setattr(request, "session", "session")
+        messages = FallbackStorage(request)
+        setattr(request, "_messages", messages)
+        request.user = self.user
+        response = $ModelClass$DeleteView.as_view()(request, pk=self.$model_name$.pk)
+        mensagem = list(messages)[0].extra_tags
+        assert mensagem == "success"
+        assert response.status_code == 302
+
+    def test_$model_name$_queryset_superuser_status(self, init, client):
+        """Retornar o status code 200 ao verificar itens cadastrados a partir do superuser logado"""
+        client.force_login(self.user)
+        request = self.factory.get(reverse("$app_name$:$model_name$-list"))
+        request.user = self.user
+        response = $ModelClass$ListView.as_view()(request)
+        assert response.status_code == 200
+
+    def test_$model_name$_queryset_superuser(self, init, client):
+        """Retornar o status code 200 ao verificar itens cadastrados a partir do superuser logado"""
+        client.force_login(self.user)
+        request = self.factory.get(reverse("$app_name$:$model_name$-list"))
+        request.user = self.user
+        response = $ModelClass$ListView.as_view()(request)
+        assert len(response.context_data["object_list"]) == 1

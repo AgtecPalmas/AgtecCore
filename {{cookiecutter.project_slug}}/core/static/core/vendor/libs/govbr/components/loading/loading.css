@@ -1,0 +1,590 @@
+.br-loading {
+  --loading-indetermined-color: var(--interactive);
+  --loading-indetermined-diameter-md: 44px;
+  --loading-indetermined-diameter-sm: 24px;
+  --loading-diameter: 84px;
+  background-color: var(--color-secondary-04);
+  border-radius: 50%;
+  height: var(--loading-diameter);
+  width: var(--loading-diameter);
+  z-index: var(--z-index-layer-4);
+}
+.br-loading-mask, .br-loading-fill {
+  backface-visibility: hidden;
+  border-radius: 50%;
+  clip: rect(0, 84px, 84px, 42px);
+  height: 84px;
+  overflow: hidden;
+  position: absolute;
+  width: 84px;
+}
+.br-loading-fill {
+  background: var(--interactive);
+  clip: rect(0, 42px, 84px, 0);
+}
+.br-loading::after {
+  background: var(--color-secondary-01);
+  border-radius: 50%;
+  color: var(--interactive);
+  content: attr(data-progress) "%";
+  font-size: var(--font-size-scale-up-02);
+  font-weight: var(--font-weight-semi-bold);
+  height: 74px;
+  line-height: 74px;
+  margin: 5px;
+  position: absolute;
+  text-align: center;
+  width: 74px;
+}
+@keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+}
+.br-loading[data-progress="1"] .br-loading-mask.full,
+.br-loading[data-progress="1"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(1.8deg);
+}
+.br-loading[data-progress="2"] .br-loading-mask.full,
+.br-loading[data-progress="2"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(3.6deg);
+}
+.br-loading[data-progress="3"] .br-loading-mask.full,
+.br-loading[data-progress="3"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(5.4deg);
+}
+.br-loading[data-progress="4"] .br-loading-mask.full,
+.br-loading[data-progress="4"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(7.2deg);
+}
+.br-loading[data-progress="5"] .br-loading-mask.full,
+.br-loading[data-progress="5"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(9deg);
+}
+.br-loading[data-progress="6"] .br-loading-mask.full,
+.br-loading[data-progress="6"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(10.8deg);
+}
+.br-loading[data-progress="7"] .br-loading-mask.full,
+.br-loading[data-progress="7"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(12.6deg);
+}
+.br-loading[data-progress="8"] .br-loading-mask.full,
+.br-loading[data-progress="8"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(14.4deg);
+}
+.br-loading[data-progress="9"] .br-loading-mask.full,
+.br-loading[data-progress="9"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(16.2deg);
+}
+.br-loading[data-progress="10"] .br-loading-mask.full,
+.br-loading[data-progress="10"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(18deg);
+}
+.br-loading[data-progress="11"] .br-loading-mask.full,
+.br-loading[data-progress="11"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(19.8deg);
+}
+.br-loading[data-progress="12"] .br-loading-mask.full,
+.br-loading[data-progress="12"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(21.6deg);
+}
+.br-loading[data-progress="13"] .br-loading-mask.full,
+.br-loading[data-progress="13"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(23.4deg);
+}
+.br-loading[data-progress="14"] .br-loading-mask.full,
+.br-loading[data-progress="14"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(25.2deg);
+}
+.br-loading[data-progress="15"] .br-loading-mask.full,
+.br-loading[data-progress="15"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(27deg);
+}
+.br-loading[data-progress="16"] .br-loading-mask.full,
+.br-loading[data-progress="16"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(28.8deg);
+}
+.br-loading[data-progress="17"] .br-loading-mask.full,
+.br-loading[data-progress="17"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(30.6deg);
+}
+.br-loading[data-progress="18"] .br-loading-mask.full,
+.br-loading[data-progress="18"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(32.4deg);
+}
+.br-loading[data-progress="19"] .br-loading-mask.full,
+.br-loading[data-progress="19"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(34.2deg);
+}
+.br-loading[data-progress="20"] .br-loading-mask.full,
+.br-loading[data-progress="20"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(36deg);
+}
+.br-loading[data-progress="21"] .br-loading-mask.full,
+.br-loading[data-progress="21"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(37.8deg);
+}
+.br-loading[data-progress="22"] .br-loading-mask.full,
+.br-loading[data-progress="22"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(39.6deg);
+}
+.br-loading[data-progress="23"] .br-loading-mask.full,
+.br-loading[data-progress="23"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(41.4deg);
+}
+.br-loading[data-progress="24"] .br-loading-mask.full,
+.br-loading[data-progress="24"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(43.2deg);
+}
+.br-loading[data-progress="25"] .br-loading-mask.full,
+.br-loading[data-progress="25"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(45deg);
+}
+.br-loading[data-progress="26"] .br-loading-mask.full,
+.br-loading[data-progress="26"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(46.8deg);
+}
+.br-loading[data-progress="27"] .br-loading-mask.full,
+.br-loading[data-progress="27"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(48.6deg);
+}
+.br-loading[data-progress="28"] .br-loading-mask.full,
+.br-loading[data-progress="28"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(50.4deg);
+}
+.br-loading[data-progress="29"] .br-loading-mask.full,
+.br-loading[data-progress="29"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(52.2deg);
+}
+.br-loading[data-progress="30"] .br-loading-mask.full,
+.br-loading[data-progress="30"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(54deg);
+}
+.br-loading[data-progress="31"] .br-loading-mask.full,
+.br-loading[data-progress="31"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(55.8deg);
+}
+.br-loading[data-progress="32"] .br-loading-mask.full,
+.br-loading[data-progress="32"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(57.6deg);
+}
+.br-loading[data-progress="33"] .br-loading-mask.full,
+.br-loading[data-progress="33"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(59.4deg);
+}
+.br-loading[data-progress="34"] .br-loading-mask.full,
+.br-loading[data-progress="34"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(61.2deg);
+}
+.br-loading[data-progress="35"] .br-loading-mask.full,
+.br-loading[data-progress="35"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(63deg);
+}
+.br-loading[data-progress="36"] .br-loading-mask.full,
+.br-loading[data-progress="36"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(64.8deg);
+}
+.br-loading[data-progress="37"] .br-loading-mask.full,
+.br-loading[data-progress="37"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(66.6deg);
+}
+.br-loading[data-progress="38"] .br-loading-mask.full,
+.br-loading[data-progress="38"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(68.4deg);
+}
+.br-loading[data-progress="39"] .br-loading-mask.full,
+.br-loading[data-progress="39"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(70.2deg);
+}
+.br-loading[data-progress="40"] .br-loading-mask.full,
+.br-loading[data-progress="40"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(72deg);
+}
+.br-loading[data-progress="41"] .br-loading-mask.full,
+.br-loading[data-progress="41"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(73.8deg);
+}
+.br-loading[data-progress="42"] .br-loading-mask.full,
+.br-loading[data-progress="42"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(75.6deg);
+}
+.br-loading[data-progress="43"] .br-loading-mask.full,
+.br-loading[data-progress="43"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(77.4deg);
+}
+.br-loading[data-progress="44"] .br-loading-mask.full,
+.br-loading[data-progress="44"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(79.2deg);
+}
+.br-loading[data-progress="45"] .br-loading-mask.full,
+.br-loading[data-progress="45"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(81deg);
+}
+.br-loading[data-progress="46"] .br-loading-mask.full,
+.br-loading[data-progress="46"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(82.8deg);
+}
+.br-loading[data-progress="47"] .br-loading-mask.full,
+.br-loading[data-progress="47"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(84.6deg);
+}
+.br-loading[data-progress="48"] .br-loading-mask.full,
+.br-loading[data-progress="48"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(86.4deg);
+}
+.br-loading[data-progress="49"] .br-loading-mask.full,
+.br-loading[data-progress="49"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(88.2deg);
+}
+.br-loading[data-progress="50"] .br-loading-mask.full,
+.br-loading[data-progress="50"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(90deg);
+}
+.br-loading[data-progress="51"] .br-loading-mask.full,
+.br-loading[data-progress="51"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(91.8deg);
+}
+.br-loading[data-progress="52"] .br-loading-mask.full,
+.br-loading[data-progress="52"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(93.6deg);
+}
+.br-loading[data-progress="53"] .br-loading-mask.full,
+.br-loading[data-progress="53"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(95.4deg);
+}
+.br-loading[data-progress="54"] .br-loading-mask.full,
+.br-loading[data-progress="54"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(97.2deg);
+}
+.br-loading[data-progress="55"] .br-loading-mask.full,
+.br-loading[data-progress="55"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(99deg);
+}
+.br-loading[data-progress="56"] .br-loading-mask.full,
+.br-loading[data-progress="56"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(100.8deg);
+}
+.br-loading[data-progress="57"] .br-loading-mask.full,
+.br-loading[data-progress="57"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(102.6deg);
+}
+.br-loading[data-progress="58"] .br-loading-mask.full,
+.br-loading[data-progress="58"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(104.4deg);
+}
+.br-loading[data-progress="59"] .br-loading-mask.full,
+.br-loading[data-progress="59"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(106.2deg);
+}
+.br-loading[data-progress="60"] .br-loading-mask.full,
+.br-loading[data-progress="60"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(108deg);
+}
+.br-loading[data-progress="61"] .br-loading-mask.full,
+.br-loading[data-progress="61"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(109.8deg);
+}
+.br-loading[data-progress="62"] .br-loading-mask.full,
+.br-loading[data-progress="62"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(111.6deg);
+}
+.br-loading[data-progress="63"] .br-loading-mask.full,
+.br-loading[data-progress="63"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(113.4deg);
+}
+.br-loading[data-progress="64"] .br-loading-mask.full,
+.br-loading[data-progress="64"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(115.2deg);
+}
+.br-loading[data-progress="65"] .br-loading-mask.full,
+.br-loading[data-progress="65"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(117deg);
+}
+.br-loading[data-progress="66"] .br-loading-mask.full,
+.br-loading[data-progress="66"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(118.8deg);
+}
+.br-loading[data-progress="67"] .br-loading-mask.full,
+.br-loading[data-progress="67"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(120.6deg);
+}
+.br-loading[data-progress="68"] .br-loading-mask.full,
+.br-loading[data-progress="68"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(122.4deg);
+}
+.br-loading[data-progress="69"] .br-loading-mask.full,
+.br-loading[data-progress="69"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(124.2deg);
+}
+.br-loading[data-progress="70"] .br-loading-mask.full,
+.br-loading[data-progress="70"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(126deg);
+}
+.br-loading[data-progress="71"] .br-loading-mask.full,
+.br-loading[data-progress="71"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(127.8deg);
+}
+.br-loading[data-progress="72"] .br-loading-mask.full,
+.br-loading[data-progress="72"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(129.6deg);
+}
+.br-loading[data-progress="73"] .br-loading-mask.full,
+.br-loading[data-progress="73"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(131.4deg);
+}
+.br-loading[data-progress="74"] .br-loading-mask.full,
+.br-loading[data-progress="74"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(133.2deg);
+}
+.br-loading[data-progress="75"] .br-loading-mask.full,
+.br-loading[data-progress="75"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(135deg);
+}
+.br-loading[data-progress="76"] .br-loading-mask.full,
+.br-loading[data-progress="76"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(136.8deg);
+}
+.br-loading[data-progress="77"] .br-loading-mask.full,
+.br-loading[data-progress="77"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(138.6deg);
+}
+.br-loading[data-progress="78"] .br-loading-mask.full,
+.br-loading[data-progress="78"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(140.4deg);
+}
+.br-loading[data-progress="79"] .br-loading-mask.full,
+.br-loading[data-progress="79"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(142.2deg);
+}
+.br-loading[data-progress="80"] .br-loading-mask.full,
+.br-loading[data-progress="80"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(144deg);
+}
+.br-loading[data-progress="81"] .br-loading-mask.full,
+.br-loading[data-progress="81"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(145.8deg);
+}
+.br-loading[data-progress="82"] .br-loading-mask.full,
+.br-loading[data-progress="82"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(147.6deg);
+}
+.br-loading[data-progress="83"] .br-loading-mask.full,
+.br-loading[data-progress="83"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(149.4deg);
+}
+.br-loading[data-progress="84"] .br-loading-mask.full,
+.br-loading[data-progress="84"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(151.2deg);
+}
+.br-loading[data-progress="85"] .br-loading-mask.full,
+.br-loading[data-progress="85"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(153deg);
+}
+.br-loading[data-progress="86"] .br-loading-mask.full,
+.br-loading[data-progress="86"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(154.8deg);
+}
+.br-loading[data-progress="87"] .br-loading-mask.full,
+.br-loading[data-progress="87"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(156.6deg);
+}
+.br-loading[data-progress="88"] .br-loading-mask.full,
+.br-loading[data-progress="88"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(158.4deg);
+}
+.br-loading[data-progress="89"] .br-loading-mask.full,
+.br-loading[data-progress="89"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(160.2deg);
+}
+.br-loading[data-progress="90"] .br-loading-mask.full,
+.br-loading[data-progress="90"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(162deg);
+}
+.br-loading[data-progress="91"] .br-loading-mask.full,
+.br-loading[data-progress="91"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(163.8deg);
+}
+.br-loading[data-progress="92"] .br-loading-mask.full,
+.br-loading[data-progress="92"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(165.6deg);
+}
+.br-loading[data-progress="93"] .br-loading-mask.full,
+.br-loading[data-progress="93"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(167.4deg);
+}
+.br-loading[data-progress="94"] .br-loading-mask.full,
+.br-loading[data-progress="94"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(169.2deg);
+}
+.br-loading[data-progress="95"] .br-loading-mask.full,
+.br-loading[data-progress="95"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(171deg);
+}
+.br-loading[data-progress="96"] .br-loading-mask.full,
+.br-loading[data-progress="96"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(172.8deg);
+}
+.br-loading[data-progress="97"] .br-loading-mask.full,
+.br-loading[data-progress="97"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(174.6deg);
+}
+.br-loading[data-progress="98"] .br-loading-mask.full,
+.br-loading[data-progress="98"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(176.4deg);
+}
+.br-loading[data-progress="99"] .br-loading-mask.full,
+.br-loading[data-progress="99"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(178.2deg);
+}
+.br-loading[data-progress="100"] .br-loading-mask.full,
+.br-loading[data-progress="100"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(180deg);
+}
+
+*.is-loading, *.loading, *[loading] {
+  --loading-indetermined-color: var(--interactive);
+  --loading-indetermined-diameter-md: 44px;
+  --loading-indetermined-diameter-sm: 24px;
+  color: transparent !important;
+  min-height: 32px;
+  pointer-events: none;
+  position: relative;
+  z-index: var(--z-index-layer-4);
+}
+*.is-loading::after, *.loading::after, *[loading]::after {
+  animation: spinAround 1.3s infinite linear;
+  border: 2px solid var(--loading-indetermined-color);
+  border-radius: 50%;
+  border-right-color: transparent;
+  content: "";
+  display: block;
+  height: var(--loading-indetermined-diameter-sm);
+  left: calc(50% - 12px);
+  position: absolute;
+  top: calc(50% - 12px);
+  width: var(--loading-indetermined-diameter-sm);
+}
+*.is-loading.primary::after, *.loading.primary::after, *[loading].primary::after {
+  border-bottom-color: var(--color-secondary-01);
+  border-left-color: var(--color-secondary-01);
+  border-top-color: var(--color-secondary-01);
+}
+*.is-loading.medium::after, *.is-loading[md]::after, *.loading.medium::after, *.loading[md]::after, *[loading].medium::after, *[loading][md]::after {
+  border-width: 4px;
+  height: var(--loading-indetermined-diameter-md);
+  left: calc(50% - 22px);
+  top: calc(50% - 22px);
+  width: var(--loading-indetermined-diameter-md);
+}
+
+@keyframes spinAround {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+/*# sourceMappingURL=loading.css.map*/

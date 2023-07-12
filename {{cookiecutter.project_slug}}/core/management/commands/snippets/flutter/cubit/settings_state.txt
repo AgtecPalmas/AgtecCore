@@ -1,0 +1,36 @@
+
+
+part of 'cubit.dart';
+
+abstract class SettingsState extends Equatable {
+  const SettingsState();
+}
+
+class SettingsInitial extends SettingsState {
+  @override
+  List<Object> get props => [];
+}
+
+class SettingsProcessState extends SettingsState {
+  @override
+  List<Object> get props => [];
+}
+
+class SettingsSuccessState extends SettingsState {
+  final String successMessage;
+  SettingsSuccessState({
+    required this.successMessage,
+  });
+
+  @override
+  List<Object> get props => [];
+}
+
+class SettingsErrorState extends SettingsState {
+  final String error;
+
+  SettingsErrorState(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

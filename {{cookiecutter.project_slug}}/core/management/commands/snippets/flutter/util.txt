@@ -1,0 +1,298 @@
+/// Classe contendo método auxiliares comportilhados por
+/// toda a APP
+/// #FileLocked
+
+import 'dart:math';
+import 'dart:developer' as dev;
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+
+import 'config.dart';
+
+class Process {
+  static Process? _instance;
+
+  Process._internal() {
+    _instance = this;
+  }
+
+  factory Process() => _instance ?? Process._internal();
+
+  static bool processing = true;
+  static bool finishedSuccessfully = true;
+  static bool isDioError = false;
+  static int statusCode = 0;
+  static String resultMessage = "";
+  static String friendlyMessage = 'Ocorreu um erro, favor tentar novamente.';
+  static String httpHeader = "";
+  static String httpData = "";
+  static String resultException = "";
+  static String requestStr = "";
+
+  Process.finishSuccess(String message, {
+    int status=0, 
+    String data="", 
+    String header="",
+  }) {
+    finishedSuccessfully = true;
+    resultMessage = message;
+    statusCode = status;
+  }
+
+  Process.finishError(
+    String message,
+    String exception, {
+    int status=0,
+    String data="",
+    String header="",
+    String request="",
+    bool dioError = false,
+  }) {
+    finishedSuccessfully = false;
+    resultMessage = message;
+    httpHeader = header;
+    httpData = data;
+    statusCode = status;
+    resultException = exception;
+    requestStr = request;
+    isDioError = dioError;
+  }
+
+  static bool get isSuccess {
+    return finishedSuccessfully;
+  }
+
+  @override
+  String toString() {
+    String _result =
+        "===\nProcesso:\nStatusCode -> $statusCode\nException -> $resultException\nError -> $resultMessage\nHttp Data -> $httpData\n Http Header -> $httpHeader\n===";
+    return _result;
+  }
+}
+
+class Util {
+  final _imageDefault =
+      "https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg";
+
+  static String getRandomImage() {
+    final _random = Random();
+    final String _item = images[_random.nextInt(images.length)];
+    return _item;
+  }
+
+  /// Retornando a imagem default
+  static String getDefaultImage() => Util()._imageDefault;
+
+  static List<String> images = [
+    'https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2015/09/09/16/40/ocean-931776_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2018/07/14/15/27/cafe-3537801_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2015/03/26/09/48/chicago-690364_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2014/05/02/23/46/new-york-city-336475_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2013/04/02/13/06/ipanema-beach-99388_960_720.jpg',
+  ];
+
+  /// Método para formatar a data do padrão Americano TimeZone para
+  /// o Brasileiro
+  ///     Params:
+  ///        stringDate = String com a data a ser formatada
+  ///        stringFormat = String com o formato a ser utilizado, padrão "dd/MM/yyyy hh:mm"
+  ///      Return:
+  ///        DateTime
+  ///
+  static String parserDateTimeTimeZoneToBrasilianFormat(String dateTime) {
+    try {
+      String _result = dateTime;
+      List<String> dateTimePart = dateTime.split("T");
+      if (dateTimePart.length == 2) {
+        String datePart = dateTimePart[0];
+        String timePart = dateTimePart[1];
+        datePart =
+            "${datePart.split("-")[2]}/${datePart.split("-")[1]}/${datePart.split("-")[0]}";
+        String? timePartSplit = timePart.split(".").length > 0? timePart.split(".")[0]: null;
+        if (timePartSplit != null) {
+          timePart = "${timePart.split(":")[0]}:${timePart.split(":")[1]}";
+        }
+        _result = "$datePart às $timePart";
+      }
+      return _result;
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      return "";
+    }
+  }
+
+  /// Método para converter uma String em um Date
+  ///     Params:
+  ///        stringDate = String com a data a ser formatada
+  ///        stringFormat = String com o formato a ser utilizado, padrão "dd/MM/yyyy hh:mm"
+  ///      Return:
+  ///        DateTime
+  ///
+  static DateTime? convertStrToDate(String stringDate,
+      {String stringFormat = "dd/MM/yyyy HH:mm"}) {
+    try {
+      final DateFormat format = new DateFormat(stringFormat);
+      final DateTime data = format.parse(stringDate);
+      return data;
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      return null;
+    }
+  }
+
+  /// Método para repartir uma String em Data e Hora
+  ///    Params:
+  ///       dateTime = dynamic com a data a ser repartida
+  ///       returnType String determinando o tipo do retorno
+  ///       dt = List<Data, Hora>
+  ///       d = Data
+  ///       h = Hora
+  ///    Return:
+  ///        List<String> or String
+  ///
+  static dynamic stringDateTimeSplit(dynamic dateTime,
+      {String returnType = "dt"}) {
+    String? _data;
+    String? _hora;
+    try {
+      if (dateTime == null) {
+        return null;
+      }
+      if (dateTime.toString().isEmpty){
+        return null;
+      }
+      if (dateTime.toString() is String) {
+        if (dateTime != null && dateTime.toString().isNotEmpty) {
+          final dataSplit = dateTime.toString().split(" ");
+          _data = dataSplit[0];
+          _hora = dataSplit[1];
+        }
+        switch (returnType) {
+          case "d":
+            return _data;
+          case "t":
+            return _hora;
+          default:
+            return [_data, _hora];
+        }
+      }
+      return null;
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      return null;
+    }
+  }
+
+  /// Método para Converter uma String em um DateTime
+  ///
+  /// Formato da Data 2019-08-23T12:52:46.697982Z
+  /// Formato vindo da API 2019-10-02T10:52:44.823736-03:00
+  ///     return formatDate(DateTime(1989, 2, 1), [yy, '-', MM, '-', d]);
+  ///
+  ///  Params:
+  ///      stringDate = String com a data a ser convertida
+  ///  Return:
+  ///      DateTime
+  ///
+  static DateTime? convertDate(String? stringDate) {
+    try {
+      if (stringDate == null) return null;
+      if (stringDate.isEmpty) return null;
+      // Verificando se o Formato é 2019-08-23T12:52:46.697982Z
+      if (stringDate.contains("T") && stringDate.contains("-")) {
+        return DateTime.parse(stringDate);
+      }
+      if (stringDate.contains("-") &&
+          !stringDate.contains("/") &&
+          !stringDate.contains(":")) {
+        final DateFormat format = DateFormat("yyyy-MM-dd");
+        return format.parse(stringDate);
+      }
+      // Verificando se o Formato é dd/MM/YYYY HH:mm:ss
+      if (stringDate.contains("/") && stringDate.contains(":")) {
+        // Data e Hora passados
+        final DateFormat format = new DateFormat("dd/MM/yyyy HH:mm");
+        return format.parse(stringDate);
+      }
+      if (stringDate.contains("/") && !stringDate.contains(":")) {
+        // Apenas Data passado
+        final DateFormat format = new DateFormat("dd/MM/yyyy");
+        return format.parse(stringDate);
+        // return DateTime.parse("${stringDate}T14Z");
+      }
+      if (!stringDate.contains("/") && stringDate.contains(":")) {
+        // Apenas Hora passado
+        final DateFormat format = new DateFormat("HH:mm");
+        return format.parse(stringDate);
+        // return DateTime.parse("1000-01-01T$stringDate");
+      }
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      return null;
+    }
+  }
+
+  /// Método Estatico para retornar o tamanho livre na tela para
+  ///
+  ///  Parameters:
+  ///      context
+  ///
+  ///  Return:
+  ///      Double
+  static double getUtilAreaScreenHeigth(BuildContext context, {double heightAppBar = 10}) {
+    double _heightUtilArea = 0.0;
+    try {
+      double _height = MediaQuery.of(context).size.height;
+      _height += getHeightSystemBar(context);
+      _height += MediaQuery.of(context).padding.bottom;
+      _height += marginTopCustomAppBar;
+      _heightUtilArea = _height + heightAppBar;
+    } catch (e, s) {
+      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      _heightUtilArea = 0.0;
+    }
+    return _heightUtilArea;
+  }
+
+  /// Método Estatico para retornar o tamanho da tela do device
+  ///
+  ///  Parameters:
+  ///      context
+  ///      fator de proporção
+  ///
+  ///  Return:
+  ///      Double
+  static double getProportionScreenWidth(BuildContext context, double proportion){
+    return MediaQuery.of(context).size.width * proportion;
+  }
+
+  /// Método estático para retornar o tamanho da tela do device
+  ///
+  ///  Parameters:
+  ///      context
+  ///      fator de proporção
+  ///
+  ///  Return:
+  ///      Double
+  ///
+  static double getProportionScreenHeight(
+      BuildContext context, double proportion) {
+    return MediaQuery.of(context).size.height * proportion;
+  }
+
+  /// Método estático para retornar o tamanho da barra do sistema Android / iOS
+  ///
+  /// Parameters:
+  ///     context
+  ///     double incrementHeight: valor adicionar a ser acrescentado a altura
+  ///                             da barra do sistema.
+  ///
+  ///  Return:
+  ///      Double
+  ///
+  static double getHeightSystemBar(BuildContext context,
+      {double incrementHeight = 0.0}) {
+    return MediaQuery.of(context).padding.top + incrementHeight;
+  }
+}

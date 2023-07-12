@@ -1,0 +1,148 @@
+.br-checkbox {
+  --checkbox-padding: var(--spacing-scale-base);
+  --checkbox-size: 24px;
+  display: flex;
+}
+.br-checkbox + .br-checkbox {
+  margin-top: var(--spacing-scale-base);
+}
+.br-checkbox input {
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+}
+.br-checkbox input + label {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 0;
+  min-height: var(--checkbox-size);
+  min-width: var(--checkbox-size);
+  padding-left: calc(var(--spacing-scale-base) + var(--checkbox-size));
+  position: relative;
+}
+.br-checkbox input + label::before {
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  content: "";
+  height: var(--checkbox-size);
+  left: 0;
+  position: absolute;
+  width: var(--checkbox-size);
+}
+.br-checkbox input + label:empty {
+  padding: 0;
+}
+.br-checkbox label {
+  font-weight: var(--font-weight-medium);
+}
+.br-checkbox.hidden-label label {
+  padding-left: calc(var(--checkbox-size) + var(--surface-width-md) * 2);
+  text-indent: -10000px;
+  white-space: nowrap;
+  width: 0;
+}
+.br-checkbox input:checked + label::after {
+  border: solid var(--selected);
+  border-width: 0 3px 3px 0;
+  content: "";
+  height: var(--icon-size-sm);
+  left: 8px;
+  position: absolute;
+  top: 4px;
+  transform: rotate(45deg);
+  width: 8px;
+}
+.br-checkbox input[indeterminate] + label::before {
+  --interactive-rgb: var(--color-rgb);
+  background: var(--selected);
+  border-color: var(--selected);
+}
+.br-checkbox input[indeterminate]:hover:not(:disabled) + label::before {
+  --interactive-rgb: var(--color-dark-rgb);
+}
+.br-checkbox input[indeterminate]:checked + label::after {
+  border-color: var(--background-light);
+  border-width: 0 0 3px;
+  top: 2px;
+  transform: none;
+}
+.br-checkbox.is-invalid input + label::before, .br-checkbox.invalid input + label::before, .br-checkbox[invalid] input + label::before {
+  --border-color: var(--danger);
+}
+.br-checkbox.is-invalid input:focus-visible:checked + label::before,
+.br-checkbox.is-invalid input:focus-visible + label::before, .br-checkbox.is-invalid input.focus-visible:checked + label::before,
+.br-checkbox.is-invalid input.focus-visible + label::before, .br-checkbox.invalid input:focus-visible:checked + label::before,
+.br-checkbox.invalid input:focus-visible + label::before, .br-checkbox.invalid input.focus-visible:checked + label::before,
+.br-checkbox.invalid input.focus-visible + label::before, .br-checkbox[invalid] input:focus-visible:checked + label::before,
+.br-checkbox[invalid] input:focus-visible + label::before, .br-checkbox[invalid] input.focus-visible:checked + label::before,
+.br-checkbox[invalid] input.focus-visible + label::before {
+  --border-color: var(--focus-color);
+}
+.br-checkbox.is-invalid input:checked + label::before, .br-checkbox.invalid input:checked + label::before, .br-checkbox[invalid] input:checked + label::before {
+  --border-color: var(--danger);
+}
+.br-checkbox.is-valid input + label::before, .br-checkbox.valid input + label::before, .br-checkbox[valid] input + label::before {
+  --border-color: var(--success);
+}
+.br-checkbox.is-valid input:focus-visible:checked + label::before,
+.br-checkbox.is-valid input:focus-visible + label::before, .br-checkbox.is-valid input.focus-visible:checked + label::before,
+.br-checkbox.is-valid input.focus-visible + label::before, .br-checkbox.valid input:focus-visible:checked + label::before,
+.br-checkbox.valid input:focus-visible + label::before, .br-checkbox.valid input.focus-visible:checked + label::before,
+.br-checkbox.valid input.focus-visible + label::before, .br-checkbox[valid] input:focus-visible:checked + label::before,
+.br-checkbox[valid] input:focus-visible + label::before, .br-checkbox[valid] input.focus-visible:checked + label::before,
+.br-checkbox[valid] input.focus-visible + label::before {
+  --border-color: var(--focus-color);
+}
+.br-checkbox.is-valid input:checked + label::before, .br-checkbox.valid input:checked + label::before, .br-checkbox[valid] input:checked + label::before {
+  --border-color: var(--success);
+}
+.br-checkbox.is-small input + label, .br-checkbox.small input + label, .br-checkbox[small] input + label {
+  line-height: var(--spacing-scale-2xh);
+  min-height: var(--spacing-scale-2xh);
+}
+.br-checkbox.is-small input + label::before, .br-checkbox.small input + label::before, .br-checkbox[small] input + label::before {
+  height: var(--spacing-scale-2xh);
+  width: var(--spacing-scale-2xh);
+}
+.br-checkbox.is-small input:checked + label::after, .br-checkbox.small input:checked + label::after, .br-checkbox[small] input:checked + label::after {
+  border-width: 0 2px 2px 0;
+  height: var(--icon-size-sm);
+  left: 7px;
+  top: 6px;
+  width: 6px;
+}
+.br-checkbox.is-small input:checked[indeterminate] + label::after, .br-checkbox.small input:checked[indeterminate] + label::after, .br-checkbox[small] input:checked[indeterminate] + label::after {
+  border-color: var(--background-light);
+  border-width: 0 0 3px;
+  top: 2px;
+  transform: none;
+}
+.br-checkbox input:invalid + label::before {
+  --border-color: var(--danger);
+}
+.br-checkbox input:focus-visible:checked + label::before,
+.br-checkbox input:focus-visible + label::before, .br-checkbox input.focus-visible:checked + label::before,
+.br-checkbox input.focus-visible + label::before {
+  border-color: var(--focus) !important;
+  box-shadow: 0 0 0 var(--surface-width-md) var(--focus);
+  outline: none;
+}
+.br-checkbox input:hover:not(:disabled) + label::before {
+  --interactive-rgb: var(--interactive-light-rgb);
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+.br-checkbox:not(.disabled) input:disabled + label {
+  cursor: not-allowed;
+  opacity: var(--disabled);
+}
+.br-checkbox:not(.disabled) input:disabled + label * {
+  pointer-events: none;
+}
+.br-checkbox.inverted,
+.br-checkbox.inverted label, .br-checkbox.dark-mode,
+.br-checkbox.dark-mode label {
+  color: var(--color-dark);
+}
+
+/*# sourceMappingURL=checkbox.css.map*/

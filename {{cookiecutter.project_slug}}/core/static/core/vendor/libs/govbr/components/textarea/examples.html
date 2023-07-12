@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Textarea</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Textarea padrão</p>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="br-textarea">
+            <label for="textarea-id1">Label</label>
+            <textarea id="textarea-id1" placeholder="Exemplo de textarea simples"></textarea>
+            <p class="text-base mt-1">Texto auxiliar ao preenchimento.</p>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Textarea padrão com fundo escuro</p>
+      <div class="p-3 bg-gray-60">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="br-textarea dark-mode">
+              <label for="textarea-dark-id1">Label</label>
+              <textarea id="textarea-dark-id1" placeholder="Exemplo de textarea simples"></textarea>
+              <p class="text-base mt-1">Texto auxiliar ao preenchimento.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Textarea padrão com label à esquerda</p>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="br-textarea">
+            <div class="row">
+              <div class="col-auto pt-half">
+                <label for="textarea-left-id1">Label</label>
+              </div>
+              <div class="col">
+                <textarea id="textarea-left-id1" placeholder="Exemplo de textarea simples"></textarea>
+                <p class="text-base mt-1">Texto auxiliar ao preenchimento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Densidades dos Inputs</p>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="br-textarea large">
+            <label for="textarea-density-id2">Densidade baixa</label>
+            <textarea id="textarea-density-id2" placeholder="Digite somente números"></textarea>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="br-textarea medium">
+            <label for="textarea-density-id3">Densidade média(padrão)</label>
+            <textarea id="textarea-density-id3" placeholder="Digite somente números"></textarea>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="br-textarea small">
+            <label for="textarea-density-id4">Densidade alta</label>
+            <textarea id="textarea-density-id4" placeholder="Digite somente números"></textarea>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Validação e estados</p>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <div class="br-textarea success">
+            <label for="textarea-success">Label</label>
+            <textarea id="textarea-success" placeholder="Exemplo de textarea com sucesso"></textarea><span class="feedback success" role="alert"><i class="fas fa-check-circle" aria-hidden="true"></i><span>Campo correto</span></span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <div class="br-textarea danger">
+            <label for="textarea-danger">Label</label>
+            <textarea id="textarea-danger" placeholder="Exemplo de textarea com erro"></textarea><span class="feedback danger" role="alert"><i class="fas fa-times-circle" aria-hidden="true"></i><span>Campo com erro</span></span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <div class="br-textarea warning">
+            <label for="textarea-alerta">Label</label>
+            <textarea id="textarea-alerta" placeholder="Exemplo de textarea com alerta"></textarea><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span>Campo com alerta</span></span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <div class="br-textarea info">
+            <label for="textarea-info">Label</label>
+            <textarea id="textarea-info" placeholder="Exemplo de textarea com informação"></textarea><span class="feedback info" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i><span>Campo com informação</span></span>
+          </div>
+        </div>
+        <div class="col-sm-4 mb-3">
+          <div class="br-textarea">
+            <label for="textarea-id7">Label</label>
+            <textarea id="textarea-id7" placeholder="Exemplo de textarea desabilitado" disabled="disabled"></textarea><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i><span>Campo desabilitado</span></span>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5"> Textarea COM limite e contador de caracteres</p>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="br-textarea">
+            <label for="textarea-id8">Label</label>
+            <textarea id="textarea-id8" placeholder="Exemplo de textarea com contador de caracteres" maxlength="300"></textarea>
+            <div class="text-base mt-1"><span class="limit">Limite máximo de <strong>300</strong> caracteres</span><span class="current"></span></div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5"> Textarea SEM limite e contador de caracteres</p>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="br-textarea">
+            <label for="textarea-id9">Label</label>
+            <textarea id="textarea-id9" placeholder="Exemplo de textarea com contador e sem limite de caracteres"></textarea>
+            <div class="text-base mt-1"><span class="characters"><strong>0</strong> caracteres digitados</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

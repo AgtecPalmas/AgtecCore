@@ -1,0 +1,46 @@
+{% extends "core/index_list.html" %}
+{% load boilerplate_base base %}
+{% block title %}
+    Listagem Auditoria
+{% endblock title %}
+{% block title_modulo %}
+    <h4 class="font-weight-bold m-1">
+        <span class="text-muted font-weight-light">{{ model_name }} /</span> {{ object }}
+    </h4>
+{% endblock title_modulo %}
+{% block list_app %}
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center" scope="col" style="width: 9rem !important;">Ações</th>
+                {% for header in display %}
+                    {% if header != "id" and header != "pk" %}<th>{{ header|capfirst }}</th>{% endif %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in object_list %}
+                <tr>
+                    {% for item_key, item_value in value.items %}
+                        {% if forloop.first %}
+                            <td class="text-center">
+                                <a href="{{ url_audit }}{{ value.pk }}"
+                                   class="br-button circle primary small m-1"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Visualizar">
+                                    <i class="fas fa-eye fa-sm"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td>{{ item_value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock list_app %}
+{% block size_itens %}
+    Exibindo {{ audit.count }} de {{ paginator.count }} itens encontrados.
+{% endblock size_itens %}

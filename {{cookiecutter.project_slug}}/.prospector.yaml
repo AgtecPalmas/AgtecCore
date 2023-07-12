@@ -1,0 +1,24 @@
+strictness: medium
+test-warnings: true
+doc-warnings: false
+
+ignore-paths:
+  - docs
+  - core
+  - base
+  - mock_data.py
+
+ignore-patterns:
+  - (^|/)skip(this)?(/|$)
+
+pep8:
+  disable:
+    - W602
+    - W603
+  enable:
+    - W601
+  options:
+    max-line-length: 120
+
+mccabe:
+  run: false

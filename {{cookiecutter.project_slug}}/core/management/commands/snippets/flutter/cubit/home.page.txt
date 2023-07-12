@@ -1,0 +1,229 @@
+/// Página inicial da APP.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'apps/configuracao/cubit.dart';
+import 'apps/configuracao/index.page.dart';
+import 'apps/usuario/usuario/pages/list.dart' as UsuarioUsuarioViews;
+import 'core/config.dart';
+import 'core/user_interface/widget.dart';
+import 'core/util.dart';
+import 'routers.dart';
+
+$ImportViews$
+
+class MyHomePage extends StatefulWidget {
+  final String title;
+  MyHomePage({Key? key, String? title}): this.title = title ?? "", super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool bottomNavigationEnable = true;
+  int _currentIndexPage = 0;
+
+  // Declarando o inteiro para controlar qual página deve ser exibida
+  int _indexCurrentPage = 0;
+
+  // Declarando uma instancia da Classe dos items do Menu
+  final Itens _itensMenuGridView = Itens();
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndexPage = 0;
+    _itensMenuGridView.make();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: enabledBottomNavigationBar ? _buildScaffoldWithBottomNavigationBar(context) : _buildScaffold(context),
+    );
+  }
+
+  Widget _buildScaffoldWithBottomNavigationBar(context) {
+    return Scaffold(
+      body: _buildBodyWithBottomNavigationBar(context),
+      bottomNavigationBar: _buildCupertinoTabScaffold(context),
+    );
+  }
+
+  Widget _buildScaffold(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(Config.app_title),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  child: Icon(Icons.settings),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsIndexPage()));
+                  },
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      body: _buildBody(context),
+    );
+  }
+
+  /// Método para construir o corpo da página.
+  Widget _buildBody(BuildContext context) {
+    return Container(
+      height: Util.getProportionScreenHeight(context, 1),
+      color: Colors.white,
+      child: _buildGridView(context),
+    );
+  }
+
+  /// Método para construir o corpo da página utilizando o BottomNavigationBar
+  Widget _buildBodyWithBottomNavigationBar(BuildContext context) {
+    return IndexedStack(index: _currentIndexPage);
+  }
+
+  /// Componente de navegação CupertinoTabScaffold
+  Widget _buildCupertinoTabScaffold(BuildContext context) {
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Principal"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Configurações"),
+        ],
+      ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              onGenerateRoute: RouteGenerator.generateRoute,
+              builder: (context) {
+                return CupertinoPageScaffold(child: _buildGridView(context));
+              },
+            );
+            break;
+          case 1:
+            return CupertinoTabView(
+              onGenerateRoute: RouteGenerator.generateRoute,
+              builder: (context) {
+                return CupertinoPageScaffold(child: SettingsIndexPage());
+              },
+            );
+            break;
+          default:
+            return Container();
+        }
+      },
+    );
+  }
+
+  Widget _buildGridView(BuildContext context) {
+    return Stack(children: <Widget>[
+      HeadWidget(),
+      Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * .18,
+          bottom: 10,
+        ),
+        child: GridView.count(
+          crossAxisCount: 2,
+          children: List.generate(_itensMenuGridView.list.length, (index) {
+            return Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          _itensMenuGridView.list[index].geturi(),
+                    ),
+                  );
+                },
+                child: BlocConsumer<SettingsCubit, SettingsState>(
+                  listener: (context, state){},
+                  builder:
+                      (context, state) {
+                    return customMainCardButton(
+                      _itensMenuGridView.list[index].icon,
+                      _itensMenuGridView.list[index].title,
+                      iconColor: context.watch<SettingsCubit>().lightTheme == true
+                          ? CustomTheme.mainCardLightIconColor
+                          : CustomTheme.mainCardDarkIconColor,
+                      textColor: context.watch<SettingsCubit>().lightTheme == true
+                          ? CustomTheme.mainCardLightTextColor
+                          : CustomTheme.mainCardDarkTextColor,
+                      cardBackgroundColorBegin:
+                          context.watch<SettingsCubit>().lightTheme == true
+                              ? CustomTheme.mainCardLightBackgroundColor
+                              : CustomTheme.mainCardDarkBackgroundColor,
+                      cardBackgroundColorEnd:
+                          context.watch<SettingsCubit>().lightTheme == true
+                              ? CustomTheme.mainCardLightBackgroundColor
+                              : CustomTheme.mainCardDarkBackgroundColor,
+                      boxShadowColor: context.watch<SettingsCubit>().lightTheme == true
+                          ? CustomTheme.mainCardLightShadowColor
+                          : CustomTheme.mainCardDarkShadowColor,
+                      cardBorderColor: context.watch<SettingsCubit>().lightTheme == true
+                          ? CustomTheme.mainCardLightBackgroundColor
+                          : CustomTheme.mainCardDarkBackgroundColor,
+                    );
+                  },
+                ),
+              ),
+            );
+          }),
+        ),
+      )
+    ]);
+  }
+}
+
+class Itens {
+  final String title;
+  final IconData icon;
+  final Widget uri;
+  final Image? imageIcon;
+
+  Itens({String? title, IconData? icon, Widget? uri, Image? image})
+      : title = title ?? '',
+        icon = icon ?? FontAwesomeIcons.folderOpen,
+        uri = uri ?? Container(),
+        imageIcon = image;
+
+  List<Itens> list = [];
+
+  void make() {
+    // Exemplo de inserção de uma imagem do Assets como Card
+    // list.add(Itens(
+    //     title: 'arquivo importacao',
+    //     icon: null,
+    //     imageIcon: Image.asset("assets/icons/icons8-calendar-500.png",
+    //         width: MediaQuery.of(context).size.width / 4, color: Colors.red),
+    //     uri: Container()));
+
+    $ItenMenu$
+  }
+
+  Widget geturi() => uri;
+}

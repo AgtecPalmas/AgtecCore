@@ -1,0 +1,149 @@
+import 'package:dio/dio.dart';
+import 'dart:developer' as dev;
+import '../../../apps/auth/data.dart';
+import '../../../core/config.dart';
+import '../../exceptions/exception.dart';
+import '../custom_dio.dart';
+
+/// Interceptor específico para gerenciamento do
+/// fluxo de atualização do RefreshToken
+class RefreshTokenInterceptor extends Interceptor {
+  // Instanciando as classes para atualizar os dados.
+  final CustomDio _customDio;
+  final Dio _dio;
+  final String _refreshTokenPath = '${Config.uri}api/token/refresh/';
+
+  RefreshTokenInterceptor({required CustomDio customDio, required Dio dio})
+      : _customDio = customDio,
+        _dio = dio;
+
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) async {
+    // Verificando o tipo do erro baseado no status code do response
+    try {
+      final _errorResponse = err.response;
+      final _requestPath = err.requestOptions.path;
+
+      if (_errorResponse != null) {
+        final statusCode = _errorResponse.statusCode;
+        // Verificando se o statusCode é 403 ou 401
+        if (statusCode == 403 || statusCode == 401) {
+          // Verificando se o path do endPoint é o de refreshToken
+          if (_requestPath != _refreshTokenPath) {
+            await _refreshToken(err);
+            // Chamando o método para realizar a retentativa da consulta
+            await _retryRequest(err);
+          } else {
+            dev.log('Erro', error: err, stackTrace: StackTrace.current, name: 'AgtecCore');
+            // Passando o erro para cima, quem chamou a requisição
+            throw err;
+          }
+        } else {
+          // Erro não é 403 nem 401
+          dev.log('Erro', error: err, stackTrace: StackTrace.current, name: 'AgtecCore');
+          // Passando o erro para cima, quem chamou a requisição
+          throw err;
+        }
+      }
+    } on ExceptionCustom {
+      dev.log('Erro ao atualizar o RefreshToken', stackTrace: StackTrace.current, name: 'AgtecCore');
+      // Passando o erro para cima, quem chamou a requisição
+      handler.next(err);
+    } on DioError catch (e, s) {
+      dev.log('Erro', error: e, stackTrace: s, name: 'AgtecCore');
+      // Passando o erro para cima, quem chamou a requisição
+      handler.next(e);
+    } catch (error, stackTrace) {
+      dev.log('Erro', error: error, stackTrace: stackTrace, name: 'AgtecCore');
+      // Passando o erro para cima, quem chamou a requisição
+      handler.next(err);
+    }
+  }
+
+  /// Método para consultar na API o endpoint para capturar o novo
+  /// jwt_token e refresh_token
+  /// [Parameters]
+  ///   err DioError
+  Future<void> _refreshToken(DioError err) async {
+    try {
+      // Recuperando o RefreshToken do AuthData
+      final _refreshToken = await AuthData().getRefreshToken();
+      if (_refreshToken.isEmpty) {
+        // Não encontrou o Refreshtoken no AuthData
+        throw ExceptionCustom.tokenException(
+          "Erro ao tentar realizar a atualização do TokenJWT",
+          err,
+        );
+      }
+      // Realizando o processo de Refresh
+      _getNewToken(_refreshToken, err);
+    } catch (error, stacktrace) {
+      dev.log('Erro', error: error, stackTrace: stacktrace, name: 'AgtecCore');
+    }
+  }
+
+  // Método para realizar o processo de atualização do token
+  Future<void> _getNewToken(String refreshToken, DioError dioError) async {
+    final _uri = '${Config.uri}api/token/refresh/';
+    FormData _data = FormData.fromMap({'refresh': refreshToken});
+    final response = await _customDio.postHttp(_data, uri: _uri);
+
+    // Verificando se o retorno da atualização do Token possui
+    // a chave access que traz o token
+    if (response.containsKey('access')) {
+      final accessToken = response['access'];
+      if (accessToken.isNotEmpty) {
+        // Atualizando o token no banco de dados local
+        await AuthData().updateAccessToken(accessToken);
+      }
+    } else {
+      // Ocorreu erro na atualização
+      // Apagando os registros do usuário na base local
+      AuthData().deleteAll();
+      // TODO: Estudar como redirecionar o usuário para a tela de login
+    }
+
+    // Verificando se o retorno da atualização do Token possui
+    // a chave refreshToken
+    if (response.containsKey('refresh_token')) {
+      final refreshToken = response['refresh_token'];
+      if (refreshToken.isNotEmpty) {
+        // Atualizando o token no banco de dados local
+        await AuthData().updateRefreshToken(refreshToken);
+      }
+    } else {
+      // Ocorreu erro na atualização
+      // Apagando os registros do usuário na base local
+      AuthData().deleteAll();
+      // TODO: Estudar como redirecionar o usuário para a tela de login
+    }
+  }
+
+  /// Método para após a revalidação do AccessToken e RefreshToken
+  /// deve ser chamado para tentar novamente a consulta que
+  /// levantou a exception
+  /// [Parameters]
+  ///   err DioError
+  /// [Return]
+  ///   Future<Response<dynamic>>
+  ///
+  Future<Response<dynamic>> _retryRequest(DioError err) async {
+    // Recuperando os valores da requisição anterior para realizar nova tentativa
+    final _requestOptions = err.requestOptions;
+    final String _path = _requestOptions.path;
+    final Map<String, dynamic> _queryParameters = _requestOptions.queryParameters;
+    final dynamic _data = _requestOptions.data;
+
+    final _options = Options(
+      method: _requestOptions.method,
+      headers: _requestOptions.headers,
+    );
+
+    return _dio.request<dynamic>(
+      _path,
+      data: _data,
+      queryParameters: _queryParameters,
+      options: _options,
+    );
+  }
+}

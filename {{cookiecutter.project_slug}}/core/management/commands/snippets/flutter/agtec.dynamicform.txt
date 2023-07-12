@@ -1,0 +1,288 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../utils/util.dart';
+import 'agtec.inputformats.dart';
+import 'agtec.text.dart';
+import 'agtec.validatorsforms.dart';
+import 'widget.dart';
+
+class DynamicForm {
+  /// Método para configurar o tipo de teclado baseado no tipo de campo
+  /// Parameters:
+  /// - [field] Dynamic com o campo retornado do backend
+  /// Return:
+  /// - [TextInputType] com o tipo de teclado
+  static TextInputType configureKeyboardType(String tipo) {
+    switch (tipo) {
+      case "charfield":
+        return TextInputType.text;
+      case "integerfield":
+        return TextInputType.number;
+      case "floatfield":
+        return TextInputType.numberWithOptions(decimal: true);
+      case "datefield":
+        return TextInputType.datetime;
+      case "datetimefield":
+        return TextInputType.datetime;
+      case "timefield":
+        return TextInputType.datetime;
+      case "booleanfield":
+        return TextInputType.text;
+      case "primarykeyrelatedfield":
+        return TextInputType.text;
+      default:
+        return TextInputType.emailAddress;
+    }
+  }
+
+  /// Método para configurar as máscaras do input baseado no tipo
+  /// do campo
+  /// Parameters:
+  /// - [field] Dynamic com o campo retornado do backend
+  static List<TextInputFormatter>? getInputMask(dynamic field) {
+    try {
+      if (field['tipo'] == 'datefield' || field['tipo'] == 'datetimefield') {
+        return [maskDateFormatter];
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Método para verificar se o campo é do tipo ForeignKey ou UUID
+  /// Parameters:
+  /// - [field] Dynamic com o campo retornado do backend
+  static bool fieldIsForeignkeyOrUUID(dynamic field) {
+    try {
+      if (field['tipo'].toString().toLowerCase() == "primarykeyrelatedfield" ||
+          field['tipo'].toString().toLowerCase() == "uuidfield") {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Método para verificar se o campo é do tipo TextArea
+  /// Parameters:
+  /// - [field] Dynamic com o campo retornado do backend
+  static bool fieldIsTextarea(dynamic field) {
+    try {
+      if (field['tipo'] == 'charfield' && field['limite_caracter'] == null) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Método para verificar se o campo é obrigatório
+  /// Parameters:
+  ///  - [field] campo a ser verificado se é obrigatório ou não
+  static bool fieldIsRequired(dynamic field) {
+    try {
+      return field['obrigatorio'];
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Método para retornar o Map percorrendo os controllers
+  /// Parameters:
+  ///  - [controllers] Lista de controllers
+  /// - [inputs] Lista de inputs
+  static Map<String, dynamic>? getFormData(List<TextEditingController> controllers, List<dynamic> inputs) {
+    try {
+      var _response = Map<String, dynamic>();
+      for (var i = 0; i < controllers.length; i++) {
+        _response.putIfAbsent("${inputs[i]['nome'].toString().toLowerCase()}", () {
+          if (inputs[i]['tipo'].toString().toLowerCase() == 'charfield') {
+            return "'${controllers[i].text.toString().trim()}'";
+          }
+          if (inputs[i]['tipo'].toString().toLowerCase() == 'datetimefield') {
+            // convertDate
+            final _dataFormatada = Util.convertDate(controllers[i].text.toString().trim());
+            return '$_dataFormatada';
+          }
+          if (inputs[i]['tipo'].toString().toLowerCase() == 'datefield') {
+            // convertDate
+            final _dateFormated = Util.getDateFromDateTime(controllers[i].text.toString().trim());
+            return '$_dateFormated';
+          }
+          if (inputs[i]['tipo'].toString().toLowerCase() == 'booleanfield') {
+            // Campo Boolean
+            if (controllers[i].text.toString().trim().isEmpty) {
+              return 'false';
+            }
+          }
+          return '${controllers[i].text.toString().trim()}';
+        });
+      }
+      return _response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Método para renderizar os campos do formulário baseados
+  /// no backend
+  static Widget renderFormField(int index, dynamic field, List<TextEditingController> controllers) {
+    try {
+      // Verificando se o campo é do tipo BooleanField
+      if (field['tipo'].toString().toLowerCase() == 'booleanfield') {
+        return BooleanDynamicField(field: field, controllers: controllers, index: index);
+      }
+      return TextDynamicField(field: field, controllers: controllers, index: index);
+    } catch (e) {
+      return SizedBox.shrink();
+    }
+  }
+
+  /// Método estático para tratar os valores vindos do
+  /// backend e transformar num mapa que será utilizado
+  /// para renderizar os campos do formulário posteriormente
+  /// Parameters:
+  /// - [field] Dynamic com o campo retornado do backend
+  static dynamic mapBackendFormField(dynamic field) {
+    try {
+      var data = {
+        "nome": field['nome'],
+        "tipo": field['tipo'].toString().toLowerCase(),
+        "label": field['label'],
+        "hint": field['help_text'] ?? "Informe",
+        "requerido": field['obrigatorio'],
+        "limite_caracter": field['max_length'],
+        "permite_nulo": field['permite_nulo'],
+        "obrigatorio": field['obrigatorio'],
+      };
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+/// Classe do tipo Statefull para renderizar o Widget do tipo BooleanField
+/// Parameters:
+/// - [field] Dynamic com o campo retornado do backend
+/// - [controllers] Lista de controllers
+/// - [index] Índice do campo
+class BooleanDynamicField extends StatefulWidget {
+  final dynamic field;
+  final List<TextEditingController> controllers;
+  final int index;
+  final String labelTrue;
+  final String labelFalse;
+  BooleanDynamicField({
+    Key? key,
+    required this.field,
+    required this.controllers,
+    required this.index,
+    this.labelTrue = "Sim",
+    this.labelFalse = "Não",
+  }) : super(key: key);
+
+  @override
+  State<BooleanDynamicField> createState() => _BooleanDynamicFieldState();
+}
+
+class _BooleanDynamicFieldState extends State<BooleanDynamicField> {
+  late dynamic _field;
+  late List<TextEditingController> _controllers;
+  late int _index;
+  late String _labelTrue;
+  late String _labelFalse;
+  @override
+  void initState() {
+    super.initState();
+    _index = widget.index;
+    _field = widget.field;
+    _controllers = widget.controllers;
+    _labelTrue = widget.labelTrue;
+    _labelFalse = widget.labelFalse;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        CustomTextFormFieldLabel(labelText: _field['label']),
+        Row(
+          children: [
+            Radio(
+              value: true,
+              groupValue: _controllers[_index].text.toString().trim() == "true" ? true : false,
+              onChanged: (value) {
+                setState(() {
+                  _controllers[_index].text = value.toString();
+                });
+              },
+            ),
+            Text(_labelTrue),
+            Radio(
+              value: false,
+              groupValue: _controllers[_index].text.toString().trim() == "true" ? true : false,
+              onChanged: (value) {
+                setState(() {
+                  _controllers[_index].text = value.toString();
+                });
+              },
+            ),
+            Text(_labelFalse),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+/// Classe do tipo Statefull para renderizar o Widget do tipo TextField
+///   Parameters:
+/// - [field] Dynamic com o campo retornado do backend
+/// - [controllers] Lista de controllers
+/// - [index] Índice do campo
+class TextDynamicField extends StatefulWidget {
+  final dynamic field;
+  final List<TextEditingController> controllers;
+  final int index;
+  TextDynamicField({
+    Key? key,
+    required this.field,
+    required this.controllers,
+    required this.index,
+  }) : super(key: key);
+
+  @override
+  State<TextDynamicField> createState() => _TextDynamicFieldState();
+}
+
+class _TextDynamicFieldState extends State<TextDynamicField> {
+  late dynamic _field;
+  late List<TextEditingController> _controllers;
+  late int _index;
+
+  @override
+  void initState() {
+    super.initState();
+    _field = widget.field;
+    _controllers = widget.controllers;
+    _index = widget.index;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextFormField(
+      labelText: _field["label"],
+      hintText: _field["hint"],
+      controller: _controllers[_index],
+      keyBoardType: DynamicForm.configureKeyboardType(_field['tipo'].toString().toLowerCase()),
+      maxLineField: DynamicForm.fieldIsTextarea(_field) ? 3 : 1,
+      inputFormatters: DynamicForm.getInputMask(_field),
+      customValidator: DynamicForm.fieldIsRequired(_field) ? FormValidators.validatorRequired : null,
+    );
+  }
+}

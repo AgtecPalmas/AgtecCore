@@ -1,0 +1,377 @@
+.br-item {
+  background: var(--background);
+  --item-padding-x: var(--spacing-scale-2x);
+  --item-padding-y: var(--spacing-scale-base);
+  --item-padding: var(--item-padding-y) var(--item-padding-x);
+  --focus-offset: calc(var(--focus-width) * -1);
+  border: 0;
+  color: var(--color);
+  display: block;
+  font-weight: var(--font-weight);
+  padding: var(--item-padding);
+  text-align: left;
+  width: 100%;
+}
+.br-item .row {
+  margin-left: calc(-1 * var(--spacing-scale-base));
+  margin-right: calc(-1 * var(--spacing-scale-base));
+}
+.br-item .row .col,
+.br-item .row [class*=col-] {
+  padding-left: var(--spacing-scale-base);
+  padding-right: var(--spacing-scale-base);
+}
+.br-item::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.br-item[data-toggle] {
+  cursor: pointer;
+}
+.br-item[data-toggle=selection]:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
+}
+.br-item .br-checkbox:not(.hidden-label),
+.br-item .br-radio:not(.hidden-label) {
+  margin-bottom: calc(var(--item-padding-y) * -1);
+  margin-left: calc(var(--item-padding-x) * -1);
+  margin-right: calc(var(--item-padding-x) * -1);
+  margin-top: calc(var(--item-padding-y) * -1);
+}
+.br-item .br-checkbox:not(.hidden-label) input + label,
+.br-item .br-radio:not(.hidden-label) input + label {
+  padding-bottom: var(--item-padding-y);
+  padding-top: var(--item-padding-y);
+  top: 1px;
+  width: 100%;
+}
+.br-item .br-checkbox:not(.hidden-label) input + label::before,
+.br-item .br-radio:not(.hidden-label) input + label::before {
+  left: var(--item-padding-x);
+  top: calc(var(--item-padding-y) - 1px);
+}
+.br-item .br-checkbox:not(.hidden-label) input + label:empty,
+.br-item .br-radio:not(.hidden-label) input + label:empty {
+  left: 0;
+  top: 1px;
+}
+.br-item .br-checkbox:not(.hidden-label) input:hover:not(:disabled) + label::before,
+.br-item .br-radio:not(.hidden-label) input:hover:not(:disabled) + label::before {
+  background-image: none;
+}
+.br-item .br-checkbox input + label {
+  min-height: calc(var(--checkbox-size) + var(--item-padding-y) * 2);
+}
+.br-item .br-checkbox input + label:not(:empty) {
+  padding-left: calc(var(--checkbox-padding) + var(--checkbox-size) + var(--item-padding-x));
+}
+.br-item .br-checkbox input + label::after {
+  left: calc(var(--item-padding-x) + 8px);
+  top: calc(var(--item-padding-y) + 4px);
+}
+.br-item .br-checkbox input + label:empty {
+  min-height: var(--checkbox-size);
+}
+.br-item .br-checkbox input + label:empty::after {
+  left: 8px;
+  top: 4px;
+}
+.br-item .br-radio input + label {
+  min-height: calc(var(--radio-size) + var(--item-padding-y) * 2);
+  padding-left: calc(var(--spacing-scale-base) + var(--radio-size) + var(--item-padding-x));
+}
+.br-item .br-radio input + label::after {
+  left: calc(var(--item-padding-x) + var(--radio-bullet-position));
+  top: calc(var(--item-padding-y) + var(--radio-bullet-position) - 1px);
+}
+.br-item .br-radio input + label:empty {
+  min-height: var(--radio-size);
+}
+.br-item .br-radio input + label:empty::after {
+  left: var(--radio-bullet-position);
+  top: var(--radio-bullet-position);
+}
+.br-item.primary-lighten-01 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.primary-lighten-02 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.primary-default {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.primary-darken-01 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.primary-darken-02 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.secondary-06 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.secondary-07 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.secondary-08 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.secondary-09 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.highlight {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.support-01 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.support-03 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.support-04 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.support-07 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.support-08 {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.selected {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+  background-color: var(--selected);
+}
+.br-item.active {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+  background-color: var(--active);
+  color: var(--color);
+}
+.br-item.inverted, .br-item.dark-mode {
+  --color: var(--color-dark);
+  --color-rgb: var(--color-dark-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-dark);
+  --interactive-rgb: var(--interactive-dark-rgb);
+  --visited: var(--visited-dark);
+  --hover: var(--hover-dark);
+  --pressed: var(--pressed-dark);
+  --focus-color: var(--focus-color-dark);
+  --focus: var(--focus-color);
+}
+.br-item.inverted.active, .br-item.dark-mode.active {
+  --color: var(--color-light);
+  --color-rgb: var(--color-light-rgb);
+  --text-color: var(--color);
+  --interactive: var(--interactive-light);
+  --interactive-rgb: var(--interactive-light-rgb);
+  --visited: var(--visited-light);
+  --hover: var(--hover-light);
+  --pressed: var(--pressed-light);
+  --focus-color: var(--focus-color-light);
+  --focus: var(--focus-color);
+  --interactive-rgb: var(--active-rgb);
+  background-color: var(--background-light);
+  color: var(--active);
+}
+.br-item[data-toggle]:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
+}
+.br-item[data-toggle] .content i {
+  color: var(--interactive);
+}
+.br-item .content {
+  align-items: center;
+  display: flex;
+}
+.br-item [class*=fa-] {
+  height: 16px;
+  width: 14px !important;
+}
+.br-item .toogle-icon-interactive {
+  color: var(--interactive);
+}
+
+a.br-item {
+  color: var(--interactive);
+}
+a.br-item:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+a.br-item:not(:disabled):active {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--pressed)), rgba(var(--interactive-rgb), var(--pressed)));
+}
+
+button.br-item {
+  background-color: transparent;
+  color: var(--color);
+}
+button.br-item:focus {
+  outline: none;
+}
+button.br-item.focus-visible, button.br-item:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
+button.br-item:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
+}
+button.br-item:not(:disabled):active {
+  background-image: linear-gradient(rgba(var(--color-rgb), var(--pressed)), rgba(var(--color-rgb), var(--pressed)));
+}
+
+/*# sourceMappingURL=item.css.map*/

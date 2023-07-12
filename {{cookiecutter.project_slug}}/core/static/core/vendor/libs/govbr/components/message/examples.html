@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Mensagem</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <p class="h4 mt-5">Mensagens padrão</p>
+      <div class="row">
+        <div class="col-sm pt-3">
+          <div class="br-message danger" role="alert">
+            <div class="icon"><i class="fas fa-times-circle fa-lg" aria-hidden="true"></i>
+            </div>
+            <div class="content"><span class="message-title">Data de início do afastamento inválida.</span><span class="message-body"> A data não pode ser superior à data atual.</span></div>
+            <div class="close">
+              <button class="br-button circle small" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="br-message success" role="alert">
+            <div class="icon"><i class="fas fa-check-circle fa-lg" aria-hidden="true"></i>
+            </div>
+            <div class="content"><span class="message-title">Sucesso.</span><span class="message-body"> Seus dados foram alterados conforme preencimento do formulário.</span></div>
+            <div class="close">
+              <button class="br-button circle small" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="br-message info" role="alert">
+            <div class="icon"><i class="fas fa-info-circle fa-lg" aria-hidden="true"></i>
+            </div>
+            <div class="content"><span class="message-title">Informação.</span><span class="message-body"> Seus dados só serão salvos após o preenchimento do primeiro campo do formulário.</span></div>
+            <div class="close">
+              <button class="br-button circle small" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="br-message warning" role="alert">
+            <div class="icon"><i class="fas fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+            </div>
+            <div class="content"><span class="message-title">Atenção.</span><span class="message-body"> Em caso de dúvida, não compartilhe sua senha com terceiros. Ligue para a Central de atendimento.</span></div>
+            <div class="close">
+              <button class="br-button circle small" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="h4 mt-5">Mensagens contextuais</p>
+      <p><span class="feedback danger" role="alert"><i class="fas fa-times-circle" aria-hidden="true"></i>O CPF deve conter apenas dígitos.</span>
+      </p>
+      <p><span class="feedback success" role="alert"><i class="fas fa-check-circle" aria-hidden="true"></i>Campo correto.</span>
+      </p>
+      <p><span class="feedback warning" role="alert"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i>A tecla CAPS-LOCK está ativada.</span>
+      </p>
+      <p><span class="feedback info" role="alert"><i class="fas fa-info-circle" aria-hidden="true"></i>Os arquivos devem ser no formato PNG, JPG, PDF e ter no máximo 1GB.</span>
+      </p>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

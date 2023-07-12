@@ -1,0 +1,6 @@
+customTextFormField(
+  labelText: '$Field$',
+  hintText: '$Field$',
+  controller: $controller$,
+  context: context,
+),

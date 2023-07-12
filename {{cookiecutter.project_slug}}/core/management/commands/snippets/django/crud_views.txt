@@ -1,0 +1,84 @@
+
+# Views do Models $ModelClass$
+class $ModelClass$ListView(BaseListView):
+    """Classe para gerenciar a listagem do $ModelClass$"""
+    model = $ModelClass$
+    template_name = "$app_name$/$model_name$/$model_name$_list.html"
+    context_object_name = "$model_name$"
+    $ListFields$
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super($ModelClass$ListView, self).get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        """Subscrevendo o queryset para
+        filtrar os dados conforme o perfil logado
+
+        Returns:
+            QuerySet
+        """
+
+        if self.request.user.is_superuser:
+            queryset = super($ModelClass$ListView, self).get_queryset()
+            return queryset
+        else:
+            queryset = super($ModelClass$ListView, self).get_queryset()
+            return queryset
+
+
+class $ModelClass$DetailView(BaseDetailView):
+    """Classe para gerenciar o detalhe do $ModelClass$ """
+    model = $ModelClass$
+    form_class = $ModelClass$Form
+    success_url = "$app_name$:$model_name$-list"
+    template_name = "$app_name$/$model_name$/$model_name$_detail.html"
+    context_object_name = "$model_name$"
+
+    def get_context_data(self, **kwargs):
+        context = super($ModelClass$DetailView, self).get_context_data(**kwargs)
+        return context
+
+
+class $ModelClass$CreateView(BaseCreateView):
+    """Classe para gerenciar o create do $ModelClass$ """
+    model = $ModelClass$
+    form_class = $ModelClass$Form
+    context_object_name = "$model_name$"
+    success_url = "$app_name$:$model_name$-list"
+    template_name = "$app_name$/$model_name$/$model_name$_create.html"
+    # inlines = []
+
+    $FormsModalCreate$
+
+
+class $ModelClass$UpdateView(BaseUpdateView):
+    """Classe para gerenciar a update do $ModelClass$ """
+    model = $ModelClass$
+    form_class = $ModelClass$Form
+    context_object_name = "$model_name$"
+    success_url = "$app_name$:$model_name$-list"
+    template_name = "$app_name$/$model_name$/$model_name$_update.html"
+    # inlines = []
+
+    $FormsModalUpdate$
+
+
+class $ModelClass$DeleteView(BaseDeleteView):
+    """Classe para gerenciar o delete do $ModelClass$ """
+    model = $ModelClass$
+    form_class = $ModelClass$Form
+    context_object_name = "$model_name$"
+    success_url = "$app_name$:$model_name$-list"
+    template_name = "$app_name$/$model_name$/$model_name$_delete.html"
+
+
+class $ModelClass$RestoreView(BaseRestoreView):
+    """Classe para gerenciar o restore do $ModelClass$ """
+    model = $ModelClass$
+    context_object_name = "$model_name$"
+    success_url = "$app_name$:$model_name$-list"
+    template_name = "$app_name$/$model_name$/$model_name$_restore.html"
+
+# Fim das Views do Models $ModelClass$

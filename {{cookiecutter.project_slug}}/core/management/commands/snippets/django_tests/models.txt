@@ -1,0 +1,29 @@
+class Test$ModelClass$Models:
+    """Testes para o model $ModelClass$"""
+
+    @pytest.fixture
+    def init(self, db):
+        self.faker = Faker("pt_BR")
+        self.$model_name$ = baker.make($ModelClass$)
+
+    def test_count_$model_name$(self, init):
+        """Testa a quantidade de $model_name$"""
+        assert $ModelClass$.objects.all().count() == 1
+
+    def test_soft_delete_$model_name$(self, init):
+        """Testa o soft delete de $model_name$"""
+        $ModelClass$.objects.all().delete()
+        assert $ModelClass$.objects.filter(deleted=False).count() == 0
+
+    def test_create_$model_name$(self, init):
+        """Testa a criação de $model_name$"""
+        assert self.$model_name$.id is not None
+
+    def test_update_$model_name$(self, init):
+        """Testa a atualização de $model_name$"""
+        # TODO - Altere o campo e o valor
+        self.$model_name$.save()
+        self.$model_name$.campo = "valor"
+        self.$model_name$.save()
+        $model_name$ = $ModelClass$.objects.get(campo="valor")
+        assert $model_name$.campo == "valor"

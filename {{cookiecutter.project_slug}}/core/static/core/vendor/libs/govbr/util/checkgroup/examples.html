@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Checkgroup</title>
+    <!-- Fonte Rawline-->
+    <link rel="stylesheet" href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"/>
+    <!-- Fonte Raleway-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&amp;display=swap"/>
+    <!-- Design System de Governo-->
+    <link rel="stylesheet" href="../../core.css"/>
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <p class="h4 mt-5">Comportamento checkgroup simples</p>
+          <div class="mb-1">
+            <div class="checkgroup-example">
+              <input id="p1" name="p1" type="checkbox" aria-label="Selecionar tudo" checked="checked" indeterminate="indeterminate" data-parent="check-01" data-checked-label="Selecionar tudo" data-unchecked-label="Desselecionar tudo"/>
+              <label for="p1">Selecionar tudo</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p1-f1" name="p1-f1" type="checkbox" aria-label="opção 1" checked="checked" data-child="check-01"/>
+              <label for="p1-f1">Opção 1</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p1-f2" name="p1-f2" type="checkbox" aria-label="opção 2" data-child="check-01"/>
+              <label for="p1-f2">Opção 2</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p1-f3" name="p1-f3" type="checkbox" aria-label="opção 3" data-child="check-01"/>
+              <label for="p1-f3">Opção 3</label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p class="h4 mt-5">Comportamento checkgroup em cadeia</p>
+          <div class="mb-1">
+            <div class="checkgroup-example">
+              <input id="p2" name="p2" type="checkbox" aria-label="Selecionar tudo" checked="checked" indeterminate="indeterminate" data-parent="check-02" data-checked-label="Selecionar tudo" data-unchecked-label="Desselecionar tudo"/>
+              <label for="p2">Selecionar tudo</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p2-f1" name="p2-f1" type="checkbox" aria-label="opção 1" checked="checked" data-child="check-02"/>
+              <label for="p2-f1">Opção 1</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p2-f2" name="p2-f2" type="checkbox" aria-label="opção 2" data-child="check-02"/>
+              <label for="p2-f2">Opção 2</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-2">
+            <div class="checkgroup-example">
+              <input id="p2-f3" name="p2-f3" type="checkbox" aria-label="Selecionar grupo" data-parent="check-03" data-child="check-02" data-checked-label="Selecionar grupo" data-unchecked-label="Desselecionar grupo"/>
+              <label for="p2-f3">Selecionar grupo</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-4">
+            <div class="checkgroup-example">
+              <input id="p2-f3-1" name="p2-f3-1" type="checkbox" aria-label="opção 3" data-child="check-03"/>
+              <label for="p2-f3-1">Opção 3</label>
+            </div>
+          </div>
+          <div class="mb-1 ml-4">
+            <div class="checkgroup-example">
+              <input id="p2-f3-2" name="p2-f3-2" type="checkbox" aria-label="opção 3" data-child="check-03"/>
+              <label for="p2-f3-2">Opção 3</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../core-init.js"></script>
+  </body>
+</html>

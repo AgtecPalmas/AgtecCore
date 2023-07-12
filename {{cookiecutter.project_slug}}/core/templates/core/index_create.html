@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="layout-content">
+  {% include "./block/notifications.html" %}
+    {% block title_modulo %}{% endblock title_modulo %}
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          {% block form_app %}{% endblock form_app %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
