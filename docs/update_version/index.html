@@ -9,13 +9,13 @@
       
       
       
-        <link rel="prev" href="../flutter/">
+        <link rel="prev" href="../sphinx/documentacao_dev/">
       
       
         <link rel="next" href="../windows/">
       
       <link rel="icon" href="../assets/logo_agtec.svg">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -793,6 +793,55 @@
 
   
   
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+          Sphinx
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Sphinx
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sphinx/documentacao_dev/" class="md-nav__link">
+        Documentação Sphinx
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -802,17 +851,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
           Update version
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_14">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_15">
           <span class="md-nav__icon md-icon"></span>
           Update version
         </label>
@@ -912,17 +961,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
       
       
       
-        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
           Windows
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_15">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_16">
           <span class="md-nav__icon md-icon"></span>
           Windows
         </label>
@@ -1067,7 +1116,7 @@ TEMPUS_DOMINUS_TIME_FORMAT = "HH:mm"
 <li>
 <p>No arquivo urls.py (base/urls.py)</p>
 <p>2.1. Adicionar a linha abaixo no bloco urlpatterns</p>
-<pre><code>    path("core/", include("configuracao_agtec_core.urls", namespace="configuracao_agtec_core")),
+<pre><code>    path("core/", include("configuracao_core.urls", namespace="configuracao_core")),
 </code></pre>
 <p>2.2. Caso exista a entrada da url da app configuracao, remover.</p>
 <pre><code>    path("configuracao/", include("configuracao.urls", namespace="configuracao")),

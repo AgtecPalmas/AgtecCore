@@ -15,7 +15,7 @@
         <link rel="next" href="../python-decouple/">
       
       <link rel="icon" href="../assets/logo_agtec.svg">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -23,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.a6bdf11c.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
       
       
 
@@ -373,7 +373,7 @@
       
         <li class="md-nav__item">
   <a href="#gerar-a-base-dos-testes-de-uma-app-especifica" class="md-nav__link">
-    Gerar a base dos testes de uma app específica.
+    Gerar a base dos testes de uma app específica
   </a>
   
 </li>
@@ -922,12 +922,61 @@
       
       
         <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
-          Update version
+          Sphinx
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Sphinx
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sphinx/documentacao_dev/" class="md-nav__link">
+        Documentação Sphinx
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+          Update version
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_15">
           <span class="md-nav__icon md-icon"></span>
           Update version
         </label>
@@ -966,17 +1015,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
       
       
       
-        <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
           Windows
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_15">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_16">
           <span class="md-nav__icon md-icon"></span>
           Windows
         </label>
@@ -1051,7 +1100,7 @@
       
         <li class="md-nav__item">
   <a href="#gerar-a-base-dos-testes-de-uma-app-especifica" class="md-nav__link">
-    Gerar a base dos testes de uma app específica.
+    Gerar a base dos testes de uma app específica
   </a>
   
 </li>
@@ -1134,7 +1183,6 @@
 3 - views.py</p>
 <p>Na raiz do projeto existe o arquivo <code>pytest.ini</code> contendo a configuração necessário para que o framework identifique
 os testes no projeto Django.</p>
-<p>Para ser considerado válido um commit nos projeto a cobertura de testes deve ser igual ou maior que 90%</p>
 <h2 id="executar">Executar</h2>
 <pre><code class="language-python">pytest
 </code></pre>
@@ -1154,9 +1202,9 @@ TOTAL                                               80     14    82%
 
 FAIL Required test coverage of 90% not reached. Total coverage: 82.50%
 </code></pre>
-<h2 id="gerar-a-base-dos-testes-de-uma-app-especifica">Gerar a base dos testes de uma app específica.</h2>
+<h2 id="gerar-a-base-dos-testes-de-uma-app-especifica">Gerar a base dos testes de uma app específica</h2>
 <p>Para agilizar a criação dos testes, foi criado um comando para gerar a base dos testes de uma app específica. Este comando
-irá gerar os arquivos <code>tests_forms.py</code>, <code>tests_models.py</code> e <code>tests_views.py</code> separando os por pastas de cada modelo
+irá gerar os arquivos <code>tests_forms.py</code>, <code>tests_models.py</code> e <code>tests_views.py</code> separando-os por pastas de cada modelo
 que ficará localizada dentro da pasta <code>tests</code> da app.</p>
 <pre><code class="language-python">python manage.py build nome_da_app --tests
 
@@ -1174,14 +1222,17 @@ from usuario.models import Usuario
 
 
 class TestUsuarioModels:
-    &quot;&quot;&quot;Teste básicos para o model Usuario.&quot;&quot;&quot;
+    &quot;&quot;&quot;Teste básicos para o model Usuario.
+    Nos campos CPF geramos um valor fictício para teste 24935340002 
+    no site https://www.4devs.com.br/gerador_de_cpf
+    .&quot;&quot;&quot;
 
     @pytest.fixture
     def init(self, db):
         self.faker = Faker(&quot;pt_BR&quot;)
         &quot;&quot;&quot;Fixture para inicializar os testes utilizando baker&quot;&quot;&quot;
         self.usuario = baker.make(
-            Usuario, cpf=&quot;15151551515&quot;, email=&quot;usuario@email.com.br&quot;
+            Usuario, cpf=&quot;24935340002&quot;, email=&quot;usuario@email.com.br&quot;
         )
         &quot;&quot;&quot;baker cria um objeto do model Usuario com os campos obrigatórios. Se necessario passar algum campo opcional,
                  basta passar como parametro no baker.make&quot;&quot;&quot;
@@ -1206,7 +1257,7 @@ class TestUsuarioModels:
     def test_save_user_method(self, init):
         &quot;&quot;&quot;Teste para verificar se o usuario foi criado com sucesso, e verificação se o count de usuarios é 2&quot;&quot;&quot;
         usuario = Usuario(
-            cpf=&quot;12345678900&quot;,
+            cpf=&quot;24935340002&quot;,
             nome=self.faker.name(),
             email=self.faker.company_email(),
         )
@@ -1239,8 +1290,6 @@ class TestUsuarioModels:
         assert mail.outbox[0].subject == &quot;Teste campo subject do email&quot;
         assert mail.outbox[0].body == &quot;Teste campo corpo do email&quot;
         assert mail.outbox[0].to[0] == self.usuario.email
-
-
 </code></pre>
 <h3 id="exemplo-de-teste-de-forms">Exemplo de teste de forms</h3>
 <pre><code class="language-python">import pytest
@@ -1257,7 +1306,7 @@ class TestUsuarioForms:
     def init(self, db):
         self.faker = Faker(&quot;pt_BR&quot;)
         self.valid_data = {
-            &quot;cpf&quot;: &quot;12345678900&quot;,
+            &quot;cpf&quot;: &quot;24935340002&quot;,
             &quot;nome&quot;: self.faker.name(),
             &quot;email&quot;: self.faker.company_email(),
             &quot;password&quot;: &quot;123456789&quot;,
@@ -1284,8 +1333,6 @@ class TestUsuarioForms:
         form = UsuarioForm(data=self.valid_data)
         form.save()
         assert Usuario.objects.all().count() == 1
-
-
 </code></pre>
 <h3 id="exemplo-de-teste-de-views">Exemplo de teste de views</h3>
 <pre><code class="language-python">import pytest
@@ -1306,7 +1353,6 @@ from usuario.views import (
     UsuarioUpdateView,
 )
 
-
 class TestUsuarioViews:
     &quot;&quot;&quot;Testes básicos para a views Usuario.&quot;&quot;&quot;
 
@@ -1314,15 +1360,15 @@ class TestUsuarioViews:
     def init(self, db):
         self.faker = Faker(&quot;pt_BR&quot;)
         self.user = User.objects.create_superuser(
-            username=&quot;teste&quot;, email=&quot;teste@email.com.br&quot;, password=&quot;asdf@1234&quot;
+            username=&quot;teste&quot;, email=&quot;teste@email.com.br&quot;, password=&quot;senha_padrao_deve_ser_mudada&quot;
         )
         baker.make(
             Usuario,
             django_user=self.user,
-            cpf=&quot;12345678900&quot;,
+            cpf=&quot;24935340002&quot;,
             email=&quot;usuario@email.com.br&quot;,
         )
-        baker.make(Usuario, cpf=&quot;98765432100&quot;, email=&quot;usuario2@email.com.br&quot;)
+        baker.make(Usuario, cpf=&quot;24935340002&quot;, email=&quot;usuario2@email.com.br&quot;)
         self.factory = RequestFactory()
         self.usuario = Usuario.objects.all().first()
 
@@ -1376,7 +1422,7 @@ class TestUsuarioViews:
     def test_usuario_usuario_create_post(self, init):
         &quot;&quot;&quot;Testa se o template create está sendo renderizado corretamente com metodo post&quot;&quot;&quot;
         data = {
-            &quot;cpf&quot;: &quot;12345678900&quot;,
+            &quot;cpf&quot;: &quot;24935340002&quot;,
             &quot;nome&quot;: self.faker.name(),
             &quot;email&quot;: self.faker.company_email(),
         }
@@ -1443,13 +1489,11 @@ class TestUsuarioViews:
         request.user = self.django_usuario_dois
         response = UsuarioListView.as_view()(request)
         assert len(response.context_data[&quot;object_list&quot;]) == 1
-
-
 </code></pre>
 <h2 id="verificar-os-modelos-que-ainda-nao-foram-testados">Verificar os modelos que ainda não foram testados</h2>
-<p>Para tornar essa verificação de uma forma mais simples, foi criado um script que verifica os modelos que ainda não
-foram testados. O script verifica os modelos que estão no arquivo <code>models.py</code> das apps do projeto e compara com os 
-testes que foram criados nos arquivos <code>test_models.py</code>, <code>test_views.py</code> e <code>test_forms.py</code> de cada app.</p>
+<p>Para simplificar o processo de verificação, desenvolvemos um script que identifica os modelos que ainda
+não foram testados. O script analisa os modelos que estão no arquivo <code>models.py</code> das apps do projeto e compara-os
+com os testes que foram criados nos arquivos <code>test_models.py</code>, <code>test_views.py</code> e <code>test_forms.py</code> de cada app.</p>
 <pre><code class="language-python">python manage.py check_tests 
 </code></pre>
 <h2 id="arquivo-de-configuracao">Arquivo de configuração</h2>
