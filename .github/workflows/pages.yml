@@ -51,6 +51,7 @@ jobs:
     needs: ['build']
     steps:
       - name: Pages deploy
+        id: deployment
         uses: actions/deploy-pages@v2.0.3
         with:
           token: ${{ github.token }}
