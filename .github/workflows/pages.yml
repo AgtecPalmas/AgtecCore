@@ -49,6 +49,7 @@ jobs:
       contents: read
       id-token: write
       pages: write
+    needs: ['build']
     steps:
       - name: Pages deploy
         uses: actions/deploy-pages@v2.0.3
