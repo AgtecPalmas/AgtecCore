@@ -5,6 +5,7 @@ on:
     branches: [ "main", "feature-workflow" ]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -41,10 +42,16 @@ jobs:
         name: agteccore-pages
         path: docs/
         retention-days: 1
-    
-    - name: Pages deploy
-      uses: actions/deploy-pages@v2.0.3
-      with:
-         token: ${{ github.token }}
-         artifact_name: agteccore-pages
-         
+        
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    steps:
+      - name: Pages deploy
+        uses: actions/deploy-pages@v2.0.3
+        with:
+          token: ${{ github.token }}
+          artifact_name: agteccore-pages
