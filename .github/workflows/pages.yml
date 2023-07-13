@@ -33,8 +33,8 @@ jobs:
         mkdocs build -d site --clean
         cp -r site/* ../docs  
     
-    - name: Upload Artifact
-      uses: actions/upload-pages-artifact@2.0.0
+    - name: Upload Pages Artifact
+      uses: actions/upload-pages-artifact@v1.0.9
       with:
         name: agteccore-pages
         path: docs/
