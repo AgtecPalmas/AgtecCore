@@ -2,47 +2,17 @@
 
 ## Documentação
 
-https://agtecpalmas.github.io/AgtecCore/
+<https://agtecpalmas.github.io/AgtecCore/>
 
 ## Pré requisitos
 
-Faça o clone desse projeto para o diretório
-
-Crie um diretório para o seu projeto
-
-```console
-mkdir "nome_do_seu_projeto"
-```
-
-Acesse o diretório criado na etapa anterior
-
-```console
-cd "nome_do_seu_projeto" 
-```
-
-Crie e ative um ambiente virtual python
-
-```console
-python3 -m venv venv
-```
-
-Atualize o pip
-
-```console
-python3 -m pip install --upgrade pip
-```
-
-Instale o **cookiecutter**
-
-```console
-pip install cookiecutter==2.1.1
-```
-
-Instale o gerenciador de pacote **pip-tools**
-
-```console
-pip install pip-tools
-```
+- Faça o clone desse projeto para o diretório
+- Crie um diretório para o seu projeto
+- Acesse o diretório criado na etapa anterior
+- Crie e ative um ambiente virtual python
+- Atualize o pip
+- Instale o **cookiecutter**
+- Instale o gerenciador de pacote **pip-tools**
 
 ## Uso
 
