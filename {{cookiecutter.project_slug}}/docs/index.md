@@ -4,7 +4,6 @@
 
 Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Django trazendo diversas tecnologias embarcadas para expander o conceito Dont Repeat Yourself (DRY), além das tecnologias já embarcadas temos managers para automatizar a geração de cógido do projeto
 
-
 ## Principais bibliotecas embarcadas no projeto
 
 * [Django rest framework](https://www.django-rest-framework.org/)
@@ -67,12 +66,17 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tbblack)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/thales-barbosa-de-oliveira/)
 
-### Márcio Henrique Rodrigues de Lima
+#### Márcio Henrique Rodrigues de Lima
 
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marciohr9)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/m%C3%A1rcio-henrique-rodrigues-de-lima-71b08576/)
 
-### André Praça Pinheiro
+#### Clazzeani Almeida
+
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/clazzeani)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/clazzeani-almeida-a8a9bb42/)
+
+#### André Praça de Almeida Pinheiro
 
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/apracapinheiro)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/andr%C3%A9-pinheiro-03064120/)
