@@ -12,8 +12,7 @@ jobs:
       matrix:
         python-version: [3.9]
     permissions:
-      id-token: 'write'
-      pages: 'write'
+      pages: write
 
     steps:
     - uses: actions/checkout@v3
@@ -35,10 +34,11 @@ jobs:
         cp -r site/* ../docs  
     
     - name: Upload Pages Artifact
-      uses: actions/upload-pages-artifact@v1.0.9
+      uses: actions/upload-pages-artifact@v2
       with:
         name: agteccore-pages
         path: docs/
+        retention-days: 1
     
     - name: Pages deploy
       uses: actions/deploy-pages@v2.0.3
