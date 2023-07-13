@@ -29,8 +29,8 @@ jobs:
         cd {{cookiecutter.project_slug}}
         mkdocs build -d site --clean
         cp -r site/* ../docs  
-    
-    - uses: actions/deploy-pages@v2.0.3
+        
     - name: Pages deploy
+      uses: actions/deploy-pages@v2.0.3
       with:
          token: ${{ github.token }}
