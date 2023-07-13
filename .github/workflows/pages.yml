@@ -39,7 +39,6 @@ jobs:
     - name: Upload Pages Artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        name: agteccore-pages
         path: docs/
         retention-days: 1
         
@@ -55,4 +54,3 @@ jobs:
         uses: actions/deploy-pages@v2.0.3
         with:
           token: ${{ github.token }}
-          artifact_name: agteccore-pages
