@@ -2,7 +2,7 @@ name: Documentation Update
 
 on:
   push:
-    branches: [ "main", "feature-workflow" ]
+    branches: [ "main" ]
 
 jobs:
 
