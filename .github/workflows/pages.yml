@@ -32,8 +32,16 @@ jobs:
         cd {{cookiecutter.project_slug}}
         mkdocs build -d site --clean
         cp -r site/* ../docs  
-        
+    
+    - name: Upload Artifact
+      uses: actions/upload-pages-artifact@2.0.0
+      with:
+        name: agteccore-pages
+        path: docs/
+    
     - name: Pages deploy
       uses: actions/deploy-pages@v2.0.3
       with:
          token: ${{ github.token }}
+         artifact_name: agteccore-pages
+         
