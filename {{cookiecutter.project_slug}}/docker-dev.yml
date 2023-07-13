@@ -15,7 +15,7 @@ services:
       - LC_ALL=C.UTF-8
       - POSTGRES_DB={{cookiecutter.project_slug.lower()}}_db
       - POSTGRES_USER={{cookiecutter.project_slug.lower()}}_dbmanager_2LiyBoLHeHo5yG
-      - POSTGRES_PASSWORD=senha_padrao_deve_ser_mudada
+      - POSTGRES_PASSWORD=2LiyBoLHeHo5yGfxan8euHGIzEEzIs
       - POSTGRES_HOST_AUTH_METHOD=md5
     networks:
       - {{cookiecutter.project_slug.lower()}}_network
@@ -29,7 +29,7 @@ services:
     environment:
       - DB_NAME={{cookiecutter.project_slug.lower()}}_db
       - DB_HOST={{cookiecutter.project_slug.lower()}}_database
-      - DB_PASSWORD=senha_padrao_deve_ser_mudada
+      - DB_PASSWORD=2LiyBoLHeHo5yGfxan8euHGIzEEzIs
       - DB_ENGINE=django.db.backends.postgresql
       - DB_USER={{cookiecutter.project_slug.lower()}}_dbmanager_2LiyBoLHeHo5yG
       - DB_PORT=5432
@@ -50,6 +50,7 @@ services:
       - HORAS_SEM_ATENDIMENTO=19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 12
       - DIAS_DA_SEMANA=0, 1, 2, 3, 4
       - SENHA_PADRAO=123456
+      - CSRF_TRUSTED_ORIGINS=https://*.localhost,
     build:
       context: .
       dockerfile: ./DockerfileDev
