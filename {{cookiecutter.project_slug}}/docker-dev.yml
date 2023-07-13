@@ -67,3 +67,4 @@ services:
 
 volumes:
     {{cookiecutter.project_slug.lower()}}_db:
+

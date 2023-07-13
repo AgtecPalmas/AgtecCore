@@ -36,7 +36,7 @@ services:
       - GOOGLE_API_KEY=''
       - HORAS_SEM_ATENDIMENTO=19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 12
       - DIAS_DA_SEMANA=0, 1, 2, 3, 4
-      - SENHA_PADRAO=''
+      - SENHA_PADRAO=123456
       - CSRF_TRUSTED_ORIGINS=''
     build:
       context: .
