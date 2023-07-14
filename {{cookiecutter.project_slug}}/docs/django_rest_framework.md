@@ -13,7 +13,7 @@ INSTALLED_APPS = [
     ]
 ```
 
-Configurando a estrutura de paginação dos responses, caso deseje alterar a quantidade de itens por página, basta alterar
+Configurando a estrutura de paginação dos responses. Caso deseje alterar a quantidade de itens por página, basta alterar
 o valor da chave **PAGE_SIZE**
 
 ```python
@@ -45,7 +45,7 @@ REST_FRAMEWORK = {
     }
 ```
 
-Configurando o padrão do parser, **deixar o padrão**
+Configurando o padrão do parser (**deixar o padrão**)
 
 ```python
 REST_FRAMEWORK = {

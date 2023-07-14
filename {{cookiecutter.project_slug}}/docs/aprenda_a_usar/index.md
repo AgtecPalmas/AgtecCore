@@ -1,7 +1,6 @@
 # Projeto Django
 
-Esse projeto foi criado utilizando o AgtecCore que gera um projeto Django com as configurações padrões de um
-projeto Django, com Django Rest Framework e com managers que auxiliarão no desenvolvimento do seu projeto.
+Esse projeto foi criado utilizando o AgtecCore, que gera um projeto Django com as configurações utilizadas normalmente em projetos, com Django Rest Framework e com managers que auxiliarão no desenvolvimento do seu projeto.
 
 > Lembre-se de sempre consultar a documentação quando surgir alguma dúvida.
 

@@ -2,7 +2,7 @@
 
 ## Sobre
 
-Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Django trazendo diversas tecnologias embarcadas para expander o conceito Dont Repeat Yourself (DRY), além das tecnologias já embarcadas temos managers para automatizar a geração de cógido do projeto
+Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Django trazendo diversas tecnologias embarcadas para expandir o conceito Don't Repeat Yourself (DRY). Além das tecnologias já embarcadas, temos managers para automatizar a geração de código do projeto.
 
 ## Principais bibliotecas embarcadas no projeto
 
@@ -81,9 +81,9 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/apracapinheiro)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/andr%C3%A9-pinheiro-03064120/)
 
-#### Marco Antônio
+#### Marco Antônio Martins Porto Netto
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tche-Marco)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tchez)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tch%C3%AA/)
 
 --------------------------------------------
