@@ -6,13 +6,33 @@
 
 ## Pré requisitos
 
-- Faça o clone desse projeto para o diretório
 - Crie um diretório para o seu projeto
+```console 
+  mkdir <nome_do_seu_projeto>
+ ```
+- Faça o clone desse projeto para o diretório
 - Acesse o diretório criado na etapa anterior
+
+```console
+  cd <nome_do_seu_projeto>
+```
 - Crie e ative um ambiente virtual python
+```console
+  python3 -m venv venv
+  . venv/bin/activate
+```
 - Atualize o pip
+````console
+  python3 -m pip install --upgrade pip
+````
 - Instale o **cookiecutter**
+````console
+  pip install cookiecutter==2.1.1
+````
 - Instale o gerenciador de pacote **pip-tools**
+```console
+  pip install pip-tools
+```
 
 ## Uso
 
@@ -21,7 +41,6 @@ Rode o cookiecutter apontando para o diretório do projeto agtecore:
 ```console
 cookiecutter ../DIRETORIO_AONDE_FOI_CLONADO_O_PROJETO
 ```
-
 Responda as perguntas sobre seu novo projeto:
 
     project_name [Base]: Informe o nome do projeto 
