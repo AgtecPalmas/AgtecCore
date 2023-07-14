@@ -4,7 +4,7 @@
 
 Biblioteca responsável por analisar se os códigos do projeto estão segundo os padrões de qualidade de código do Python, as famosas PEP`s.  
   
-Na raiz do projeto existe o arquivo **.flake8** que deve ser utilizado para configurar o comportamento da lib. Por padrão foi configurado que o limite de caracteres por linha é de 120
+Na raiz do projeto existe o arquivo **.flake8** que deve ser utilizado para configurar o comportamento da lib. Por padrão foi configurado que o limite de caracteres por linha é de 120.
 
 ## Executar
 ```python
