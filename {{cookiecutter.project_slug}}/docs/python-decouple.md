@@ -2,7 +2,7 @@
 
 ## Sobre
 
-Lib para aplicar dentre outras funcionalidades a separação de dados sensíveis da aplicação do arquivo settings e colocar em variáveis de ambiente
+Lib para aplicar, dentre outras funcionalidades, a separação de dados sensíveis da aplicação do arquivo settings e colocar em variáveis de ambiente.
 
 ## Arquivo .env
 No ambiente de desenvolvimento deve-se utilizar esse arquivo para conter as configurações do projeto. Como exemplo 
