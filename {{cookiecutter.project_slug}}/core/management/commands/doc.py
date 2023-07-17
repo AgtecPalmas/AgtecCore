@@ -120,18 +120,37 @@ class Command(BaseCommand):
                         "management/commands/snippets/sphinx_doc/rst.txt",
                     )
                 )
-                __content = __content.replace("$App$", app.title())
-                __content = __content.replace("$app$", app)
+                content = content.replace("$App$", app.title())
+                content = content.replace("$app$", app)
+                arquivo_rst = f"{self.__docs_path}/source/{app.lower()}.rst"
 
                 with open(
-                    f"{self.__docs_path}/source/{app.lower()}.rst", "w"
+                        arquivo_rst, "w"
                 ) as arquivo:
                     arquivo.write(__content)
+
+                self.build_rst(self, arquivo_rst, "views", app)
+                self.build_rst(self, arquivo_rst, "api", app)
 
             subprocess.run(["sphinx-apidoc", "-f", "-o", "doc", "source"])
             subprocess.run(["sphinx-build", "-M", "html", "doc\source", "doc\source"])
         except:
             pass
+
+    @staticmethod
+    def build_rst(self, arquivo_rst, modulo, app):
+        with open(arquivo_rst, "a") as arquivo:
+            caminho_app = os.path.join(self.path_root, app)
+            caminho_views = os.path.join(caminho_app, modulo)
+            if os.path.isdir(caminho_views):
+                arquivo.write(f"\n{modulo.capitalize()}")
+                arquivo.write("\n-----------------------------")
+                for arquivo_view in os.listdir(caminho_views):
+                    if arquivo_view.endswith(".py"):
+                        nome_modulo = os.path.splitext(arquivo_view)[0]
+                        caminho_modulo = f"{app}.{modulo}.{nome_modulo}"
+                        arquivo.write(f"\n\n.. automodule:: {caminho_modulo}\n")
+                        arquivo.write("   :members:\n")
 
     @staticmethod
     def verificar_apps_instaladas():
