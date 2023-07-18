@@ -1,40 +1,61 @@
 import contextlib
+import re
+from string import Template
 
 import requests
 from decouple import config
 from django.apps import apps
 from django.core.management.base import BaseCommand
+from packaging.version import parse
 
 from core.management.commands.utils import Utils
 
+MESSAGES = {
+    "erro_exception": Template(
+        "Erro ao tentar obter tags do projeto no Github\n$exception"
+    ),
+    "erro_status_code": Template(
+        "Erro ao tentar obter a última tag do projeto no Github\n[red b]Status Code: $status_code[/]"
+    ),
+    "erro_url_env": Template("URL do Github não foi definido no arquivo .env"),
+    "error_version": Template(
+        "Algo está errado\nCore $version_core\nProjeto $version_project"
+    ),
+    "help": Template(
+        "[green b]AGTEC CORE[/] [cyan b]$version[/]\
+            \n\n[yellow b]Comandos[/]\
+            \n[green b]--checkupdate[/] - Verifica se existe uma nova versão do Core\
+            \n[green b]--help[/] ou [green b]-h[/] - Exibe esta mensagem\
+            \n[green b]--version[/] ou [green b]-v[/] - Exibe a versão do Core"
+    ),
+    "new_core_version": Template(
+        "Atualização $version disponível\nVersão $current_version está sendo usada\n\nBaixar atualização\n$download_url"
+    ),
+    "new_django_version": Template(
+        "Encontramos uma nova versão do Django: $version\nÉ recomendado que você atualize o Core e o Django"
+    ),
+    "not_found_core_version": Template(
+        "Não encontramos versões do Core para o Django $version"
+    ),
+    "success_version": Template("Você está na versão mais recente do Core: $version"),
+    "version": Template("Versão do Core: [green b]$version[/]"),
+}
 
-def sanitize(version: str) -> list[int]:
-    """Sanitizes a software version"""
-    # 4 parts: django, major, minor, patch
-    version = version.replace("v", "")
-    version_parts = version.split(".")
-    num_parts = len(version_parts)
 
-    if num_parts < 4:
-        version_parts += ["0"] * (4 - num_parts)
-
-    return [int(part) for part in version_parts]
-
+def get_tag_django_version(tag: str) -> int:
+    """Returns the Django version of the tag"""
+    return int(re.sub(r"[^0-9]", "", tag.split(".")[0]))
 
 def compare_version(version1: str, version2: str) -> str:
-    """Compara a primeira versão com a segunda versão"""
+    """Compare two versions"""
 
-    version1 = sanitize(version1)
-    version2 = sanitize(version2)
+    if parse(version1) > parse(version2):
+        return 1
 
-    for index in range(1, 4):
-        if version1[index] > version2[index]:
-            return "lower"
+    elif parse(version1) < parse(version2):
+        return -1
 
-        elif version2[index] > version1[index]:
-            return "higher"
-
-    return "equal"
+    return 0
 
 
 class Command(BaseCommand):
@@ -43,29 +64,32 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.url: str = None
-        self.token: str = None
+        self.url_github: str = None
 
         with contextlib.suppress(Exception):
-            self.url = config("GITLAB_API_CORE_URL")
-            self.token = config("GITLAB_TOKEN")
+            self.url_github = config("GITHUB_API_CORE_URL")
 
-        self.last_version: str = None
-        self.current_version: str = getattr(
-            apps.get_app_config("core"), "version", "0.0.0.0"
+        self.releases: list[dict] = []
+        self.versions: dict[str, dict[str, str]] = {}
+
+        self.core_project_version: str = getattr(
+            apps.get_app_config("core"), "version", "0"
         )
-        self.django_version: int = int(self.current_version.split(".")[0][-1])
-        self.last_django_version: int = 0
+
+        self.django_project_version: int = get_tag_django_version(
+            self.core_project_version
+        )
+        self.django_last_version: int = 0
 
     def __remove_parser_arguments(self, parser) -> None:
-        """Remove os argumentos padrões do Django causando conflito"""
+        """Remove the default arguments from the parser"""
         flags = ["--version", "--help", "-v", "-h"]
 
         for flag in flags:
             parser._optionals._option_string_actions.pop(flag)
 
     def add_arguments(self, parser) -> None:
-        """Adiciona os argumentos para o comando"""
+        """Add arguments to the parser"""
         self.__remove_parser_arguments(parser)
 
         parser.add_argument(
@@ -89,111 +113,133 @@ class Command(BaseCommand):
             help="Exibe a ajuda do comando",
         )
 
-    def __validate_url_and_token(self) -> bool:
-        """Valida a URL e o Token do GitLab"""
-        if not self.url or not self.token:
-            Utils.show_error(
-                "URL do GitLab ou Token não foram definidos no arquivo .env"
-            )
-        elif "__id_projeto__" in self.url or "__url_gitlab__" in self.url:
-            Utils.show_error(
-                "URL do GitLab ou ID do projeto estão incorretos no arquivo .env"
-            )
-        else:
-            return True
+    def __validate_env_variables(self) -> bool:
+        """Valid if the url are defined"""
+        if not self.url_github:
+            Utils.show_error(MESSAGES["erro_url_env"].substitute())
+            return False
+        return True
 
-    def __get_tags_from_gitlab(self) -> str:
-        """Retorna a última tag do projeto no GitLab"""
-        if not self.__validate_url_and_token():
+    def __get_tags_from_github(self) -> None:
+        """Returns the tags from Github"""
+        if not self.__validate_env_variables():
             return
 
         try:
-            response = requests.get(
-                url=f"{self.url}tags", headers={"Private-Token": self.token}
-            )
+            response = requests.get(url=f"{self.url_github}/releases", timeout=5)
 
             if response.status_code != 200:
                 Utils.show_error(
-                    f"Erro ao tentar obter a última tag do projeto no GitLab\n\
-                        [red b]Status Code: {response.status_code}[/]"
+                    MESSAGES["erro_status_code"].substitute(
+                        status_code=response.status_code
+                    )
                 )
 
-            tags = response.json()
-
-            for tag in tags:
-                tag_version = sanitize(tag.get("name"))
-                if tag_version[0] > self.last_django_version:
-                    self.last_django_version = tag_version[0]
-
-            for tag in tags:
-                tag_version = sanitize(tag.get("name"))
-                if tag_version[0] == self.django_version:
-                    self.last_version = tag.get("name")
-                    return
-
-            Utils.show_error(
-                f"Seu Core aponta a versão {self.current_version}\
-                \nMas não há registro do Core com a versão {self.django_version} do Django"
-            )
+            self.releases = response.json()
 
         except requests.exceptions.RequestException as error:
-            Utils.show_error(
-                f"Erro ao tentar obter a última tag do projeto no GitLab\n{error}"
+            Utils.show_error(MESSAGES["erro_exception"].substitute(exception=error))
+
+    def __populate_versions(self) -> None:
+        """Populate the versions"""
+        for release in self.releases:
+            tag_name: str = release.get("tag_name")
+            tag_django_version = get_tag_django_version(tag_name)
+            version_from_versions = self.versions.get(tag_django_version, {}).get(
+                "tag_name", "0"
             )
 
+            if tag_django_version > self.django_last_version:
+                self.django_last_version = tag_django_version
+
+            if compare_version(tag_name, version_from_versions) == 1:
+                self.versions[tag_django_version] = {
+                    "tag_name": tag_name,
+                    "html_url": release.get("html_url"),
+                }
+
     def __check_django_upgrade(self) -> None:
-        """Verifica se o Django foi atualizado"""
-        if self.django_version < self.last_django_version:
+        """Check if the Django version is the last"""
+        if self.django_project_version < self.django_last_version:
             Utils.show_message(
                 title=True,
                 emoji="rocket",
-                self=f"Encontramos uma nova versão do Django: [green b]{self.last_django_version}[/]\
-                    \nÉ recomendado que você atualize o Core e o Django",
+                self=MESSAGES["new_django_version"].substitute(
+                    version=self.django_last_version,
+                ),
             )
 
-    def __check_update(self) -> None:
-        """Verifica se existe uma nova versão do Core"""
-        state: str = compare_version(self.last_version, self.current_version)
-
-        if state == "lower":
+    def __check_core_version(self) -> bool:
+        """Check if there is a version of the Core for the Django version"""
+        if not self.versions.get(self.django_project_version):
             Utils.show_message(
-                f"[green b]Atualização {self.last_version} disponível[/]\nVersão [cyan b]{self.current_version}[/] está sendo usada",
+                title=True,
+                emoji="rocket",
+                self=MESSAGES["not_found_core_version"].substitute(
+                    version=self.django_project_version
+                ),
+            )
+            return False
+        return True
+
+    def __check_core_update(self) -> None:
+        """Check if the Core version is the last"""
+        last_core_version_current_django: str = self.versions[
+            self.django_project_version
+        ]
+        state: str = compare_version(
+            self.core_project_version, last_core_version_current_django["tag_name"]
+        )
+
+        if state == -1:
+            Utils.show_message(
+                MESSAGES["new_core_version"].substitute(
+                    version=last_core_version_current_django["tag_name"],
+                    current_version=self.core_project_version,
+                    download_url=last_core_version_current_django["html_url"],
+                ),
                 emoji="up",
             )
 
-        elif state == "higher":
+        elif state == 1:
             Utils.show_message(
-                f"Algo está errado\nCore [green b]{self.last_version}[/]\nProjeto [red b]{self.current_version}[/]",
+                MESSAGES["error_version"].substitute(
+                    version_core=last_core_version_current_django["tag_name"],
+                    version_project=self.core_project_version,
+                ),
                 emoji="rotating_light",
             )
 
         else:
             Utils.show_message(
-                f"Você está na versão mais recente do Core: [green b]{self.current_version}[/]"
+                MESSAGES["success_version"].substitute(
+                    version=self.core_project_version
+                )
             )
 
     def __help(self) -> None:
-        """Exibe a ajuda do comando"""
+        """Show help message"""
         Utils.show_message(
-            f"[green b]AGTEC CORE[/] [cyan b]{self.current_version}[/]\
-            \n\n[yellow b]Comandos[/]\
-            \n[green b]--checkupdate[/] - Verifica se existe uma nova versão do Core\
-            \n[green b]--help[/] ou [green b]-h[/] - Exibe esta mensagem\
-            \n[green b]--version[/] ou [green b]-v[/] - Exibe a versão do Core",
+            MESSAGES["help"].substitute(version=self.core_project_version),
             title=True,
             emoji="rocket",
         )
 
     def handle(self, *args, **options) -> None:
-        """Executa o comando"""
+        """Handle the command"""
 
         if options["version"]:
-            Utils.show_message(f"Versão do Core: [green b]{self.current_version}[/]")
+            Utils.show_message(
+                MESSAGES["version"].substitute(version=self.core_project_version),
+            )
 
         elif options["checkupdate"]:
-            self.__get_tags_from_gitlab()
+            self.__get_tags_from_github()
+            self.__populate_versions()
             self.__check_django_upgrade()
-            self.__check_update()
+
+            if self.__check_core_version():
+                self.__check_core_update()
 
         else:
             self.__help()
