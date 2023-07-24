@@ -3,15 +3,15 @@ import string
 
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from sentry_sdk import capture_exception
 
-from base.settings import PROJECT_NAME
+from base.settings import DEFAULT_FROM_EMAIL, PROJECT_NAME
+from configuracao_core.models import ImagemLogin, LogoSistema
 from core.forms import ValidateUserForm
 from core.utils import get_cache, save_to_cache
-from configuracao_core.models import LogoSistema, ImagemLogin
-
-from .api_email import ApiEmail
 
 
 class RequestPassword(FormView):
@@ -30,15 +30,23 @@ class RequestPassword(FormView):
     def __send_email(email_link: str, emails: list) -> bool:
         """Envia o e-mail de redefinição de senha"""
 
-        return ApiEmail().send_email(
-            subject=f"Redefinição de Senha - {PROJECT_NAME}",
-            message=f"""Recemos uma solicitação de redefinição de senha para sua conta
+        try:
+            send_mail(
+                subject=f"Redefinição de Senha - {PROJECT_NAME}",
+                message="",
+                html_message=f"""Recemos uma solicitação de redefinição de senha para sua conta
             <br/>Se você não fez essa solicitação, ignore este e-mail
             <br/>Acesse o link abaixo para redefinir sua senha
             <br/><br/><a href="{email_link}" target="_blank">{email_link}</a>
             <br/>O link é válido por 5 minutos""",
-            emails=emails,
-        )
+                recipient_list=emails,
+                from_email=DEFAULT_FROM_EMAIL,
+            )
+            return True
+
+        except Exception as e:
+            capture_exception(e)
+            return False
 
     @staticmethod
     def __get_email_code(user: User) -> tuple:
