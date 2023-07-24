@@ -32,7 +32,7 @@ class UsuarioLoginView(LoginView):
         ----------
             self
                 Represent the instance of the object
-            **kwargs
+            kwargs
                 Pass keyworded, variable-length argument list
 
         Returns
