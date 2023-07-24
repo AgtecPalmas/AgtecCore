@@ -120,8 +120,8 @@ class Command(BaseCommand):
                         "management/commands/snippets/sphinx_doc/rst.txt",
                     )
                 )
-                content = content.replace("$App$", app.title())
-                content = content.replace("$app$", app)
+                __content = __content.replace('$App$', app.title())
+                __content = __content.replace('$app$', app)
                 arquivo_rst = f"{self.__docs_path}/source/{app.lower()}.rst"
 
                 with open(
@@ -133,7 +133,7 @@ class Command(BaseCommand):
                 self.build_rst(self, arquivo_rst, "api", app)
 
             subprocess.run(["sphinx-apidoc", "-f", "-o", "doc", "source"])
-            subprocess.run(["sphinx-build", "-M", "html", "doc\source", "doc\source"])
+            subprocess.run(["sphinx-build", "-M", "html", "doc/source", "doc/source"])
         except:
             pass
 
