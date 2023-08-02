@@ -4,9 +4,9 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
-from configuracao_core.models import ImagemLogin, LogoSistema
 from core.forms import ResetPasswordUserForm
 from core.utils import get_cache, save_to_cache
+from core.views.utils import get_default_context_data
 
 
 class ResetPassword(FormView):
@@ -17,10 +17,8 @@ class ResetPassword(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ResetPassword, self).get_context_data(**kwargs)
-        context["background"] = ImagemLogin.get_background()
-        context["logo_sistema"] = LogoSistema.get_logo()
         context["title"] = "Redefinição de Senha"
-        return context
+        return get_default_context_data(context, self)
 
     def get(self, request, *args, **kwargs):
         if not get_cache(self.kwargs.get("email_code")):

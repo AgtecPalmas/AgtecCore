@@ -13,6 +13,9 @@
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
         <link rel="icon" type="image/x-icon" href="{{ imagens_sistema.favicon }}" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet"
+              href="{% static 'core/vendor/libs/fontawesome/css/fontawesome.min.css' %}" />
         <!-- Bootstrap -->
         <link rel="stylesheet"
               href="{% static 'core/vendor/libs/bootstrap/css/bootstrap.min.css' %}" />
@@ -31,7 +34,6 @@
     <body>
         <div class="background" style="background-image: url({{ background }}"></div>
         <div class="login-card">
-            {% include "core/block/notifications.html" %}
             <div class="d-flex flex-column justify-content-center gap-medium">
                 <div class="text-center">
                     <img class="logo-sistema"
@@ -46,9 +48,20 @@
                         {% endblock page_title %}
                     </p>
                 </div>
+                {% include "core/block/notifications.html" %}
                 {% if form.non_field_errors %}
-                    <div class="alert alert-danger text-wrap" role="alert">
-                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    <div class="br-message danger rounder-md">
+                        <div class="icon">
+                            <i class="fas fa-times-circle fa-lg" aria-hidden="true"></i>
+                        </div>
+                        <div class="content">
+                            <span class="message-title">{{ form.non_field_errors.as_text }}</span>
+                        </div>
+                        <div class="close">
+                            <button class="br-button circle small" type="button" aria-label="Fechar">
+                                <i class="fas fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 {% endif %}
                 <form method="post" class="d-flex flex-column gap-medium">
@@ -60,6 +73,8 @@
                             {% endblock submit_text %}
                         </button>
                     </div>
+                    {% block botao_extra %}
+                    {% endblock botao_extra %}
                 </form>
                 <div class="text-center mt-5">
                     <div class="d-flex justify-content-center gap-large">

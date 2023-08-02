@@ -9,9 +9,9 @@ from django.views.generic import FormView
 from sentry_sdk import capture_exception
 
 from base.settings import DEFAULT_FROM_EMAIL, PROJECT_NAME
-from configuracao_core.models import ImagemLogin, LogoSistema
 from core.forms import ValidateUserForm
 from core.utils import get_cache, save_to_cache
+from core.views.utils import get_default_context_data
 
 
 class RequestPassword(FormView):
@@ -88,10 +88,8 @@ class RequestPassword(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(RequestPassword, self).get_context_data(**kwargs)
-        context["background"] = ImagemLogin.get_background()
-        context["logo_sistema"] = LogoSistema.get_logo()
         context["title"] = "Redefinição de Senha"
-        return context
+        return get_default_context_data(context, self)
 
     def form_valid(self, form):
         user = User.objects.get(username=form.cleaned_data["username"])
