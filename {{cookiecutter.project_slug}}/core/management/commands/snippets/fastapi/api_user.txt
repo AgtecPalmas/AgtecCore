@@ -5,9 +5,9 @@ from sqlalchemy.orm import Session
 
 from core.database import get_db
 from authentication import security
-from authentication import cruds as crud_auth
+from authentication import use_cases as crud_auth
 
-from $app$ import schemas, cruds
+from . import schemas, use_cases
 
 router = APIRouter()
 
@@ -21,7 +21,7 @@ def read_$model$s(db: Session = Depends(get_db), skip: int = 0, limit: int = 25)
     """
     Retrieve $model$s.
     """
-    $model$s = cruds.$model$.get_multi(db, skip=skip, limit=limit)
+    $model$s = use_cases.$model$.get_multi(db, skip=skip, limit=limit)
     for $model$ in $model$s:
         $model$.django_user = crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
     return $model$s
@@ -33,7 +33,7 @@ def create_$model$(*, db: Session = Depends(get_db), $model$_in: schemas.$ModelC
     """
     Create new $model$.
     """
-    $model$ = cruds.$model$.create(db, obj_in=$model$_in)
+    $model$ = use_cases.$model$.create(db, obj_in=$model$_in)
     return $model$
 
 
@@ -43,7 +43,7 @@ def read_$model$_by_id($model$_id: str, db: Session = Depends(get_db)) -> Any:
     """
     Get a specific $model$ by id.
     """
-    $model$ = cruds.$model$.get(db, id=$model$_id)
+    $model$ = use_cases.$model$.get(db, id=$model$_id)
     if not $model$:
         raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
     $model$.django_user = crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
@@ -56,10 +56,10 @@ def update_$model$(*, db: Session = Depends(get_db), $model$_id: str, $model$_in
     """
     Update a $model$.
     """
-    $model$ = cruds.$model$.get(db, id=$model$_id)
+    $model$ = use_cases.$model$.get(db, id=$model$_id)
     if not $model$:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = cruds.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
+    $model$ = use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
     return $model$
 
 
@@ -69,10 +69,10 @@ def delete_$model$(*, db: Session = Depends(get_db), id: str) -> Any:
     """
     Delete a $model$.
     """
-    $model$ = cruds.$model$.get(db=db, id=id)
+    $model$ = use_cases.$model$.get(db=db, id=id)
     if not $model$:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = cruds.$model$.remove(db=db, id=id)
+    $model$ = use_cases.$model$.remove(db=db, id=id)
     return $model$
 
 

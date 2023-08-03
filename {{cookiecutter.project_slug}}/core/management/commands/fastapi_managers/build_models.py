@@ -84,7 +84,7 @@ class ModelsBuild:
                         __model = field.related_model._meta
                         attribute = f"ForeignKey('{__model.db_table}.id')"
                         if __model.app_label not in [item.get("app"), "auth"]:
-                            imports += f"from {__model.app_label}.models import {__model.object_name}\n"
+                            imports += f"from {__model.app_label}.{__model.object_name.lower()}.models import {__model.object_name}\n"
                         if item.get("name") != "django_user":
                             relationship = f"\t{item.get('name')} = relationship('{__model.object_name}', foreign_keys=[{field_name}])\n"
 
@@ -94,7 +94,7 @@ class ModelsBuild:
                         attribute = self.__add_attr_default(field, mapped_field)
                     if field.unique is True:
                         attribute += f" ,unique={field.unique}"
-                    result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column(sa.{attribute})\n"
+                    result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
                     if relationship is not None:
                         result += relationship
 
@@ -115,18 +115,18 @@ class ModelsBuild:
                     table = f"{related_item.get('app')}_{_model_name}_{related_item.get('name')}"
                     # Variável contendo o nome da tabela ManyToMany que é utilizado na tabela de ligação
                     table_related_name = f"{model._meta.db_table}_{related_item.get('name')}"
-                    many_to_many += f'{table} = sa.Table("{table_related_name}", Base.metadata,'
-                    many_to_many += "sa.Column('id', Integer, primary_key=True, index=True),"
+                    many_to_many += f'{table} = Table("{table_related_name}", Base.metadata,'
+                    many_to_many += "Column('id', Integer, primary_key=True, index=True),"
 
                     # Verificando se o relacionamento é com ele mesmo
                     if _model_name == _related_model_name and _app_name == _related_model_app:
                         many_to_many += (
-                            f"sa.Column('from_{_model_name}_id', sa.ForeignKey('{model._meta.db_table}.id')),"
+                            f"Column('from_{_model_name}_id', ForeignKey('{model._meta.db_table}.id')),"
                         )
-                        many_to_many += f"sa.Column('to_{_related_model_name}_id', sa.ForeignKey('{__model.db_table}.id')))\n"
+                        many_to_many += f"Column('to_{_related_model_name}_id', ForeignKey('{__model.db_table}.id')))\n"
                     else:
-                        many_to_many += f"sa.Column('{_model_name}_id', sa.ForeignKey('{model._meta.db_table}.id')),"
-                        many_to_many += f"sa.Column('{_related_model_name}_id', sa.ForeignKey('{__model.db_table}.id')))\n"
+                        many_to_many += f"Column('{_model_name}_id', ForeignKey('{model._meta.db_table}.id')),"
+                        many_to_many += f"Column('{_related_model_name}_id', ForeignKey('{__model.db_table}.id')))\n"
 
                     result += f'\t{related_item.get("name")}: Mapped[List["{__model.object_name}"]] = relationship(secondary={table}, backref="{table.replace("_", "")}", lazy="joined")\n'
 
