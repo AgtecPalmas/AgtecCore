@@ -6,6 +6,7 @@ from ..utils import Utils
 
 
 class ModelsBuild:
+    """teste"""
     def __init__(self, command):
         self.command = command
         self.app = self.command.app
