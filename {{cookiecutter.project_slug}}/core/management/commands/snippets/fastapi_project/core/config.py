@@ -5,7 +5,7 @@ from pydantic import AnyHttpUrl, BaseSettings
 """
 Arquivos principal de configuração da app
 
-- Nesse aquivo podem ser incluidas novos atributos que serão lidos pelo arquivo .env
+- Nesse aquivo podem ser incluídas novos atributos que serão lidos pelo arquivo .env
 - APP_NAME no .env se traduz para app_name dentro da aplicação
 """
 

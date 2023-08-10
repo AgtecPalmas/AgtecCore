@@ -1,9 +1,0 @@
-from core.cruds import CRUDBase
-
-from .models import $ModelClass$
-from .schemas import $ModelClass$Create, $ModelClass$Update
-
-class CRUD$ModelClass$(CRUDBase[$ModelClass$, $ModelClass$Create, $ModelClass$Update]):
-    pass
-
-$model$ = CRUD$ModelClass$($ModelClass$)

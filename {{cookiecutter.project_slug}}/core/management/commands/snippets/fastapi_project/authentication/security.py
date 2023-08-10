@@ -1,4 +1,4 @@
-from authentication import cruds, models, schemas
+from authentication import use_cases, models, schemas
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
@@ -9,11 +9,6 @@ from core import security
 from core.config import settings
 from core.database import get_db
 
-"""
-Arquivo com os middlewares de segurança da app
-
-- Neste aquivo e possível obeter o usuário logado de acordo com o token jwt
-"""
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.api_str}/authentication/login"
@@ -33,7 +28,7 @@ def get_current_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Não foi possível validar as credenciais",
         )
-    user = cruds.user.get(db, id=token_data.sub)
+    user = use_cases.user.get(db, id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrador")
     return user
@@ -42,7 +37,7 @@ def get_current_user(
 def get_current_active_user(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
-    if not cruds.user.is_active(current_user):
+    if not use_cases.user.is_active(current_user):
         raise HTTPException(status_code=403, detail="Usuário inativo")
     return current_user
 
@@ -50,7 +45,7 @@ def get_current_active_user(
 def get_current_active_superuser(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
-    if not cruds.user.is_superuser(current_user):
+    if not use_cases.user.is_superuser(current_user):
         raise HTTPException(
             status_code=403, detail="O usuário não tem privilégios suficientes"
         )

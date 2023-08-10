@@ -1,0 +1,9 @@
+from core.use_cases import BaseUseCases
+
+from .models import $ModelClass$
+from .schemas import $ModelClass$Create, $ModelClass$Update
+
+class $ModelClass$UseCase(BaseUseCases[$ModelClass$, $ModelClass$Create, $ModelClass$Update]):
+    pass
+
+$model$ = $ModelClass$UseCase($ModelClass$)
