@@ -10,7 +10,7 @@ from rich import box
 from rich.prompt import Prompt
 
 from .fastapi_managers import (
-    ApiBuild,
+    RoutersBuild,
     CrudsBuild,
     DockerBuild,
     ModelsBuild,
@@ -148,8 +148,8 @@ class Command(BaseCommand):
 
     def __manage_api(self):
         try:
-            ApiBuild(self, apps).build()
-            ApiBuild(self, apps).add_route_core()
+            RoutersBuild(self, apps).build()
+            RoutersBuild(self, apps).add_route_core()
         except Exception as error:
             Utils.show_error(f"Error in __manage_crud: {error}")
 
