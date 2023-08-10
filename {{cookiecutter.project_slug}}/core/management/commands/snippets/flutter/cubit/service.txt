@@ -20,10 +20,11 @@ import '../../../core/dio/custom_dio.dart';
 import '../../../core/exceptions/exception.dart';
 import '../../../core/config.dart';
 import 'model.dart';
+import 'interface.dart';
 
 
-class $ModelClass$Service {
-  String _uri = "${Config.uri}$App$/api/v1/$Model$/";
+class $ModelClass$Service implements $ModelClass$ServiceInterface {
+  String _uri = "${Config.uri}api/v1/$App$/$Model$/";
   $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model();
   List<$ModelClass$Model> _$ModelClassCamelCase$List = [];
 

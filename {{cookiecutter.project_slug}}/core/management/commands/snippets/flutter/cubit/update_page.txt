@@ -12,7 +12,7 @@ import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
 import '../../../../core/util.dart';
-import '../cubit.dart';
+import '../controller.dart';
 import '../model.dart';
 
 class $ModelClass$UpdatePage extends StatefulWidget {
@@ -62,7 +62,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   }
 
   Widget _buildBody() {
-    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           _showMessage(state.error, error: true);
@@ -135,7 +135,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   }
 
   Widget _createButton(context){
-    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is $ModelClass$ProcessState) {
@@ -168,11 +168,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   }
 
   void _put() async {
-    final _$Model$Cubit = context.read<$ModelClass$Cubit>();
+    final _$Model$Controller = context.read<$ModelClass$Controller>();
     try{
        $GetValuesControllers$
 
-      await _$Model$Cubit.put(_$Model$Model);
+      await _$Model$Controller.put(_$Model$Model);
     }catch (e){
     }
   }

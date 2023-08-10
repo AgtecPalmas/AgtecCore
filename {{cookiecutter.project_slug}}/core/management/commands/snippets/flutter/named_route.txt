@@ -1,5 +1,4 @@
-/// Arquivo gerado via manager do Django para controlar as rotas nomeadas
-/// da aplicação.
+/// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
 /// Caso uma nova app seja adicionada no projeto siga os passos abaixo:
 ///   1. Adicionar as constantes nas páginas:
@@ -14,7 +13,7 @@
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
-/// #FileLocked
+/// FileLocked
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';

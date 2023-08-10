@@ -11,7 +11,7 @@ from rich.prompt import Prompt
 
 from .fastapi_managers import (
     RoutersBuild,
-    CrudsBuild,
+    UseCasesBuild,
     DockerBuild,
     ModelsBuild,
     SchemasBuild,
@@ -142,7 +142,7 @@ class Command(BaseCommand):
 
     def __manage_cruds(self):
         try:
-            CrudsBuild(self).build()
+            UseCasesBuild(self).build()
         except Exception as error:
             Utils.show_error(f"Error in __manage_crud: {error}")
 
