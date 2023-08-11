@@ -12,29 +12,31 @@ from django.core.management.base import BaseCommand
 
 from base.settings import FLUTTER_APPS
 from core.management.commands.constants.flutter import DJANGO_TYPES, FLUTTER_TYPES, SQLLITE_TYPES
-from core.management.commands.flutter_managers.build_add_packages import AddPackagesBuilder
-from core.management.commands.flutter_managers.build_auth_app import AuthAppBuilder
-from core.management.commands.flutter_managers.build_controller import ControllerBuilder
-from core.management.commands.flutter_managers.build_custom_colors import CustomColorsBuilder
-from core.management.commands.flutter_managers.build_custom_dio import CustomDIOBuilder
-from core.management.commands.flutter_managers.build_custom_dio_interceptors import CustomDIOInterceptorsBuilder
-from core.management.commands.flutter_managers.build_custom_style import CustomStyleBuilder
-from core.management.commands.flutter_managers.build_data_and_service_layer import DataServiceLayerBuild
-from core.management.commands.flutter_managers.build_exception_class import ExceptionClassBuilder
-from core.management.commands.flutter_managers.build_logger import LoggerBuilder
-from core.management.commands.flutter_managers.build_main_file import MainFileBuilder
-from core.management.commands.flutter_managers.build_models import ModelsBuilder
-from core.management.commands.flutter_managers.build_named_routes import NamedRoutesBuilder
-from core.management.commands.flutter_managers.build_pages import PagesBuilder
-from core.management.commands.flutter_managers.build_register_controller import RegisterProviderControllerBuilder
-from core.management.commands.flutter_managers.build_settings_controller import SettingsControllerBuilder
-from core.management.commands.flutter_managers.build_sized_extensions import SizedExtensionsBuilder
-from core.management.commands.flutter_managers.build_source_files import SourceFileBuilder
-from core.management.commands.flutter_managers.build_string_extensions import StringExtensionsBuilder
-from core.management.commands.flutter_managers.build_translate_strings import TranslateStringBuilder
-from core.management.commands.flutter_managers.build_user_interface import UserInterfaceBuilder
-from core.management.commands.flutter_managers.build_utils import UtilsBuilder
-from core.management.commands.flutter_managers.build_widget import WidgetBuilder
+from core.management.commands.flutter_managers import (
+    AddPackagesBuilder,
+    AuthAppBuilder,
+    ControllerBuilder,
+    CustomColorsBuilder,
+    CustomDIOBuilder,
+    CustomDIOInterceptorsBuilder,
+    CustomStyleBuilder,
+    DataServiceLayerBuild,
+    ExceptionClassBuilder,
+    LoggerBuilder,
+    MainFileBuilder,
+    ModelsBuilder,
+    NamedRoutesBuilder,
+    PagesBuilder,
+    RegisterProviderControllerBuilder,
+    SettingsControllerBuilder,
+    SizedExtensionsBuilder,
+    SourceFileBuilder,
+    StringExtensionsBuilder,
+    TranslateStringBuilder,
+    UserInterfaceBuilder,
+    UtilsBuilder,
+    WidgetBuilder,
+)
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
 
