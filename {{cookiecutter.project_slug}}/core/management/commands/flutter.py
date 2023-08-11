@@ -44,27 +44,6 @@ logger = logging.getLogger("django_debug")
 
 
 class AppModel:
-    """Classe responsável pelo processo de análise do models do Django para
-    gerar os arquivos tantos do projeto Django como do Flutter
-
-    Arquivos Django Gerados:
-        1 - templates (create, list, update, detail, delete)
-        2 - forms
-        3 - views
-        4 - urls
-        5 - api_views
-        6 - api_urls
-        7 - serializers
-
-    Arguments:
-        path_flutter {String} -- Caminho do projeto Flutter
-        app_name {String} -- Nome do app do projeto que será mapeada para gerar os arquivos do projeto
-
-    Keyword Arguments:
-        model_name {String} -- Nome do models a ser mapeado, caso não seja passado o script fará a
-                               análise de todos os models da app (default: {None})
-    """
-
     def __init__(self, path_flutter, app_name, model_name=None):
         try:
             self.path_flutter = path_flutter
@@ -373,20 +352,12 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_flutter: {error}")
 
-    # ----------------------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------------------
-    #                       REFATORADOS PARA MANAGER EXTERNO
-    # ----------------------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------------------
-
-    # Refatorado - OK
     def _build_auth_app(self):
         try:
             AuthAppBuilder(command=self).build()
         except Exception as error:
             Utils.show_error(f"Error in __build_auth_app {error}")
 
-    # Refatorado - OK
     def _register_providers_controller(self) -> tuple:
         try:
             return RegisterProviderControllerBuilder(command=self).build()
@@ -394,7 +365,6 @@ class Command(BaseCommand):
             Utils.show_error(f"Error in _register_providers_controller: {error}")
             return None, None
 
-    # Refatorado - OK
     def _build_widget(self, app):
         try:
             __widget_file = Path(f"{app.get_path_views_dir()}/widget.dart")
@@ -404,7 +374,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_widget {error}")
 
-    # Refatorado - OK
     def _build_exception_class(self):
         try:
             _path_directory = Path(f"{self.flutter_dir}/lib/core/exceptions")
@@ -415,7 +384,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_exception_class: {error}")
 
-    # Refatorado - OK
     def _build_custom_dio_interceptors(self):
         try:
             _path = Path(f"{self.flutter_dir}/lib/core/dio/interceptors")
@@ -425,7 +393,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_custom_dio_interceptors {error}")
 
-    # Refatorado - OK
     def _build_custom_dio(self):
         try:
             _path_directory = Path(f"{self.flutter_dir}/lib/core/dio")
@@ -435,7 +402,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_custom_dio {error}")
 
-    # Refatorado - OK
     def _build_custom_style(self):
         try:
             if not Utils.check_dir(self.ui_dir):
@@ -444,7 +410,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_custom_style {error}")
 
-    # Refatorado - OK
     def _build_sized_extensions(self):
         try:
             if not Utils.check_dir(self.ui_extensions):
@@ -453,7 +418,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_sized_extensions {error}")
 
-    # Refatorado - OK
     def _build_string_extensions(self):
         try:
             if not Utils.check_dir(self.ui_extensions):
@@ -462,7 +426,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_string_extensions {error}")
 
-    # Refatorado - OK
     def _build_logger_file(self):
         try:
             if not Utils.check_dir(self.core_dir):
@@ -471,7 +434,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_logger_file {error}")
 
-    # Refatorado - OK
     def _controller_parser(self, app):
         try:
             if app.model is None:
@@ -480,7 +442,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _controller_parser: {error}")
 
-    # Refatorado - OK
     def _data_local_and_service_layer_parser(self, app: AppModel):
         try:
             if app.model is None:
@@ -489,7 +450,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _data_local_and_service_layer_parser: {error}")
 
-    # Refatorado - OK
     def _model_parser(self, app):
         try:
             if app.model is None:
@@ -498,7 +458,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _model_parser: {error}")
 
-    # Refatorado - OK
     def _build_custom_colors(self):
         try:
             # Verificando se o diretório das extensions existe
@@ -508,7 +467,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_custom_colors {error}")
 
-    # Refatorado - OK
     def _build_config_utils_file(self):
         try:
             if not Utils.check_dir(self.core_dir):
@@ -517,7 +475,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_utils {error}")
 
-    # Refatorado - OK
     def _build_named_routes(self):
         try:
             path_routes = Path(f"{self.flutter_dir}/lib/routers.dart")
@@ -529,7 +486,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_message(f"Error in __create_name_route: {error}")
 
-    # Refatorado - OK
     def _buid_settings(self):
         try:
             if not Utils.check_dir(self.app_configuration):
@@ -538,7 +494,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _buid_settings: {error}")
 
-    # Refatorado - OK
     def _build_user_interface(self):
         try:
             if not Utils.check_dir(self.ui_dir):
@@ -547,21 +502,18 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_user_interface: {error}")
 
-    # Refatorado - OK
     def _add_packages(self):
         try:
             AddPackagesBuilder(command=self).build()
         except Exception as error:
             Utils.show_error(f"Error in _add_packages: {error}")
 
-    # Refatorado - OK
     def _build_translate_strings(self):
         try:
             TranslateStringBuilder(command=self).build()
         except Exception as error:
             Utils.show_error(f"Error in _build_translate_strings: {error}")
 
-    # Refatorado - OK
     def _create_source_from_model(self):
         Utils.show_message("Criando as apps baseado na App e no Model")
         try:
@@ -569,7 +521,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __create_source_from_model: {error}")
 
-    # Refatorado - OK
     def _create_source_from_generators(self):
         Utils.show_message("Criando as apps baseado na App e nos Generators")
         try:
@@ -578,7 +529,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __create_source_from_generators: {error}")
 
-    # Refatorado - OK
     def _create_source_files(self, app_name, model_name):
         try:
             if app_name is None:
@@ -605,25 +555,22 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _create_source_file: {error}")
 
-    # Refatorado - OK
     def _replace_main(self):
         try:
             MainFileBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
         except Exception as error:
             Utils.show_error(f"Error in __replace_main: {error}")
 
-    # ----------------------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------------------
-    #                      FIM DOS REFATORADOS PARA MANAGER EXTERNO
-    # ----------------------------------------------------------------------------------------------------------------
-    # ----------------------------------------------------------------------------------------------------------------
+    def _check_flutter_installation(self) -> bool:
+        if subprocess.call("flutter --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
+            Utils.show_error("Flutter não está instalado na máquina.")
+            return False
+        return True
 
     def call_methods(self, options):
-        """
-        Método que identifica qual comando foi solicitado pelo usuário para ser executado, antes de chamar o método,
-        as entradas informadas pelo usuário são validadas, evitando erros de execução do programa devido à ausência de
-        parâmetros obrigatórios.
-        """
+        if self._check_flutter_installation() is False:
+            Utils.show_error("Flutter não está instalado na máquina.", exit=True)
+            return 
 
         if options["main"]:
             self._replace_main()
@@ -643,7 +590,6 @@ class Command(BaseCommand):
             self._build_auth_app()
             self._build_flutter()
 
-            # Refatorado para manager externo - OK
             self._build_user_interface()
             self._build_named_routes()
             self._buid_settings()

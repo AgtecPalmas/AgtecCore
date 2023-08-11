@@ -22,16 +22,19 @@ class NamedRoutesBuilder:
         self._imports_apps = ""
         self._snippet_imports = "import 'apps/$APP$/$model$/pages/$page$.dart';"
         self._snippet_route = "case $ClassName$$PageName$.routeName:\n"
-        self._snippet_route += "    return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$());\n"
+        self._snippet_route += "    return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$(),);\n"
 
         # Snippet para rotas de edição e detalhamento
         self._snippet_route_created_updated = "case $ClassName$$PageName$.routeName:\n"
         self._snippet_route_created_updated += "  if(args is $ClassName$Model)\n"
         self._snippet_route_created_updated += (
             "    return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$("
-            "$ModelClassCamelCase$Model: args));\n"
+            "$ModelClassCamelCase$Model: args,),);\n"
         )
-        self._snippet_route_created_updated += "  return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$($ModelClassCamelCase$Model: $ClassName$Model()));\n"
+        self._snippet_route_created_updated += (
+            "  return CupertinoPageRoute(builder: (_) => "
+            "$ClassName$$PageName$($ModelClassCamelCase$Model: $ClassName$Model(),),);\n"
+        )
 
         self._routes_target_file = Path(f"{self._flutter_dir}/lib/routers.dart")
         self._routes_snippet_file = Path(f"{self._snippet_dir}/named_route.txt")
