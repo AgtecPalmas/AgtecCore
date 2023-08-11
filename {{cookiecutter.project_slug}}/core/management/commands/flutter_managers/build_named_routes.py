@@ -5,11 +5,9 @@ from core.management.commands.utils import Utils
 
 
 class NamedRoutesBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, flutter_apps) -> None:
         self.command = command
-        self.app = app
-        self._app_name = self.app.app_name
-        self._app_name_lower = self._app_name.lower()
+        self._flutter_apps = flutter_apps
         self._snippet_dir = self.command.snippet_dir
         self._flutter_dir = self.command.flutter_dir
         self._current_model = None
@@ -20,6 +18,7 @@ class NamedRoutesBuilder:
         self._imports_name = ["index", "list", "detail", "update", "create"]
         self._routers_apps = ""
         self._imports_apps = ""
+        self._app_name_lower = ""
         self._snippet_imports = "import 'apps/$APP$/$model$/pages/$page$.dart';"
         self._snippet_route = "case $ClassName$$PageName$.routeName:\n"
         self._snippet_route += "    return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$(),);\n"
@@ -40,18 +39,31 @@ class NamedRoutesBuilder:
         self._routes_snippet_file = Path(f"{self._snippet_dir}/named_route.txt")
 
     def build(self):
+        """
+        build _summary_
+
+        Raises
+        ------
+        error
+            _description_
+        """
+        from core.management.commands.flutter import AppModel
+
         try:
             self._content = Utils.get_snippet(str(self._routes_snippet_file))
-            for _model in self.app.models:
-                self._current_model = _model[1]
-                for _page_name in self._pages_name:
-                    self._current_page_name = _page_name
-                    self._build_routers()
-                self._build_import_names()
-                self._save_file()
-        except Exception as e:
-            Utils.show_error(f"Erro ao executar o build de NamedRoutesBuilder: {e}")
-            raise e
+            for app in self._flutter_apps:
+                self._app_name_lower = app.lower()
+                _current_app = AppModel(self.command.flutter_project, app)
+                for _model in _current_app.models:
+                    self._current_model = _model[1]
+                    for _page_name in self._pages_name:
+                        self._current_page_name = _page_name
+                        self._build_routers()
+                    self._build_import_names()
+            self._save_file()
+        except Exception as error:
+            Utils.show_error(f"Erro ao executar o build de NamedRoutesBuilder: {error}")
+            raise error
 
     def _save_file(self):
         try:
@@ -61,9 +73,9 @@ class NamedRoutesBuilder:
                 )
                 with open(self._routes_target_file, "w", encoding="utf-8") as _file:
                     _file.write(_content)
-        except Exception as e:
-            Utils.show_error(f"Erro ao executar o _save_file de NamedRoutesBuilder: {e}", exit=True)
-            raise e
+        except Exception as error:
+            Utils.show_error(f"Erro ao executar o _save_file de NamedRoutesBuilder: {error}", exit=True)
+            raise error
 
     def _build_import_names(self):
         try:
@@ -78,9 +90,9 @@ class NamedRoutesBuilder:
             self._imports_apps += _import_string.replace("$APP$", self._app_name_lower).replace(
                 "$model$", self._current_model.lower()
             )
-        except Exception as e:
-            Utils.show_error(f"Erro ao executar o _build_import_names de NamedRoutesBuilder: {e}")
-            raise e
+        except Exception as error:
+            Utils.show_error(f"Erro ao executar o _build_import_names de NamedRoutesBuilder: {error}")
+            raise error
 
     def _build_routers(self):
         try:
@@ -95,6 +107,6 @@ class NamedRoutesBuilder:
                     "$PageName$", self._current_page_name
                 )
             self._routers_apps += "\n"
-        except Exception as e:
-            Utils.show_error(f"Erro ao executar o _build_routers de NamedRoutesBuilder: {e}")
-            raise e
+        except Exception as error:
+            Utils.show_error(f"Erro ao executar o _build_routers de NamedRoutesBuilder: {error}")
+            raise error

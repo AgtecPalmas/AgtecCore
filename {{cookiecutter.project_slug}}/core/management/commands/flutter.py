@@ -480,9 +480,9 @@ class Command(BaseCommand):
             path_routes = Path(f"{self.flutter_dir}/lib/routers.dart")
             if Utils.check_file_is_locked(path_routes):
                 return
-            for app in FLUTTER_APPS:
-                _current_app = AppModel(self.flutter_project, app)
-                NamedRoutesBuilder(command=self, app=_current_app).build()
+            # for app in FLUTTER_APPS:
+            #     _current_app = AppModel(self.flutter_project, app)
+            NamedRoutesBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
         except Exception as error:
             Utils.show_message(f"Error in __create_name_route: {error}")
 
@@ -570,7 +570,7 @@ class Command(BaseCommand):
     def call_methods(self, options):
         if self._check_flutter_installation() is False:
             Utils.show_error("Flutter não está instalado na máquina.", exit=True)
-            return 
+            return
 
         if options["main"]:
             self._replace_main()
