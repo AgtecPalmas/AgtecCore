@@ -53,7 +53,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
-    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _loadData();
     });
   }

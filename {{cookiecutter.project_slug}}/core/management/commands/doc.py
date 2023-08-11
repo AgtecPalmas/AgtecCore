@@ -137,7 +137,6 @@ class Command(BaseCommand):
         except:
             pass
 
-    #Metodo criado para o build automatico de arquivos de Views modulares da pasta views
     @staticmethod
     def build_rst(self, arquivo_rst, modulo, app):
         with open(arquivo_rst, "a") as arquivo:

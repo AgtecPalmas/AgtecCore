@@ -130,7 +130,6 @@ class AuthService {
         final djangoUser = await signInDjangoUser(auth.login, userType);
         if (djangoUser != null) {
           auth.id = djangoUser.id;
-          auth.cpf = djangoUser.cpf;
           auth.uuid = djangoUser.id;
           auth.name = djangoUser.nome;
           auth.login = djangoUser.email;

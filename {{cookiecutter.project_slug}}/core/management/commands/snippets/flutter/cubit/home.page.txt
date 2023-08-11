@@ -122,7 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 return CupertinoPageScaffold(child: _buildGridView(context));
               },
             );
-            break;
           case 1:
             return CupertinoTabView(
               onGenerateRoute: RouteGenerator.generateRoute,
@@ -130,9 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 return CupertinoPageScaffold(child: SettingsIndexPage());
               },
             );
-            break;
           default:
-            return Container();
+            return SizedBox.shrink();
         }
       },
     );
@@ -147,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
           bottom: 10,
         ),
         child: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           children: List.generate(_itensMenuGridView.list.length, (index) {
             return Center(
               child: GestureDetector(

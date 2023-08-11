@@ -1,15 +1,16 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 /// Model do objeto $ModelClass$
 /// 
 /// Os Métodos padrões gerados são:
 ///     toString() -> Sobrescreve o toString para trazer todos os atributos da classe.
 ///     fromMap() -> Realiza o parser do Json para o Model.
 ///     toMap()   -> Realiza o parser do Model para Json.
-///
-
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
 /// 
 import 'dart:convert';
 import 'dart:developer' as dev;
