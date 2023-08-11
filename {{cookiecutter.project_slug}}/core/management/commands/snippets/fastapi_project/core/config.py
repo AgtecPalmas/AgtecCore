@@ -1,6 +1,8 @@
 from typing import List
 
-from pydantic import AnyHttpUrl, BaseSettings
+from pydantic import AnyHttpUrl
+
+from pydantic_settings import BaseSettings
 
 """
 Arquivos principal de configuração da app
@@ -23,6 +25,10 @@ class Settings(BaseSettings):
     db_database: str
     db_username: str
     db_password: str
+
+    app_env: str
+    app_debug: str
+    django_url: str
 
     class Config:
         env_file = ".env"
