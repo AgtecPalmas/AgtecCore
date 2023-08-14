@@ -17,12 +17,16 @@ class Settings(BaseSettings):
     app_url: AnyHttpUrl
     backend_cors_origins: List[AnyHttpUrl] = ["http://localhost"]
 
-    db_connection: str
+    db_engine: str
     db_host: str
     db_port: int
-    db_database: str
-    db_username: str
+    db_name: str
+    db_user: str
     db_password: str
+
+    app_env: str
+    app_debug: str
+    django_url: str
 
     class Config:
         env_file = ".env"

@@ -7,12 +7,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'apps/auth/cubit.dart';
 import 'apps/configuracao/cubit.dart';
 import 'apps/configuracao/index.page.dart';
 import 'apps/usuario/usuario/pages/list.dart' as UsuarioUsuarioViews;
+import 'core/agtec.logger.dart';
 import 'core/config.dart';
 import 'core/user_interface/widget.dart';
 import 'core/util.dart';
@@ -43,6 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _currentIndexPage = 0;
     _itensMenuGridView.make();
+    _defaultAuthenticationFastAPI();
+  }
+
+    Future<void> _defaultAuthenticationFastAPI() async {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      try {
+        AuthCubit().defaultAuthenticationFastAPI();
+      } catch (error, stackTrace) {
+        AgteCoreLogger().erro(error.toString(), stackTrace);
+      }
+    });
   }
 
   @override

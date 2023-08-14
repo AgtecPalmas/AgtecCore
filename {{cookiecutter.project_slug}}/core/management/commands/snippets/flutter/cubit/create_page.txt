@@ -1,13 +1,16 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
-import 'dart:developer' as dev;
+///
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/user_interface/custom.style.dart';
+import '../../../../core/agtec.logger.dart';
 import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
@@ -88,7 +91,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
                     _showMessage(state.error, error: true);
-                    dev.log("Erro no BlocConsumer CreatePage", name: "AgtecCore", error: state.error.toString());
+                    AgteCoreLogger().erro("Ocorreu o erro no BlocConsumer CreatePage", state.error.toString());
                   }
                   if(state is $ModelClass$SuccessState){
                     _showMessage(state.successMessage);
@@ -165,8 +168,8 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       $GetValuesControllers$
       _$Model$Controller.$Model$Model = _$Model$Model;
       await _$Model$Controller.post(_$Model$Model);
-    }catch (e, s){
-      dev.log("CreatePage", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }catch (error, stackTrace){
+      AgteCoreLogger().erro("Ocorreu o erro no _post do PageCreate", error, stackTrace);
     }
   }
 

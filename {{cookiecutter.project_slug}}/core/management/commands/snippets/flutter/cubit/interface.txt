@@ -1,4 +1,9 @@
-/// Interface Service do model $ModelClass$
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
 /// 
 /// Os Métodos padrões gerados são:
 ///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
@@ -7,12 +12,6 @@
 ///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
 ///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
 ///
-/// Os métodos de acesso à API devem ser implementados no nessa classe.
-
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
 
 
 import 'model.dart';

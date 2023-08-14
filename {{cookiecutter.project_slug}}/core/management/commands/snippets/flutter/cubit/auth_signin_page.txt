@@ -7,7 +7,6 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../core/user_interface/widget.dart';
 
-
 class SigninPage extends StatefulWidget {
   @override
   _SigninPageState createState() => _SigninPageState();

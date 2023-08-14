@@ -5,14 +5,15 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
 
 ## Etapas para rodar o projeto
 
-1. Configurando o projeto para executar no Android
-1.1 Alterar o versão do compileSdkVersion para **33** no arquivo build.gradle no caminho **android/app/build.gradle**
+1. Criar um repositório git
+2. Configurando o projeto para executar no Android
+2.1 Alterar o versão do compileSdkVersion para **33** no arquivo build.gradle no caminho **android/app/build.gradle**
     ```code
         android {
             compileSdkVersion 33
         ...
     ```
-    1.2 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
+    2.2 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
     ```code
         defaultConfig {
             ...
@@ -20,7 +21,7 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
             ...
         }
     ```
-    1.3 Alterar no arquivo **android/app/build.gradle** o **minSdkVersion** para **19**
+    2.3 Alterar no arquivo **android/app/build.gradle** o **minSdkVersion** para **19**
     ```code
         defaultConfig {
             ...    
@@ -28,7 +29,7 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
             ...
         }
     ```
-    1.4 Alterar no arquivo **android/app/build.gradle** o **targetSdkVersion** para **30**
+    2.4 Alterar no arquivo **android/app/build.gradle** o **targetSdkVersion** para **30**
     ```code
         defaultConfig {
             ...    
@@ -37,13 +38,31 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
         }
     ```
 
-2. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
+1. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
+2. Configurar o VsCode para executar o Flutter do FVM [https://fvm.app/docs/getting_started/configuration] (Etapa opcional)
 3. Criar o projeto no Firebase [https://firebase.google.com/] (Etapa opcional)
 4. Ativar a funcionalidade de autenticacao (Etapa opcional)
 5. Baixar o arquivo google (Etapa opcional)
 6. Configurar o projeto no Android e iOS para trabalhar com a autenticação, conforme documentação do Flutter (Etapa opcional)
 7. Configurar no arquivo lib/core/config.dart a costante uriDeveloper apontando para a URL da API do projeto DRF ou FastAPI
 8. Configurar no arquivo lib/core/config.dart a costante DRFToken para o token de ambiente de desenvolvimento.
+9. No arquivo main.dart descomente as linhas abaixo no método main() para configurar o Firebase (Etapa opcional)
+
+```dart
+void main() async {
+    /// Descomentar as linhas abaixo para inicializar o Firebase
+    
+    // WidgetsFlutterBinding.ensureInitialized();
+    // await Firebase.initializeApp();
+    runApp(MyApp());
+}
+```
+
+## Versões do flutter validadas
+
+- 3.0.4
+- 3.3.0
+- 3.3.10
 
 ## O projeto gerado contém as seguinte estrutura
 

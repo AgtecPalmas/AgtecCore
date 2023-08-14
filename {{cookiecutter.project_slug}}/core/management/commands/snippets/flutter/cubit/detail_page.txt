@@ -1,9 +1,11 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
-import 'dart:developer' as dev;
+///
+import '../../../../core/agtec.logger.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +49,7 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           _showMessage(state.error, error: true);
-          dev.log("Erro no BlocConsumer", name: "AgtecCore", error: state.error.toString());
+          AgteCoreLogger().erro("Ocorreu o erro ao executar o Detail Page BlocConsumer", state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
           _showMessage(state.successMessage);

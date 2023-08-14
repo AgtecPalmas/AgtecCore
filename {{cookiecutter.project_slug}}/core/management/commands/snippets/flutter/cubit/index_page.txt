@@ -1,12 +1,10 @@
-/// View/Page inicial de um $ModelClass$
-/// Caso seja necessário criar uma página anterior à da listagem
-/// deve ser alterado o código abaixo e depois alterar a URL de
-/// navegação vinda da main.dart
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
+///
 
 import 'package:flutter/material.dart';
 
