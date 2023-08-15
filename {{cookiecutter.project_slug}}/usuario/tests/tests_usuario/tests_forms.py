@@ -1,5 +1,6 @@
 import pytest
 from faker import Faker
+
 from usuario.forms import UsuarioForm
 from usuario.models import Usuario
 

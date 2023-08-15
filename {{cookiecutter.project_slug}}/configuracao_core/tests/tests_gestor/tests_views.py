@@ -1,5 +1,4 @@
 import pytest
-
 from django.contrib.auth.models import User
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test import RequestFactory
@@ -7,10 +6,14 @@ from django.urls import reverse
 from faker import Faker
 from model_bakery import baker
 
-from configuracao_core.models import (Gestor, )
-from configuracao_core.views import (GestorCreateView, GestorDeleteView,
-                                           GestorDetailView, GestorListView,
-                                           GestorUpdateView, )
+from configuracao_core.models import Gestor
+from configuracao_core.views import (
+    GestorCreateView,
+    GestorDeleteView,
+    GestorDetailView,
+    GestorListView,
+    GestorUpdateView,
+)
 
 
 class TestGestorViews:
@@ -21,7 +24,9 @@ class TestGestorViews:
         self.faker = Faker("pt_BR")
         self.factory = RequestFactory()
         self.user = User.objects.create_superuser(
-            username="teste", email="teste@email.com.br", password="senha_padrao_deve_ser_mudada"
+            username="teste",
+            email="teste@email.com.br",
+            password="senha_padrao_deve_ser_mudada",
         )
         self.gestor = baker.make(Gestor)
 

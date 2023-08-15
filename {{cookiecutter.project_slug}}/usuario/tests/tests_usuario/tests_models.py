@@ -2,6 +2,7 @@ import pytest
 from django.core import mail
 from faker import Faker
 from model_bakery import baker
+
 from usuario.models import Usuario
 
 

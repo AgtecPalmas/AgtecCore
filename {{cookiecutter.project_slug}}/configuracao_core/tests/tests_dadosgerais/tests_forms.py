@@ -1,11 +1,8 @@
-
 import pytest
-
 from faker import Faker
 
-
-from configuracao_core.forms import (DadosGeraisForm)
-from configuracao_core.models import (DadosGerais)
+from configuracao_core.forms import DadosGeraisForm
+from configuracao_core.models import DadosGerais
 
 
 class TestDadosGeraisForms:

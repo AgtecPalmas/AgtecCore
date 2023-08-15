@@ -1,0 +1,30 @@
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+#FileLocked
+-->
+{% extends "core/index_restore.html" %}
+{% load base %}
+{% block title %}
+    Restaurar Configuração
+{% endblock title %}
+{% block title_modulo %}
+    Configuração
+{% endblock title_modulo %}
+{% block titlerestore_app %}
+    <h3 class="m-4">Restaurar: {{ object }} ?</h3>
+{% endblock titlerestore_app %}
+{% block restore_app %}
+    <form class="needs-validation was-validated flex-buttons-end gap-small"
+          method="post"
+          novalidate>
+        {% csrf_token %}
+        <div>
+            <a href="{% url 'configuracao_core:imagemgenerica-list' %}"
+               class="br-button block">Cancelar</a>
+        </div>
+        <div>
+            <button type="submit" class="br-button block primary" value="Restaurar">Restaurar</button>
+        </div>
+    </form>
+{% endblock restore_app %}

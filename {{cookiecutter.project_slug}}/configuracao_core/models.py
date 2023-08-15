@@ -1,9 +1,9 @@
 from random import randint
 
-from base.settings import MEDIA_URL
 from django.db import models
 from django.utils.html import format_html
 
+from base.settings import MEDIA_URL
 from core.models import Base
 from core.utils import get_cache, get_full_url_static, save_file_to, save_to_cache
 from core.validators import FileMaxSizeValidator

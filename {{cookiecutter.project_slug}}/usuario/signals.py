@@ -64,7 +64,6 @@ def signal_save_usuario_django(sender, instance, created, **kwargs):
         except Exception as error:
             print(f"Erro ao Inativar o DjangoUser: {error}")
 
-
 @receiver(post_delete, sender=Usuario)
 def signal_delete_usuario_django(sender, instance, **kwargs):
     # Deleta o Django User quando o usuário for deletado

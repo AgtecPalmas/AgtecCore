@@ -1,9 +1,8 @@
 import pytest
-
 from faker import Faker
 
-from configuracao_core.forms import (GestorForm, )
-from configuracao_core.models import (Gestor, )
+from configuracao_core.forms import GestorForm
+from configuracao_core.models import Gestor
 
 
 class TestGestorForms:
@@ -13,16 +12,15 @@ class TestGestorForms:
     def init(self, db):
         self.faker = Faker()
         self.valid_data = {
-            'nome': self.faker.name(),
-            'email': self.faker.email(),
-            'funcao': self.faker.job(),
-            'telefone': "63999999999",
-
+            "nome": self.faker.name(),
+            "email": self.faker.email(),
+            "funcao": self.faker.job(),
+            "telefone": "63999999999",
         }
         self.invalid_data = {
-            'nome': self.faker.name(),
-            'email': self.faker.email(),
-            'funcao': self.faker.job(),
+            "nome": self.faker.name(),
+            "email": self.faker.email(),
+            "funcao": self.faker.job(),
         }
 
     def test_gestor_create(self, init):

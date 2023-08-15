@@ -1,0 +1,87 @@
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+#FileLocked
+-->
+{% extends "core/index_list.html" %}
+{% load base %}
+{% block title %}
+    Listagem Usuário
+{% endblock title %}
+{% block title_modulo %}
+    <h4 class="font-weight-bold m-1">Usuário - {{ model_name }}</h4>
+{% endblock title_modulo %}
+<!-- Bloco para passagem da URL do formulário de cadastro -->
+{% block uriadd %}
+    {% url "usuario:usuario-create" %}
+{% endblock uriadd %}
+{% block list_app %}
+    <table>
+        <thead>
+            <tr>
+                <th class="table-actions" scope="col">Ações</th>
+                <th></th>
+                <th>Nome</th>
+                <th>E-Mail</th>
+                <th>Telefone</th>
+                <th>Endereço Residencial</th>
+                <th scope="col" class="table-delete"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in usuario %}
+                <tr {% if item.deleted %}class="deleted"{% endif %}>
+                    <td class="text-center">
+                        {% if perms.usuario.view_usuario %}
+                            <a href="{% url 'usuario:usuario-detail' item.pk %}"
+                               class="br-button circle primary small m-1"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Visualizar">
+                                <i class="fas fa-eye fa-sm"></i>
+                            </a>
+                        {% endif %}
+                        {% if perms.usuario.change_usuario %}
+                            <a href="{% url 'usuario:usuario-update' item.pk %}"
+                               class="br-button secondary circle small m-1"
+                               data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Editar">
+                                <i class="fas fa-pencil-alt fa-sm"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td></td>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.telefone }}</td>
+                    <td>{{ item.endereco }}</td>
+                    <td class="text-center">
+                        {% if perms.usuario.delete_usuario %}
+                            {% if item.deleted %}
+                                <a href="{% url 'usuario:usuario-restore' item.pk %}"
+                                   class="br-button circle small text-success"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Restaurar">
+                                    <i class="fas fa-trash-restore fa-sm"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'usuario:usuario-delete' item.pk %}"
+                                   class="br-button circle small text-danger"
+                                   data-toggle="tooltip"
+                                   data-placement="bottom"
+                                   title="Excluir">
+                                    <i class="fas fa-trash fa-sm"></i>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock list_app %}
+{% block size_itens %}
+    Exibindo {{ usuario.count }} de {{ paginator.count }} itens encontrados.
+{% endblock size_itens %}

@@ -6,9 +6,13 @@ from core.forms import BaseForm
 from core.utils import somente_numeros
 
 from .models import (
-    ImagensSistema,
     DadosGerais,
     Gestor,
+    ImagemGenerica,
+    ImagemLogin,
+    ImagensSistema,
+    LogoSistema,
+    RedeSocial,
 )
 
 
@@ -83,3 +87,35 @@ class ImagensSistemaForm(BaseForm):
     class Meta:
         exclude = ["deleted", "enabled"]
         model = ImagensSistema
+
+
+class ImagemLoginForm(BaseForm):
+    """Form padrão para o model ImagemLogin"""
+
+    class Meta:
+        exclude = ["deleted", "enabled"]
+        model = ImagemLogin
+
+
+class LogoSistemaForm(BaseForm):
+    """Form padrão para o model LogoSistema"""
+
+    class Meta:
+        exclude = ["deleted", "enabled"]
+        model = LogoSistema
+
+
+class RedeSocialForm(BaseForm):
+    """Form padrão para o model RedeSocial"""
+
+    class Meta:
+        exclude = ["deleted", "enabled"]
+        model = RedeSocial
+
+
+class ImagemGenericaForm(BaseForm):
+    """Form padrão para o model ImagemGenerica"""
+
+    class Meta:
+        exclude = ["deleted", "enabled"]
+        model = ImagemGenerica

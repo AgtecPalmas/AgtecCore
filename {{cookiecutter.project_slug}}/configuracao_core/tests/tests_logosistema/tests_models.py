@@ -2,7 +2,7 @@ import pytest
 from faker import Faker
 from model_bakery import baker
 
-from configuracao_core.models import (LogoSistema)
+from configuracao_core.models import LogoSistema
 
 
 class TestLogoSistemaModels:

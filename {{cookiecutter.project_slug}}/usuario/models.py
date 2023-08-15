@@ -1,6 +1,7 @@
-from core.models import Base
 from django.contrib.auth.models import User
 from django.db import models
+
+from core.models import Base
 
 
 class Usuario(Base):

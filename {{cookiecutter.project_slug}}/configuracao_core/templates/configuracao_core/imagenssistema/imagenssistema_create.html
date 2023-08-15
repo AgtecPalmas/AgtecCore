@@ -1,0 +1,229 @@
+{% extends "core/index_create.html" %}
+{% load base %}
+{% load static %}
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+#FileLocked
+-->
+{% block title %}
+    Criação de Configuração
+{% endblock title %}
+<span class="text-muted font-weight-light"></span>
+{% block title_modulo %}
+    <h4 class="font-weight-bold py-3 mb-4">
+        <span class="text-muted font-weight-light">Configuração /</span> Adicionar {{ model_name }}
+    </h4>
+{% endblock title_modulo %}
+<div class="row">
+    {% block menu_app %}
+        {% for app in apps %}
+            {% if app.real_name_app.lower == 'configuracao_core' %}
+                {% for model in app.models_app %}
+                    {% if model|has_view_permission:request %}
+                        <div class="col-xl-12">
+                            <i class="ion ion-md-arrow-dropight text-muted"></i> &nbsp;
+                            <a href="{% url model.path_url %}">{{ model.name_model|title }}</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endblock menu_app %}
+    {% block form_app %}
+        <div class="col-xl-12">
+            <form id="form_principal"
+                  class="needs-validation was-validated"
+                  method="post"
+                  novalidate
+                  enctype="multipart/form-data">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {% for hidden_field in form.hidden_fields %}{{ hidden_field }}{% endfor %}
+                    {% if form.non_field_errors %}
+                        <div class="br-message danger rounder-md" role="alert">
+                            <div class="content">
+                                {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                            </div>
+                            <div class="close">
+                                <button class="br-button circle small" type="button" aria-label="Fechar">
+                                    <i class="fas fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-row">
+                        {% if form.footer_principal in form.visible_fields %}
+                            <div class="form-group col-md-6">
+                                {{ form.footer_principal.label_tag }}
+                                {{ form.footer_principal }}
+                                <div class="invalid-feedback">Campo Requerido.</div>
+                                {% if form.footer_principal.help_text %}
+                                    <small class="form-text text-muted">{{ form.footer_principal.help_text }}</small>
+                                {% endif %}
+                                <div class="invalid-feedback">{{ form.footer_principal.errors }}</div>
+                            </div>
+                        {% endif %}
+                        {% if form.favicon in form.visible_fields %}
+                            <div class="form-group col-md-6">
+                                {{ form.favicon.label_tag }}
+                                {{ form.favicon }}
+                                <div class="invalid-feedback">Campo Requerido.</div>
+                                {% if form.favicon.help_text %}<small class="form-text text-muted">{{ form.favicon.help_text }}</small>{% endif %}
+                                <div class="invalid-feedback">{{ form.favicon.errors }}</div>
+                            </div>
+                        {% endif %}
+                        {% if form.login in form.visible_fields %}
+                            <div class="form-group col-md-6">
+                                {{ form.login.label_tag }}
+                                {{ form.login }}
+                                <div class="invalid-feedback">Campo Requerido.</div>
+                                {% if form.login.help_text %}<small class="form-text text-muted">{{ form.login.help_text }}</small>{% endif %}
+                                <div class="invalid-feedback">{{ form.login.errors }}</div>
+                            </div>
+                        {% endif %}
+                        {% if form.footer in form.visible_fields %}
+                            <div class="form-group col-md-6">
+                                {{ form.footer.label_tag }}
+                                {{ form.footer }}
+                                <div class="invalid-feedback">Campo Requerido.</div>
+                                {% if form.footer.help_text %}<small class="form-text text-muted">{{ form.footer.help_text }}</small>{% endif %}
+                                <div class="invalid-feedback">{{ form.footer.errors }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% block content_inline %}
+                    <!-- Bloco para renderizar os formularios configurados no inline -->
+                    {% if list_inlines %}
+                        {% for formset in list_inlines %}
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <strong>
+                                        {% if formset.model.get_meta.verbose_name_plural %}
+                                            {{ formset.model.get_meta.verbose_name_plural }}
+                                        {% elif formset.model.get_meta.verbose_name %}
+                                            {{ formset.model.get_meta.verbose_name }}
+                                        {% elif formset.prefix %}
+                                            {{ formset.prefix.title }}
+                                        {% endif %}
+                                    </strong>
+                                </div>
+                                <div class="card-body p-0">
+                                    {{ formset.management_form }}
+                                    {% if formset.non_form_errors %}
+                                        {% for erro in formset.non_form_errors %}<div class="alert alert-danger" role="alert">{{ erro }}</div>{% endfor %}
+                                    {% endif %}
+                                    {% for formset_form in formset %}
+                                        <div {% if '__prefix__' in formset_form.prefix %} class="p-3 mb-3 inline formset-custom-template {{ formset.prefix }} border-bottom" {% else %}class="p-3 mb-3 inline {{ formset.prefix }} border-bottom" {% endif %}>
+                                            {% for hidden in formset_form.hidden_fields %}{{ hidden }}{% endfor %}
+                                            <div class="form-row">
+                                                {% for field_formset in formset_form.visible_fields %}
+                                                    {% if not 'DELETE' in field_formset.name or not '__prefix__' in formset_form.prefix %}
+                                                        <div class="form-group col-md-6 pl-3">
+                                                            {% if field_formset.field.widget.input_type == 'radio' and field_formset.name != 'DELETE' %}
+                                                                <div class="form-check form-check-inline">{{ field_formset.label_tag }}</div>
+                                                                <div class="w-100">
+                                                                    {% for radio in field_formset.subwidgets %}
+                                                                        <div class="custom-control custom-{{ field_formset.field.widget.input_type }} custom-control-inline pr-2">
+                                                                            <input type="{{ field_formset.field.widget.input_type }}"
+                                                                                   class="{{ field_formset.field.widget.attrs.class }}"
+                                                                                   value="{{ radio.data.value }}"
+                                                                                   {% if radio.data.selected %}checked{% endif %}
+                                                                                   name="{{ field_formset.html_name }}"
+                                                                                   id="{{ radio.id_for_label }}" />
+                                                                            <label class="custom-control-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                                {% if field_formset.help_text %}
+                                                                    <small class="form-text text-muted">{{ field_formset.help_text|safe }}</small>
+                                                                {% endif %}
+                                                                {#  TRATANDO OS CAMPOS DO TIPO CHECKBOX. #}
+                                                            {% elif field_formset.field.widget.input_type == 'checkbox' %}
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="br-switch icon top mr-5">
+                                                                        {{ field_formset }}{{ field_formset.label_tag }}
+                                                                        <div class="invalid-feedback">Campo Requerido.</div>
+                                                                        {% if field_formset.errors %}{{ field_formset.errors }}{% endif %}
+                                                                    </div>
+                                                                </div>
+                                                                {% if field_formset.help_text %}
+                                                                    <small class="form-text text-muted">{{ field_formset.help_text|safe }}</small>
+                                                                {% endif %}
+                                                                {# TRATANDO OS CAMPOS FILES E IMAGENS #}
+                                                            {% elif field_formset.field.widget.input_type == 'file' %}
+                                                                {{ field_formset.label_tag }}
+                                                                <div class="w-100">{{ field_formset }}</div>
+                                                                {% if field_formset.help_text %}
+                                                                    <small class="form-text text-muted">{{ field_formset.help_text|safe }}</small>
+                                                                {% endif %}
+                                                                {# TRATANDO OS DEMAIS CAMPOS #}
+                                                            {% else %}
+                                                                {{ field_formset.label_tag }}
+                                                                <div class="w-100">{{ field_formset }}</div>
+                                                                {% if field_formset.help_text %}
+                                                                    <small class="form-text text-muted">{{ field_formset.help_text|safe }}</small>
+                                                                {% endif %}
+                                                                {% if field_formset.field.required %}<div class="invalid-feedback">Campo Obrigatório.</div>{% endif %}
+                                                            {% endif %}
+                                                            {% if field_formset.errors %}{{ field_formset.errors }}{% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% block extra_js %}
+                                    {% if list_inlines and formset %}
+                                        <script src="{% static 'core/js/jquery.formset.js' %}"></script>
+                                        <script type="application/javascript">
+                                            $(".{{ formset.prefix }}").formset({
+                                                addText: 'Adicionar outro {{ formset.model.get_meta.verbose_name }}',
+                                                deleteText: 'Remover {{ formset.model.get_meta.verbose_name }}',
+                                                prefix: '{{ formset.prefix }}',
+                                                deleteCssClass: 'br-button danger',
+                                                addCssClass: 'br-button primary',
+                                            });
+                                        </script>
+                                    {% endif %}
+                                {% endblock extra_js %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endblock content_inline %}
+                <div class="card-footer">
+                    <div class="btn-toolbar flex-buttons-end gap-small" role="toolbar">
+                        <div>
+                            <a class="br-button block"
+                               href="{% url 'configuracao_core:imagenssistema-list' %}">Voltar</a>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                    class="br-button secondary block"
+                                    name="_continue"
+                                    value="Salvar e Continuar">Salvar e Continuar</button>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                    class="br-button secondary block"
+                                    name="_addanother"
+                                    value="Salvar e Adicionar Novo">Salvar e Adicionar Novo</button>
+                        </div>
+                        <div>
+                            {% if list_inlines %}
+                                <button type="submit"
+                                        class="br-button primary block"
+                                        name="_continue"
+                                        value="Salvar Todos">Salvar Todos</button>
+                            {% else %}
+                                <button type="submit" class="br-button primary block" value="Salvar">Salvar</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endblock form_app %}
+</div>

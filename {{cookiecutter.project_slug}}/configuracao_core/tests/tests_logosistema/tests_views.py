@@ -11,12 +11,14 @@ from faker import Faker
 from model_bakery import baker
 from PIL import Image
 
-from configuracao_core.models import (LogoSistema)
-from configuracao_core.views import (LogoSistemaCreateView,
-                                           LogoSistemaDeleteView,
-                                           LogoSistemaDetailView,
-                                           LogoSistemaListView,
-                                           LogoSistemaUpdateView)
+from configuracao_core.models import LogoSistema
+from configuracao_core.views import (
+    LogoSistemaCreateView,
+    LogoSistemaDeleteView,
+    LogoSistemaDetailView,
+    LogoSistemaListView,
+    LogoSistemaUpdateView,
+)
 
 
 class TestLogoSistemaViews:
@@ -27,21 +29,25 @@ class TestLogoSistemaViews:
         self.faker = Faker("pt_BR")
         self.factory = RequestFactory()
         self.user = User.objects.create_superuser(
-            username="teste", email="teste@email.com.br", password="senha_padrao_deve_ser_mudada"
+            username="teste",
+            email="teste@email.com.br",
+            password="senha_padrao_deve_ser_mudada",
         )
         self.logosistema = baker.make(LogoSistema)
 
         def create_test_image():
             # Cria uma imagem aleatória com 100x100 pixels
-            image = Image.new('RGB', (100, 100), color='white')
+            image = Image.new("RGB", (100, 100), color="white")
             pixels = image.load()
             for i in range(100):
                 for j in range(100):
                     pixels[i, j] = (i + j, i, j)
 
             # Salva a imagem no diretório de mídia temporário
-            with tempfile.NamedTemporaryFile(suffix='.jpg', dir=settings.MEDIA_ROOT) as f:
-                image.save(f, format='JPEG')
+            with tempfile.NamedTemporaryFile(
+                suffix=".jpg", dir=settings.MEDIA_ROOT
+            ) as f:
+                image.save(f, format="JPEG")
                 f.seek(0)
                 return f.read(), f.name
 
@@ -49,7 +55,9 @@ class TestLogoSistemaViews:
         image_content, image_filename = create_test_image()
 
         # Cria o objeto de arquivo carregado com o conteúdo da imagem
-        self.uploaded_file = SimpleUploadedFile(name='test_image.jpg', content=image_content, content_type='image/jpeg')
+        self.uploaded_file = SimpleUploadedFile(
+            name="test_image.jpg", content=image_content, content_type="image/jpeg"
+        )
 
     def test_logosistema_list(self, init):
         """Teste para a view list."""
@@ -61,7 +69,9 @@ class TestLogoSistemaViews:
 
     def test_logosistema_detail(self, init):
         """Teste para a view detail."""
-        url = reverse("configuracao_core:logosistema-detail", args={self.logosistema.pk})
+        url = reverse(
+            "configuracao_core:logosistema-detail", args={self.logosistema.pk}
+        )
         request = self.factory.get(url)
         request.user = self.user
         response = LogoSistemaDetailView.as_view()(request, pk=self.logosistema.pk)
@@ -89,7 +99,9 @@ class TestLogoSistemaViews:
 
     def test_logosistema_update(self, init):
         """Teste para a view update."""
-        url = reverse("configuracao_core:logosistema-update", args={self.logosistema.pk})
+        url = reverse(
+            "configuracao_core:logosistema-update", args={self.logosistema.pk}
+        )
         request = self.factory.put(url)
         request.user = self.user
         response = LogoSistemaUpdateView.as_view()(request, pk=self.logosistema.pk)
@@ -97,7 +109,9 @@ class TestLogoSistemaViews:
 
     def test_logosistema_delete(self, init):
         """Teste para a view delete."""
-        url = reverse("configuracao_core:logosistema-delete", args={self.logosistema.pk})
+        url = reverse(
+            "configuracao_core:logosistema-delete", args={self.logosistema.pk}
+        )
         request = self.factory.delete(url)
         setattr(request, "session", "session")
         messages = FallbackStorage(request)

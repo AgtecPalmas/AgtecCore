@@ -6,6 +6,7 @@ from django.test import RequestFactory
 from django.urls import reverse
 from faker import Faker
 from model_bakery import baker
+
 from usuario.models import Usuario
 from usuario.views import (
     UsuarioCreateView,
@@ -24,7 +25,9 @@ class TestUsuarioViews:
     def init(self, db):
         self.faker = Faker("pt_BR")
         self.user = User.objects.create_superuser(
-            username="teste", email="teste@email.com.br", password="senha_padrao_deve_ser_mudada"
+            username="teste",
+            email="teste@email.com.br",
+            password="senha_padrao_deve_ser_mudada",
         )
         baker.make(
             Usuario,
