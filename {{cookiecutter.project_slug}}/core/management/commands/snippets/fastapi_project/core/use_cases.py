@@ -1,4 +1,5 @@
 import datetime
+import json
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import HTTPException, Request
@@ -42,7 +43,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return query.offset(skip).limit(limit).all()
 
     def get_paginate(
-        self, db: Session, *, request: Request, offset: int = 0, limit: int = 25
+        self, db: Session, *, request: Request, offset: int = 0, limit: int = 5, model_pydantic: Type[BaseModel] = None
     ) -> PaginationBase:
         query = db.query(self.model)
         if hasattr(self.model, "deleted"):
@@ -59,7 +60,13 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         data = PaginationBase()
         data.count = total
-        data.results = query.offset(offset).limit(limit).all()
+        data.results = []
+
+        for item in query.offset(offset).limit(limit).all():
+            modelo_pydantic = model_pydantic(**item.__dict__)
+            modelo_json = modelo_pydantic.model_dump_json()
+            data.results.append(json.loads(modelo_json))
+
         data.next = (
             f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
         )

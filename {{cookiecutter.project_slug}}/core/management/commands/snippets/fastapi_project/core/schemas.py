@@ -7,4 +7,4 @@ class PaginationBase(BaseModel):
     count: int = 0
     next: Union[str, None] = None
     previous: Union[str, None] = None
-    results: list = []
+    results: List[dict] = None

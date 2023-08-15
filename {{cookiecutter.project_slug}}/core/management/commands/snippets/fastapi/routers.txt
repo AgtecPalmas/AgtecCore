@@ -12,13 +12,13 @@ from . import schemas, use_cases
 
 router = APIRouter()
 
-router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'], 
+router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
                            dependencies=[Depends(security.get_current_active_user)])
 
-@router_$model$.get("/", response_model=PaginationBase, 
+@router_$model$.get("/", response_model=PaginationBase,
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
 def read_$model$s(request: Request, db: Session = Depends(get_db), offset: int = 0, limit: int = 25) -> Any:
-    $model$s = use_cases.$model$.get_paginate(db, request=request, offset=offset, limit=limit)
+    $model$s = use_cases.$model$.get_paginate(db, request=request, offset=offset, limit=limit, model_pydantic=schemas.$ModelClass$)
     return $model$s
 
 @router_$model$.post("/", dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
