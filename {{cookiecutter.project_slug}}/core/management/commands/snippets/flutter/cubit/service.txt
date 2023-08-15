@@ -1,3 +1,10 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 /// Service do model $ModelClass$
 /// 
 /// Os Métodos padrões gerados são:
@@ -9,10 +16,6 @@
 ///
 /// Os métodos de acesso à API devem ser implementados no nessa classe.
 
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
 
 import 'dart:convert';
 
@@ -78,7 +81,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
 
   Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+      final _url = "${_uri}${$ModelClassCamelCase$.id}";
       final CustomDio _dio = CustomDio(_url);
       final data = await _dio.getHttp(uri: _url);
       if (data != null) {
@@ -106,7 +109,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$) async {
-    final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+    final _url = "${_uri}${$ModelClassCamelCase$.id}";
     try {
       final CustomDio _dio = CustomDio(_url);
       final _data = json.encode($ModelClassCamelCase$.toMap());
@@ -122,7 +125,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
 
   Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+      final _url = "${_uri}${$ModelClassCamelCase$.id}";
       final CustomDio _dio = CustomDio(_url);
       final _data = json.encode($ModelClassCamelCase$.toMap());
       final data = await _dio.patchHttp(_data, uri: _url);
@@ -136,7 +139,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   Future<bool> delete($ModelClass$Model $ModelClassCamelCase$) async {
-    final _url = "${Config.uri}${$ModelClassCamelCase$.id}/";
+    final _url = "${_uri}${$ModelClassCamelCase$.id}";
     try {
       final CustomDio _dio = CustomDio(_url);
       final _data = json.encode($ModelClassCamelCase$.toMap());

@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: 1.0.4
-  dio: 4.0.6 #Lib para acesso HTTP para consumir APIRest.
+  cupertino_icons: 1.0.5
+  dio: 5.3.2 #Lib para acesso HTTP para consumir APIRest.
   intl: 0.17.0 #Lib para formatação de dados como Date e DateTime.
   date_format: 2.0.5 #Lib para formatação trabalhando apenas com Data.
   url_launcher: 6.0.20 #Lib para invocar intents dos devices como por exemplo envio de email.
@@ -40,10 +40,10 @@ dependencies:
   flutter_bloc: 8.0.1
 
   # Firebase
-  firebase_messaging: 12.0.1 #Lib para recebimento de mensagens push.
-  firebase_auth: 3.6.2 #Lib para autenticação com contas Firebase.
-  firebase_core: 1.20.1 #lib para trabalhar com o Firebase
-  firebase_crashlytics: 2.8.7 #Lib para capturar os erros da aplicação.
+  firebase_messaging: 14.3.0 #Lib para recebimento de mensagens push.
+  firebase_auth: 4.3.0 #Lib para autenticação com contas Firebase.
+  firebase_core: 2.8.0 #lib para trabalhar com o Firebase
+  firebase_crashlytics: 3.0.17
 
   # Sentry Plataforma de monitoramento de bugs
   sentry_flutter: 6.8.0

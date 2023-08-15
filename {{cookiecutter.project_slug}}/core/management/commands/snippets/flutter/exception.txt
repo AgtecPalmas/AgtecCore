@@ -17,7 +17,7 @@ class ExceptionCustom implements Exception {
   String errorMessage = "";
   String url = "";
   CustomTypeException typeException = CustomTypeException.general;
-  DioError? dioError;
+  DioException? dioError;
 
   ExceptionCustom(codigo, mensagemAmigavel, mensagemErro, tipo) {
     this.code = codigo;

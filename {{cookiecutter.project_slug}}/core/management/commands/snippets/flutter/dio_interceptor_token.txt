@@ -5,10 +5,12 @@
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
 ///
+
 import 'package:dio/dio.dart';
-import 'dart:developer' as dev;
+
 import '../../../apps/auth/data.dart';
 import '../../../core/config.dart';
+import '../../agtec.logger.dart';
 import '../../exceptions/exception.dart';
 import '../custom_dio.dart';
 
@@ -25,7 +27,7 @@ class RefreshTokenInterceptor extends Interceptor {
         _dio = dio;
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     // Verificando o tipo do erro baseado no status code do response
     try {
       final _errorResponse = err.response;
@@ -41,27 +43,28 @@ class RefreshTokenInterceptor extends Interceptor {
             // Chamando o método para realizar a retentativa da consulta
             await _retryRequest(err);
           } else {
-            dev.log('Erro', error: err, stackTrace: StackTrace.current, name: 'AgtecCore');
-            // Passando o erro para cima, quem chamou a requisição
+            AgteCoreLogger().debug("Ocorreu o erro: $err | StackTrace: ${StackTrace.current}, name: 'AgtecCore'");
             throw err;
           }
         } else {
           // Erro não é 403 nem 401
-          dev.log('Erro', error: err, stackTrace: StackTrace.current, name: 'AgtecCore');
+          AgteCoreLogger().debug("Ocorreu o erro: $err | StackTrace: ${StackTrace.current}, name: 'AgtecCore'");
           // Passando o erro para cima, quem chamou a requisição
           throw err;
         }
       }
     } on ExceptionCustom {
-      dev.log('Erro ao atualizar o RefreshToken', stackTrace: StackTrace.current, name: 'AgtecCore');
+      AgteCoreLogger().erro(
+          "Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: ${StackTrace.current}, name: 'AgtecCore'");
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
-    } on DioError catch (e, s) {
-      dev.log('Erro', error: e, stackTrace: s, name: 'AgtecCore');
+    } on DioException catch (err, stackTrace) {
+      AgteCoreLogger()
+          .erro("Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: $stackTrace, name: 'AgtecCore'");
       // Passando o erro para cima, quem chamou a requisição
-      handler.next(e);
+      handler.next(err);
     } catch (error, stackTrace) {
-      dev.log('Erro', error: error, stackTrace: stackTrace, name: 'AgtecCore');
+      AgteCoreLogger().erro("Ocorreu o erro: $err | StackTrace: $stackTrace, name: 'AgtecCore'");
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     }
@@ -70,8 +73,8 @@ class RefreshTokenInterceptor extends Interceptor {
   /// Método para consultar na API o endpoint para capturar o novo
   /// jwt_token e refresh_token
   /// [Parameters]
-  ///   err DioError
-  Future<void> _refreshToken(DioError err) async {
+  ///   err DioException
+  Future<void> _refreshToken(DioException err) async {
     try {
       // Recuperando o RefreshToken do AuthData
       final _refreshToken = await AuthData().getRefreshToken();
@@ -84,13 +87,13 @@ class RefreshTokenInterceptor extends Interceptor {
       }
       // Realizando o processo de Refresh
       _getNewToken(_refreshToken, err);
-    } catch (error, stacktrace) {
-      dev.log('Erro', error: error, stackTrace: stacktrace, name: 'AgtecCore');
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro: $err | StackTrace: $stackTrace, name: 'AgtecCore'");
     }
   }
 
   // Método para realizar o processo de atualização do token
-  Future<void> _getNewToken(String refreshToken, DioError dioError) async {
+  Future<void> _getNewToken(String refreshToken, DioException dioError) async {
     final _uri = '${Config.uri}api/token/refresh/';
     FormData _data = FormData.fromMap({'refresh': refreshToken});
     final response = await _customDio.postHttp(_data, uri: _uri);
@@ -107,7 +110,6 @@ class RefreshTokenInterceptor extends Interceptor {
       // Ocorreu erro na atualização
       // Apagando os registros do usuário na base local
       AuthData().deleteAll();
-      // TODO: Estudar como redirecionar o usuário para a tela de login
     }
 
     // Verificando se o retorno da atualização do Token possui
@@ -122,7 +124,6 @@ class RefreshTokenInterceptor extends Interceptor {
       // Ocorreu erro na atualização
       // Apagando os registros do usuário na base local
       AuthData().deleteAll();
-      // TODO: Estudar como redirecionar o usuário para a tela de login
     }
   }
 
@@ -130,11 +131,11 @@ class RefreshTokenInterceptor extends Interceptor {
   /// deve ser chamado para tentar novamente a consulta que
   /// levantou a exception
   /// [Parameters]
-  ///   err DioError
+  ///   err DioException
   /// [Return]
   ///   Future<Response<dynamic>>
   ///
-  Future<Response<dynamic>> _retryRequest(DioError err) async {
+  Future<Response<dynamic>> _retryRequest(DioException err) async {
     // Recuperando os valores da requisição anterior para realizar nova tentativa
     final _requestOptions = err.requestOptions;
     final String _path = _requestOptions.path;

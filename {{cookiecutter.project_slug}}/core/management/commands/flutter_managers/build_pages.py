@@ -12,7 +12,8 @@ class PagesBuilder:
         self._source_app = source_app
         self._model_name_lower = self._source_app.model_name_lower
         self._app_name_lower = self._source_app.app_name_lower
-        self._snippet_dir = Path(f"{self.command.path_command}/snippets/flutter/cubit")
+        self._snippet_dir = Path(f"{self.command.path_command}/snippets/flutter/")
+        self._snippet_dir_cubit = Path(f"{self._snippet_dir}/cubit")
         self._pages_target_path = (
             f"{self._source_app.path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/pages/"
         )
@@ -114,11 +115,11 @@ class PagesBuilder:
     def _build_create_or_update_page(self, update=False):
         try:
             _target_file = Path(f"{self._pages_target_path}/create.dart")
-            _snippet_file = Path(f"{self._snippet_dir}/create_page.txt")
+            _snippet_file = Path(f"{self._snippet_dir_cubit}/create_page.txt")
 
             if update is True:
                 _target_file = Path(f"{self._pages_target_path}/update.dart")
-                _snippet_file = Path(f"{self._snippet_dir}/update_page.txt")
+                _snippet_file = Path(f"{self._snippet_dir_cubit}/update_page.txt")
 
             _form_content_file = Path(f"{self._snippet_dir}/text_field.txt")
             if Utils.check_file_is_locked(_target_file):
@@ -150,7 +151,7 @@ class PagesBuilder:
                 text_field = _content_form
                 controller = f"_{_model_name_camel_case}Form{_name_title}"
                 text_field = text_field.replace("$controller$", controller)
-                text_field = text_field.replace("$Field$", str(field.verbose_name).replace("R$", r"R\$"))
+                text_field = text_field.replace("$Field$", str(field.verbose_name).replace("R$", "R\$"))
                 _text_fields += text_field
                 _attributes_data += self._get_attributes_data(
                     attribute, self._source_app.model_name, _name, _name_title
@@ -207,7 +208,7 @@ class PagesBuilder:
     def _build_detail_page(self):
         try:
             _target_file = Path(f"{self._pages_target_path}/detail.dart")
-            _snippet_file = Path(f"{self._snippet_dir}/detail_page.txt")
+            _snippet_file = Path(f"{self._snippet_dir_cubit}/detail_page.txt")
             if Utils.check_file_is_locked(_target_file):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
@@ -232,7 +233,7 @@ class PagesBuilder:
     def _build_index_page(self):
         try:
             _target_file = Path(f"{self._pages_target_path}/index.dart")
-            _snippet_file = Path(f"{self._snippet_dir}/index_page.txt")
+            _snippet_file = Path(f"{self._snippet_dir_cubit}/index_page.txt")
             if Utils.check_file_is_locked(_target_file):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
@@ -254,7 +255,7 @@ class PagesBuilder:
     def _build_list_page(self):
         try:
             _target_file = Path(f"{self._pages_target_path}/list.dart")
-            _snippet_file = Path(f"{self._snippet_dir}/list_page.txt")
+            _snippet_file = Path(f"{self._snippet_dir_cubit}/list_page.txt")
             if Utils.check_file_is_locked(_target_file):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)

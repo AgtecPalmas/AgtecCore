@@ -1,20 +1,4 @@
-/// Local Data do model Auth
-///
-/// Os Métodos padrões gerados são:
-///     fecthAll() -> Recupera a lista de Auth.
-///     save() -> Salva os dados de uma instância do Auth.
-///     detail() -> Recupera os detalhes de Auth.
-///     update() -> Atualiza os dados de uma instância do Auth.
-///     delete() -> Deleta um registro.
-///     deleteAll() -> Deleta todos os registros.
-
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
-
-import 'dart:developer' as dev;
-
+import 'package:doctorweb/core/agtec.logger.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart' as smbt;
@@ -24,7 +8,6 @@ import '../../core/exceptions/exception.dart';
 import 'model.dart';
 
 class AuthData {
-
   static AuthData? _instance;
 
   factory AuthData() {
@@ -107,13 +90,19 @@ class AuthData {
   Future<bool> save(AuthModel auth) async {
     smbt.Database? _db;
     try {
-      _db = await initDb();
+      AgteCoreLogger().debug("Iniciado processo de save do AuthModel");
       await deleteAll();
+      AgteCoreLogger().debug("Iniciando o db");
+      _db = await initDb();
       if (_db != null) {
+        AgteCoreLogger().debug("DB não nulo");
         final _store = smbt.intMapStoreFactory.store(_storeName);
+        AgteCoreLogger().debug("Store criada");
         await _store.add(_db, auth.toMap());
+        AgteCoreLogger().debug("Dados salvos: ${auth.toMap()}");
         return true;
       }
+      AgteCoreLogger().debug("Finalizado processo de save do AuthModel");
     } catch (error, stackTrace) {
       ExceptionCustom.data(
         "------DATA ERROR------",
@@ -203,8 +192,8 @@ class AuthData {
     try {
       _db = await initDb();
       if (_db != null) {
-        //final _store = smbt.intMapStoreFactory.store(_storeName);
-        smbt.intMapStoreFactory.store(_storeName);
+        final _store = smbt.intMapStoreFactory.store(_storeName);
+        await _store.update(_db, auth.toMap());
         return true;
       }
     } catch (error, stackTrace) {
@@ -226,7 +215,11 @@ class AuthData {
     try {
       final _data = await get(0);
       if (_data != null) {
-        final String token = _data.token.isNotEmpty ? _data.token : "";
+        final String token = _data.token.isNotEmpty
+            ? _data.token
+            : _data.accessToken.isNotEmpty
+                ? _data.accessToken
+                : "";
         if (token.isNotEmpty) {
           return token;
         }
