@@ -50,17 +50,17 @@ class Usuario(Base):
         fields_display = ["nome", "email", "telefone", "endereco"]
         icon_model = "fas fa-user"
 
-    def save(self, *args, **kwargs):
-        # Checa se o email foi alterado
-        # para modificar o Django User no Signal
-        if not self._state.adding:
-            old = Usuario.objects.get(pk=self.pk)
-            if old.email != self.email:
-                old.django_user.is_active = False
-                old.django_user.save()
-                self.django_user = None
-                self.token = None
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     # Checa se o email foi alterado
+    #     # para modificar o Django User no Signal
+    #     if not self._state.adding:
+    #         old = Usuario.objects.get(pk=self.pk)
+    #         if old.email != self.email:
+    #             old.django_user.is_active = False
+    #             old.django_user.save()
+    #             self.django_user = None
+    #             self.token = None
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Usuario: {self.cpf} | {self.email}"
