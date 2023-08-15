@@ -1,3 +1,11 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
+
 import 'package:dio/dio.dart';
 import '../agtec.logger.dart';
 
@@ -9,7 +17,7 @@ class ExceptionCustom implements Exception {
   String errorMessage = "";
   String url = "";
   CustomTypeException typeException = CustomTypeException.general;
-  DioError? dioError;
+  DioException? dioError;
 
   ExceptionCustom(codigo, mensagemAmigavel, mensagemErro, tipo) {
     this.code = codigo;

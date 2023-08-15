@@ -46,9 +46,9 @@ def get_tag_django_version(tag: str) -> int:
     """Returns the Django version of the tag"""
     return int(re.sub(r"[^0-9]", "", tag.split(".")[0]))
 
+
 def compare_version(version1: str, version2: str) -> str:
     """Compare two versions"""
-
     if parse(version1) > parse(version2):
         return 1
 

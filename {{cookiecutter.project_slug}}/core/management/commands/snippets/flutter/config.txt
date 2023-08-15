@@ -1,6 +1,10 @@
-// #FileLocked
-
-import 'dart:developer' as developer;
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 
 import 'package:flutter/material.dart';
 
@@ -47,9 +51,11 @@ class Config {
   static const uriAuth = "";
 
   // TODO Adicionar aqui o token para ambiente de desenvolvimento.
-  /// O token abaixo é o mesmo do super usuário do projeto django, caso você tenha executado o comando
-  /// python mcok_superuser.py lá no projeto Django
   static const DRFToken = "Token 2b817ddbb5b974e5a451a8156963de586d72079e";
+
+  // Dados de acesso à camada FastAPI
+  static const fastAPIUserDevelopment = "";
+  static const fastAPIPasswordDevelopment = "";
 
   static const String uri_media = "media/";
   static const String app_title = "App Flutter";

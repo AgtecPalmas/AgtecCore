@@ -39,15 +39,15 @@ class Base(DeclarativeBase):
         return cls.__name__.lower()
 
 
-DB_CONNECTION = settings.db_connection
-DB_USERNAME = settings.db_username
+DB_ENGINE = settings.db_engine
+DB_USER = settings.db_user
 DB_PASSWORD = settings.db_password
-DB_DATABASE = settings.db_database
+DB_NAME = settings.db_name
 DB_PORT = settings.db_port
 DB_HOST = settings.db_host
 
 SQLALCHEMY_DATABASE_URI: str = (
-    f"{DB_CONNECTION}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
+    f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
 engine = sa.create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)

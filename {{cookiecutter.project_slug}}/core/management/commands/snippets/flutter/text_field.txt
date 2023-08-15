@@ -1,6 +1,7 @@
-customTextFormField(
-  labelText: '$Field$',
-  hintText: '$Field$',
+TextFormField(
+  decoration: CustomTextFormFieldStyle.textFieldStyle(
+    hintText: '$Field$',
+    hiddenCounter: true,
+  ),
   controller: $controller$,
-  context: context,
 ),

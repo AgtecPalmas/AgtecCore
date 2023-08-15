@@ -7,7 +7,6 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../core/user_interface/widget.dart';
 
-
 class SigninPage extends StatefulWidget {
   @override
   _SigninPageState createState() => _SigninPageState();
@@ -22,7 +21,7 @@ class _SigninPageState extends State<SigninPage> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
-    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _loadData();
     });
   }

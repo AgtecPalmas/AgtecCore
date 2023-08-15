@@ -1,18 +1,21 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
-import 'dart:developer' as dev;
+///
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/user_interface/custom.style.dart';
+import '../../../../core/agtec.logger.dart';
 import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
 import '../../../../core/util.dart';
-import '../cubit.dart';
+import '../controller.dart';
 import '../model.dart';
 
 class $ModelClass$AddPage extends StatefulWidget {
@@ -84,18 +87,18 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                   ),
                 ),
 
-                BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+                BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
                     _showMessage(state.error, error: true);
-                    dev.log("Erro no BlocConsumer CreatePage", name: "AgtecCore", error: state.error.toString());
+                    AgteCoreLogger().erro("Ocorreu o erro no BlocConsumer CreatePage", state.error.toString());
                   }
                   if(state is $ModelClass$SuccessState){
                     _showMessage(state.successMessage);
                   }
                 },
                 builder: (context, state) {
-                    _$Model$Model = context.read<$ModelClass$Cubit>().$Model$Model;
+                    _$Model$Model = context.read<$ModelClass$Controller>().$Model$Model;
                     return Stack(
                     children : <Widget>[
                       Column(
@@ -129,7 +132,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   }
 
   Widget _createButton(context){
-    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is $ModelClass$ProcessState) {
@@ -159,14 +162,14 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   }
 
   void _post() async {
-    final _$Model$Cubit = context.read<$ModelClass$Cubit>();
+    final _$Model$Controller = context.read<$ModelClass$Controller>();
     try{
       _$Model$Model = $ModelClass$Model();
       $GetValuesControllers$
-      _$Model$Cubit.$Model$Model = _$Model$Model;
-      await _$Model$Cubit.post(_$Model$Model);
-    }catch (e, s){
-      dev.log("CreatePage", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      _$Model$Controller.$Model$Model = _$Model$Model;
+      await _$Model$Controller.post(_$Model$Model);
+    }catch (error, stackTrace){
+      AgteCoreLogger().erro("Ocorreu o erro no _post do PageCreate", error, stackTrace);
     }
   }
 

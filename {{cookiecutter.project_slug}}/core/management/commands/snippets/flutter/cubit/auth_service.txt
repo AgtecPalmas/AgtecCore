@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:developer' as dev;
 
 import 'package:dio/dio.dart';
 
-import '../../../core/dio/custom_dio.dart';
 import '../../../core/config.dart';
-import '../../core/config.dart';
+import '../../../core/dio/custom_dio.dart';
+import '../../core/agtec.logger.dart';
+import '../../core/exceptions/exception.dart';
 import '../../core/util.dart';
 import '../auth/data.dart';
 import '../usuario/usuario/model.dart';
@@ -13,6 +13,42 @@ import 'model.dart';
 
 class AuthService {
   AuthModel auth = AuthModel();
+
+  Future<void> defaultAuthenticationFastAPI() async {
+    final _uriAuth = uriDeveloper;
+    final String _uriAutentication = '${_uriAuth}api/v1/authentication/login';
+    try {
+      final authenticationLogin = {
+        'username': Config.fastAPIUserDevelopment,
+        'password': Config.fastAPIPasswordDevelopment,
+      };
+      final CustomDio _dio = CustomDio(_uriAutentication);
+      final authenticationForm = FormData.fromMap(authenticationLogin);
+      final dataResponse = await _dio.postHttp(authenticationForm);
+      if (dataResponse != null) {
+        AgteCoreLogger().debug(dataResponse);
+        final _authData = AuthData();
+        final _authModel = AuthModel();
+        final String _token = dataResponse['access_token'] ?? '';
+        _authModel.accessToken = _token;
+        _authData.save(_authModel);
+      }
+      return dataResponse['access_token'];
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        "Ocorreu o erro: ${error.response?.data?.toString()} no defaultAuthentication",
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          "Ocorreu um erro desconhecido no método defaultAuthentication do Dio", errorGeneral.toString());
+      return null;
+    }
+  }
 
   Future<void> signUpUser(int typeUser) async {
     String _uri = "";
@@ -34,8 +70,8 @@ class AuthService {
         "firebase": auth.firebaseId
       });
       final data = await _dio.postHttp(_data, uri: _uri);
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signUpUser", error, stackTrace);
     }
   }
 
@@ -48,8 +84,8 @@ class AuthService {
         auth.firebaseId = data['localId'];
         signUpUser(0);
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signUpUserFirebase", error, stackTrace);
     }
   }
 
@@ -64,8 +100,8 @@ class AuthService {
         _authModel.token = dataResponse['access'];
         _success("Usuário logado com sucesso", statusCode: 200);
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signIn", error, stackTrace);
     }
     return _authModel;
   }
@@ -81,8 +117,8 @@ class AuthService {
         }
         return 1;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService checkDjangoUserTypeClient", error, stackTrace);
     }
     return null;
   }
@@ -111,8 +147,8 @@ class AuthService {
         _success("Usuário criado com sucesso", statusCode: Process.statusCode);
         return data["id"];
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signUp", error, stackTrace);
     }
     return null;
   }
@@ -130,7 +166,6 @@ class AuthService {
         final djangoUser = await signInDjangoUser(auth.login, userType);
         if (djangoUser != null) {
           auth.id = djangoUser.id;
-          auth.cpf = djangoUser.cpf;
           auth.uuid = djangoUser.id;
           auth.name = djangoUser.nome;
           auth.login = djangoUser.email;
@@ -145,9 +180,10 @@ class AuthService {
       } else {
         return null;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService login", error, stackTrace);
     }
+    return null;
   }
 
   Future<bool> verifyingEmailAlreadyExists(String email) async {
@@ -160,8 +196,8 @@ class AuthService {
       if (dataResult != null) {
         result = dataResult['count'] != 0;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService verifyingEmailAlreadyExists", error, stackTrace);
     }
     return result;
   }
@@ -187,8 +223,8 @@ class AuthService {
           return UsuarioModel.fromMap(dataResponse["results"][0]);
         }
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signInDJangoUser", error, stackTrace);
     }
     if (typeException == 0) {
       throw ("Seu cadastro ainda não foi aprovado.");
@@ -207,8 +243,8 @@ class AuthService {
       if (data != null) {
         return true;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService logout", error, stackTrace);
     }
     return false;
   }
@@ -221,8 +257,8 @@ class AuthService {
       if (data != null) {
         return true;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService changePassword", error, stackTrace);
     }
     return false;
   }
@@ -235,8 +271,8 @@ class AuthService {
       if (data != null) {
         return true;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService recoverPassword", error, stackTrace);
     }
     return false;
   }
@@ -249,8 +285,8 @@ class AuthService {
       if (data != null) {
         return AuthModel.fromMap(data);
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService createAccount", error, stackTrace);
     }
     return null;
   }
@@ -263,8 +299,8 @@ class AuthService {
       if (data != null) {
         return true;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService disableAccount", error, stackTrace);
     }
     return false;
   }
@@ -277,17 +313,17 @@ class AuthService {
       if (data != null) {
         return true;
       }
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService excludeAccount", error, stackTrace);
     }
     return false;
   }
 
   void _success(String message, {int statusCode = 200}) async {
     try {
-      dev.log(message, name: "AgtecCore");
-    } catch (e, s) {
-      dev.log("Auth Service", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      AgteCoreLogger().debug(message);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthService signUpUser", error, stackTrace);
     }
   }
 }

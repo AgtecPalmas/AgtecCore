@@ -11,7 +11,12 @@ from django.views import View
 from base.settings import AUDIT_ENABLED, COPYRIGHT
 from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
 from base.settings import SYSTEM_NAME
-from configuracao_core.models import ImagensSistema, LogoSistema, RedeSocial
+from configuracao_core.models import (
+    ImagemLogin,
+    ImagensSistema,
+    LogoSistema,
+    RedeSocial,
+)
 from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 
 # Configurando o logger
@@ -152,6 +157,7 @@ def get_default_context_data(context: dict, view: View):
     context["imagens_sistema"] = ImagensSistema.get_imagens()
     context["apps"] = get_apps()
     context["logo_sistema"] = LogoSistema.get_logo()
+    context["background"] = ImagemLogin.get_background()
 
     if app and model:
         context["model_name"] = (

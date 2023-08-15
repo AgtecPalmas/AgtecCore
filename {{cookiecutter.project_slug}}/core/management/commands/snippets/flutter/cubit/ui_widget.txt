@@ -1,7 +1,13 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 /// Arquivo contendo os Widgets componentizados da aplicação
-import 'dart:developer' as dev;
-
-import 'package:cached_network_image/cached_network_image.dart';
+///
+import '../../core/agtec.logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,7 +16,6 @@ import '../../core/localization.dart';
 import '../../core/util.dart';
 import 'custom.colors.dart';
 import 'custom.style.dart';
-
 
 // Constante contendo o valor da proporção da tela padrão
 // utilizado para calcular altura do Head da página e da
@@ -72,309 +77,6 @@ Widget customMainCardButton(icon, label,
   );
 }
 
-/// Componente CircleAvatarAppBar
-/// testando o componente com tamanho reduzido para ser mostrado na Appbar.
-Widget customAvatarAppBar() {
-  return AspectRatio(
-    aspectRatio: 1,
-    child: Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          image: CachedNetworkImageProvider('https://picsum.photos/200'),
-          fit: BoxFit.fill,
-        ),
-      ),
-    ),
-  );
-}
-
-/// Componente ImageCircular
-///
-///    Parameters:
-///     context -> BuildContext
-///     path -> String com o caminho da image
-///     size (default = 22) -> Double com o tamanho do elemento.
-///     example (default = false) -> Bool para determinar se utilizará uma imagem aleatória de exemplo
-///     networkImage (default = false) -> Bool para determinar se a imagem é da web ou dos assets
-///
-Widget customImageCircular(BuildContext context, String path,
-    {double size = 22, bool example = false, bool networkImage = false, BoxFit boxFit = BoxFit.cover}) {
-  try {
-    if (example == true) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: CachedNetworkImage(
-          imageUrl: 'https://picsum.photos/600',
-          width: size,
-          height: size,
-          fit: boxFit,
-        ),
-      );
-    } else {
-      if (networkImage == true && path.isNotEmpty) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: CachedNetworkImage(
-            imageUrl: path,
-            width: size,
-            height: size,
-            fit: boxFit,
-          ),
-        );
-      } else {
-        if (path.isNotEmpty) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(path, width: size, height: size),
-          );
-        }
-        return Container();
-      }
-    }
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
-  }
-}
-
-/// Componente Card
-///
-///    Parameters:
-///     context -> BuildContext
-///     child -> Widget filho do card
-///     backgroundColor (opcional) -> Color com a cor do card
-///     elevation (default = 6.0) -> Double com a altura da elevação.
-///     radius (default = 4.0) -> Double com o raio a ser aplicado nas quinas do card.
-///     width (opcional) -> Double para determinar a largura do card.
-///
-///
-Widget customCard(
-    {required BuildContext context,
-    required Widget child,
-    Color? backgroundColor,
-    double elevation = 2.0,
-    double radius = 4.0,
-    double? width}) {
-  try {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6.0),
-      child: Container(),
-    );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
-  }
-}
-
-/// Componente Card com imagem
-///
-///    Parameters:
-///     context -> BuildContext
-///     child -> Widget filho do card
-///     path -> String com o caminho da imagem
-///     positionImage -> String com as opções de posicionamento da image (t = top, b = bottom, l = left, r = right, bg = background)
-///     networkImage -> Bool para determinar se a imagem é da web ou local.
-///     backgroundColor -> Color com a cor a ser aplicada no background do Card.
-///     elevation (default = 6.0) -> Double com a altura da elevação.
-///     radius (default = 4.0) -> Double com o raio a ser aplicado nas quinas do card.
-///     width (opcional) -> Double para determinar a largura do card.
-///
-Widget customCardWithImage(
-    {required BuildContext context,
-    required Widget child,
-    required String path,
-    required bool networkImage,
-    String positionImage = "t",
-    double elevation = 6.0,
-    double radius = 4.0,
-    double height = 200,
-    Color? backgroundColor,
-    double? width,
-    double? widthImage,
-    double? heightImage}) {
-  try {
-    Widget _childCard = Container();
-    List<String> _positionImageValues = ["t", "r", "b", "l", "bg"];
-    // Caso o valor passado não seja nenhuma das opções possíveis
-    // retorno null
-    if (!_positionImageValues.contains(positionImage)) return Container();
-    // Verificando o posicionamento da imagem
-    switch (positionImage) {
-      case "t":
-        // Posicionar a imagem no top utilizando Column
-        _childCard =
-            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            height: heightImage ?? height * 0.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(radius),
-                topRight: Radius.circular(radius),
-              ),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(path.isNotEmpty ? path: "https://picsum.photos/600"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          child
-        ]);
-        break;
-      case "r":
-        // Posicionar a imagem na direita utilizando Row
-        _childCard = Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              child,
-              SizedBox(height: 8),
-              Container(
-                width: width ?? MediaQuery.of(context).size.width * 0.5,
-                height: height,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(radius),
-                    bottomRight: Radius.circular(radius),
-                  ),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ]);
-        break;
-      case "b":
-        // Posicionar a imagem no bottom utilizando Column
-        _childCard =
-            Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          child,
-          SizedBox(height: 8),
-          Container(
-            height: heightImage ?? height * 0.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(radius),
-                bottomRight: Radius.circular(radius),
-              ),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ]);
-        break;
-      case "l":
-        // Posicionar a imagem na esquerda utilizando Row
-        _childCard =
-            Row(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            width: width ?? MediaQuery.of(context).size.width * 0.5,
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(radius),
-                bottomLeft: Radius.circular(radius),
-              ),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          child
-        ]);
-        break;
-      case "bg":
-        // Posicionar a imagem no background
-        _childCard = Stack(children: [
-          Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(radius),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(path.isNotEmpty ? path : "https://picsum.photos/600"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            left: 0,
-            child: Container(
-              color: Theme.of(context).accentColor.withOpacity(0.45),
-              child: child,
-            ),
-          )
-        ]);
-        break;
-      default:
-    }
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(radius),
-      ),
-      color: backgroundColor ?? Theme.of(context).accentColor.withAlpha(80),
-      elevation: elevation,
-      child: _childCard,
-    );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
-  }
-}
-
-/// Componente TextButton
-///
-///    Parameters:
-///     label -> String com o texto a ser mostrado no botão
-///     onPress -> Função a ser executada ao clicar no botão
-///     textColor (opcional) -> Color com a cor do texto
-///     iconButton (opcional) -> Icon a ser mostrado à esquerda do botão
-///
-/// O método onPress deve seguir o exemplo abaixo:
-/// ```dart
-/// onPress: (() {
-///   // Coloque a função que deseja executar aqui
-/// }),
-/// ```
-///
-Widget customFlatButton(
-    {required String label,
-    required VoidCallback onPress,
-    required BuildContext context,
-    Color? textColor,
-    Icon? iconButton}) {
-  try {
-    return TextButton(
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-      ),
-      onPressed: onPress,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          iconButton ?? Container(),
-          SizedBox(width: 4.0),
-          Text(
-            label,
-            style: TextStyle(color: textColor),
-          ),
-        ],
-      ),
-    );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
-  }
-}
-
 /// Componente RaisedButton
 ///
 ///    Parameters:
@@ -406,7 +108,7 @@ Widget customRaisedButton(
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
-        primary: color ?? Theme.of(context).colorScheme.secondary,
+        backgroundColor: color ?? Theme.of(context).colorScheme.secondary,
         elevation: elevation,
         shape: rounded
             ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
@@ -425,9 +127,9 @@ Widget customRaisedButton(
         ],
       ),
     );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
+  } catch (error, stackTrace) {
+    AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
+    return SizedBox.shrink();
   }
 }
 
@@ -500,74 +202,9 @@ Widget customButtonOutline(
         onPressed: onPress,
       ),
     );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
-  }
-}
-
-/// Componente TextFormField
-///
-///    Parameters:
-///     labelText -> String com o texto a ser mostrado no label do TextField
-///     hintText -> String com o texto a ser mostrado como help dentro do TextField
-///     controller -> TextEditController do TextField
-///     validator (opcional) -> Função de validação dos dados do TextField
-///     outline (default = false) -> Bool para determinar se o TextField terá bordas do tipo Outline
-///
-/// Caso seja necessário passar o validator para o construtor deve-se seguir o exemplo abaixo:
-/// ```dart
-/// validator: ((value) {
-///   if (value.isEmpty) {
-///     return 'Campo Obrigatório';
-///   }
-///   return null;
-/// }),
-/// ```
-///
-Widget customTextFormField({
-  required String labelText,
-  required String hintText,
-  required TextEditingController controller,
-  required BuildContext context,
-  final String? Function(String?)? customValidator,
-  bool outline = false,
-  bool obscure = false,
-  TextInputType keyBoardType = TextInputType.text,
-  Color textColor = Colors.black54,
-  bool lowerCase = false,
-}) {
-  try {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyBoardType,
-        obscureText: obscure,
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          labelStyle: TextStyle(color: CustomTheme.lightPrimary),
-          hintStyle: TextStyle(color: CustomTheme.defaultColor),
-          border: outline == true
-              ? OutlineInputBorder(
-                  borderSide: BorderSide(
-                  color: CustomTheme.defaultColor,
-                ))
-              : null,
-          enabledBorder: outline == true
-              ? OutlineInputBorder(
-                  borderSide: BorderSide(
-                  color: CustomTheme.defaultColor,
-                ))
-              : null,
-        ),
-        validator: customValidator ?? null,
-      ),
-    );
-  } catch (e, s) {
-    dev.log("UiWidget", name: "AgtecCore", error: e.toString(), stackTrace: s);
-    return Container();
+  } catch (error, stackTrace) {
+    AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
+    return SizedBox.shrink();
   }
 }
 
@@ -587,7 +224,9 @@ Widget customProcessingCardModal(BuildContext context) {
           child: Column(
             children: [
               CircularProgressIndicator(),
-              SizedBox(height: 16,),
+              SizedBox(
+                height: 16,
+              ),
               Text(
                 AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
               ),
@@ -598,7 +237,6 @@ Widget customProcessingCardModal(BuildContext context) {
     ),
   );
 }
-
 
 /// Componente visual para mostrar um card centralizado enquando o usuário aguarda
 /// o processamento da operação.
@@ -617,7 +255,9 @@ Widget customProcessingCardModalCenter(BuildContext context) {
           child: Column(
             children: [
               const CircularProgressIndicator(),
-              SizedBox(height: 16,),
+              SizedBox(
+                height: 16,
+              ),
               Text(
                 AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
               ),
@@ -629,13 +269,6 @@ Widget customProcessingCardModalCenter(BuildContext context) {
   );
 }
 
-
-/// Componente para mostrar a mensagem de erro para o usuário na UI
-Widget customErrorMessage(BuildContext context,
-    {String? title, required String message}) {
-  return Center(child: Text(message));
-}
-
 /// Componente para mostrar mensagens aos usuário de
 /// ações que retornaram com sucesso
 customSuccessSnackbar(String message, {int secondsDuration = 4}) {
@@ -645,7 +278,6 @@ customSuccessSnackbar(String message, {int secondsDuration = 4}) {
     duration: Duration(seconds: secondsDuration),
   );
 }
-
 
 /// Componente visual para mostrar um elemento de loading customizado
 ///     Parameters:
@@ -715,7 +347,7 @@ class _HeadWidgetState extends State<HeadWidget> {
   /// no construtor do Widget. Valor 1 -> AssetsImage, 2 -> WebImage
   int imageType = 0;
   double marginTitleTop = 0.0;
-  double marginTitleLef = 0.0; 
+  double marginTitleLef = 0.0;
   double marginTitleBottom = 0.0;
   double marginTitleRight = 0.0;
 
@@ -747,7 +379,7 @@ class _HeadWidgetState extends State<HeadWidget> {
         gradient: LinearGradient(
           colors: [
             Theme.of(context).primaryColor,
-            Theme.of(context).accentColor,
+            Theme.of(context).colorScheme.secondary,
           ],
         ),
       ),
@@ -776,10 +408,10 @@ class _HeadWidgetState extends State<HeadWidget> {
               children: <Widget>[
                 Text(
                   "",
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      wordSpacing: 0.08,
-                      color: Colors.white),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      ?.copyWith(fontWeight: FontWeight.w600, wordSpacing: 0.08, color: Colors.white),
                 ),
               ],
             ),
@@ -812,9 +444,8 @@ class _ContentWidgetState extends State<ContentWidget> {
   }
 }
 
-
 /// [Área para o CustomTextFormFieldLabel]
-///
+/// TODO Trazer para esse componente o padrão do TextField do DesignSystem
 class CustomTextFormFieldLabel extends StatelessWidget {
   final String labelText;
 
@@ -840,8 +471,7 @@ class CustomTextFormFieldLabel extends StatelessWidget {
 }
 
 /// [Área para o CustomTextFormFieldWidget Class]
-/// 
-
+/// TODO Trazer para esse componente o padrão do TextField do DesignSystem
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
   final String hintText;

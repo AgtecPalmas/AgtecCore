@@ -1,4 +1,10 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 import 'package:dio/dio.dart';
 
 import '../../../apps/auth/data.dart';
@@ -13,8 +19,8 @@ class HeaderTokenInterceptor  extends Interceptor {
     } else {
       options.headers.addAll({"Authorization": "${Config.DRFToken}"});
     }
-    options.connectTimeout = 20000;
-    options.receiveTimeout = 20000;
+    options.connectTimeout = Duration(seconds: 20);
+    options.receiveTimeout = Duration(seconds: 20);
     return super.onRequest(options, handler);
   }
 }

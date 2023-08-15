@@ -1,15 +1,19 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
+///
+
+import '../../../../core/agtec.logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/util.dart';
-import '../cubit.dart';
+import '../controller.dart';
 import '../model.dart';
 import 'create.dart';
 import 'detail.dart';
@@ -31,7 +35,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
-    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _loadData();
     });
   }
@@ -84,9 +88,10 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   /// Método responsável por criar o GridView com os 
   /// dados retornados da API
   Widget _listBuilder() {
-    return BlocConsumer<$ModelClass$Cubit, $ModelClass$State>(
+    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
+          AgteCoreLogger().erro("Ocorreu o erro ao executar o List Page BlocConsumer | listener", state.error.toString());
           _showMessage(state.error, error: true);
         }
         if(state is $ModelClass$SuccessState){
@@ -110,7 +115,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
                 margin: EdgeInsets.only(top: Util.getHeightSystemBar(context)),
                 height: Util.getProportionScreenHeight(context, 0.8),
                 child: GridView.count(
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   childAspectRatio: MediaQuery.of(context).size.height / 380,
                   crossAxisSpacing: 2.0,
                   mainAxisSpacing: 4.0,
@@ -124,9 +129,8 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
                         },
                         child: Card(
                         child: Container(
-                            child: Center(
-                              child: Text(state.$ModelClassCamelCase$List[index].toString()),
-                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                            child: Text(state.$ModelClassCamelCase$List[index].toString(),),
                           ),
                         )
                       );
@@ -199,7 +203,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
 
   /// Método responsável por carregar os dados da API
   Future<void> _loadData() async {
-    final _$ModelClassCamelCase$Cubit = context.read<$ModelClass$Cubit>();
-    await _$ModelClassCamelCase$Cubit.fetch();
+    final _$ModelClassCamelCase$Controller = context.read<$ModelClass$Controller>();
+    await _$ModelClassCamelCase$Controller.fetch();
   }
 }

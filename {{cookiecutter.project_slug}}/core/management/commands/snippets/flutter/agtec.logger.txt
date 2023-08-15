@@ -1,3 +1,10 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 /// Classe para centralizar as mensagens de logg do desenvolvimento
 /// Utilizo o pacote logger na versão logger: ^1.1.0 para controlar o

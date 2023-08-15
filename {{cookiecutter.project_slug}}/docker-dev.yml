@@ -51,6 +51,8 @@ services:
       - DIAS_DA_SEMANA=0, 1, 2, 3, 4
       - SENHA_PADRAO=123456
       - CSRF_TRUSTED_ORIGINS=https://*.localhost,
+      - ORGANIZATION_NAME='Agtec Core'
+      - ORGANIZATION_FLUTTER_NAME='agtec_core'
     build:
       context: .
       dockerfile: ./DockerfileDev

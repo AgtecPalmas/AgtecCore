@@ -1,0 +1,38 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+/// 
+/// Os Métodos padrões gerados são:
+///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
+///     detail()   -> Recupera os detalhes de $ModelClass$ da API.
+///     post()     -> Salva os dados de uma instância do $ModelClass$ na API.
+///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
+///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
+///
+
+
+import 'model.dart';
+import 'package:sembast/sembast.dart' as smbt;
+
+abstract class $ModelClass$ServiceInterface {
+  Future<List<$ModelClass$Model>> fetch({String? url});
+  Future<List<$ModelClass$Model>> getMore(String uri);
+  Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model> post($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$);
+  Future<bool> delete($ModelClass$Model $ModelClassCamelCase$);
+}
+
+abstract class $ModelClass$LocalDataInterface {
+  Future<smbt.Database?> initDb();
+  Future<List<$ModelClass$Model>> fetchAll();
+  Future<$ModelClass$Model?> get(int id);
+  Future<bool> save($ModelClass$Model $Model$);
+  Future<bool> deleteAll();
+  Future<bool> delete(int id);
+  Future<bool> update($ModelClass$Model $Model$);
+}

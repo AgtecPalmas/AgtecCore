@@ -1,5 +1,4 @@
-import 'dart:developer' as dev;
-
+import '../../core/agtec.logger.dart';
 import 'data.dart';
 
 class AuthModel {
@@ -45,8 +44,8 @@ class AuthModel {
     try {
       AuthData _authData = AuthData();
       return _authData.deleteAll();
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel logout", error, stackTrace);
       return false;
     }
   }
@@ -55,8 +54,8 @@ class AuthModel {
     try {
       if (this.account.isEmpty) return "";
       return this.account;
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel profileName", error, stackTrace);
     }
     return "";
   }
@@ -70,8 +69,8 @@ class AuthModel {
       if (idToken.isEmpty) {
         result = false;
       }
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle", error, stackTrace);
     }
     return result;
   }
@@ -85,8 +84,8 @@ class AuthModel {
       if (password.isEmpty) {
         result = false;
       }
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail", error, stackTrace);
     }
     return result;
   }
@@ -116,8 +115,8 @@ class AuthModel {
         accessToken: map['accessToken'] as String,
         idToken: map['idToken'] as String,
       );
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel fromMap", error, stackTrace);
       return AuthModel();
     }
   }
@@ -142,8 +141,8 @@ class AuthModel {
         'accessToken': this.accessToken,
         'idToken': this.idToken,
       };
-    } catch (error, stacktrace) {
-      dev.log("AuthService", name: "AgtecCore", error: error.toString(), stackTrace: stacktrace);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro no AuthModel toMap", error, stackTrace);
       return {};
     }
   }

@@ -1,9 +1,0 @@
-import 'package:flutter/material.dart';
-
-// Cores padrões
-const Color customBlack = Colors.black;
-const Color customWhite = Color(0xfffFFFFFF);
-const Color customSuccessTitle = Color(0xff6CA8E3);
-const Color customTextSuccessMessage = Color(0xff6CA8E3);
-const Color customErrorTitle = Color(0xff514766);
-const Color customTextErrorMessage = Color(0xff514766);

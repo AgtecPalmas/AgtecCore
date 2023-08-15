@@ -1,6 +1,6 @@
 alembic==1.11.*
 email-validator==2.0.0.post2
-fastapi==0.95.*
+fastapi==0.100.*
 passlib==1.7.*
 psycopg2-binary==2.9.*
 python-dotenv==1.0.*
