@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'routers.dart';
@@ -54,34 +55,37 @@ class MaterialAppWidget extends StatelessWidget {
     return BlocConsumer<SettingsCubit, SettingsState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return MaterialApp(
-          title: Config.app_title,
-          theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
-          home: MyHomePage(title: '${Config.app_title}'),
-          onGenerateRoute: RouteGenerator.generateRoute,
-          supportedLocales: [
-            const Locale('en', 'US'),
-            const Locale('pt', 'BR'),
-          ],
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
-            for (var supportedLocale in supportedLocales) {
-              if (locale != null) {
-                if (supportedLocale.languageCode == locale.languageCode &&
-                    supportedLocale.countryCode == locale.countryCode) {
-                  currentLanguage = supportedLocale.toString();
-                  return supportedLocale;
+        return ScreenUtilInit(
+          designSize: const Size(widthScreenUtil, heightScreenUtil),
+          builder: (_, __) => MaterialApp(
+            title: Config.app_title,
+            theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
+            home: MyHomePage(title: '${Config.app_title}'),
+            onGenerateRoute: RouteGenerator.generateRoute,
+            supportedLocales: [
+              const Locale('en', 'US'),
+              const Locale('pt', 'BR'),
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (var supportedLocale in supportedLocales) {
+                if (locale != null) {
+                  if (supportedLocale.languageCode == locale.languageCode &&
+                      supportedLocale.countryCode == locale.countryCode) {
+                    currentLanguage = supportedLocale.toString();
+                    return supportedLocale;
+                  }
                 }
               }
-            }
-            return supportedLocales.first;
-          },
-          debugShowCheckedModeBanner: false,
+              return supportedLocales.first;
+            },
+            debugShowCheckedModeBanner: false,
+          ),
         );
       },
     );
