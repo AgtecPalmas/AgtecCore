@@ -460,8 +460,7 @@ class CustomTextFormFieldLabel extends StatelessWidget {
       ),
       child: Text(
         labelText,
-        style: TextStyle(
-          color: customLabelTextFormField,
+        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),

@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -20,10 +20,10 @@ const bool releaseVersion = false;
 
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
-// TODO Altere o valor dessa constante para o IP do projeto Django
-const String uriDeveloper = "http://127.0.0.1:8080/";
+// TODO - Altere o valor dessa constante para o IP do projeto Django
+const String uriDeveloper = "";
 
-// TODO Ajustando o projeto Android para aceitar conexão sem https na comunicação via HTTP
+// Para acesso sem ser via https
 // Acesse o arquivo AndroidManifest.xml no caminho: seu_projeto/android/app/src/main e adicione
 // a chave a seguir: android:usesCleartextTraffic="true" na tag application, vide exemplo a seguir
 /*
@@ -50,9 +50,10 @@ class Config {
   static const uri = releaseVersion ? uriRelease : uriDeveloper;
   static const uriAuth = "";
 
-  // TODO Adicionar aqui o token para ambiente de desenvolvimento.
-  static const DRFToken = "Token 2b817ddbb5b974e5a451a8156963de586d72079e";
+  // TODO - Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
+  static const DRFToken = "Token ";
 
+  // TODO - Adicionar as credenciais caso esteja utilizando FastAPI.
   // Dados de acesso à camada FastAPI
   static const fastAPIUserDevelopment = "";
   static const fastAPIPasswordDevelopment = "";
@@ -63,7 +64,10 @@ class Config {
   static const double marginHead = 0.25;
 }
 
-class CustomTheme{
+///
+/// Customizando o Thema do aplicativo Flutter
+///
+class CustomTheme {
  //Colors for theme
   static Color defaultColor = Colors.black;
   static Color lightPrimary = const Color(0xfffcfcff);
@@ -74,23 +78,20 @@ class CustomTheme{
   static Color darkBG = Colors.black;
 
   //Colors for main cards theme light and dark
-  static Color mainCardLightBorderColor = Colors.black87;
   static Color mainCardLightIconColor = Colors.black38;
   static Color mainCardLightTextColor = Colors.black38;
   static Color mainCardLightBackgroundColor = Colors.white;
   static Color mainCardLightShadowColor = Colors.black38;
-  static Color mainTextFieldLightColor = Colors.black45;
-  static Color mainButtonBgLightColor = Colors.black38;
-  static Color mainButtonFontLightColor = Colors.white;
+  static Color textStyleDefaultColor = Colors.orangeAccent;
 
-  static Color mainCardDarkBorderColor = Colors.grey[700] as Color;
-  static Color mainCardDarkIconColor = Colors.grey[300] as Color;
-  static Color mainCardDarkTextColor = Colors.grey[300] as Color;
-  static Color mainCardDarkBackgroundColor = Colors.grey[850] as Color;
-  static Color mainCardDarkShadowColor = Colors.grey[900] as Color;
-  static Color mainTextFieldDarkColor = Colors.grey[600] as Color;
-  static Color mainButtonBgDarkColor = Colors.grey[600] as Color;
-  static Color mainButtonFontDarkColor = Colors.black;
+  // Classe estática para configuração do TextStyle padrão
+  static final _defaultTextStyle = TextStyle(color: textStyleDefaultColor);
+
+  static final _textThemeDefault = TextTheme(
+    bodyLarge: _defaultTextStyle,
+    bodyText1: _defaultTextStyle,
+    headline5: _defaultTextStyle,
+  );
 
   static ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
@@ -99,23 +100,16 @@ class CustomTheme{
     appBarTheme: AppBarTheme(
       elevation: 0,
       toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).bodyText2,
       titleTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).headline6,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: lightAccent,
     ),
+    // textTheme: _textThemeDefault
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -126,22 +120,15 @@ class CustomTheme{
     appBarTheme: AppBarTheme(
       elevation: 0,
       toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle( color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).bodyText2,
       titleTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).headline6,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: darkAccent,
     ),
+    // textTheme: _textThemeDefault
   );
 }
