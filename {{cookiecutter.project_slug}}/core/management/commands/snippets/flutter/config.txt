@@ -12,6 +12,10 @@ const heightAppBarPage = 22.0;
 const marginTopCustomAppBar = 12.0;
 const marginHorizontalSectionsDataPage = 12.0;
 
+// Definindo o width e o height do ScreenUtil Extensions
+const double widthScreenUtil = 390;
+const double heightScreenUtil = 844;
+
 // Constante para determinar se a navegação na App será utilizando o Bottom NavigationBar
 const bool enabledBottomNavigationBar = false;
 
