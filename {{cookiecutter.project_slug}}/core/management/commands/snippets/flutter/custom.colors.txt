@@ -14,3 +14,4 @@ const Color backgroundColorCardHomePageBegin = Colors.white;
 const Color backgroundColorCardHomePageEnd = Colors.white;
 const Color boxShadownColorCardHomePage = Colors.black38;
 const Color borderCardColorHomePage = Colors.black38;
+const Color appBarDefaultBackgroundColor = Color.fromARGB(92, 0, 153, 255);
