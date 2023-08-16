@@ -52,6 +52,8 @@ class SchemasBuild:
 
             else:
                 attribute += f" = '{field_str}'"
+        if field.attname == "django_user_id":
+                attribute == "int"
         return attribute
 
     def build(self):
@@ -86,8 +88,7 @@ class SchemasBuild:
                                 "$auth_import$",
                                 "from authentication.schemas import User",
                             )
-                            result += f"\t django_user_id: Optional[str]\n"
-                            result += f"\t django_user: Optional[User]\n"
+                            result += f"\t django_user_id: int\n"
                             continue
 
                         field_name = field.get_attname_column()[1]
