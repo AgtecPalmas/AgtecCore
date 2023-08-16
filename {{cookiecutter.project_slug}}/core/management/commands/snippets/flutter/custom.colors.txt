@@ -1,42 +1,16 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
 ///
+
 import 'package:flutter/material.dart';
 
-//Cores da logo marcar
-const Color customIteeiaAzul = Color(0xff6CA8E3);
-const Color customIteeiaVerde = Color(0xff0AA16F);
-const Color customIteeiaRoxo = Color(0xff794E80);
-const Color customIteeiaAmarelo = Color(0xfff4b100);
-const Color customIteeiaCorFonteLogo = Color(0xff4d4d4d);
-
-// Cores padrões
-const Color customPrimary = Colors.black;
-const Color customWhite = Color(0xfffFFFFFF);
-
-// Cores dos widgets
-const Color customLabelTitleCardOptions = Color(0xff514766);
-const Color customTitleGeneralPage = Color(0xff514766);
-const Color customTextCardsListViews = Color(0xff667080);
-const Color customLabelTextFormField = Color(0xff667080);
-const Color customHintTextFormField = Color(0xff667080);
-const Color customBorderTextFormField = Color(0xff667080);
-const Color customSubtitleGeneralPage = Color(0xff667080);
-const Color customBackgroundColorPage = Color(0xAAF5F5FA);
-const Color customTitleSuccessMessage = Color(0xff514766);
-const Color customTextSuccessMessage = Color(0xff667080);
-const Color customBorderCardHomePageOptions = Color(0xffE1E1E5);
-const Color customBorderCardHead = Color(0xffE1E1E5);
-const Color customBackgroundButtonColor = Color(0xff6CA8E3);
-const Color customBackgroundSnackBarErrorColor = Color(0xff9984d4);
-const Color customButtonColorSnackBarErrorColor = Color(0xff230C33);
-const Color customBackgroundSnackBarColor = Color(0xff6CA8E3);
-const Color customButtonColorSnackBarColor = Color(0xfffFFFFFF);
-
-// Cores do gradiente
-const Color customGradienteInicio = const Color(0xff6CA8E3);
-const Color customGradienteFim = const Color(0xff794E80);
+const Color iconCardColorHomePage = Colors.black38;
+const Color textCardColorHomePage = Colors.black38;
+const Color backgroundColorCardHomePageBegin = Colors.white;
+const Color backgroundColorCardHomePageEnd = Colors.white;
+const Color boxShadownColorCardHomePage = Colors.black38;
+const Color borderCardColorHomePage = Colors.black38;
