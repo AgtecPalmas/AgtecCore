@@ -82,15 +82,25 @@ class CustomTheme {
   static Color mainCardLightTextColor = Colors.black38;
   static Color mainCardLightBackgroundColor = Colors.white;
   static Color mainCardLightShadowColor = Colors.black38;
-  static Color textStyleDefaultColor = Colors.orangeAccent;
+  static Color textStyleDefaultColor = Color(0xFF4a5c6a);
 
   // Classe estática para configuração do TextStyle padrão
   static final _defaultTextStyle = TextStyle(color: textStyleDefaultColor);
 
-  static final _textThemeDefault = TextTheme(
-    bodyLarge: _defaultTextStyle,
-    bodyText1: _defaultTextStyle,
+static final _textThemeDefault = TextTheme(
+    headline1: _defaultTextStyle,
+    headline2: _defaultTextStyle,
+    headline3: _defaultTextStyle,
+    headline4: _defaultTextStyle,
     headline5: _defaultTextStyle,
+    headline6: _defaultTextStyle,
+    subtitle1: _defaultTextStyle,
+    subtitle2: _defaultTextStyle,
+    bodyText1: _defaultTextStyle,
+    bodyText2: _defaultTextStyle,
+    caption: _defaultTextStyle,
+    button: _defaultTextStyle,
+    overline: _defaultTextStyle,
   );
 
   static ThemeData lightTheme = ThemeData(
@@ -109,7 +119,7 @@ class CustomTheme {
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: lightAccent,
     ),
-    // textTheme: _textThemeDefault
+    textTheme: _textThemeDefault
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -129,6 +139,6 @@ class CustomTheme {
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: darkAccent,
     ),
-    // textTheme: _textThemeDefault
+    textTheme: _textThemeDefault
   );
 }

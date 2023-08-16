@@ -445,7 +445,6 @@ class _ContentWidgetState extends State<ContentWidget> {
 }
 
 /// [Área para o CustomTextFormFieldLabel]
-/// TODO Trazer para esse componente o padrão do TextField do DesignSystem
 class CustomTextFormFieldLabel extends StatelessWidget {
   final String labelText;
 
@@ -470,7 +469,6 @@ class CustomTextFormFieldLabel extends StatelessWidget {
 }
 
 /// [Área para o CustomTextFormFieldWidget Class]
-/// TODO Trazer para esse componente o padrão do TextField do DesignSystem
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
   final String hintText;
