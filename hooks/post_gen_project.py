@@ -4,7 +4,20 @@ import subprocess
 import sys
 import typing as t
 from pathlib import Path
+from rich.progress import (
+    BarColumn,
+    Progress,
+    SpinnerColumn,
+    TaskProgressColumn,
+    TimeRemainingColumn,
+)
 from subprocess import DEVNULL, PIPE
+
+INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "True"
+
+GIT_INIT = "{{ cookiecutter.git_init }}" == "True"
+
+BUILD_APPS = "{{ cookiecutter.build_apps }}" == "True"
 
 PYTHON = "py" if sys.platform.startswith("win") else "python"
 
@@ -32,19 +45,19 @@ GIT_COMMANDS = [
 def run_command(
     command: t.Union[str, list], silent: bool = False, exit_on_fail=False
 ) -> bool:
-    """Método para executar um comando"""
+    """Método para executar um comando, retorna True se sucedido"""
 
     try:
         if silent:
             command = subprocess.run(
-                command,
+                command.split(" "),
                 cwd=PROJECT_DIRECTORY,
                 stdin=DEVNULL,
                 stdout=DEVNULL,
                 stderr=DEVNULL,
             )
         else:
-            command = subprocess.run(command, cwd=PROJECT_DIRECTORY)
+            command = subprocess.run(command.split(" "), cwd=PROJECT_DIRECTORY)
 
         return command.returncode == 0
 
@@ -115,7 +128,7 @@ def remove_subdirectory_project() -> None:
         source_dir = Path(path_root)
         print("*" * 100)
         print("=" * 100)
-        print(f"Lembre de apagar manualmente o diretório:\n")
+        print("Lembre de apagar manualmente o diretório:\n")
         print(f"{source_dir} \n")
         print("=" * 100)
         print("*" * 100)
@@ -148,27 +161,41 @@ def pip_install_requirements() -> bool:
     try:
         print(f"{EMOJIS['wait']} Instalando as dependências do projeto")
 
-        for requirement in REQUIREMENTS:
-            if not requirement.exists():
-                print(f"{EMOJIS['error']} O arquivo {requirement} não existe")
-                return False
-
-        # pip install -r req.txt -r req-dev.txt
-        requirements = " -r ".join([str(requirement) for requirement in REQUIREMENTS])
-
-        returncode = run_command(
-            f"{PYTHON} -m pip install -r {requirements}", silent=True
-        )
-
-        if returncode is False:
-            print(
-                f"{EMOJIS['error']} Erro ao instalar requirements, instalando manualmente e faça o build das apps padrões"
+        with Progress(
+            SpinnerColumn(spinner_name="bouncingBall", speed=0.3),
+            "[progress.description]{task.description}",
+            TaskProgressColumn(),
+            BarColumn(),
+            TimeRemainingColumn(),
+            transient=True,
+        ) as progress_bar:
+            task = progress_bar.add_task(
+                "Instalando as dependências do projeto",
+                total=len(REQUIREMENTS),
+                start=False,
             )
-            return False
 
-        else:
-            print(f"{EMOJIS['success']} Requirements instalados com sucesso")
-            return True
+            for requirement in REQUIREMENTS:
+                if not requirement.exists():
+                    print(f"{EMOJIS['error']} O arquivo {requirement} não existe")
+                    return False
+
+                returncode = run_command(
+                    f"{PYTHON} -m pip install -r {requirement}", silent=True
+                )
+
+                if returncode is False:
+                    print(
+                        f"{EMOJIS['error']} Erro ao instalar requirements,\
+                        instale manualmente e faça o build dos apps padrões"
+                    )
+                    return False
+
+                print(f"{EMOJIS['success']} {requirement} instalado com sucesso")
+                progress_bar.advance(task)
+
+        print(f"{EMOJIS['success']} Requirements instalados com sucesso")
+        return True
 
     except Exception as e:
         print(f"{EMOJIS['error']} Erro ao instalar as dependências do projeto: {e}")
@@ -181,9 +208,10 @@ def build_default_apps() -> None:
         for app in DEFAULT_APPS:
             returncode = run_command(f"{PYTHON} manage.py build {app} --all")
 
-            if not returncode:
+            if returncode is False:
                 print(
-                    f"{EMOJIS['error']} Erro ao construir as apps padrões do projeto: {app}"
+                    f"{EMOJIS['error']} Erro ao construir as apps padrões\
+                    do projeto: {app}"
                 )
 
     except Exception as e:
@@ -193,7 +221,11 @@ def build_default_apps() -> None:
 
 copy_all_files_to_root_dir()
 copy_file_env_example_to_env()
-if pip_install_requirements():
+
+if INSTALL_REQUIREMENTS and pip_install_requirements() and BUILD_APPS:
     build_default_apps()
-init_git()
+
+if GIT_INIT:
+    init_git()
+
 remove_subdirectory_project()

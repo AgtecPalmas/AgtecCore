@@ -27,7 +27,7 @@
 ````
 - Instale o **cookiecutter**
 ````console
-  pip install cookiecutter==2.1.1
+  pip install cookiecutter==2.3.0
 ````
 - Instale o gerenciador de pacote **pip-tools**
 ```console
