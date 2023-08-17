@@ -1,0 +1,57 @@
+{% extends "core/index_detail.html" %}
+{% load static %}
+{% load base %}
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+#FileLocked
+-->
+{% block title %}
+    Detalhes de Configuração
+{% endblock title %}
+<span class="text-muted font-weight-light"></span>
+{% block title_modulo %}
+    <h4 class="font-weight-bold py-3 mb-4">
+        <span class="text-muted font-weight-light">Configuração /</span> Detalhes {{ model_name }}
+    </h4>
+{% endblock title_modulo %}
+<div class="row">
+    {% block menu_app %}
+        {% for app in apps %}
+            {% if app.real_name_app.lower == 'configuracao_core' %}
+                {% for model in app.models_app %}
+                    {% if model|has_view_permission:request %}
+                        <div class="col-xl-12">
+                            <i class="ion ion-md-arrow-dropight text-muted"></i> &nbsp;
+                            <a href="{% url model.path_url %}">{{ model.name_model|title }}</a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endblock menu_app %}
+    {% block detail %}
+        <div class="col-xl-12">
+            <div class="br-list" role="list">
+                {% for field in object_list %}
+                    <div class="col-xl-6">
+                        <h4 class="align-items-center my-4">{{ field.0|capfirst }}</h4>
+                        <p>{{ field.1 }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-footer flex-buttons-end gap-small">
+            <div>
+                <a class="br-button block"
+                   href="{% url 'configuracao_core:dadosgerais-list' %}">Voltar</a>
+            </div>
+            {% if perms.core.view_audit and audit %}
+                <div>
+                    <a href="{% url url_detail object.pk %}audit"
+                       class="br-button secondary block">Auditar</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock detail %}
+</div>

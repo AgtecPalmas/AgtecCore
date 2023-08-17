@@ -6,14 +6,15 @@ from django.urls import reverse
 from faker import Faker
 from model_bakery import baker
 
-
-from configuracao_core.models import (DadosGerais,)
-from configuracao_core.views import (Configuracao_CoreIndexTemplateView,
-                                           DadosGeraisCreateView,
-                                           DadosGeraisDeleteView,
-                                           DadosGeraisDetailView,
-                                           DadosGeraisListView,
-                                           DadosGeraisUpdateView)
+from configuracao_core.models import DadosGerais
+from configuracao_core.views import (
+    Configuracao_CoreIndexTemplateView,
+    DadosGeraisCreateView,
+    DadosGeraisDeleteView,
+    DadosGeraisDetailView,
+    DadosGeraisListView,
+    DadosGeraisUpdateView,
+)
 
 
 class TestDadosGeraisViews:
@@ -24,7 +25,9 @@ class TestDadosGeraisViews:
         self.faker = Faker("pt_BR")
         self.factory = RequestFactory()
         self.user = User.objects.create_superuser(
-            username="teste", email="teste@email.com.br", password="senha_padrao_deve_ser_mudada"
+            username="teste",
+            email="teste@email.com.br",
+            password="senha_padrao_deve_ser_mudada",
         )
         self.dadosgerais = baker.make(DadosGerais)
 
@@ -38,7 +41,9 @@ class TestDadosGeraisViews:
 
     def test_dadosgerais_detail(self, init):
         """Teste para a view detail."""
-        url = reverse("configuracao_core:dadosgerais-detail", args={self.dadosgerais.pk})
+        url = reverse(
+            "configuracao_core:dadosgerais-detail", args={self.dadosgerais.pk}
+        )
         request = self.factory.get(url)
         request.user = self.user
         response = DadosGeraisDetailView.as_view()(request, pk=self.dadosgerais.pk)
@@ -68,7 +73,9 @@ class TestDadosGeraisViews:
 
     def test_dadosgerais_update(self, init):
         """Teste para a view update."""
-        url = reverse("configuracao_core:dadosgerais-update", args={self.dadosgerais.pk})
+        url = reverse(
+            "configuracao_core:dadosgerais-update", args={self.dadosgerais.pk}
+        )
         request = self.factory.put(url)
         request.user = self.user
         response = DadosGeraisUpdateView.as_view()(request, pk=self.dadosgerais.pk)
@@ -76,7 +83,9 @@ class TestDadosGeraisViews:
 
     def test_dadosgerais_delete(self, init):
         """Teste para a view delete."""
-        url = reverse("configuracao_core:dadosgerais-delete", args={self.dadosgerais.pk})
+        url = reverse(
+            "configuracao_core:dadosgerais-delete", args={self.dadosgerais.pk}
+        )
         request = self.factory.delete(url)
         setattr(request, "session", "session")
         messages = FallbackStorage(request)

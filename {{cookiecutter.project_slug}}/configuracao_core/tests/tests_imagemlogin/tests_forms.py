@@ -6,8 +6,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from faker import Faker
 from PIL import Image
 
-from configuracao_core.forms import (ImagemLoginForm,)
-from configuracao_core.models import (ImagemLogin,)
+from configuracao_core.forms import ImagemLoginForm
+from configuracao_core.models import ImagemLogin
 
 
 class TestImagemLoginForms:
@@ -19,15 +19,17 @@ class TestImagemLoginForms:
 
         def create_test_image():
             # Cria uma imagem aleatória com 100x100 pixels
-            image = Image.new('RGB', (100, 100), color='white')
+            image = Image.new("RGB", (100, 100), color="white")
             pixels = image.load()
             for i in range(100):
                 for j in range(100):
                     pixels[i, j] = (i + j, i, j)
 
             # Salva a imagem no diretório de mídia temporário
-            with tempfile.NamedTemporaryFile(suffix='.jpg', dir=settings.MEDIA_ROOT) as f:
-                image.save(f, format='JPEG')
+            with tempfile.NamedTemporaryFile(
+                suffix=".jpg", dir=settings.MEDIA_ROOT
+            ) as f:
+                image.save(f, format="JPEG")
                 f.seek(0)
                 return f.read(), f.name
 
@@ -35,7 +37,9 @@ class TestImagemLoginForms:
         image_content, image_filename = create_test_image()
 
         # Cria o objeto de arquivo carregado com o conteúdo da imagem
-        uploaded_file = SimpleUploadedFile(name='test_image.jpg', content=image_content, content_type='image/jpeg')
+        uploaded_file = SimpleUploadedFile(
+            name="test_image.jpg", content=image_content, content_type="image/jpeg"
+        )
         self.valid_data = {
             "imagem": uploaded_file,
             "ativo": True,

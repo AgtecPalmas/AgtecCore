@@ -2,7 +2,7 @@ import pytest
 from faker import Faker
 from model_bakery import baker
 
-from configuracao_core.models import (ImagemLogin, )
+from configuracao_core.models import ImagemLogin
 
 
 class TestImagemLoginModels:

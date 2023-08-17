@@ -1,0 +1,30 @@
+<!--
+Arquivo gerado automaticamente pelo build.
+Caso deseje bloquear o parser nesse arquivo, basta adicionar o caracter #(cerquilha) antes da palavra a seguir
+#FileLocked
+-->
+{% extends "core/index_delete.html" %}
+{% load base %}
+{% block title %}
+    Deletar Configuração
+{% endblock title %}
+{% block title_modulo %}
+    Configuração
+{% endblock title_modulo %}
+{% block titledelete_app %}
+    <h3 class="m-4">Apagar: {{ object }} ?</h3>
+{% endblock titledelete_app %}
+{% block delete_app %}
+    <form class="needs-validation was-validated flex-buttons-end gap-small"
+          method="post"
+          novalidate>
+        {% csrf_token %}
+        <div>
+            <a href="{% url 'configuracao_core:redesocial-list' %}"
+               class="br-button block">Cancelar</a>
+        </div>
+        <div>
+            <button type="submit" class="br-button danger block" value="Excluir">Excluir</button>
+        </div>
+    </form>
+{% endblock delete_app %}

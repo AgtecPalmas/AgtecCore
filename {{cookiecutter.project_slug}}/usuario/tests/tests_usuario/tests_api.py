@@ -1,11 +1,11 @@
 import pytest
 from django.contrib.auth.models import User
 from faker import Faker
-from model_bakery import baker
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
-from usuario.models import Usuario
 from validate_docbr import CPF
+
+from usuario.models import Usuario
 
 
 class TestUsuarioAPI:
