@@ -5,11 +5,13 @@
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
 ///
-import '../../../../core/agtec.logger.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/user_interface/connection_mixin.dart';
+import '../../../../core/user_interface/message_mixin.dart';
+import '../../../../core/user_interface/modal_loading_mixin.dart';
+import '../../../../core/agtec.logger.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
 import '../../../../core/util.dart';
@@ -30,7 +32,7 @@ class $ModelClass$DetailPage extends StatefulWidget {
 }
 
 class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage> 
-  with SingleTickerProviderStateMixin{
+  with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin{
 
   late $ModelClass$Model _$ModelClassCamelCase$Model;
   late AnimationController _animationController;
@@ -48,14 +50,17 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
-          _showMessage(state.error, error: true);
+          showError(detailItemErrorMessage);
           AgteCoreLogger().erro("Ocorreu o erro ao executar o Detail Page BlocConsumer", state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
-          _showMessage(state.successMessage);
+          showSuccess(detailItemSuccessMessage);
         }
       },
       builder: (context, state) {
+        if (state is $ModelClass$ProcessState) {
+          return showHideModal(show: true);
+        }
         return Scaffold(
           key: _scaffoldKey,
           extendBodyBehindAppBar: true,
@@ -101,47 +106,4 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       ),
     );
   }
-
-  /// Método responsável por mostrar um SnackBar com uma mensagem
-  /// com o texto passada como parâmetro
-   _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false
-              ? customSuccessSnackbar(message)
-              : customErrorSnackbar(message),
-        );
-      });
-    }
-  }
-
-  /// Método responsável por mostrar um modal com o texto informado
-  void _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  /// Método para ocultar o teclado
-  _hideKeyboard(BuildContext context){
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
-
 }

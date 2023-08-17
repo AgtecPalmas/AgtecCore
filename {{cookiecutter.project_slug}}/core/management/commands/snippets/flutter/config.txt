@@ -22,10 +22,27 @@ const bool enabledBottomNavigationBar = false;
 // Chave para determinar se a versão está em desenvolvimento ou produção
 const bool releaseVersion = false;
 
+// Constantes contendo os textos padrões para o componente Message
+const String listLoadMessage = "Carregando...";
+const String listErrorMessage = "Erro ao carregar os dados";
+const String listSuccessMessage = "Dados carregados com sucesso";
+const String listEmptyMessage = "Nenhum registro encontrado";
+const String registerItemSuccessMessage = "Item registrado com sucesso";
+const String registerItemErrorMessage = "Erro ao registrar item";
+const String registerItemProccessMessage = "Registrando item...";
+const String updateItemSuccessMessage = "Item atualizado com sucesso";
+const String updateItemErrorMessage = "Erro ao atualizar item";
+const String updateItemProccessMessage = "Atualizando item...";
+const String detailItemSuccessMessage = "Item detalhado com sucesso";
+const String detailItemErrorMessage = "Erro ao detalhar item";
+const String detailItemProccessMessage = "Detalhando item...";
+
+
+
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
 // TODO - Altere o valor dessa constante para o IP do projeto Django
-const String uriDeveloper = "";
+const String uriDeveloper = "http://192.168.1.82:8101/";
 
 // Para acesso sem ser via https
 // Acesse o arquivo AndroidManifest.xml no caminho: seu_projeto/android/app/src/main e adicione
@@ -59,8 +76,8 @@ class Config {
 
   // TODO - Adicionar as credenciais caso esteja utilizando FastAPI.
   // Dados de acesso à camada FastAPI
-  static const fastAPIUserDevelopment = "";
-  static const fastAPIPasswordDevelopment = "";
+  static const fastAPIUserDevelopment = "admin";
+  static const fastAPIPasswordDevelopment = "asdf@1234";
 
   static const String uri_media = "media/";
   static const String app_title = "App Flutter";
