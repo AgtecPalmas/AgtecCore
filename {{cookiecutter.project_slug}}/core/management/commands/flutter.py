@@ -38,6 +38,7 @@ from core.management.commands.flutter_managers import (
     UserInterfaceBuilder,
     UtilsBuilder,
     WidgetBuilder,
+    MixinsClassBuilder,
 )
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
@@ -506,6 +507,14 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_user_interface: {error}")
 
+    def _build_user_interface_mixins(self):
+        try:
+            if not Utils.check_dir(self.ui_dir):
+                os.makedirs(self.ui_dir)
+            MixinsClassBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _build_user_interface: {error}")
+
     def _add_packages(self):
         try:
             AddPackagesBuilder(command=self).build()
@@ -595,6 +604,7 @@ class Command(BaseCommand):
             self._build_flutter()
 
             self._build_user_interface()
+            self._build_user_interface_mixins()
             self._build_named_routes()
             self._buid_settings()
             self._build_exception_class()

@@ -21,6 +21,7 @@ class CustomTextFormFieldStyle {
     return InputDecoration(
       hintText: hintText,
       counter: hiddenCounter ? Offstage() : null,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
       hintStyle: TextStyle(
         color: Colors.black38,
         fontSize: 14,
