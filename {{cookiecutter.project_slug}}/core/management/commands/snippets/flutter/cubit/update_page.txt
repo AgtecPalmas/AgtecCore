@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/user_interface/custom.style.dart';
+import '../../../../core/user_interface/connection_mixin.dart';
+import '../../../../core/user_interface/message_mixin.dart';
+import '../../../../core/user_interface/modal_loading_mixin.dart';
 import '../../../../core/agtec.logger.dart';
 import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
@@ -30,7 +33,7 @@ class $ModelClass$UpdatePage extends StatefulWidget {
 }
 
 class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
-  with SingleTickerProviderStateMixin{
+  with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin{
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _form$ModelClass$ = GlobalKey<FormState>();
 
@@ -68,11 +71,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
-          _showMessage(state.error, error: true);
+          showError(updateItemErrorMessage);
           AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page BlocConsumer", state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
-          _showMessage(state.successMessage);
+          showSuccess(updateItemSuccessMessage);
         }
       },
       builder: (context, state) {
@@ -142,9 +145,6 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is $ModelClass$ProcessState) {
-          return customProcessingWidget(context, isCircularIndicator: false);
-        }
       return  Padding(
         padding: const EdgeInsets.only(top: 24.0),
         child: Container(
@@ -188,45 +188,5 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     }catch (error, stackTrace){
       AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page _loadData", error.toString(), stackTrace);
     }
-  }
-
-  /// Método responsável por mostrar um SnackBar com uma mensagem
-  /// com o texto passada como parâmetro
-   _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false
-              ? customSuccessSnackbar(message)
-              : customErrorSnackbar(message),
-        );
-      });
-    }
-  }
-  
-  _hideKeyboard(BuildContext context){
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
-
-  _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
   }
 }

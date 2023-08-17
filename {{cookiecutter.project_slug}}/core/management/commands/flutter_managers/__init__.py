@@ -9,6 +9,7 @@ from .build_data_and_service_layer import DataServiceLayerBuild
 from .build_exception_class import ExceptionClassBuilder
 from .build_logger import LoggerBuilder
 from .build_main_file import MainFileBuilder
+from .build_mixins import MixinsClassBuilder
 from .build_models import ModelsBuilder
 from .build_named_routes import NamedRoutesBuilder
 from .build_pages import PagesBuilder
@@ -46,4 +47,5 @@ __all__ = [
     "UserInterfaceBuilder",
     "UtilsBuilder",
     "WidgetBuilder",
+    "MixinsClassBuilder",
 ]

@@ -7,9 +7,14 @@
 ///
 
 import '../../../../core/agtec.logger.dart';
+import '../../../../core/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/user_interface/connection_mixin.dart';
+import '../../../../core/user_interface/modal_loading_mixin.dart';
+import '../../../../core/user_interface/message_mixin.dart';
 
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/util.dart';
@@ -26,7 +31,7 @@ class $ModelClass$ListPage extends StatefulWidget {
 }
 
 class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
-  with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late AnimationController? _animationController;
   List<$ModelClass$Model> _$Model$List = <$ModelClass$Model>[];
@@ -92,15 +97,15 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           AgteCoreLogger().erro("Ocorreu o erro ao executar o List Page BlocConsumer | listener", state.error.toString());
-          _showMessage(state.error, error: true);
+          showError(listErrorMessage);
         }
         if(state is $ModelClass$SuccessState){
-          _showMessage(state.successMessage);
+          showSuccess(listSuccessMessage);
         }
       },
       builder: (context, state) {
         if (state is $ModelClass$ProcessState) {
-          return customProcessingCardModalCenter(context);
+          return showHideModal(show: true);
         }
         if (state is $ModelClass$SuccessState){
             if(state.$ModelClassCamelCase$List  == null) {
@@ -157,48 +162,6 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
     } catch (error) {
 
     }
-  }
-
-  /// Método responsável por mostrar um SnackBar com uma mensagem
-  /// com o texto passada como parâmetro
-   _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false
-              ? customSuccessSnackbar(message)
-              : customErrorSnackbar(message),
-        );
-      });
-    }
-  }
-
-  /// Método responsável por mostrar um modal com o texto informado
-  void _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  /// Método para ocultar o teclado
-  _hideKeyboard(BuildContext context){
-    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   /// Método responsável por carregar os dados da API
