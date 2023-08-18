@@ -37,7 +37,6 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _form$ModelClass$ = GlobalKey<FormState>();
 
-  late AnimationController _animationController;
   $ModelClass$Model _$Model$Model = $ModelClass$Model();
 
   $Attributes$
@@ -45,7 +44,6 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this);
     _$ModelClassCamelCase$Model = widget.$ModelClassCamelCase$Model;
     _loadData();
   }
@@ -71,11 +69,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
-          showError(updateItemErrorMessage);
+          showError(UpdateStringConstants.error);
           AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page BlocConsumer", state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
-          showSuccess(updateItemSuccessMessage);
+          showSuccess(UpdateStringConstants.success);
         }
       },
       builder: (context, state) {
@@ -179,6 +177,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
       await _$Model$Controller.put(_$Model$Model);
     }catch (error, stackTrace){
       AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page _put", error.toString(), stackTrace);
+      showError(UpdateStringConstants.error);
     }
   }
 
@@ -187,6 +186,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
       $EditedAttributes$
     }catch (error, stackTrace){
       AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page _loadData", error.toString(), stackTrace);
+      showError(UpdateStringConstants.loadingError);
     }
   }
 }

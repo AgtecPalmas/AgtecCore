@@ -9,14 +9,12 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'routers.dart';
 
 import 'apps/configuracao/cubit.dart';
 import 'home.page.dart';
 import 'core/config.dart';
-import 'core/localization.dart';
 
 $ImportCubit$
 
@@ -62,28 +60,6 @@ class MaterialAppWidget extends StatelessWidget {
             theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
             home: MyHomePage(title: '${Config.app_title}'),
             onGenerateRoute: RouteGenerator.generateRoute,
-            supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('pt', 'BR'),
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            localeResolutionCallback: (locale, supportedLocales) {
-              for (var supportedLocale in supportedLocales) {
-                if (locale != null) {
-                  if (supportedLocale.languageCode == locale.languageCode &&
-                      supportedLocale.countryCode == locale.countryCode) {
-                    currentLanguage = supportedLocale.toString();
-                    return supportedLocale;
-                  }
-                }
-              }
-              return supportedLocales.first;
-            },
             debugShowCheckedModeBanner: false,
           ),
         );

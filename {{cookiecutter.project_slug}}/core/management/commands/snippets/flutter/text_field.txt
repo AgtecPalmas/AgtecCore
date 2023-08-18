@@ -1,7 +1,8 @@
 TextFormField(
+  controller: $controller$,
+  onTapOutside: (_) => FocusScope.of(context).unfocus(),
   decoration: CustomTextFormFieldStyle.textFieldStyle(
     hintText: '$Field$',
     hiddenCounter: true,
   ),
-  controller: $controller$,
 ),

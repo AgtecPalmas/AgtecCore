@@ -31,9 +31,10 @@ class MainFileBuilder:
                 for model in _current_app.models:
                     _model = model[1]
                     _app_model = f"{_app.title()}{_model}"
-                    _imports_views += f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model}Views;\n"
+                    _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
+                    _imports_views += f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
                     _list_views += f"Itens(title: '{model[0]._meta.verbose_name}', "
-                    _list_views += f"icon: FontAwesomeIcons.folderOpen, uri: {_app.title()}{_model}."
+                    _list_views += f"icon: FontAwesomeIcons.folderOpen, uri: {_app_model}."
                     _list_views += f"{_model}ListPage()),\n"
                     _imports_controllers += f"import 'apps/{_app.lower()}/{_model.lower()}/controller.dart' "
                     _imports_controllers += f"as {_app.title()}{_model.title()}Controller;\n"
@@ -57,9 +58,10 @@ class MainFileBuilder:
                 _app = _current_app.app_name
                 for model in _current_app.models:
                     _model = model[1]
+                    _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
                     _items_menu += f"list.add(Itens(title: '{_model.title()}'"
-                    _items_menu += f",icon: FontAwesomeIcons.folderOpen,uri: {_app.title()}{_model}"
-                    _items_menu += f"Views.{_model}ListPage(),),);"
+                    _items_menu += f",icon: FontAwesomeIcons.folderOpen,uri: {_app_model_snack_case}"
+                    _items_menu += f".{_model}ListPage(),),);"
             return _items_menu
         except Exception as error:
             Utils.show_error(f"Error in _build_menu_home_page_itens: {error}")

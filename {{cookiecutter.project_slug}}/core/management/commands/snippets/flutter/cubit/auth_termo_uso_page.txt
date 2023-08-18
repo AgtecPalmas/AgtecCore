@@ -3,7 +3,6 @@ import '../../../core/config.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TermoUso extends StatelessWidget {
-  late WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +19,6 @@ class TermoUso extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return WebView(
-      initialUrl: urlTermoUso,
-      javascriptMode: JavascriptMode.unrestricted,
-      onWebViewCreated: (WebViewController webViewController) {
-        _controller = webViewController;
-      },
-    );
+    return const SizedBox.shrink();
   }
 }
