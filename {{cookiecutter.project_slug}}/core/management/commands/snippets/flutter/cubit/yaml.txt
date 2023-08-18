@@ -51,7 +51,8 @@ dependencies:
   # Pacote para auxiliar a geração de logs no terminal
   logger: ^1.1.0
 
-  flutter_localization: ^0.1.13
+  # Pacote para auxiliar na validação de campos
+  validatorless: ^1.2.3
 
 dev_dependencies:
   flutter_test:
