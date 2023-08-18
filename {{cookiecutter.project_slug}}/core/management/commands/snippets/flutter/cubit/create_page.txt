@@ -31,16 +31,9 @@ class $ModelClass$AddPage extends StatefulWidget {
 class _$ModelClass$AddPageState extends State<$ModelClass$AddPage> 
   with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();  
-  late AnimationController _animationController;
   $ModelClass$Model _$Model$Model = $ModelClass$Model();
   final _form$ModelClass$ = GlobalKey<FormState>();
   $Attributes$
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(vsync: this);
-  }
 
   @override
   void dispose() {
@@ -93,11 +86,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                 BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
-                    showError(registerItemErrorMessage);
+                    showError(InsertStringConstants.error);
                     AgteCoreLogger().erro("Ocorreu o erro no BlocConsumer CreatePage", state.error.toString());
                   }
                   if(state is $ModelClass$SuccessState){
-                    showSuccess(registerItemSuccessMessage);
+                    showSuccess(InsertStringConstants.success);
                   }
                 },
                 builder: (context, state) {
@@ -170,7 +163,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       await _$Model$Controller.post(_$Model$Model);
     }catch (error, stackTrace){
       AgteCoreLogger().erro("Ocorreu o erro no _post do PageCreate", error, stackTrace);
-      showError(registerItemErrorMessage);
+      showError(InsertStringConstants.error);
     }
   }
 }

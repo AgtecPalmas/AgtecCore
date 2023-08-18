@@ -12,7 +12,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'apps/usuario/usuario/pages/list.dart' as UsuarioUsuarioViews;
 import 'core/user_interface/custom.colors.dart';
 import 'apps/configuracao/index.page.dart';
 import 'core/user_interface/widget.dart';
@@ -36,9 +35,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool bottomNavigationEnable = true;
   int _currentIndexPage = 0;
-
-  // Declarando o inteiro para controlar qual página deve ser exibida
-  int _indexCurrentPage = 0;
 
   // Declarando uma instancia da Classe dos items do Menu
   final Itens _itensMenuGridView = Itens();

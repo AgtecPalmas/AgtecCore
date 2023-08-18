@@ -22,38 +22,10 @@ const bool enabledBottomNavigationBar = false;
 // Chave para determinar se a versão está em desenvolvimento ou produção
 const bool releaseVersion = false;
 
-// Constantes contendo os textos padrões para o componente Message
-const String listLoadMessage = "Carregando...";
-const String listErrorMessage = "Erro ao carregar os dados";
-const String listSuccessMessage = "Dados carregados com sucesso";
-const String listEmptyMessage = "Nenhum registro encontrado";
-const String registerItemSuccessMessage = "Item registrado com sucesso";
-const String registerItemErrorMessage = "Erro ao registrar item";
-const String registerItemProccessMessage = "Registrando item...";
-const String updateItemSuccessMessage = "Item atualizado com sucesso";
-const String updateItemErrorMessage = "Erro ao atualizar item";
-const String updateItemProccessMessage = "Atualizando item...";
-const String detailItemSuccessMessage = "Item detalhado com sucesso";
-const String detailItemErrorMessage = "Erro ao detalhar item";
-const String detailItemProccessMessage = "Detalhando item...";
-
-
-
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
 // TODO - Altere o valor dessa constante para o IP do projeto Django
 const String uriDeveloper = "http://192.168.1.82:8101/";
-
-// Para acesso sem ser via https
-// Acesse o arquivo AndroidManifest.xml no caminho: seu_projeto/android/app/src/main e adicione
-// a chave a seguir: android:usesCleartextTraffic="true" na tag application, vide exemplo a seguir
-/*
-    <application
-        android:name="io.flutter.app.FlutterApplication"
-        android:label="seu_projeto"
-        android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
-*/
 
 // URI para produção
 const String uriRelease = "";
@@ -162,4 +134,38 @@ static final _textThemeDefault = TextTheme(
     ),
     textTheme: _textThemeDefault
   );
+}
+
+// Área de definição das classes que encapsulam as String defaultas
+// das telas de listagem, inserção, edição, exclusão e detalhamento
+class ListStringConstants {
+  static const String loading = "Carregando...";
+  static const String error = "Erro ao carregar os dados";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String success = "Dados carregados com sucesso";
+  static const String empty = "Nenhum registro encontrado";
+}
+
+class DetailStringConstants {
+  static const String loading = "Detalhando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao detalhar o item";
+  static const String success = "Item detalhado com sucesso";
+  static const String empty = "Item não encontrado";
+}
+
+class InsertStringConstants {
+  static const String loading = "Cadastrando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao cadastrar o item";
+  static const String success = "Item cadastrado com sucesso";
+  static const String empty = "";
+}
+
+class UpdateStringConstants {
+  static const String loading = "Atualizando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao atualizar o item";
+  static const String success = "Item atualizado com sucesso";
+  static const String empty = "";
 }

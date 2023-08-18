@@ -7,14 +7,12 @@
 ///
 /// Arquivo contendo os Widgets componentizados da aplicação
 ///
-import '../../core/agtec.logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../core/config.dart';
+import '../../core/agtec.logger.dart';
 import '../../core/localization.dart';
 import '../../core/util.dart';
-import 'custom.colors.dart';
 import 'custom.style.dart';
 
 // Constante contendo o valor da proporção da tela padrão
@@ -40,14 +38,14 @@ Widget customMainCardButton(icon, label,
       boxShadow: [
         BoxShadow(
           color: boxShadowColor,
-          offset: Offset(2.0, 2.0),
+          offset: const Offset(2.0, 2.0),
           blurRadius: 3.0,
         )
       ],
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        stops: [0.0, 0.9],
+        stops: const [0.0, 0.9],
         colors: [
           cardBackgroundColorBegin,
           cardBackgroundColorEnd,
@@ -103,7 +101,7 @@ Widget customRaisedButton(
     Color? textColor,
     Icon? iconButton,
     bool rounded = false,
-    double elevation: 2.0}) {
+    double elevation = 2.0}) {
   try {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -119,7 +117,7 @@ Widget customRaisedButton(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           iconButton ?? Container(),
-          SizedBox(width: 4.0),
+          const SizedBox(width: 4.0),
           Text(
             label,
             style: TextStyle(color: textColor ?? Theme.of(context).primaryColor),
@@ -129,7 +127,7 @@ Widget customRaisedButton(
     );
   } catch (error, stackTrace) {
     AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }
 
@@ -178,20 +176,21 @@ Widget customButtonOutline(
             color: borderColor ?? Theme.of(context).primaryColor,
           ),
         ),
+        onPressed: onPress,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            iconButton != null ? iconButton : Container(),
-            SizedBox(
+            iconButton ?? Container(),
+            const SizedBox(
               width: 4.0,
             ),
             processing
-                ? Container(
+                ? SizedBox(
                     height: circularProgressIndicatorSize,
                     width: circularProgressIndicatorSize,
                     child: CircularProgressIndicator(
                       strokeWidth: circularProgressIndicatorStrokeWidth,
-                      valueColor: new AlwaysStoppedAnimation<Color>(circularProgressIndicatorBgColor),
+                      valueColor: AlwaysStoppedAnimation<Color>(circularProgressIndicatorBgColor),
                     ))
                 : Text(
                     label,
@@ -199,12 +198,11 @@ Widget customButtonOutline(
                   ),
           ],
         ),
-        onPressed: onPress,
       ),
     );
   } catch (error, stackTrace) {
     AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }
 
@@ -223,8 +221,8 @@ Widget customProcessingCardModal(BuildContext context) {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8.0),
           child: Column(
             children: [
-              CircularProgressIndicator(),
-              SizedBox(
+              const CircularProgressIndicator(),
+              const SizedBox(
                 height: 16,
               ),
               Text(
@@ -255,7 +253,7 @@ Widget customProcessingCardModalCenter(BuildContext context) {
           child: Column(
             children: [
               const CircularProgressIndicator(),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Text(
@@ -274,7 +272,7 @@ Widget customProcessingCardModalCenter(BuildContext context) {
 customSuccessSnackbar(String message, {int secondsDuration = 4}) {
   return SnackBar(
     content: Text(message),
-    backgroundColor: Color(0xFFF799FCB),
+    backgroundColor: const Color(0xfff799fcb),
     duration: Duration(seconds: secondsDuration),
   );
 }
@@ -295,7 +293,7 @@ Widget customProcessingWidget(
   if (isCircularIndicator == true) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: CircularProgressIndicator(),
+      child: const CircularProgressIndicator(),
     );
   }
   return Container(
@@ -311,7 +309,7 @@ Widget customProcessingWidget(
 customErrorSnackbar(String message, {int secondsDuration = 4}) {
   return SnackBar(
     content: Text(message),
-    backgroundColor: Color(0xfffFF6961),
+    backgroundColor: const Color(0xfffff6961),
     duration: Duration(seconds: secondsDuration),
   );
 }
@@ -328,8 +326,9 @@ class HeadWidget extends StatefulWidget {
   final double marginTitleRight;
   final double marginTitleLeft;
 
-  HeadWidget(
-      {this.assetImageHeadBackground = "",
+  const HeadWidget(
+      {super.key,
+      this.assetImageHeadBackground = "",
       this.webImageHeadBackground = "",
       this.marginTitleTop = 80,
       this.marginTitleBottom = 12,
@@ -410,7 +409,7 @@ class _HeadWidgetState extends State<HeadWidget> {
                   "",
                   style: Theme.of(context)
                       .textTheme
-                      .headline5
+                      .headlineSmall
                       ?.copyWith(fontWeight: FontWeight.w600, wordSpacing: 0.08, color: Colors.white),
                 ),
               ],
@@ -426,7 +425,7 @@ class _HeadWidgetState extends State<HeadWidget> {
 class ContentWidget extends StatefulWidget {
   final widgetChild = Container();
   ContentWidget({
-    Key? key,
+    super.key,
     Widget? widgetChild,
   });
 
@@ -453,16 +452,16 @@ class CustomTextFormFieldLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         bottom: 8,
         left: 4,
       ),
       child: Text(
         labelText,
         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
       ),
     );
   }
@@ -496,8 +495,8 @@ class CustomTextFormField extends StatelessWidget {
       this.keyBoardType = TextInputType.text,
       this.obscureValue = false,
       this.readOnly = false,
-      this.maxLineField = null,
-      this.maxLengthCharacter = null,
+      this.maxLineField,
+      this.maxLengthCharacter,
       this.hiddenCounter = false})
       : super(key: key);
 
@@ -519,8 +518,8 @@ class CustomTextFormField extends StatelessWidget {
             obscureText: obscureValue,
             readOnly: readOnly,
             maxLines: maxLineField,
-            focusNode: this.focusNode,
-            maxLength: maxLengthCharacter ?? null,
+            focusNode: focusNode,
+            maxLength: maxLengthCharacter,
             decoration: CustomTextFormFieldStyle.textFieldStyle(hintText: hintText, hiddenCounter: hiddenCounter),
           ),
         )

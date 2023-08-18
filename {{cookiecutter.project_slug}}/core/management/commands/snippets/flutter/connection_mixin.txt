@@ -10,11 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../agtec.logger.dart';
+
 mixin ConnectionMixin<T extends StatefulWidget> on State<T> {
   Future<void> checarConexao() async {
     try {
-      final _connectionState = await Connectivity().checkConnectivity();
-      if (_connectionState == ConnectivityResult.none) {
+      final connectionState = await Connectivity().checkConnectivity();
+      if (connectionState == ConnectivityResult.none) {
         // TODO redirecionar para uma tela de sem conexão
       }
       // Conigurando o listener para verificar a disponibilidade de conexão
@@ -25,26 +27,28 @@ mixin ConnectionMixin<T extends StatefulWidget> on State<T> {
           _showInfo('Conexão com a internet restabelecida');
         }
       });
-    } catch (error) {}
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro ao executar o checarConexao ", error, stackTrace);
+    }
   }
 
   void _showError(String message) {
     showTopSnackBar(
-      Overlay.of(context)!,
+      Overlay.of(context),
       CustomSnackBar.error(message: message),
     );
   }
 
   void _showInfo(String message) {
     showTopSnackBar(
-      Overlay.of(context)!,
+      Overlay.of(context),
       CustomSnackBar.info(message: message),
     );
   }
 
   void _showSuccess(String message) {
     showTopSnackBar(
-      Overlay.of(context)!,
+      Overlay.of(context),
       CustomSnackBar.success(message: message),
     );
   }

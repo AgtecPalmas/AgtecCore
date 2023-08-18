@@ -155,8 +155,8 @@ class Util {
   ///        List<String> or String
   ///
   static dynamic stringDateTimeSplit(dynamic dateTime, {String returnType = "dt"}) {
-    String? _data;
-    String? _hora;
+    String? data;
+    String? hora;
     try {
       if (dateTime == null) {
         return null;
@@ -164,22 +164,19 @@ class Util {
       if (dateTime.toString().isEmpty) {
         return null;
       }
-      if (dateTime.toString() is String) {
-        if (dateTime != null && dateTime.toString().isNotEmpty) {
-          final dataSplit = dateTime.toString().split(" ");
-          _data = dataSplit[0];
-          _hora = dataSplit[1];
-        }
-        switch (returnType) {
-          case "d":
-            return _data;
-          case "t":
-            return _hora;
-          default:
-            return [_data, _hora];
-        }
+      if (dateTime != null && dateTime.toString().isNotEmpty) {
+        final dataSplit = dateTime.toString().split(" ");
+        data = dataSplit[0];
+        hora = dataSplit[1];
       }
-      return null;
+      switch (returnType) {
+        case "d":
+          return data;
+        case "t":
+          return hora;
+        default:
+          return [data, hora];
+      }
     } catch (error, stackTrace) {
       AgteCoreLogger().erro("Ocorreu o erro Util stringDateTimeSplit ", error, stackTrace);
       return null;
