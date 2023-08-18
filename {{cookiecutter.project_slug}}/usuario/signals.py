@@ -63,6 +63,18 @@ def signal_save_usuario_django(sender, instance, created, **kwargs):
 
         except Exception as error:
             print(f"Erro ao Inativar o DjangoUser: {error}")
+    
+    # Modifica o username e email do django_user quando o usuário altera o email dele 
+    elif instance.email and not User.objects.filter(username=instance.email).exists():
+        try:
+            with transaction.atomic():
+                if django_user := User.objects.filter(pk=instance.django_user.pk).first():
+                    django_user.username = instance.email
+                    django_user.email = instance.email
+                    django_user.save()
+
+        except Exception as error:
+            print(f"Erro ao atribuir/alterar o username e o email: {error}")
 
 
 @receiver(post_delete, sender=Usuario)
