@@ -1,4 +1,4 @@
-import 'package:doctorweb/core/agtec.logger.dart';
+import '../../core/agtec.logger.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart' as smbt;
@@ -24,7 +24,7 @@ class AuthData {
     try {
       var dir = await getApplicationDocumentsDirectory();
       await dir.create(recursive: true);
-      var dbPath = join(dir.path, 'Iteeia.db');
+      var dbPath = join(dir.path, '$project$.db');
       return await smbt_io.databaseFactoryIo.openDatabase(dbPath);
     } catch (error, stackTrace) {
       ExceptionCustom.data(
