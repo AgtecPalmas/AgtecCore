@@ -1,39 +1,32 @@
 # Projeto Flutter
 
-Esse projeto foi gerado a partir do AgteCore, as configurações iniciais do projeto (CRUD) foram geradas.
+Esse projeto foi gerado a partir do AgtecCore, as configurações iniciais do projeto (CRUD) foram geradas.
 Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
+
+# Versão do Flutter
+
+#### Esse projeto foi gerado e validado utilizando a versão do 3.13.0 do Flutter.
+```code
+PS C:\Users\Suporte> flutter doctor -v
+[✓] Flutter (Channel stable, 3.13.0, on Microsoft Windows [versÆo 10.0.22621.2134], locale pt-BR)
+    • Flutter version 3.13.0 on channel stable at C:\Flutter\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision efbf63d9c6 (2 days ago), 2023-08-15 21:05:06 -0500
+    • Engine revision 1ac611c64e
+    • Dart version 3.1.0
+    • DevTools version 2.25.0
+```
 
 ## Etapas para rodar o projeto
 
 1. Criar um repositório git
-2. Configurando o projeto para executar no Android
-2.1 Alterar o versão do compileSdkVersion para **33** no arquivo build.gradle no caminho **android/app/build.gradle**
-    ```code
-        android {
-            compileSdkVersion 33
-        ...
-    ```
-    2.2 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
+2. Configurando o projeto para executar no Android 
+    
+    2.1 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
     ```code
         defaultConfig {
             ...
             multiDexEnabled true 
-            ...
-        }
-    ```
-    2.3 Alterar no arquivo **android/app/build.gradle** o **minSdkVersion** para **19**
-    ```code
-        defaultConfig {
-            ...    
-            minSdkVersion 19
-            ...
-        }
-    ```
-    2.4 Alterar no arquivo **android/app/build.gradle** o **targetSdkVersion** para **30**
-    ```code
-        defaultConfig {
-            ...    
-            targetSdkVersion 30
             ...
         }
     ```
@@ -57,12 +50,6 @@ void main() async {
     runApp(MyApp());
 }
 ```
-
-## Versões do flutter validadas
-
-- 3.0.4
-- 3.3.0
-- 3.3.10
 
 ## O projeto gerado contém as seguinte estrutura
 

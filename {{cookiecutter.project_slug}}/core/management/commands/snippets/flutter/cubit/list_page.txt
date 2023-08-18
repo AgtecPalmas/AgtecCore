@@ -33,13 +33,11 @@ class $ModelClass$ListPage extends StatefulWidget {
 class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  late AnimationController? _animationController;
   List<$ModelClass$Model> _$Model$List = <$ModelClass$Model>[];
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _loadData();
     });
@@ -97,10 +95,10 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           AgteCoreLogger().erro("Ocorreu o erro ao executar o List Page BlocConsumer | listener", state.error.toString());
-          showError(listErrorMessage);
+          showError(ListStringConstants.error);
         }
         if(state is $ModelClass$SuccessState){
-          showSuccess(listSuccessMessage);
+          showSuccess(ListStringConstants.success);
         }
       },
       builder: (context, state) {
@@ -111,7 +109,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
             if(state.$ModelClassCamelCase$List  == null) {
               return Container(
                 child: Center(
-                  child: Text("Nenhum Item Retornado"),
+                  child: Text(ListStringConstants.empty),
                 ),
               );
             }
@@ -145,7 +143,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
             }
             return Container(
                 child: Center(
-                    child: Text("Nenhum Item Retornado"),
+                    child: Text(ListStringConstants.empty),
                 ),
             );
         }
