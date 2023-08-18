@@ -1,5 +1,6 @@
 TextFormField(
   controller: $controller$,
+  validator: Validatorless.multiple([]),
   onTapOutside: (_) => FocusScope.of(context).unfocus(),
   decoration: CustomTextFormFieldStyle.textFieldStyle(
     hintText: '$Field$',

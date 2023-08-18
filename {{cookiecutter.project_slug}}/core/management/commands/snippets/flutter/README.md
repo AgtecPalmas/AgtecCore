@@ -80,7 +80,7 @@ projeto flutter
 ├── .gitignore
 ├── .metadata
 ├── analysis_options.yaml  - arquivo gerado automaticamente pelo flutter
-├── doctorweb.iml
+├── NOME_DO_PROJETO.iml
 ├── pubscpec.lock  - arquivo gerado automaticamente pelo flutter
 ├── pubscpec.yaml - arquivo gerado automaticamente pelo flutter
 └── README.md

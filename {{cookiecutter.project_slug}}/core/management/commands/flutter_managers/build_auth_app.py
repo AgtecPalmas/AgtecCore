@@ -46,6 +46,7 @@ class AuthAppBuilder:
         _target_file = Path(f"{self._auth_dir}/data.dart")
         try:
             _content = Utils.get_snippet(_snippet)
+            _content = _content.replace("$project$", self._command.flutter_project)
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as error:
