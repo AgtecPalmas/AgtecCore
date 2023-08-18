@@ -54,6 +54,10 @@ class SchemasBuild:
                 attribute += f" = '{field_str}'"
         if field.attname == "django_user_id":
                 attribute == "int"
+
+        if "_id" in str(field.attname):
+            attribute = f"Optional[UUID]"
+
         return attribute
 
     def build(self):
@@ -83,12 +87,17 @@ class SchemasBuild:
                     attribute = self.__add_attr_default(field, attribute)
 
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
+
                         if str(field_name) == "django_user":
                             content = content.replace(
                                 "$auth_import$",
                                 "from authentication.schemas import User",
                             )
                             result += f"\t django_user_id: int\n"
+                            continue
+
+                        if "_id" in str(field_name):
+                            result += f"\t {field_name}: Opicional[UUID]\n"
                             continue
 
                         field_name = field.get_attname_column()[1]
