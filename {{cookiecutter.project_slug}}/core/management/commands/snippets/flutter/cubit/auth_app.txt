@@ -10,7 +10,7 @@
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
 import 'package:bloc/bloc.dart';
-import 'package:doctorweb/core/agtec.logger.dart';
+import '../../core/agtec.logger.dart';
 import 'package:equatable/equatable.dart';
 
 import 'model.dart';
