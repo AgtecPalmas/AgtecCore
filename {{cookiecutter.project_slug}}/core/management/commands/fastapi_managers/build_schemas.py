@@ -55,7 +55,7 @@ class SchemasBuild:
         if field.attname == "django_user_id":
                 attribute == "int"
 
-        if "_id" in str(field.attname):
+        if str(field.attname).endswith("_id"):
             attribute = f"Optional[UUID]"
 
         return attribute
@@ -96,7 +96,7 @@ class SchemasBuild:
                             result += f"\t django_user_id: int\n"
                             continue
 
-                        if "_id" in str(field_name):
+                        if str(field_name).endswith("_id"):
                             result += f"\t {field_name}: Optional[UUID]\n"
                             continue
 
