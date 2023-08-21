@@ -97,7 +97,7 @@ class SchemasBuild:
                             continue
 
                         if "_id" in str(field_name):
-                            result += f"\t {field_name}: Opicional[UUID]\n"
+                            result += f"\t {field_name}: Optional[UUID]\n"
                             continue
 
                         field_name = field.get_attname_column()[1]
