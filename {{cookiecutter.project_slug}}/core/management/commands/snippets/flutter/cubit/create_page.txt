@@ -25,8 +25,11 @@ import '../model.dart';
 class $ModelClass$AddPage extends StatefulWidget {
   static const routeName = "/$ModelClassCamelCase$AddPage";
 
+  const $ModelClass$AddPage({super.key});
+
   @override
-  _$ModelClass$AddPageState createState() => _$ModelClass$AddPageState();
+  State<$ModelClass$AddPage>  createState() => _$ModelClass$AddPageState();
+
 }
 
 class _$ModelClass$AddPageState extends State<$ModelClass$AddPage> 

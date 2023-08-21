@@ -57,7 +57,7 @@ class DataServiceLayerBuild:
 
     def _parser_interface(self):
         try:
-            if Utils.check_file_is_locked(self._interface_path_file):
+            if Utils.check_file_is_locked(str(self._interface_path_file)):
                 Utils.show_message(f"File is locked: {self._interface_path_file}", title=True, border_color="red")
                 return
             content = self._parser_content(Utils.get_snippet(str(Path(f"{self.snippet_dir}/interface.txt"))))
@@ -69,7 +69,7 @@ class DataServiceLayerBuild:
 
     def _parser_service(self):
         try:
-            if Utils.check_file_is_locked(self._service_path_file):
+            if Utils.check_file_is_locked(str(self._service_path_file)):
                 Utils.show_message(f"File is locked: {self._service_path_file}", title=True, border_color="red")
                 return
             content = self._parser_content(Utils.get_snippet(str(Path(f"{self.snippet_dir}/service.txt"))))
@@ -81,7 +81,7 @@ class DataServiceLayerBuild:
 
     def _parser_local_data(self):
         try:
-            if Utils.check_file_is_locked(self._local_data_path_file):
+            if Utils.check_file_is_locked(str(self._local_data_path_file)):
                 Utils.show_message(f"File is locked: {self._local_data_path_file}", title=True, border_color="red")
                 return
             content = self._parser_content(Utils.get_snippet(str(Path(f"{self.snippet_dir}/data.txt"))))

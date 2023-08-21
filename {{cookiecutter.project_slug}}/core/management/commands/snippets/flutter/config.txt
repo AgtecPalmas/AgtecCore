@@ -141,6 +141,7 @@ static final _textThemeDefault = TextTheme(
 class ListStringConstants {
   static const String loading = "Carregando...";
   static const String error = "Erro ao carregar os dados";
+  static const String refreshError = "Erro ao recarregar os dados";
   static const String loadingError = "Erro ao carregar os dados";
   static const String success = "Dados carregados com sucesso";
   static const String empty = "Nenhum registro encontrado";

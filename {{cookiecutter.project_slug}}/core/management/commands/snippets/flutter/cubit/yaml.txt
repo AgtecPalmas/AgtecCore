@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   cupertino_icons: ^1.0.5
   dio: ^5.3.2 #Lib para acesso HTTP para consumir APIRest.

@@ -122,7 +122,7 @@ class PagesBuilder:
                 _snippet_file = Path(f"{self._snippet_dir_cubit}/update_page.txt")
 
             _form_content_file = Path(f"{self._snippet_dir}/text_field.txt")
-            if Utils.check_file_is_locked(_target_file):
+            if Utils.check_file_is_locked(str(_target_file)):
                 return
             _content_attributes = ""
             _text_fields = ""
@@ -209,7 +209,7 @@ class PagesBuilder:
         try:
             _target_file = Path(f"{self._pages_target_path}/detail.dart")
             _snippet_file = Path(f"{self._snippet_dir_cubit}/detail_page.txt")
-            if Utils.check_file_is_locked(_target_file):
+            if Utils.check_file_is_locked(str(_target_file)):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
             _content = ParserContent(
@@ -234,7 +234,7 @@ class PagesBuilder:
         try:
             _target_file = Path(f"{self._pages_target_path}/index.dart")
             _snippet_file = Path(f"{self._snippet_dir_cubit}/index_page.txt")
-            if Utils.check_file_is_locked(_target_file):
+            if Utils.check_file_is_locked(str(_target_file)):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
             content = ParserContent(
@@ -256,7 +256,7 @@ class PagesBuilder:
         try:
             _target_file = Path(f"{self._pages_target_path}/list.dart")
             _snippet_file = Path(f"{self._snippet_dir_cubit}/list_page.txt")
-            if Utils.check_file_is_locked(_target_file):
+            if Utils.check_file_is_locked(str(_target_file)):
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
             content = ParserContent(

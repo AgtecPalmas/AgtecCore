@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 /// Widget a ser aplicado nas AppBars de cada tela
 customAppBarTitle(BuildContext context, String text) {
   return Text(text,
-      style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.w700).copyWith(fontSize: 20));
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700).copyWith(fontSize: 20),);
 }
 
 /// Widget a ser utilizado nos títulos das páginas
 customTitlePage(BuildContext context, String text) {
-  return (Text(text,
-      style: Theme.of(context).textTheme.subtitle2?.copyWith(fontWeight: FontWeight.w600).copyWith(fontSize: 32.0)));
+  return Text(text,
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600).copyWith(fontSize: 32.0),);
 }
 
 /// Widget a ser utilizado nos títulos das subareas da página.
 customTitleSection(BuildContext context, String text) {
-  return (Text(text, style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 22.0)));
+  return Text(text, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 22.0),);
 }

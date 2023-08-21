@@ -9,13 +9,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/user_interface/widget.dart';
-import '../model.dart';
 
 class $ModelClass$IndexPage extends StatefulWidget {
   static const routeName = "/$ModelClassCamelCase$Index";
 
+  const $ModelClass$IndexPage({super.key});
+
   @override
-  _$ModelClass$IndexPageState createState() => _$ModelClass$IndexPageState();
+  State<$ModelClass$IndexPage> createState() => _$ModelClass$IndexPageState();
 }
 
 class _$ModelClass$IndexPageState extends State<$ModelClass$IndexPage>
