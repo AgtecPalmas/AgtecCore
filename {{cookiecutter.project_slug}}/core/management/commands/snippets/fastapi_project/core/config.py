@@ -15,19 +15,19 @@ Arquivos principal de configuração da app
 class Settings(BaseSettings):
     app_name: str
     api_str: str = "/api/v1"
-    app_secret: str
+    secret_key: str
     app_url: AnyHttpUrl
     backend_cors_origins: List[AnyHttpUrl] = ["http://localhost"]
 
-    db_connection: str
+    db_engine: str
     db_host: str
     db_port: int
-    db_database: str
-    db_username: str
+    db_name: str
+    db_user: str
     db_password: str
 
-    app_env: str
-    app_debug: str
+    environment: str
+    debug: str
     django_url: str
 
     class Config:
