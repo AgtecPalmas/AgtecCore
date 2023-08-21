@@ -16,7 +16,7 @@ class TranslateStringBuilder:
 
     def build(self):
         try:
-            if Utils.check_file_is_locked(self._path_localization_file):
+            if Utils.check_file_is_locked(str(self._path_localization_file)):
                 return
 
             with open(self._path_localization_file, "w", encoding="utf-8") as localizations:

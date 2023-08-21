@@ -31,13 +31,11 @@ import '../../../core/exceptions/exception.dart';
 import 'model.dart';
 import 'service.dart';
 import 'interface.dart';
-import 'data.dart';
 
 part 'state.dart';
 
 class $ModelClass$Controller extends Cubit<$ModelClass$State> {
   late $ModelClass$ServiceInterface _service;
-  $ModelClass$LocalDataInterface _data = $ModelClass$Data();
   $ModelClass$Model $ModelClassCamelCase$Model = $ModelClass$Model();
   List<$ModelClass$Model> $ModelClassCamelCase$List = <$ModelClass$Model>[];
 
@@ -61,7 +59,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método fetch do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar consultar os dados."),);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar consultar os dados."),);
     }
   }
 
@@ -78,7 +76,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método reload do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar recarregar os dados."));
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar recarregar os dados."));
     }
   }
 
@@ -95,7 +93,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método post do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar salvar."));
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar salvar."));
     }
   }
 
@@ -111,7 +109,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método put do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
     }
   }
 
@@ -128,7 +126,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método path do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
     }
   }
 
@@ -145,7 +143,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
     } catch (error, stackTrace) {
       ExceptionCustom.state("Ocorreu um erro ou executar o método delete do $ModelClass$Controller", 
         error.toString(), error, stackTrace,);
-      emit($ModelClass$ErrorState("Ocorreu um erro ao tentar excluir o registro."));
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar excluir o registro."));
     }
   }
 }

@@ -26,14 +26,15 @@ import 'detail.dart';
 class $ModelClass$ListPage extends StatefulWidget {
   static const routeName = "/$ModelClassCamelCase$ListPage";
 
+  const $ModelClass$ListPage({super.key});
+
   @override
-  $ModelClass$ListPageState createState() => $ModelClass$ListPageState();
+  State<$ModelClass$ListPage> createState() => $ModelClass$ListPageState();
 }
 
 class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<$ModelClass$Model> _$Model$List = <$ModelClass$Model>[];
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       ),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.pushNamed(context, $ModelClass$AddPage.routeName);
         },
@@ -64,8 +65,8 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   Widget _buildBody() {
     return Stack(
       children: <Widget>[
-        HeadWidget(),
-        _buildPage()
+        const HeadWidget(),
+        _buildPage(),
       ],
     );
   }
@@ -74,6 +75,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
     return Container(
       alignment: FractionalOffset.topLeft,
       child: RefreshIndicator(
+        onRefresh: _refresh,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
           child: Column(
@@ -83,7 +85,6 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
             ],
           ),
         ),
-        onRefresh: _refresh,
       ),
     );
   }
@@ -93,62 +94,73 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   Widget _listBuilder() {
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {
-        if (state is $ModelClass$ErrorState){
-          AgteCoreLogger().erro("Ocorreu o erro ao executar o List Page BlocConsumer | listener", state.error.toString());
-          showError(ListStringConstants.error);
-        }
-        if(state is $ModelClass$SuccessState){
-          showSuccess(ListStringConstants.success);
+        switch (state) {
+          case $ModelClass$ErrorState(:final error):
+            AgteCoreLogger()
+                .erro("Ocorreu o erro ao executar o List Page BlocConsumer | listener", error);
+            showError(ListStringConstants.error);
+            break;
+          case $ModelClass$SuccessState():
+            AgteCoreLogger()
+                .info("Dados carregados com sucesso no List Page BlocConsumer | listener");
+            showSuccess(ListStringConstants.success);
+            break;
+          default:
+            break;
         }
       },
       builder: (context, state) {
-        if (state is $ModelClass$ProcessState) {
-          return showHideModal(show: true);
+        // Refatorando o pattern matching
+        switch (state) {
+          case $ModelClass$ProcessState():
+            return showHideModal(show: true);
+          case $ModelClass$ErrorState(:final error):
+            showError(error);
+            return const SizedBox.shrink();
+          case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
+            return _buildResultList($ModelClassCamelCase$List);
+          default:
+            return const SizedBox.shrink();
         }
-        if (state is $ModelClass$SuccessState){
-            if(state.$ModelClassCamelCase$List  == null) {
-              return Container(
-                child: Center(
-                  child: Text(ListStringConstants.empty),
-                ),
-              );
-            }
-            if (state.$ModelClassCamelCase$List.length > 0){
-              return Container(
-                margin: EdgeInsets.only(top: Util.getHeightSystemBar(context)),
-                height: Util.getProportionScreenHeight(context, 0.8),
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  childAspectRatio: MediaQuery.of(context).size.height / 380,
-                  crossAxisSpacing: 2.0,
-                  mainAxisSpacing: 4.0,
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  children:
-                    List.generate(state.$ModelClassCamelCase$List.length, (index) {
-                      return InkWell(
-                        onTap: (){
-                          Navigator.pushNamed(context, $ModelClass$DetailPage.routeName, arguments: state.$ModelClassCamelCase$List[index]);
-                        },
-                        child: Card(
-                        child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                            child: Text(state.$ModelClassCamelCase$List[index].toString(),),
-                          ),
-                        )
-                      );
-                    }),
-                ),
-              );
-            }
-            return Container(
-                child: Center(
-                    child: Text(ListStringConstants.empty),
-                ),
-            );
-        }
-        return Container();
       },
+    );
+  }
+
+  /// Método responsável por criar a listagem com os resultado
+  /// quando a API retornar os dados
+  Widget _buildResultList(List<$ModelClass$Model> $ModelClassCamelCase$List) {
+    if ($ModelClassCamelCase$List.isEmpty){
+      return const Expanded(
+        child: Center(
+          child: Text(ListStringConstants.empty),
+        ),
+      );
+    }
+    return Container(
+      margin: EdgeInsets.only(top: Util.getHeightSystemBar(context)),
+      height: Util.getProportionScreenHeight(context, 0.8),
+      child: GridView.count(
+        crossAxisCount: 1,
+        childAspectRatio: MediaQuery.of(context).size.height / 380,
+        crossAxisSpacing: 2.0,
+        mainAxisSpacing: 4.0,
+        physics: const ScrollPhysics(),
+        shrinkWrap: true,
+        children:
+          List.generate($ModelClassCamelCase$List.length, (index) {
+            return InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, $ModelClass$DetailPage.routeName, arguments: $ModelClassCamelCase$List[index]);
+              },
+              child: Card(
+              child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                  child: Text($ModelClassCamelCase$List[index].toString(),),
+                ),
+              )
+            );
+          }),
+      ),
     );
   }
 
@@ -156,15 +168,21 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
   /// realizar o movimento de puxar a tela para baixa e soltar
   Future<void> _refresh() async {
     try {
-    // TODO implementar o método de refresh da tela
-    } catch (error) {
-
+      // TODO implementar o método de refresh da tela
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro ao executar o _refresh na listPage", error, stackTrace);
+      showError(ListStringConstants.refreshError);
     }
   }
 
   /// Método responsável por carregar os dados da API
   Future<void> _loadData() async {
-    final _$ModelClassCamelCase$Controller = context.read<$ModelClass$Controller>();
-    await _$ModelClassCamelCase$Controller.fetch();
+    try {
+      final $ModelClassCamelCase$Controller = context.read<$ModelClass$Controller>();
+      await $ModelClassCamelCase$Controller.fetch();
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro ao executar o _loadData na listPage", error, stackTrace);
+    }
+    
   }
 }

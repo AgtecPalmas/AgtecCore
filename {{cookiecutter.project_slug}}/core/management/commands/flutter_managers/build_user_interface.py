@@ -33,7 +33,7 @@ class UserInterfaceBuilder:
 
     def _parser_widget(self):
         try:
-            if Utils.check_file_is_locked(self._widget_target):
+            if Utils.check_file_is_locked(str(self._widget_target)):
                 return
             _content = Utils.get_snippet(str(self._widget_snippet))
             with open(self._widget_target, "w", encoding="utf-8") as _file:
@@ -44,7 +44,7 @@ class UserInterfaceBuilder:
 
     def _parser_font(self):
         try:
-            if Utils.check_file_is_locked(self._font_target):
+            if Utils.check_file_is_locked(str(self._font_target)):
                 return
             _content = Utils.get_snippet(str(self._font_snippet))
             with open(self._font_target, "w", encoding="utf-8") as _file:
