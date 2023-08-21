@@ -1,4 +1,5 @@
 from pathlib import Path
+import pdb
 
 from base.settings import API_PATH, SYSTEM_NAME
 from core.management.commands.flutter_managers.utils import convert_to_camel_case
@@ -26,8 +27,8 @@ class UtilsBuilder:
 
     def _parser_config_file(self):
         try:
-            if Utils.check_file_is_locked(self._config_target_file):
-                return
+            if Utils.check_file_is_locked(str(self._config_target_file)):
+                return 
             _content = ParserContent(
                 ["$AppName$", "$DjangoAPIPath$"],
                 [SYSTEM_NAME, API_PATH],
@@ -41,7 +42,7 @@ class UtilsBuilder:
 
     def _parser_util_file(self):
         try:
-            if Utils.check_file_is_locked(self._util_target_file):
+            if Utils.check_file_is_locked(str(self._util_target_file)):
                 return
             _content = ParserContent(
                 ["$AppName$", "$DjangoAPIPath$"],
@@ -51,5 +52,5 @@ class UtilsBuilder:
             with open(self._util_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(f"Erro ao executar o _parser_config_file do UtilsBuilder: {e}")
+            Utils.show_error(f"Erro ao executar o _parser_util_file do UtilsBuilder: {e}")
             return

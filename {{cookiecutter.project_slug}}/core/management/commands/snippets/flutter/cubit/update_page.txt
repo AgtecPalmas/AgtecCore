@@ -30,7 +30,7 @@ class $ModelClass$UpdatePage extends StatefulWidget {
   const $ModelClass$UpdatePage({Key? key, required this.$ModelClassCamelCase$Model}) : super(key: key);
 
   @override
-  _$ModelClass$AddPageState createState() => _$ModelClass$AddPageState();
+  State<$ModelClass$UpdatePage> createState() => _$ModelClass$AddPageState();
 }
 
 class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>

@@ -32,7 +32,9 @@ class MainFileBuilder:
                     _model = model[1]
                     _app_model = f"{_app.title()}{_model}"
                     _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
-                    _imports_views += f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
+                    _imports_views += (
+                        f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
+                    )
                     _list_views += f"Itens(title: '{model[0]._meta.verbose_name}', "
                     _list_views += f"icon: FontAwesomeIcons.folderOpen, uri: {_app_model}."
                     _list_views += f"{_model}ListPage()),\n"
@@ -71,7 +73,7 @@ class MainFileBuilder:
             self._import_controllers += "import 'apps/configuracao/model.dart';"
             self._import_views += "import 'apps/configuracao/index.page.dart';\n"
             self._register_controller += "getIt.registerSingleton<SettingsController>(SettingsController());"
-            if Utils.check_file_is_locked(self._target_file):
+            if Utils.check_file_is_locked(str(self._target_file)):
                 return
 
             _imports, _controllers, _registers, _views = self._mapping_all_application()
@@ -113,7 +115,7 @@ class MainFileBuilder:
             _snippet_page_file = Path(f"{self._snippet_dir}/home.page.txt")
             _content = ""
 
-            if Utils.check_file_is_locked(_target_page_file):
+            if Utils.check_file_is_locked(str(_target_page_file)):
                 return
 
             _menu_itens = self._build_menu_home_page_items()

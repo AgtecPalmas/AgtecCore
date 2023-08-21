@@ -31,18 +31,18 @@ class SettingsControllerBuilder:
 
     def _parser_page(self):
         try:
-            if Utils.check_file_is_locked(self._settings_page_target):
-                return
+            if Utils.check_file_is_locked(str(self._settings_page_target)):
+                return 
             _content = Utils.get_snippet(str(self._settings_page_snippet))
             with open(self._settings_page_target, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _parser_config_file do SettingsControllerBuilder: {error}")
+            Utils.show_error(f"Erro ao executar o _parser_page do SettingsControllerBuilder: {error}")
             return
 
     def _parser_settings_controller(self):
         try:
-            if Utils.check_file_is_locked(self._settings_controller_target):
+            if Utils.check_file_is_locked(str(self._settings_controller_target)):
                 return
             _content = Utils.get_snippet(str(self._settings_controller_snippet))
             with open(self._settings_controller_target, "w", encoding="utf-8") as _file:
@@ -53,7 +53,7 @@ class SettingsControllerBuilder:
 
     def _parser_settings_state(self):
         try:
-            if Utils.check_file_is_locked(self._settings_state_target):
+            if Utils.check_file_is_locked(str(self._settings_state_target)):
                 return
             _content = Utils.get_snippet(str(self._settings_state_snippet))
             with open(self._settings_state_target, "w", encoding="utf-8") as _file:

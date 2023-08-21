@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'routers.dart';
 
 import 'apps/configuracao/cubit.dart';
@@ -58,9 +58,18 @@ class MaterialAppWidget extends StatelessWidget {
           builder: (_, __) => MaterialApp(
             title: Config.app_title,
             theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
-            home: MyHomePage(title: '${Config.app_title}'),
+            home: const MyHomePage(title: '${Config.app_title}'),
             onGenerateRoute: RouteGenerator.generateRoute,
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: const[
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const[
+              Locale('pt', 'BR')
+            ],
+            locale: const Locale('pt', 'BR'),
           ),
         );
       },

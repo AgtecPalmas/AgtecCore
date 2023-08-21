@@ -28,7 +28,7 @@ class $ModelClass$DetailPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _$ModelClass$DetailPageState createState() => _$ModelClass$DetailPageState();
+  State<$ModelClass$DetailPage> createState() => _$ModelClass$DetailPageState();
 }
 
 class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage> 

@@ -26,10 +26,13 @@ $ImportViews$
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  MyHomePage({Key? key, String? title}): this.title = title ?? "", super(key: key);
+  
+  const MyHomePage({Key? key, String? title})
+    : title = title ?? "",
+      super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
