@@ -1,13 +1,20 @@
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
-import 'dart:developer' as dev;
+///
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:validatorless/validatorless.dart';
 
+import '../../../../core/user_interface/custom.style.dart';
+import '../../../../core/user_interface/connection_mixin.dart';
+import '../../../../core/user_interface/message_mixin.dart';
+import '../../../../core/user_interface/modal_loading_mixin.dart';
+import '../../../../core/agtec.logger.dart';
 import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
@@ -18,23 +25,19 @@ import '../model.dart';
 class $ModelClass$AddPage extends StatefulWidget {
   static const routeName = "/$ModelClassCamelCase$AddPage";
 
+  const $ModelClass$AddPage({super.key});
+
   @override
-  _$ModelClass$AddPageState createState() => _$ModelClass$AddPageState();
+  State<$ModelClass$AddPage>  createState() => _$ModelClass$AddPageState();
+
 }
 
 class _$ModelClass$AddPageState extends State<$ModelClass$AddPage> 
-  with SingleTickerProviderStateMixin{
+  with SingleTickerProviderStateMixin, MessagesMixin, ConnectionMixin, ModalLoadingMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();  
-  late AnimationController _animationController;
   $ModelClass$Model _$Model$Model = $ModelClass$Model();
   final _form$ModelClass$ = GlobalKey<FormState>();
   $Attributes$
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(vsync: this);
-  }
 
   @override
   void dispose() {
@@ -87,11 +90,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                 BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
-                    _showMessage(state.error, error: true);
-                    dev.log("Erro no BlocConsumer CreatePage", name: "AgtecCore", error: state.error.toString());
+                    showError(InsertStringConstants.error);
+                    AgteCoreLogger().erro("Ocorreu o erro no BlocConsumer CreatePage", state.error.toString());
                   }
                   if(state is $ModelClass$SuccessState){
-                    _showMessage(state.successMessage);
+                    showSuccess(InsertStringConstants.success);
                   }
                 },
                 builder: (context, state) {
@@ -132,9 +135,6 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
     return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is $ModelClass$ProcessState) {
-          return customProcessingWidget(context, isCircularIndicator: false);
-        }
         return  Padding(
           padding: const EdgeInsets.only(top: 24.0),
           child: Container(
@@ -165,51 +165,9 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       $GetValuesControllers$
       _$Model$Controller.$Model$Model = _$Model$Model;
       await _$Model$Controller.post(_$Model$Model);
-    }catch (e, s){
-      dev.log("CreatePage", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    }catch (error, stackTrace){
+      AgteCoreLogger().erro("Ocorreu o erro no _post do PageCreate", error, stackTrace);
+      showError(InsertStringConstants.error);
     }
   }
-
-  /// Método responsável por mostrar um SnackBar com uma mensagem
-  /// com o texto passada como parâmetro
-   _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false
-              ? customSuccessSnackbar(message)
-              : customErrorSnackbar(message),
-        );
-      });
-    }
-  }
-
-  /// Método responsável por mostrar um modal com o texto informado
-  void _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  /// Método para ocultar o teclado
-  _hideKeyboard(BuildContext context){
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
-
 }

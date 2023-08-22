@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -6,13 +6,15 @@
 /// FileLocked
 ///
 
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 
 const heightAppBarPage = 22.0;
 const marginTopCustomAppBar = 12.0;
 const marginHorizontalSectionsDataPage = 12.0;
+
+// Definindo o width e o height do ScreenUtil Extensions
+const double widthScreenUtil = 390;
+const double heightScreenUtil = 844;
 
 // Constante para determinar se a navegação na App será utilizando o Bottom NavigationBar
 const bool enabledBottomNavigationBar = false;
@@ -22,19 +24,8 @@ const bool releaseVersion = false;
 
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
-// TODO Altere o valor dessa constante para o IP do projeto Django
-const String uriDeveloper = "http://127.0.0.1:8080/";
-
-// TODO Ajustando o projeto Android para aceitar conexão sem https na comunicação via HTTP
-// Acesse o arquivo AndroidManifest.xml no caminho: seu_projeto/android/app/src/main e adicione
-// a chave a seguir: android:usesCleartextTraffic="true" na tag application, vide exemplo a seguir
-/*
-    <application
-        android:name="io.flutter.app.FlutterApplication"
-        android:label="seu_projeto"
-        android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher">
-*/
+// TODO - Altere o valor dessa constante para o IP do projeto Django
+const String uriDeveloper = "http://192.168.1.82:8101/";
 
 // URI para produção
 const String uriRelease = "";
@@ -52,10 +43,13 @@ class Config {
   static const uri = releaseVersion ? uriRelease : uriDeveloper;
   static const uriAuth = "";
 
-  // TODO Adicionar aqui o token para ambiente de desenvolvimento.
-  /// O token abaixo é o mesmo do super usuário do projeto django, caso você tenha executado o comando
-  /// python mcok_superuser.py lá no projeto Django
-  static const DRFToken = "Token 2b817ddbb5b974e5a451a8156963de586d72079e";
+  // TODO - Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
+  static const DRFToken = "Token ";
+
+  // TODO - Adicionar as credenciais caso esteja utilizando FastAPI.
+  // Dados de acesso à camada FastAPI
+  static const fastAPIUserDevelopment = "admin";
+  static const fastAPIPasswordDevelopment = "asdf@1234";
 
   static const String uri_media = "media/";
   static const String app_title = "App Flutter";
@@ -63,7 +57,10 @@ class Config {
   static const double marginHead = 0.25;
 }
 
-class CustomTheme{
+///
+/// Customizando o Thema do aplicativo Flutter
+///
+class CustomTheme {
  //Colors for theme
   static Color defaultColor = Colors.black;
   static Color lightPrimary = const Color(0xfffcfcff);
@@ -74,23 +71,30 @@ class CustomTheme{
   static Color darkBG = Colors.black;
 
   //Colors for main cards theme light and dark
-  static Color mainCardLightBorderColor = Colors.black87;
   static Color mainCardLightIconColor = Colors.black38;
   static Color mainCardLightTextColor = Colors.black38;
   static Color mainCardLightBackgroundColor = Colors.white;
   static Color mainCardLightShadowColor = Colors.black38;
-  static Color mainTextFieldLightColor = Colors.black45;
-  static Color mainButtonBgLightColor = Colors.black38;
-  static Color mainButtonFontLightColor = Colors.white;
+  static Color textStyleDefaultColor = Color(0xFF4a5c6a);
 
-  static Color mainCardDarkBorderColor = Colors.grey[700] as Color;
-  static Color mainCardDarkIconColor = Colors.grey[300] as Color;
-  static Color mainCardDarkTextColor = Colors.grey[300] as Color;
-  static Color mainCardDarkBackgroundColor = Colors.grey[850] as Color;
-  static Color mainCardDarkShadowColor = Colors.grey[900] as Color;
-  static Color mainTextFieldDarkColor = Colors.grey[600] as Color;
-  static Color mainButtonBgDarkColor = Colors.grey[600] as Color;
-  static Color mainButtonFontDarkColor = Colors.black;
+  // Classe estática para configuração do TextStyle padrão
+  static final _defaultTextStyle = TextStyle(color: textStyleDefaultColor);
+
+static final _textThemeDefault = TextTheme(
+    headline1: _defaultTextStyle,
+    headline2: _defaultTextStyle,
+    headline3: _defaultTextStyle,
+    headline4: _defaultTextStyle,
+    headline5: _defaultTextStyle,
+    headline6: _defaultTextStyle,
+    subtitle1: _defaultTextStyle,
+    subtitle2: _defaultTextStyle,
+    bodyText1: _defaultTextStyle,
+    bodyText2: _defaultTextStyle,
+    caption: _defaultTextStyle,
+    button: _defaultTextStyle,
+    overline: _defaultTextStyle,
+  );
 
   static ThemeData lightTheme = ThemeData(
     backgroundColor: lightBG,
@@ -99,23 +103,16 @@ class CustomTheme{
     appBarTheme: AppBarTheme(
       elevation: 0,
       toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).bodyText2,
       titleTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).headline6,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: lightAccent,
     ),
+    textTheme: _textThemeDefault
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -126,22 +123,50 @@ class CustomTheme{
     appBarTheme: AppBarTheme(
       elevation: 0,
       toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle( color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).bodyText2,
       titleTextStyle: TextTheme(
-        subtitle1: TextStyle(
-          color: lightBG,
-          fontSize: 18.0,
-          fontWeight: FontWeight.w800,
-        ),
+        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
       ).headline6,
     ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
       secondary: darkAccent,
     ),
+    textTheme: _textThemeDefault
   );
+}
+
+// Área de definição das classes que encapsulam as String defaultas
+// das telas de listagem, inserção, edição, exclusão e detalhamento
+class ListStringConstants {
+  static const String loading = "Carregando...";
+  static const String error = "Erro ao carregar os dados";
+  static const String refreshError = "Erro ao recarregar os dados";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String success = "Dados carregados com sucesso";
+  static const String empty = "Nenhum registro encontrado";
+}
+
+class DetailStringConstants {
+  static const String loading = "Detalhando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao detalhar o item";
+  static const String success = "Item detalhado com sucesso";
+  static const String empty = "Item não encontrado";
+}
+
+class InsertStringConstants {
+  static const String loading = "Cadastrando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao cadastrar o item";
+  static const String success = "Item cadastrado com sucesso";
+  static const String empty = "";
+}
+
+class UpdateStringConstants {
+  static const String loading = "Atualizando...";
+  static const String loadingError = "Erro ao carregar os dados";
+  static const String error = "Erro ao atualizar o item";
+  static const String success = "Item atualizado com sucesso";
+  static const String empty = "";
 }

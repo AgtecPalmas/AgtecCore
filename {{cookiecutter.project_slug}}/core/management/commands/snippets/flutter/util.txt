@@ -1,13 +1,18 @@
-/// Classe contendo método auxiliares comportilhados por
-/// toda a APP
-/// #FileLocked
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// Classe contendo método auxiliares comportilhados por toda a APP
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 import 'dart:math';
-import 'dart:developer' as dev;
-import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 
-import 'config.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'agtec.logger.dart';
 
 class Process {
   static Process? _instance;
@@ -29,10 +34,11 @@ class Process {
   static String resultException = "";
   static String requestStr = "";
 
-  Process.finishSuccess(String message, {
-    int status=0, 
-    String data="", 
-    String header="",
+  Process.finishSuccess(
+    String message, {
+    int status = 0,
+    String data = "",
+    String header = "",
   }) {
     finishedSuccessfully = true;
     resultMessage = message;
@@ -42,10 +48,10 @@ class Process {
   Process.finishError(
     String message,
     String exception, {
-    int status=0,
-    String data="",
-    String header="",
-    String request="",
+    int status = 0,
+    String data = "",
+    String header = "",
+    String request = "",
     bool dioError = false,
   }) {
     finishedSuccessfully = false;
@@ -71,8 +77,7 @@ class Process {
 }
 
 class Util {
-  final _imageDefault =
-      "https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg";
+  final _imageDefault = "https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg";
 
   static String getRandomImage() {
     final _random = Random();
@@ -107,17 +112,16 @@ class Util {
       if (dateTimePart.length == 2) {
         String datePart = dateTimePart[0];
         String timePart = dateTimePart[1];
-        datePart =
-            "${datePart.split("-")[2]}/${datePart.split("-")[1]}/${datePart.split("-")[0]}";
-        String? timePartSplit = timePart.split(".").length > 0? timePart.split(".")[0]: null;
+        datePart = "${datePart.split("-")[2]}/${datePart.split("-")[1]}/${datePart.split("-")[0]}";
+        String? timePartSplit = timePart.split(".").length > 0 ? timePart.split(".")[0] : null;
         if (timePartSplit != null) {
           timePart = "${timePart.split(":")[0]}:${timePart.split(":")[1]}";
         }
         _result = "$datePart às $timePart";
       }
       return _result;
-    } catch (e, s) {
-      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro Util parserDateTimeTimeZoneToBrasilianFormat ", error, stackTrace);
       return "";
     }
   }
@@ -129,14 +133,13 @@ class Util {
   ///      Return:
   ///        DateTime
   ///
-  static DateTime? convertStrToDate(String stringDate,
-      {String stringFormat = "dd/MM/yyyy HH:mm"}) {
+  static DateTime? convertStrToDate(String stringDate, {String stringFormat = "dd/MM/yyyy HH:mm"}) {
     try {
       final DateFormat format = new DateFormat(stringFormat);
       final DateTime data = format.parse(stringDate);
       return data;
-    } catch (e, s) {
-      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro Util convertStrToDate ", error, stackTrace);
       return null;
     }
   }
@@ -151,35 +154,31 @@ class Util {
   ///    Return:
   ///        List<String> or String
   ///
-  static dynamic stringDateTimeSplit(dynamic dateTime,
-      {String returnType = "dt"}) {
-    String? _data;
-    String? _hora;
+  static dynamic stringDateTimeSplit(dynamic dateTime, {String returnType = "dt"}) {
+    String? data;
+    String? hora;
     try {
       if (dateTime == null) {
         return null;
       }
-      if (dateTime.toString().isEmpty){
+      if (dateTime.toString().isEmpty) {
         return null;
       }
-      if (dateTime.toString() is String) {
-        if (dateTime != null && dateTime.toString().isNotEmpty) {
-          final dataSplit = dateTime.toString().split(" ");
-          _data = dataSplit[0];
-          _hora = dataSplit[1];
-        }
-        switch (returnType) {
-          case "d":
-            return _data;
-          case "t":
-            return _hora;
-          default:
-            return [_data, _hora];
-        }
+      if (dateTime != null && dateTime.toString().isNotEmpty) {
+        final dataSplit = dateTime.toString().split(" ");
+        data = dataSplit[0];
+        hora = dataSplit[1];
       }
-      return null;
-    } catch (e, s) {
-      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+      switch (returnType) {
+        case "d":
+          return data;
+        case "t":
+          return hora;
+        default:
+          return [data, hora];
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro Util stringDateTimeSplit ", error, stackTrace);
       return null;
     }
   }
@@ -203,9 +202,7 @@ class Util {
       if (stringDate.contains("T") && stringDate.contains("-")) {
         return DateTime.parse(stringDate);
       }
-      if (stringDate.contains("-") &&
-          !stringDate.contains("/") &&
-          !stringDate.contains(":")) {
+      if (stringDate.contains("-") && !stringDate.contains("/") && !stringDate.contains(":")) {
         final DateFormat format = DateFormat("yyyy-MM-dd");
         return format.parse(stringDate);
       }
@@ -227,32 +224,11 @@ class Util {
         return format.parse(stringDate);
         // return DateTime.parse("1000-01-01T$stringDate");
       }
-    } catch (e, s) {
-      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro("Ocorreu o erro Util convertDate", error, stackTrace);
       return null;
     }
-  }
-
-  /// Método Estatico para retornar o tamanho livre na tela para
-  ///
-  ///  Parameters:
-  ///      context
-  ///
-  ///  Return:
-  ///      Double
-  static double getUtilAreaScreenHeigth(BuildContext context, {double heightAppBar = 10}) {
-    double _heightUtilArea = 0.0;
-    try {
-      double _height = MediaQuery.of(context).size.height;
-      _height += getHeightSystemBar(context);
-      _height += MediaQuery.of(context).padding.bottom;
-      _height += marginTopCustomAppBar;
-      _heightUtilArea = _height + heightAppBar;
-    } catch (e, s) {
-      dev.log("Log", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      _heightUtilArea = 0.0;
-    }
-    return _heightUtilArea;
+    return null;
   }
 
   /// Método Estatico para retornar o tamanho da tela do device
@@ -263,7 +239,7 @@ class Util {
   ///
   ///  Return:
   ///      Double
-  static double getProportionScreenWidth(BuildContext context, double proportion){
+  static double getProportionScreenWidth(BuildContext context, double proportion) {
     return MediaQuery.of(context).size.width * proportion;
   }
 
@@ -276,8 +252,7 @@ class Util {
   ///  Return:
   ///      Double
   ///
-  static double getProportionScreenHeight(
-      BuildContext context, double proportion) {
+  static double getProportionScreenHeight(BuildContext context, double proportion) {
     return MediaQuery.of(context).size.height * proportion;
   }
 
@@ -291,8 +266,7 @@ class Util {
   ///  Return:
   ///      Double
   ///
-  static double getHeightSystemBar(BuildContext context,
-      {double incrementHeight = 0.0}) {
+  static double getHeightSystemBar(BuildContext context, {double incrementHeight = 0.0}) {
     return MediaQuery.of(context).padding.top + incrementHeight;
   }
 }

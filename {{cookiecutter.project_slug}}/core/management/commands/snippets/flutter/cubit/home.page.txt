@@ -7,14 +7,18 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'apps/configuracao/cubit.dart';
+import 'core/user_interface/custom.colors.dart';
 import 'apps/configuracao/index.page.dart';
-import 'apps/usuario/usuario/pages/list.dart' as UsuarioUsuarioViews;
-import 'core/config.dart';
 import 'core/user_interface/widget.dart';
+import 'apps/configuracao/cubit.dart';
+import 'core/agtec.logger.dart';
+import 'apps/auth/cubit.dart';
+import 'core/config.dart';
 import 'core/util.dart';
 import 'routers.dart';
 
@@ -22,18 +26,18 @@ $ImportViews$
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  MyHomePage({Key? key, String? title}): this.title = title ?? "", super(key: key);
+  
+  const MyHomePage({Key? key, String? title})
+    : title = title ?? "",
+      super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   bool bottomNavigationEnable = true;
   int _currentIndexPage = 0;
-
-  // Declarando o inteiro para controlar qual página deve ser exibida
-  int _indexCurrentPage = 0;
 
   // Declarando uma instancia da Classe dos items do Menu
   final Itens _itensMenuGridView = Itens();
@@ -43,6 +47,17 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _currentIndexPage = 0;
     _itensMenuGridView.make();
+    _defaultAuthenticationFastAPI();
+  }
+
+  Future<void> _defaultAuthenticationFastAPI() async {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      try {
+        AuthCubit().defaultAuthenticationFastAPI();
+      } catch (error, stackTrace) {
+        AgteCoreLogger().erro(error.toString(), stackTrace);
+      }
+    });
   }
 
   @override
@@ -64,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: appBarDefaultBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -78,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 InkWell(
                   child: Icon(Icons.settings),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsIndexPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsIndexPage(),),);
                   },
                 ),
               ],
@@ -165,26 +180,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     return customMainCardButton(
                       _itensMenuGridView.list[index].icon,
                       _itensMenuGridView.list[index].title,
-                      iconColor: context.watch<SettingsCubit>().lightTheme == true
-                          ? CustomTheme.mainCardLightIconColor
-                          : CustomTheme.mainCardDarkIconColor,
-                      textColor: context.watch<SettingsCubit>().lightTheme == true
-                          ? CustomTheme.mainCardLightTextColor
-                          : CustomTheme.mainCardDarkTextColor,
-                      cardBackgroundColorBegin:
-                          context.watch<SettingsCubit>().lightTheme == true
-                              ? CustomTheme.mainCardLightBackgroundColor
-                              : CustomTheme.mainCardDarkBackgroundColor,
-                      cardBackgroundColorEnd:
-                          context.watch<SettingsCubit>().lightTheme == true
-                              ? CustomTheme.mainCardLightBackgroundColor
-                              : CustomTheme.mainCardDarkBackgroundColor,
-                      boxShadowColor: context.watch<SettingsCubit>().lightTheme == true
-                          ? CustomTheme.mainCardLightShadowColor
-                          : CustomTheme.mainCardDarkShadowColor,
-                      cardBorderColor: context.watch<SettingsCubit>().lightTheme == true
-                          ? CustomTheme.mainCardLightBackgroundColor
-                          : CustomTheme.mainCardDarkBackgroundColor,
+                      iconColor: iconCardColorHomePage,
+                      textColor: textCardColorHomePage,
+                      cardBackgroundColorBegin: backgroundColorCardHomePageBegin,
+                      cardBackgroundColorEnd: backgroundColorCardHomePageEnd,
+                      boxShadowColor: boxShadownColorCardHomePage,
+                      cardBorderColor: borderCardColorHomePage,
                     );
                   },
                 ),

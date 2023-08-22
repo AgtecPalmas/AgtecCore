@@ -34,7 +34,7 @@ class ModelsBuilder:
 
     def build(self):
         try:
-            if Utils.check_file_is_locked(self._model_path_file):
+            if Utils.check_file_is_locked(str(self._model_path_file)):
                 Utils.show_error(f"File is locked: {self._model_path_file}")
                 return
             for field in iter(self.app.model._meta.fields):
@@ -95,23 +95,23 @@ class ModelsBuilder:
 
                 if str(_field_type) == "DateTimeField":
                     self._content_to_map += "'{}': Util.stringDateTimeSplit".format(_name)
-                    self._content_to_map += '(this.{}, returnType: "dt"),\n{}'.format(_name_dart, " " * 8)
+                    self._content_to_map += '({}, returnType: "dt"),\n{}'.format(_name_dart, " " * 8)
                     continue
                 if str(_field_type) == "DateField":
                     self._content_to_map += "'{}': Util.stringDateTimeSplit".format(_name)
-                    self._content_to_map += '(this.{}, returnType: "d"),\n{}'.format(_name_dart, " " * 8)
+                    self._content_to_map += '({}, returnType: "d"),\n{}'.format(_name_dart, " " * 8)
                     continue
                 if str(_field_type) == "TimeField":
                     self._content_to_map += "'{}': Util.stringDateTimeSplit".format(_name)
-                    self._content_to_map += '(this.{}, returnType: "t"),\n{}'.format(_name_dart, " " * 8)
+                    self._content_to_map += '({}, returnType: "t"),\n{}'.format(_name_dart, " " * 8)
                     continue
                 if str(_field_type) in ["FloatField", "DecimalField"]:
-                    self._content_to_map += "'{0}': this.{1},\n{2}".format(_name, _name_dart, " " * 8)
+                    self._content_to_map += "'{0}': {1},\n{2}".format(_name, _name_dart, " " * 8)
                     continue
                 if str(_atribute) == "bool":
-                    self._content_to_map += "'{0}': this.{1},\n{2}".format(_name, _name_dart, " " * 8)
+                    self._content_to_map += "'{0}': {1},\n{2}".format(_name, _name_dart, " " * 8)
                     continue
-                self._content_to_map += "'{0}': this.{1},\n{2}".format(_name, _name_dart, " " * 8)
+                self._content_to_map += "'{0}': {1},\n{2}".format(_name, _name_dart, " " * 8)
 
             if not Utils.check_file(self._model_path_file):
                 os.makedirs(self._model_path_file)

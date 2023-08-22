@@ -20,8 +20,9 @@ class CustomTextFormFieldStyle {
   static InputDecoration textFieldStyle({String hintText = "", bool hiddenCounter = false}) {
     return InputDecoration(
       hintText: hintText,
-      counter: hiddenCounter ? Offstage() : null,
-      hintStyle: TextStyle(
+      counter: hiddenCounter ? const Offstage() : null,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      hintStyle: const TextStyle(
         color: Colors.black38,
         fontSize: 14,
         fontStyle: FontStyle.normal,

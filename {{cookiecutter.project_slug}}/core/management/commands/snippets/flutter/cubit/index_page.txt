@@ -1,23 +1,22 @@
-/// View/Page inicial de um $ModelClass$
-/// Caso seja necessário criar uma página anterior à da listagem
-/// deve ser alterado o código abaixo e depois alterar a URL de
-/// navegação vinda da main.dart
-
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
+///
 
 import 'package:flutter/material.dart';
 
 import '../../../../core/user_interface/widget.dart';
-import '../model.dart';
 
 class $ModelClass$IndexPage extends StatefulWidget {
   static const routeName = "/$ModelClassCamelCase$Index";
 
+  const $ModelClass$IndexPage({super.key});
+
   @override
-  _$ModelClass$IndexPageState createState() => _$ModelClass$IndexPageState();
+  State<$ModelClass$IndexPage> createState() => _$ModelClass$IndexPageState();
 }
 
 class _$ModelClass$IndexPageState extends State<$ModelClass$IndexPage>

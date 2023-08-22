@@ -25,7 +25,8 @@ class $ModelClass$SuccessState extends $ModelClass$State {
   final String successMessage;
   final $ModelClass$Model $ModelClassCamelCase$Model;
   final List<$ModelClass$Model> $ModelClassCamelCase$List;
-  $ModelClass$SuccessState({
+
+  const $ModelClass$SuccessState({
     required this.successMessage,
     required this.$ModelClassCamelCase$Model,
     required this.$ModelClassCamelCase$List,
@@ -38,7 +39,7 @@ class $ModelClass$SuccessState extends $ModelClass$State {
 class $ModelClass$ErrorState extends $ModelClass$State {
   final String error;
 
-  $ModelClass$ErrorState(this.error);
+  const $ModelClass$ErrorState(this.error);
 
   @override
   List<Object> get props => [error];

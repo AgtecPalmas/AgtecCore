@@ -14,12 +14,12 @@ services:
     environment:
       - APP_NAME=TROCAR_PELO_NOME_DO_SISTEMA
       - APP_URL=http://localhost:8005
-      - DB_DATABASE=TROCAR_PELO_NOME_DO_SISTEMA_db
+      - DB_NAME=TROCAR_PELO_NOME_DO_SISTEMA_db
       - DB_PASSWORD=senha_padrao_deve_ser_mudada
-      - DB_USERNAME=TROCAR_PELO_NOME_DO_SISTEMA_dbmanager_2LiyBoLHeHo5yG
+      - DB_USER=TROCAR_PELO_NOME_DO_SISTEMA_dbmanager_2LiyBoLHeHo5yG
       - DB_HOST=TROCAR_PELO_NOME_DO_SISTEMA_database
       - DB_PORT=5432
-      - DB_CONNECTION=postgresql
+      - DB_ENGINE=postgresql
       - APP_SECRET=senha_padrao_deve_ser_mudada
     build:
       context: .

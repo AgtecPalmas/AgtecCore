@@ -23,7 +23,7 @@ class WidgetBuilder:
 
     def build(self):
         try:
-            if Utils.check_file_is_locked(self._target_file):
+            if Utils.check_file_is_locked(str(self._target_file)):
                 return
             _content = self._parser_content()
             with open(self._target_file, "w", encoding="utf-8") as _file:

@@ -1,18 +1,28 @@
 # Projeto Flutter
 
-Esse projeto foi gerado a partir do AgteCore, as configurações iniciais do projeto (CRUD) foram geradas.
+Esse projeto foi gerado a partir do AgtecCore, as configurações iniciais do projeto (CRUD) foram geradas.
 Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
+
+# Versão do Flutter
+
+#### Esse projeto foi gerado e validado utilizando a versão do 3.13.0 do Flutter.
+```code
+PS C:\Users\Suporte> flutter doctor -v
+[✓] Flutter (Channel stable, 3.13.0, on Microsoft Windows [versÆo 10.0.22621.2134], locale pt-BR)
+    • Flutter version 3.13.0 on channel stable at C:\Flutter\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision efbf63d9c6 (2 days ago), 2023-08-15 21:05:06 -0500
+    • Engine revision 1ac611c64e
+    • Dart version 3.1.0
+    • DevTools version 2.25.0
+```
 
 ## Etapas para rodar o projeto
 
-1. Configurando o projeto para executar no Android
-1.1 Alterar o versão do compileSdkVersion para **33** no arquivo build.gradle no caminho **android/app/build.gradle**
-    ```code
-        android {
-            compileSdkVersion 33
-        ...
-    ```
-    1.2 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
+1. Criar um repositório git
+2. Configurando o projeto para executar no Android 
+    
+    2.1 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
     ```code
         defaultConfig {
             ...
@@ -20,30 +30,26 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
             ...
         }
     ```
-    1.3 Alterar no arquivo **android/app/build.gradle** o **minSdkVersion** para **19**
-    ```code
-        defaultConfig {
-            ...    
-            minSdkVersion 19
-            ...
-        }
-    ```
-    1.4 Alterar no arquivo **android/app/build.gradle** o **targetSdkVersion** para **30**
-    ```code
-        defaultConfig {
-            ...    
-            targetSdkVersion 30
-            ...
-        }
-    ```
 
-2. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
+1. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
+2. Configurar o VsCode para executar o Flutter do FVM [https://fvm.app/docs/getting_started/configuration] (Etapa opcional)
 3. Criar o projeto no Firebase [https://firebase.google.com/] (Etapa opcional)
 4. Ativar a funcionalidade de autenticacao (Etapa opcional)
 5. Baixar o arquivo google (Etapa opcional)
 6. Configurar o projeto no Android e iOS para trabalhar com a autenticação, conforme documentação do Flutter (Etapa opcional)
 7. Configurar no arquivo lib/core/config.dart a costante uriDeveloper apontando para a URL da API do projeto DRF ou FastAPI
 8. Configurar no arquivo lib/core/config.dart a costante DRFToken para o token de ambiente de desenvolvimento.
+9. No arquivo main.dart descomente as linhas abaixo no método main() para configurar o Firebase (Etapa opcional)
+
+```dart
+void main() async {
+    /// Descomentar as linhas abaixo para inicializar o Firebase
+    
+    // WidgetsFlutterBinding.ensureInitialized();
+    // await Firebase.initializeApp();
+    runApp(MyApp());
+}
+```
 
 ## O projeto gerado contém as seguinte estrutura
 
@@ -74,7 +80,7 @@ projeto flutter
 ├── .gitignore
 ├── .metadata
 ├── analysis_options.yaml  - arquivo gerado automaticamente pelo flutter
-├── doctorweb.iml
+├── NOME_DO_PROJETO.iml
 ├── pubscpec.lock  - arquivo gerado automaticamente pelo flutter
 ├── pubscpec.yaml - arquivo gerado automaticamente pelo flutter
 └── README.md

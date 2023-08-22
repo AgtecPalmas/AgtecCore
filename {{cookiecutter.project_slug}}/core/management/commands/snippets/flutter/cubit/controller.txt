@@ -1,3 +1,10 @@
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
 /// Os Métodos padrões gerados são:
 ///   Métodos da API
 ///     fecth() -> Recupera a lista de $ModelClass$.
@@ -16,10 +23,6 @@
 ///     deleteLocal() -> Deleta um novo $ModelClass$
 ///     deleteAllLocal() -> Deleta um novo $ModelClass$
 
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -28,14 +31,11 @@ import '../../../core/exceptions/exception.dart';
 import 'model.dart';
 import 'service.dart';
 import 'interface.dart';
-import 'data.dart';
-import 'dart:developer' as dev;
 
 part 'state.dart';
 
 class $ModelClass$Controller extends Cubit<$ModelClass$State> {
   late $ModelClass$ServiceInterface _service;
-  $ModelClass$LocalDataInterface _data = $ModelClass$Data();
   $ModelClass$Model $ModelClassCamelCase$Model = $ModelClass$Model();
   List<$ModelClass$Model> $ModelClassCamelCase$List = <$ModelClass$Model>[];
 
@@ -56,10 +56,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método fetch do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método fetch do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar consultar os dados."),);
     }
   }
 
@@ -73,10 +73,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método reload do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método reload do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar recarregar os dados."));
     }
   }
 
@@ -90,10 +90,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método post do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método post do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar salvar."));
     }
   }
 
@@ -106,10 +106,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
         $ModelClassCamelCase$List: $ModelClassCamelCase$List,
         $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método put do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método put do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
     }
   }
 
@@ -123,10 +123,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método path do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método path do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
     }
   }
 
@@ -140,10 +140,10 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
-    } catch (e, s) {
-      dev.log("Cubit", name: "AgtecCore", error: e.toString(), stackTrace: s);
-      ExceptionCustom.state("Ocorreu um erro ou executar o método delete do $ModelClass$Controller", e.toString());
-      emit($ModelClass$ErrorState(e.toString()));
+    } catch (error, stackTrace) {
+      ExceptionCustom.state("Ocorreu um erro ou executar o método delete do $ModelClass$Controller", 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar excluir o registro."));
     }
   }
 }

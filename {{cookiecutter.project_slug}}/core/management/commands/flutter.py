@@ -10,6 +10,8 @@ from pathlib import Path
 from django.apps import apps
 from django.core.management.base import BaseCommand
 
+from decouple import config
+
 from base.settings import FLUTTER_APPS
 from core.management.commands.constants.flutter import DJANGO_TYPES, FLUTTER_TYPES, SQLLITE_TYPES
 from core.management.commands.flutter_managers import (
@@ -36,6 +38,7 @@ from core.management.commands.flutter_managers import (
     UserInterfaceBuilder,
     UtilsBuilder,
     WidgetBuilder,
+    MixinsClassBuilder,
 )
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
@@ -251,6 +254,7 @@ class Command(BaseCommand):
         self.path_root: Path = os.getcwd()
         self.path_core: Path = os.path.join(self.BASE_DIR, "core")
         self.path_base: Path = Path(f"{self.path_root}/base")
+        self.organization_flutter_name = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
 
         self.operation_system = platform.system().lower()
         self.path_command = Path(__file__).parent
@@ -320,11 +324,12 @@ class Command(BaseCommand):
         try:
             if not Utils.check_dir(self.flutter_dir):
                 Utils.show_message("Criando o projeto flutter.")
-                _flutter_dir = self.flutter_dir
-                _project_name = self.flutter_project.lower()
-                _platforms = '--platforms="android,ios"'
                 _command = "flutter create --project-name"
-                _cmd = f"{_command}={_project_name} --org br.com.{_project_name} {_platforms} {_flutter_dir}"
+                _project_name = self.flutter_project.lower()
+                _organization = self.organization_flutter_name
+                _platforms = '--platforms="android,ios"'
+                _flutter_dir = self.flutter_dir
+                _cmd = f"{_command}={_project_name} --org br.com.{_organization} {_platforms} {_flutter_dir}"
                 subprocess.call(_cmd, shell=True)
                 Utils.show_message("Projeto criado com sucesso.")
                 # Copiando o arquivo README.md que está no diretório snippets flutter para a raiz do projeto
@@ -502,6 +507,14 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _build_user_interface: {error}")
 
+    def _build_user_interface_mixins(self):
+        try:
+            if not Utils.check_dir(self.ui_dir):
+                os.makedirs(self.ui_dir)
+            MixinsClassBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _build_user_interface: {error}")
+
     def _add_packages(self):
         try:
             AddPackagesBuilder(command=self).build()
@@ -591,6 +604,7 @@ class Command(BaseCommand):
             self._build_flutter()
 
             self._build_user_interface()
+            self._build_user_interface_mixins()
             self._build_named_routes()
             self._buid_settings()
             self._build_exception_class()

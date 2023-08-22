@@ -1,6 +1,9 @@
-customTextFormField( // Gerado pelo AgtecCore
-  labelText: '$Field$',
-  hintText: '$Field$',
+TextFormField(
   controller: $controller$,
-  context: context,
+  validator: Validatorless.multiple([]),
+  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+  decoration: CustomTextFormFieldStyle.textFieldStyle(
+    hintText: '$Field$',
+    hiddenCounter: true,
+  ),
 ),
