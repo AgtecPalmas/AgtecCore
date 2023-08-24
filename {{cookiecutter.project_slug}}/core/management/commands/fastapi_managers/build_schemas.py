@@ -88,7 +88,11 @@ class SchemasBuild:
 
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
 
-                        if str(field_name) == "django_user":
+                        if str(field_name).endswith("_id") and str(field_name) != "django_user_id":
+                            result += f"\t {field_name}: Optional[UUID]\n"
+                            continue
+
+                        if str(field_name) == "django_user_id":
                             content = content.replace(
                                 "$auth_import$",
                                 "from authentication.schemas import User",
@@ -96,9 +100,6 @@ class SchemasBuild:
                             result += f"\t django_user_id: int\n"
                             continue
 
-                        if str(field_name).endswith("_id"):
-                            result += f"\t {field_name}: Optional[UUID]\n"
-                            continue
 
                         field_name = field.get_attname_column()[1]
                     result += f"\t {field_name}: {attribute}\n"
