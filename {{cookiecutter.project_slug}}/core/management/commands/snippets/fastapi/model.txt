@@ -11,4 +11,4 @@ $manyToMany$
 class $ModelClass$(CoreBase):
 	__tablename__ = "$table$"
 
-$columns$,
+$columns$
