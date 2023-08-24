@@ -25,8 +25,11 @@ Arquivo responsável pelo banco de dados
 - Cria uma instância do banco e finaliza ao finalizar a transação
 """
 
-
 class Base(DeclarativeBase):
+    __abstract__ = True
+
+
+class CoreBase(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True, default=uuid.uuid4)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     created_on: Mapped[datetime.datetime] = mapped_column(
@@ -37,6 +40,8 @@ class Base(DeclarativeBase):
     )
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     __name__: Mapped[str] = mapped_column(String)
+    __abstract__ = True
+
 
     # Generate __tablename__ automatically
     @declared_attr

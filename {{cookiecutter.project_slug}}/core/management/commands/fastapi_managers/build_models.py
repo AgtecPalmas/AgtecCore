@@ -80,16 +80,24 @@ class ModelsBuild:
                         attribute += f"({field.max_length})"
                     # Tratando campos do tipo ForeignKey ou OneToOneField
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
-                        field_name = field.get_attname_column()[1]
-                        __model = field.related_model._meta
-                        attribute = f"ForeignKey('{__model.db_table}.id')"
-                        if __model.app_label not in [item.get("app"), "auth"]:
-                            imports += f"from {__model.app_label}.{__model.object_name.lower()}.models import {__model.object_name}\n"
-                        if item.get("name") != "django_user":
-                            relationship = f"\t{item.get('name')} = relationship('{__model.object_name}', foreign_keys=[{field_name}])\n"
+                        if item.get("name") == "django_user_id":
+                            attribute = f"Integer"
+                        else:
+                            field_name = field.get_attname_column()[1]
+                            __model = field.related_model._meta
+                            attribute = f"ForeignKey('{__model.db_table}.id')"
+                            if __model.app_label not in [item.get("app"), "auth"]:
+                                imports += f"from {__model.app_label}.{__model.object_name.lower()}.models import {__model.object_name}\n"
+                            if item.get("name") != "django_user":
+                                relationship = f"\t{item.get('name')} = relationship('{__model.object_name}', foreign_keys=[{field_name}])\n"
 
                     attribute = f"{attribute}, nullable={(getattr(field, 'null', None))}"
-                    mapped_field = self._fields_types.get(item["django_type"]).get("model")
+
+                    if item.get("name") == "django_user_id":
+                        mapped_field = "Integer"
+                    else:
+                        mapped_field = self._fields_types.get(item["django_type"]).get("model")
+
                     if field.has_default():
                         attribute = self.__add_attr_default(field, mapped_field)
                     if field.unique is True:
@@ -115,7 +123,7 @@ class ModelsBuild:
                     table = f"{related_item.get('app')}_{_model_name}_{related_item.get('name')}"
                     # Variável contendo o nome da tabela ManyToMany que é utilizado na tabela de ligação
                     table_related_name = f"{model._meta.db_table}_{related_item.get('name')}"
-                    many_to_many += f'{table} = Table("{table_related_name}", Base.metadata,'
+                    many_to_many += f'{table} = Table("{table_related_name}", CoreBase.metadata,'
                     many_to_many += "Column('id', Integer, primary_key=True, index=True),"
 
                     # Verificando se o relacionamento é com ele mesmo

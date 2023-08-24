@@ -9,7 +9,8 @@ from sqlalchemy import (
     Boolean,
     DateTime,
 )
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from core.database import Base
 
 """
 Arquivo com os  models da app de autenticação
@@ -17,9 +18,6 @@ Arquivo com os  models da app de autenticação
 - É configurado o nome da tabela, colunas e relacionamentos
 """
 
-
-class Base(DeclarativeBase):
-    __abstract__ = True
 
 
 class ContentType(Base):

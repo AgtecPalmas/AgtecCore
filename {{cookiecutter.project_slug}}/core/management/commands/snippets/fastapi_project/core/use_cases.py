@@ -8,10 +8,10 @@ from pydantic import BaseModel
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm import Session
 
-from .database import Base
+from .database import CoreBase
 from .schemas import PaginationBase
 
-ModelType = TypeVar("ModelType", bound=Base)
+ModelType = TypeVar("ModelType", bound=CoreBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
