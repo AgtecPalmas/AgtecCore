@@ -93,7 +93,7 @@ class ModelsBuild:
 
                     attribute = f"{attribute}, nullable={(getattr(field, 'null', None))}"
 
-                    if item.get("name") == "django_user_id":
+                    if item.get("name") == "django_user":
                         mapped_field = "Integer"
                     else:
                         mapped_field = self._fields_types.get(item["django_type"]).get("model")
