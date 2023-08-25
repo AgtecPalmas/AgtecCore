@@ -20,11 +20,6 @@ class RoutersBuild:
     def build(self):
         try:
             content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/routers.txt")))
-            if self.app.lower() == "usuario" and self.model.lower() == "usuario":
-                content = Utils.get_snippet(
-                    str(Path(f"{self.snippet_dir}/api_user.txt"))
-                )
-
             content = content.replace("$ModelClass$", self.model)
             content = content.replace("$app$", self.app)
             content = content.replace("$model$", self.model_lower)
