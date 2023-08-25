@@ -88,6 +88,10 @@ class ProjetoBuild:
     def __update_env_file(self) -> None:
         """Atualiza o arquivo .env do projeto Fastapi com a SECRET_KEY do Django"""
         secret: str = self.__get_env_from_django().get("SECRET_KEY")
+        db_name: str = self.__get_env_from_django().get("DB_NAME")
+        db_user: str = self.__get_env_from_django().get("DB_USER")
+        db_password: str = self.__get_env_from_django().get("DB_PASSWORD")
+
         file = Path(self.fastapi_dir) / ".env"
 
         with open(file, "r+") as f:
@@ -97,6 +101,16 @@ class ProjetoBuild:
             for line in env_file.splitlines():
                 if line.startswith("SECRET_KEY"):
                     env_file = env_file.replace(line, f"SECRET_KEY={secret}")
+                    continue
+                if line.startswith("DB_NAME"):
+                    env_file = env_file.replace(line, F"DB_NAME={db_name}")
+                    continue
+                if line.startswith("DB_USER"):
+                    env_file = env_file.replace(line, F"DB_USER={db_user}")
+                    continue
+                if line.startswith("DB_PASSWORD"):
+                    env_file = env_file.replace(line, F"DB_PASSWORD={db_password}")
+                    continue
 
             f.write(env_file)
             f.truncate()
