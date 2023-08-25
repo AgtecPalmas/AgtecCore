@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from rich.prompt import Prompt
-
+from decouple import config
 from ..utils import Utils
 
 
@@ -60,19 +60,6 @@ class ProjetoBuild:
         except Exception as error:
             Utils.show_error(f"Error in __init_Fastapi: {error}")
 
-    def __get_env_from_django(self) -> dict:
-        """Coleta o arquivo .env do projeto Django"""
-        file = Path(self.django_dir) / ".env"
-        env = {}
-
-        with open(file, "r") as f:
-            for line in f:
-                if not line.startswith("#") and "=" in line:
-                    key, value = line.split("=")
-                    env[key] = value.strip()
-
-        return env
-
     def __copy_file_env_example_to_env(self) -> None:
         """Copiar o arquivo .env.example para .env"""
 
@@ -87,30 +74,27 @@ class ProjetoBuild:
 
     def __update_env_file(self) -> None:
         """Atualiza o arquivo .env do projeto Fastapi com a SECRET_KEY do Django"""
-        secret: str = self.__get_env_from_django().get("SECRET_KEY")
-        db_name: str = self.__get_env_from_django().get("DB_NAME")
-        db_user: str = self.__get_env_from_django().get("DB_USER")
-        db_password: str = self.__get_env_from_django().get("DB_PASSWORD")
+        secret: str = config("SECRET_KEY")
+        db_name: str = config("DB_NAME")
+        db_user: str = config("DB_USER")
+        db_password: str = config("DB_PASSWORD")
 
         file = Path(self.fastapi_dir) / ".env"
 
-        with open(file, "r+") as f:
+        replace_dict = {
+            "SECRET_KEY": secret,
+            "DB_NAME": db_name,
+            "DB_USER": db_user,
+            "DB_PASSWORD": db_password,
+        }
+
+        with open(file, "r") as f:
             env_file = f.read()
-            f.seek(0)
 
-            for line in env_file.splitlines():
-                if line.startswith("SECRET_KEY"):
-                    env_file = env_file.replace(line, f"SECRET_KEY={secret}")
-                    continue
-                if line.startswith("DB_NAME"):
-                    env_file = env_file.replace(line, F"DB_NAME={db_name}")
-                    continue
-                if line.startswith("DB_USER"):
-                    env_file = env_file.replace(line, F"DB_USER={db_user}")
-                    continue
-                if line.startswith("DB_PASSWORD"):
-                    env_file = env_file.replace(line, F"DB_PASSWORD={db_password}")
+        for key, value in replace_dict.items():
+            env_file = env_file.replace(f"{key}=", f"{key}={value}")
 
+        with open(file, "w") as f:
             f.write(env_file)
             f.truncate()
 
