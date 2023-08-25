@@ -110,7 +110,6 @@ class ProjetoBuild:
                     continue
                 if line.startswith("DB_PASSWORD"):
                     env_file = env_file.replace(line, F"DB_PASSWORD={db_password}")
-                    continue
 
             f.write(env_file)
             f.truncate()
