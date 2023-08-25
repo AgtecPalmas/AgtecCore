@@ -12,21 +12,23 @@ from . import schemas, use_cases
 
 router = APIRouter()
 
-router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'], 
+router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
                            dependencies=[Depends(security.get_current_active_user)])
 
-@router_$model$.get("/", response_model=PaginationBase, 
+@router_$model$.get("/", response_model=PaginationBase,
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
 def read_$model$s(request: Request, db: Session = Depends(get_db), offset: int = 0, limit: int = 25) -> Any:
-    $model$s = use_cases.$model$.get_paginate(db, request=request, offset=offset, limit=limit)
+    $model$s = use_cases.$model$.get_paginate(db, request=request, offset=offset, limit=limit, model_pydantic=schemas.$ModelClass$)
     return $model$s
 
-@router_$model$.post("/", dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
+@router_$model$.post("/", response_model=schemas.$ModelClass$Create,
+                    dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
 def create_$model$(*, db: Session = Depends(get_db), $model$_in: schemas.$ModelClass$Create) -> Any:
     $model$ = use_cases.$model$.create(db, obj_in=$model$_in)
     return $model$
 
-@router_$model$.get("/{$model$_id}", dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+@router_$model$.get("/{$model$_id}", response_model=schemas.$ModelClass$,
+                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
 def read_$model$_by_id($model$_id: str, db: Session = Depends(get_db)) -> Any:
     try:
         $model$_id = uuid.UUID($model$_id)
@@ -37,7 +39,8 @@ def read_$model$_by_id($model$_id: str, db: Session = Depends(get_db)) -> Any:
       raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
     return $model$
 
-@router_$model$.put("/{$model$_id}", dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
+@router_$model$.put("/{$model$_id}", response_model=schemas.$ModelClass$Update,
+                    dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
 def update_$model$(*, db: Session = Depends(get_db), $model$_id: str,$model$_in: schemas.$ModelClass$Update) -> Any:
     $model$ = use_cases.$model$.get(db, id=$model$_id)
     if not $model$:
@@ -45,7 +48,8 @@ def update_$model$(*, db: Session = Depends(get_db), $model$_id: str,$model$_in:
     $model$ = use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
     return $model$
 
-@router_$model$.delete("/{id}", dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
+@router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
+                     dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
 def delete_$model$(*, db: Session = Depends(get_db), id: str) -> Any:
     $model$ = use_cases.$model$.get(db=db, id=id)
     if not $model$:

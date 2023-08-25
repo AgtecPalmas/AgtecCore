@@ -35,7 +35,7 @@ class UserInDBBase(UserBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Additional properties to return via API
@@ -74,7 +74,7 @@ class PermissionInDBBase(PermissionBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Additional properties to return via API
@@ -104,7 +104,7 @@ class GroupInDBBase(GroupBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # Additional properties to return via API
