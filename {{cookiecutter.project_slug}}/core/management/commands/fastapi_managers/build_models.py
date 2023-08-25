@@ -81,7 +81,7 @@ class ModelsBuild:
                     # Tratando campos do tipo ForeignKey ou OneToOneField
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
                         if item.get("name") == "django_user_id":
-                            attribute = f"Integer"
+                            attribute = "Integer"
                         else:
                             field_name = field.get_attname_column()[1]
                             __model = field.related_model._meta
