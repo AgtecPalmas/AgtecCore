@@ -13,11 +13,11 @@ from rich.progress import (
 )
 from subprocess import DEVNULL, PIPE
 
-INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "True"
+INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "Sim"
 
-GIT_INIT = "{{ cookiecutter.git_init }}" == "True"
+GIT_INIT = "{{ cookiecutter.git_init }}" == "Sim"
 
-BUILD_APPS = "{{ cookiecutter.build_apps }}" == "True"
+BUILD_APPS = "{{ cookiecutter.build_apps }}" == "Sim"
 
 PYTHON = "py" if sys.platform.startswith("win") else "python"
 
@@ -124,14 +124,14 @@ def remove_subdirectory_project() -> None:
     """Método para remover a subpasta do projeto"""
 
     try:
-        path_root = Path.cwd()
-        source_dir = Path(path_root)
-        print("*" * 100)
-        print("=" * 100)
-        print("Lembre de apagar manualmente o diretório:\n")
-        print(f"{source_dir} \n")
-        print("=" * 100)
-        print("*" * 100)
+        source = Path.cwd()
+
+        if sys.platform.startswith("win"):
+            print(f"{EMOJIS['error']} Remova a pasta {source} manualmente")
+            return
+
+        os.chdir("..")
+        shutil.rmtree(source, ignore_errors=True)
 
     except Exception as e:
         print(f"{EMOJIS['error']} Erro ao remover a subpasta do projeto: {e}")
