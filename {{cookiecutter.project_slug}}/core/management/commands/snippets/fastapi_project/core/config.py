@@ -1,6 +1,8 @@
 from typing import List
 
-from pydantic import AnyHttpUrl, BaseSettings
+from pydantic import AnyHttpUrl
+
+from pydantic_settings import BaseSettings
 
 """
 Arquivos principal de configuração da app
@@ -13,7 +15,7 @@ Arquivos principal de configuração da app
 class Settings(BaseSettings):
     app_name: str
     api_str: str = "/api/v1"
-    app_secret: str
+    secret_key: str
     app_url: AnyHttpUrl
     backend_cors_origins: List[AnyHttpUrl] = ["http://localhost"]
 
@@ -24,8 +26,8 @@ class Settings(BaseSettings):
     db_user: str
     db_password: str
 
-    app_env: str
-    app_debug: str
+    environment: str
+    debug: str
     django_url: str
 
     class Config:

@@ -2,7 +2,12 @@ import datetime
 import uuid
 from typing import Generator
 
-import sqlalchemy as sa
+from sqlalchemy import (
+    create_engine,
+    String,
+    Boolean,
+    DateTime,
+)
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -20,18 +25,23 @@ Arquivo responsável pelo banco de dados
 - Cria uma instância do banco e finaliza ao finalizar a transação
 """
 
-
 class Base(DeclarativeBase):
-    id: Mapped[str] = mapped_column(sa.String, primary_key=True, default=uuid.uuid4)
-    deleted: Mapped[bool] = mapped_column(sa.Boolean, default=False)
+    __abstract__ = True
+
+
+class CoreBase(Base):
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=uuid.uuid4)
+    deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     created_on: Mapped[datetime.datetime] = mapped_column(
-        sa.DateTime, default=datetime.datetime.now()
+        DateTime, default=datetime.datetime.now()
     )
     updated_on: Mapped[datetime.datetime] = mapped_column(
-        sa.DateTime, default=datetime.datetime.now()
+        DateTime, default=datetime.datetime.now()
     )
-    enabled: Mapped[bool] = mapped_column(sa.Boolean, default=True)
-    __name__: Mapped[str] = mapped_column(sa.String)
+    enabled: Mapped[bool] = mapped_column(Boolean, default=True)
+    __name__: Mapped[str] = mapped_column(String)
+    __abstract__ = True
+
 
     # Generate __tablename__ automatically
     @declared_attr
@@ -50,7 +60,7 @@ SQLALCHEMY_DATABASE_URI: str = (
     f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
-engine = sa.create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
+engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 

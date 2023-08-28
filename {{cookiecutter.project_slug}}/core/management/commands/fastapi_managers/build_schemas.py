@@ -52,6 +52,7 @@ class SchemasBuild:
 
             else:
                 attribute += f" = '{field_str}'"
+
         return attribute
 
     def build(self):
@@ -61,7 +62,6 @@ class SchemasBuild:
             model = self.app_instance.get_model(self.model)
             fields = model._meta.fields
             result = ""
-
             for field in iter(fields):
                 item = {
                     "app": (str(field).split("."))[0],
@@ -75,19 +75,26 @@ class SchemasBuild:
                     continue
 
                 if not Utils.check_ignore_field(item["name"]):
-                    attribute = self._fields_types.get(item["django_type"]).get("schema")
+                    attribute = self._fields_types.get(item["django_type"]).get(
+                        "schema"
+                    )
                     field_name = item.get("name")
+
+                    if getattr(field, "swappable_setting", None) == "AUTH_USER_MODEL":
+                        content = content.replace(
+                            "$auth_import$",
+                            "from authentication.schemas import User",
+                        )
+                        attribute = "int"
+
                     attribute = self.__add_attr_null(field, attribute)
                     attribute = self.__add_attr_default(field, attribute)
 
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
-                        if str(field_name) == "django_user":
-                            content = content.replace(
-                                "$auth_import$",
-                                "from authentication.schemas import User",
-                            )
-                            result += f"\t django_user_id: Optional[str]\n"
-                            result += f"\t django_user: Optional[User]\n"
+                        if (
+                            str(field_name).endswith("_id")
+                        ):
+                            result += f"\t {field_name}: Optional[UUID]\n"
                             continue
 
                         field_name = field.get_attname_column()[1]

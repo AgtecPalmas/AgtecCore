@@ -1,19 +1,18 @@
 import os
 import platform
-import subprocess
 from pathlib import Path
 
 from base.settings import FASTAPI_APPS
 from django.apps import apps
 from django.core.management.base import BaseCommand
 from rich import box
-from rich.prompt import Prompt
 
 from .fastapi_managers import (
     RoutersBuild,
     UseCasesBuild,
     DockerBuild,
     ModelsBuild,
+    ProjetoBuild,
     SchemasBuild,
 )
 from .formatters import PythonFormatter
@@ -48,7 +47,6 @@ class Command(BaseCommand):
         if self.operation_system != "windows":
             self.project = str(self.path_root).split("/")[-1]
         self.fastapi_dir = Path(f"{self.project_dir}/FastAPI/{self.project}")
-        self.fastapi_project = Path(f"{self.path_command}/snippets/fastapi_project/")
         self.snippet_dir = Path(f"{self.path_command}/snippets/fastapi/")
 
         self.current_app_model = None
@@ -102,23 +100,17 @@ class Command(BaseCommand):
             "--docker", action="store_true", dest="docker", help="Configurar o docker"
         )
         parser.add_argument(
+            "--base",
+            action="store_true",
+            dest="base",
+            help="Criar apenas o projeto base",
+        )
+        parser.add_argument(
             "--format",
             action="store_true",
             dest="format",
             help="Aplica Black, isort e flake8 nos arquivos",
         )
-
-    def __init_fastapi(self):
-        try:
-            if not Utils.check_dir(str(self.fastapi_dir)):
-                os.makedirs(self.fastapi_dir)
-            Utils.show_message("Criando o projeto Fastapi.")
-            command = f"cp -R {self.fastapi_project}/* {self.fastapi_dir}  && cp -R {self.fastapi_project}/.env.example {self.fastapi_dir}"
-            if self.operation_system == "windows":
-                command = f"Xcopy /E /I {str(self.fastapi_project)} {str(self.fastapi_dir)} /Y /Q"
-            subprocess.run(command, shell=True)
-        except Exception as error:
-            Utils.show_error(f"Error in __init_Fastapi: {error}")
 
     @staticmethod
     def __init_app(app_path):
@@ -127,6 +119,12 @@ class Command(BaseCommand):
                 os.makedirs(app_path)
         except Exception as error:
             Utils.show_error(f"Error in __init_Fastapi: {error}")
+
+    def __manage_projeto(self):
+        try:
+            ProjetoBuild(self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in __manage_projeto: {error}")
 
     def __manage_schema(self):
         try:
@@ -190,33 +188,6 @@ class Command(BaseCommand):
         self.path_api = os.path.join(self.path_app, "api.py")
         self.app_instance = apps.get_app_config(self.app_lower)
 
-    def __create_base_project(self):
-        """Método responsável por criar as apps levando em consideração as apps do projeto
-        Django informados na constante FASTAPI_APPS"""
-        try:
-            # Chamando o método para criar o projeto inicial
-            if Utils.check_dir(str(self.fastapi_dir)):
-                if (
-                    Prompt.ask(
-                        "Mudanças nos arquivos\
-                        \n[b red]base, authentication, core e usuario[/]\
-                        \npoderão ser perdidos.\
-                        \n\nProjeto base já existe, deseja sobrescrever?",
-                        default="n",
-                        choices=["s", "n"],
-                    )
-                    == "s"
-                ):
-                    self.__init_fastapi()
-            else:
-                self.__init_fastapi()
-
-            Utils.show_message(
-                "Projeto base criado com sucesso, agora vamos criar as apps."
-            )
-        except Exception as error:
-            Utils.show_message(f"Ocorreu o erro {error} ao executar a criação")
-
     def call_methods(self, options):
         if options["cruds"]:
             Utils.show_message("Trabalhando apenas os cruds.")
@@ -261,11 +232,13 @@ class Command(BaseCommand):
                 or options.get("docker")
                 or options.get("format")
                 or options.get("all")
+                or options.get("base")
             )
         ):
             Utils.show_error(
                 "Para gerar o projeto é necessário informar uma das flags:\
-                \n[b cyan]--cruds\n--api\n--schemas\n--models\n--docker\n--format\n--all[/]"
+                \n[b cyan]--cruds\n--api\n--schemas\n--models\n--docker\n--format\
+                \n--all\n--base[/]"
             )
 
     @staticmethod
@@ -369,11 +342,15 @@ class Command(BaseCommand):
         app = options["App"] or None
         model = options["Model"] or None
 
+        self.__verify_valid_flags(options)
+
+        if options["base"]:
+            self.__manage_projeto()
+            return
+
         if options["docker"]:
             self.__manage_docker()
             return
-
-        self.__verify_valid_flags(options)
 
         if not app and not model and not FASTAPI_APPS:
             Utils.show_error(
@@ -395,7 +372,7 @@ class Command(BaseCommand):
 
         generate_these = self.__get_apps_and_models_to_generate(app, model)
 
-        self.__create_base_project()
+        self.__manage_projeto()
 
         for app, models in generate_these.items():
             self.__generate_app_models(app, models, options)
