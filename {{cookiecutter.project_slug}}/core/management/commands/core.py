@@ -22,7 +22,7 @@ MESSAGES = {
         "Algo está errado\nCore $version_core\nProjeto $version_project"
     ),
     "help": Template(
-        "[green b]AGTEC CORE[/] [cyan b]$version[/]\
+        "[green b]AGTEC CORE[/] [cyan b]$version - $codename[/]\
             \n\n[yellow b]Comandos[/]\
             \n[green b]--checkupdate[/] - Verifica se existe uma nova versão do Core\
             \n[green b]--help[/] ou [green b]-h[/] - Exibe esta mensagem\
@@ -38,7 +38,7 @@ MESSAGES = {
         "Não encontramos versões do Core para o Django $version"
     ),
     "success_version": Template("Você está na versão mais recente do Core: $version"),
-    "version": Template("Versão do Core: [green b]$version[/]"),
+    "version": Template("Versão do Core: [green b]$version - $codename[/]"),
 }
 
 
@@ -74,6 +74,9 @@ class Command(BaseCommand):
 
         self.core_project_version: str = getattr(
             apps.get_app_config("core"), "version", "0"
+        )
+        self.core_codename: str = getattr(
+            apps.get_app_config("core"), "codename", "Null"
         )
 
         self.django_project_version: int = get_tag_django_version(
@@ -220,7 +223,9 @@ class Command(BaseCommand):
     def __help(self) -> None:
         """Show help message"""
         Utils.show_message(
-            MESSAGES["help"].substitute(version=self.core_project_version),
+            MESSAGES["help"].substitute(
+                version=self.core_project_version, codename=self.core_codename
+            ),
             title=True,
             emoji="rocket",
         )
@@ -230,7 +235,9 @@ class Command(BaseCommand):
 
         if options["version"]:
             Utils.show_message(
-                MESSAGES["version"].substitute(version=self.core_project_version),
+                MESSAGES["version"].substitute(
+                    version=self.core_project_version, codename=self.core_codename
+                ),
             )
 
         elif options["checkupdate"]:
