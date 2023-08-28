@@ -3,6 +3,8 @@ email-validator==2.0.0.post2
 fastapi==0.100.*
 passlib==1.7.*
 psycopg2-binary==2.9.*
+pydantic==2.1.*
+pydantic-settings==2.0.*
 python-dotenv==1.0.*
 python-jose==3.3.*
 python-multipart==0.0.*

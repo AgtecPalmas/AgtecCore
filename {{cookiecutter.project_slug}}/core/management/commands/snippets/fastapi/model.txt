@@ -3,12 +3,12 @@ from sqlalchemy import ForeignKey, String, Table, Column
 from sqlalchemy.sql.sqltypes import String, Integer, Boolean, Date, DateTime, Time, List, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from core.database import Base
+from core.database import CoreBase
 
 $imports$
 
 $manyToMany$
-class $ModelClass$(Base):
+class $ModelClass$(CoreBase):
 	__tablename__ = "$table$"
 
 $columns$
