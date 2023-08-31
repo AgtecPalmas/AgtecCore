@@ -44,11 +44,43 @@ Acesse a documentação contendo todos os detalhes do projeto em:
  
 ## Guia de instalação
 ---
-
 - Clone este projeto
 ```
 git clone https://github.com/AgtecPalmas/AgtecCore
 ```
+
+<details>
+<summary><h3>Usando Poetry</h3></summary>
+
+- Crie um projeto Poetry fora do Clone
+```
+poetry new <nome_do_seu_projeto>
+```
+
+- Acesse o diretório criado na etapa anterior
+
+```
+  cd <nome_do_seu_projeto>
+```
+
+- Adicione o Cookiecutter como dependência do seu projeto
+```
+poetry add cookiecutter
+```
+
+- Instale as dependências do projeto
+```
+poetry install
+```
+
+- Ative o ambiente virtual do Poetry
+```
+poetry shell
+```
+</details>
+
+<details>
+<summary><h3>Usando Pip</h3></summary>
 
 - Crie um diretório para o seu projeto fora do Clone
 ```
@@ -76,6 +108,7 @@ mkdir <nome_do_seu_projeto>
 ````console
   pip install cookiecutter==2.3.0
 ````
+</details>
 
 - Inicie o projeto com o Cookiecutter apontando para o Clone do Agtec Core
 ```
@@ -107,9 +140,16 @@ python3 manage.py runserver
 ---
 
 - Caso o processo do Cookiecutter não tenha sido concluído corretamente, execute os comandos abaixo para instalar as dependências do projeto
+
+Se estiver usando o Pip:
 ```
 python3 -m pip install -r requirements.txt
 python3 -m pip install -r requirements-dev.txt
+```
+
+Se estiver usando o Poetry:
+```
+poetry install
 ```
 
 - Construa as aplicações iniciais

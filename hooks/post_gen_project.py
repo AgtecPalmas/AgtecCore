@@ -4,6 +4,8 @@ import subprocess
 import sys
 import typing as t
 from pathlib import Path
+from subprocess import DEVNULL, PIPE
+
 from rich.progress import (
     BarColumn,
     Progress,
@@ -11,13 +13,12 @@ from rich.progress import (
     TaskProgressColumn,
     TimeRemainingColumn,
 )
-from subprocess import DEVNULL, PIPE
 
-INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "Sim"
+REQUIREMENTS_METHOD = "{{ cookiecutter.requirements_method }}"
 
-GIT_INIT = "{{ cookiecutter.git_init }}" == "Sim"
+GIT_INIT = "{{ cookiecutter.git_init }}" == "true"
 
-BUILD_APPS = "{{ cookiecutter.build_apps }}" == "Sim"
+BUILD_APPS = "{{ cookiecutter.build_apps }}" == "true"
 
 PYTHON = "py" if sys.platform.startswith("win") else "python"
 
@@ -155,8 +156,35 @@ def copy_all_files_to_root_dir() -> None:
         sys.exit(1)
 
 
-def pip_install_requirements() -> bool:
-    """Método para instalar as dependências do projeto"""
+def install_requirements() -> bool:
+    """Decide qual método de instalação será utilizado"""
+
+    if REQUIREMENTS_METHOD == "pip":
+        return pip_install()
+
+    elif REQUIREMENTS_METHOD == "poetry":
+        return poetry_install()
+
+    print(f"{EMOJIS['error']} Método de instalação inválido")
+    sys.exit(1)
+
+
+def poetry_install() -> bool:
+    """Utiliza o Poetry para instalar as dependências do projeto"""
+
+    if run_command("poetry --version", silent=True) is False:
+        print(f"{EMOJIS['error']} Poetry não está instalado")
+
+        if input("Deseja continuar com o PIP? [S/N]: ").lower() == "s":
+            return pip_install()
+
+        return False
+
+    return run_command("poetry check", silent=True) and run_command("poetry install")
+
+
+def pip_install() -> bool:
+    """Utiliza o PIP para instalar as dependências do projeto"""
 
     try:
         print(f"{EMOJIS['wait']} Instalando as dependências do projeto")
@@ -219,13 +247,43 @@ def build_default_apps() -> None:
         sys.exit(1)
 
 
+def delete_poetry_files():
+    """Método para deletar os arquivos iniciais do Poetry"""
+    try:
+        path_root = os.getcwd()
+        path_root = Path(path_root).parent
+
+        files = [
+            Path(f"{path_root}/poetry.lock"),
+            Path(f"{path_root}/pyproject.toml"),
+            Path(f"{path_root}/README.md"),
+        ]
+
+        for file in files:
+            if file.exists():
+                os.remove(file)
+
+    except Exception as e:
+        print(f"{EMOJIS['error']} Erro ao deletar os arquivos poetry: {e}")
+        sys.exit(1)
+
+
+delete_poetry_files()
 copy_all_files_to_root_dir()
 copy_file_env_example_to_env()
 
-if INSTALL_REQUIREMENTS and pip_install_requirements() and BUILD_APPS:
+if REQUIREMENTS_METHOD == "none" and BUILD_APPS:
+    print(
+        f"{EMOJIS['error']} Não é possível construir as apps padrões",
+        "do projeto sem instalar as dependências",
+    )
+
+elif REQUIREMENTS_METHOD != "none" and install_requirements() and BUILD_APPS:
     build_default_apps()
 
 if GIT_INIT:
     init_git()
 
 remove_subdirectory_project()
+
+print(f"{EMOJIS['success']} Projeto criado com sucesso")

@@ -13,17 +13,18 @@
   "django_version": "4.2",
   "python_version": "3.10",
   "postgresql_version": "14.2",
-  "install_requirements": [
-    "Sim",
-    "Não"
+  "requirements_method": [
+    "pip",
+    "poetry",
+    "none"
   ],
   "git_init": [
-    "Sim",
-    "Não"
+    "true",
+    "false"
   ],
   "build_apps": [
-    "Sim",
-    "Não"
+    "true",
+    "false"
   ],
   "__prompts__": {
     "git_init": {
@@ -36,10 +37,11 @@
       "true": "Sim",
       "false": "Não"
     },
-    "install_requirements": {
+    "requirements_method": {
       "__prompt__": "Instalar requirements?",
-      "true": "Sim",
-      "false": "Não"
+      "pip": "PIP",
+      "poetry": "Poetry",
+      "none": "Nenhum"
     }
   },
   "_copy_without_render": [
