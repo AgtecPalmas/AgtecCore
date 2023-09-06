@@ -55,7 +55,7 @@ class PagesBuilder:
                 _fields_contains_zero = f"_{_model_cc}Form{_title}.text.contains('0') ? true: false : false"
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = {_field_is_empty} ? {_fields_contains_zero};\n"
             elif attribute == "DateTime?":
-                _controllers_data = f'{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text != ""?'
+                _controllers_data = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text != ''?"
                 _controllers_data += f" Util.convertDate(_{_model_cc}Form{_title}.text) : null;\n"
             else:
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text;\n"
@@ -91,7 +91,7 @@ class PagesBuilder:
             elif attribute == "DateTime?":
                 _convert = f"?Util.convertDate(_{_model_cc}Form{name_title}.text): null"
                 _attribute = f"{_space}_{_model_cc}Model.{name} = "
-                _attribute += f'_{_model_cc}Form{name_title}.text != "" {_convert};\n'
+                _attribute += f"_{_model_cc}Form{name_title}.text != '' {_convert};\n"
             else:
                 _attribute = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{name_title}.text;\n"
             return _attribute
@@ -125,6 +125,7 @@ class PagesBuilder:
             if Utils.check_file_is_locked(str(_target_file)):
                 return
             _content_attributes = ""
+            _dispose_attributes = ""
             _text_fields = ""
             _attributes_data = ""
             _clear_data = ""
@@ -148,6 +149,7 @@ class PagesBuilder:
                 _content_attributes += (
                     f"  final _{_model_name_camel_case}Form{_name_title} = TextEditingController();\n"
                 )
+                _dispose_attributes += f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
                 text_field = _content_form
                 controller = f"_{_model_name_camel_case}Form{_name_title}"
                 text_field = text_field.replace("$controller$", controller)
@@ -176,6 +178,7 @@ class PagesBuilder:
                     "$ModelClassCamelCase$",
                     "$project$",
                     "$Attributes$",
+                    "$DisposeController$",
                     "$Form$",
                     "$AttributesData$",
                     "$ClearData$",
@@ -191,6 +194,7 @@ class PagesBuilder:
                     convert_to_camel_case(self._source_app.model_name),
                     self.command.flutter_project,
                     _content_attributes,
+                    _dispose_attributes,
                     _text_fields,
                     _attributes_data,
                     _clear_data,

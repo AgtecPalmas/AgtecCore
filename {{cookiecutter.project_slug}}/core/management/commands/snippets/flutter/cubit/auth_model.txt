@@ -42,22 +42,22 @@ class AuthModel {
 
   Future<bool> logout() async {
     try {
-      AuthData _authData = AuthData();
-      return _authData.deleteAll();
+      final AuthData authData = AuthData();
+      return authData.deleteAll();
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel logout", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel logout', error, stackTrace);
       return false;
     }
   }
 
   String get profileName {
     try {
-      if (this.account.isEmpty) return "";
-      return this.account;
+      if (account.isEmpty) return '';
+      return account;
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel profileName", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel profileName', error, stackTrace);
     }
-    return "";
+    return '';
   }
 
   bool validateLocalUserSignInWithGoogle() {
@@ -70,7 +70,7 @@ class AuthModel {
         result = false;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle', error, stackTrace);
     }
     return result;
   }
@@ -85,7 +85,7 @@ class AuthModel {
         result = false;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
     }
     return result;
   }
@@ -97,7 +97,7 @@ class AuthModel {
 
   factory AuthModel.fromMap(Map<String, dynamic> map) {
     try {
-      return new AuthModel(
+      return AuthModel(
         id: map['id'] as String,
         uuid: map['uuid'] as String,
         name: map['name'] as String,
@@ -116,7 +116,7 @@ class AuthModel {
         idToken: map['idToken'] as String,
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel fromMap", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
       return AuthModel();
     }
   }
@@ -124,25 +124,25 @@ class AuthModel {
   Map<String, dynamic> toMap() {
     try {
       return {
-        'id': this.id,
-        'uuid': this.uuid,
-        'name': this.name,
-        'email': this.email,
-        'login': this.login,
-        'socialProfileLogin': this.socialProfileLogin,
-        'account': this.account,
-        'password': this.password,
-        'cpf': this.cpf,
-        'phoneNumber': this.phoneNumber,
-        'photoUrl': this.photoUrl,
-        'token': this.token,
-        'firebaseId': this.firebaseId,
-        'firebaseToken': this.firebaseToken,
-        'accessToken': this.accessToken,
-        'idToken': this.idToken,
+        'id': id,
+        'uuid': uuid,
+        'name': name,
+        'email': email,
+        'login': login,
+        'socialProfileLogin': socialProfileLogin,
+        'account': account,
+        'password': password,
+        'cpf': cpf,
+        'phoneNumber': phoneNumber,
+        'photoUrl': photoUrl,
+        'token': token,
+        'firebaseId': firebaseId,
+        'firebaseToken': firebaseToken,
+        'accessToken': accessToken,
+        'idToken': idToken,
       };
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthModel toMap", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
       return {};
     }
   }

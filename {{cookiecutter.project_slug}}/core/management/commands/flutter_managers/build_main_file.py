@@ -62,7 +62,7 @@ class MainFileBuilder:
                     _model = model[1]
                     _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
                     _items_menu += f"list.add(Itens(title: '{_model.title()}'"
-                    _items_menu += f",icon: FontAwesomeIcons.folderOpen,uri: {_app_model_snack_case}"
+                    _items_menu += f",icon: FontAwesomeIcons.folderOpen,uri: const {_app_model_snack_case}"
                     _items_menu += f".{_model}ListPage(),),);"
             return _items_menu
         except Exception as error:

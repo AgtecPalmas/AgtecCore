@@ -28,7 +28,7 @@ import 'interface.dart';
 
 
 class $ModelClass$Service implements $ModelClass$ServiceInterface {
-  final String _uri = "${Config.uri}api/v1/$App$/$Model$/";
+  final String _uri = '${Config.uri}api/v1/$App$/$Model$/';
   $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model();
   final List<$ModelClass$Model> _$ModelClassCamelCase$List = [];
 
@@ -44,12 +44,12 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       final CustomDio dio = CustomDio(url);
       final dataResponse = await dio.getHttp(uri: url);
       if (dataResponse != null) {
-        final items = dataResponse["results"] ?? "";
+        final items = dataResponse['results'] ?? '';
         for (var item in items) {
           item.addAll(
             {
-              "nextUrl": dataResponse["next"] ?? "",
-              "previousUrl": dataResponse["previous"] ?? "",
+              'nextUrl': dataResponse['next'] ?? '',
+              'previousUrl': dataResponse['previous'] ?? '',
             },
           );
           final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
@@ -57,9 +57,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service fetch", error);
+      AgteCoreLogger().erro('ArgumentError no service fetch', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$List;
   }
@@ -70,12 +70,12 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       final CustomDio dio = CustomDio(uri);
       final dataResponse = await dio.getHttp(uri: uri);
       if (dataResponse != null) {
-        final items = dataResponse["results"] ?? "";
+        final items = dataResponse['results'] ?? '';
         for (var item in items) {
           item.addAll(
             {
-              "nextUrl": dataResponse["next"] ?? "",
-              "previousUrl": dataResponse["previous"] ?? "",
+              'nextUrl': dataResponse['next'] ?? '',
+              'previousUrl': dataResponse['previous'] ?? '',
             },
           );
           final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
@@ -83,9 +83,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service getMore", error);
+      AgteCoreLogger().erro('ArgumentError no service getMore', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$List;
   }
@@ -93,16 +93,16 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final url = "$_uri${$ModelClassCamelCase$.id}";
+      final url = '$_uri${$ModelClassCamelCase$.id}';
       final CustomDio dio = CustomDio(url);
       final dataResponse = await dio.getHttp(uri: url);
       if (dataResponse != null) {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service detail", error);
+      AgteCoreLogger().erro('ArgumentError no service detail', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$;
   }
@@ -117,16 +117,16 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service post", error);
+      AgteCoreLogger().erro('ArgumentError no service post', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$;
   }
 
   @override
   Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$) async {
-    final url = "$_uri${$ModelClassCamelCase$.id}";
+    final url = '$_uri${$ModelClassCamelCase$.id}';
     try {
       final CustomDio dio = CustomDio(url);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
@@ -135,9 +135,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service put", error);
+      AgteCoreLogger().erro('ArgumentError no service put', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$;
   }
@@ -145,7 +145,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final url = "$_uri${$ModelClassCamelCase$.id}";
+      final url = '$_uri${$ModelClassCamelCase$.id}';
       final CustomDio dio = CustomDio(url);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
       final dataResponse = await dio.patchHttp(dataMap, uri: url);
@@ -153,16 +153,16 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service patch", error);
+      AgteCoreLogger().erro('ArgumentError no service patch', error);
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
     return _$ModelClassCamelCase$;
   }
 
   @override
   Future<bool> delete($ModelClass$Model $ModelClassCamelCase$) async {
-    final url = "$_uri${$ModelClassCamelCase$.id}";
+    final url = '$_uri${$ModelClassCamelCase$.id}';
     try {
       final CustomDio dio = CustomDio(url);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
@@ -172,10 +172,10 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return false;
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro("ArgumentError no service delete", error);
+      AgteCoreLogger().erro('ArgumentError no service delete', error);
       return false;
     } catch (error, stackTrace)  {
-      ExceptionCustom.service("Erro no service", error, error, stackTrace);
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
       return false;
     }
   }

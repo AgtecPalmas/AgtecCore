@@ -1,9 +1,9 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de customização de excessões, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 
 import 'package:dio/dio.dart';
@@ -13,97 +13,97 @@ enum CustomTypeException { dio, service, data, state, general, refreshToken }
 
 class ExceptionCustom implements Exception {
   int code = 0;
-  String friendlyMessage = "";
-  String errorMessage = "";
-  String url = "";
+  String friendlyMessage = '';
+  String errorMessage = '';
+  String url = '';
   CustomTypeException typeException = CustomTypeException.general;
   DioException? dioError;
 
   ExceptionCustom(codigo, mensagemAmigavel, mensagemErro, tipo) {
-    this.code = codigo;
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = tipo;
+    code = codigo;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = tipo;
   }
 
   ExceptionCustom.dio(codigo, mensagemAmigavel, mensagemErro, url, dioError, [dynamic error, StackTrace? stackTrace]) {
-    this.code = codigo;
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.url = url;
-    this.typeException = CustomTypeException.dio;
-    this.dioError = dioError;
+    code = codigo;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    url = url;
+    typeException = CustomTypeException.dio;
+    dioError = dioError;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.data(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = CustomTypeException.data;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = CustomTypeException.data;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.service(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = CustomTypeException.service;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = CustomTypeException.service;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.state(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = CustomTypeException.state;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = CustomTypeException.state;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.general(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = CustomTypeException.general;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = CustomTypeException.general;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   /// Excessão para ser levantada quando o método
   /// de renovação do TokenJWT der erro
   ExceptionCustom.tokenException(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
-    this.friendlyMessage = mensagemAmigavel;
-    this.errorMessage = mensagemErro;
-    this.typeException = CustomTypeException.refreshToken;
+    friendlyMessage = mensagemAmigavel;
+    errorMessage = mensagemErro;
+    typeException = CustomTypeException.refreshToken;
     AgteCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   CustomTypeException get getTipo {
-    return this.typeException;
+    return typeException;
   }
 
   @override
   String toString() {
-    switch (this.typeException.index) {
+    switch (typeException.index) {
       case 0:
-        return "Dio Error\n Code: $code\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage\n\n URL: $url\n\n DioError: ${dioError.toString()}";
+        return 'Dio Error\n Code: $code\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage\n\n URL: $url\n\n DioError: ${dioError.toString()}';
       case 1:
-        return "Service Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage ";
+        return 'Service Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage ';
       case 2:
-        return "Data Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage";
+        return 'Data Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage';
       case 3:
-        return "State Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage";
+        return 'State Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage';
       case 4:
-        return "General Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage";
+        return 'General Error\n ErrorMessage: $errorMessage\n ErrorFriendly:$friendlyMessage';
       default:
         return 'Unknow Error: {$code, $friendlyMessage, $errorMessage, $typeException}';
     }
   }
 
   String get getFriendlyMessage {
-    return this.friendlyMessage;
+    return friendlyMessage;
   }
 
   String get getErrorMessage {
-    return this.errorMessage;
+    return errorMessage;
   }
 
   int get getCodeError {
-    return this.code;
+    return code;
   }
 }

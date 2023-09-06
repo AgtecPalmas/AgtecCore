@@ -1,9 +1,9 @@
-/// [Arquivo gerado automatimante pelo AgtecCore]
+/// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de configuração das cores da aplicação, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 
 import 'package:flutter/material.dart';

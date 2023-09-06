@@ -17,18 +17,18 @@ class AuthData {
 
   AuthData._internal();
 
-  final String _storeName = "AuthStoreDB";
+  final String _storeName = 'AuthStoreDB';
 
   /// Método para inicializar o banco de dados criando a tabela.
   Future<smbt.Database?> initDb() async {
     try {
-      var dir = await getApplicationDocumentsDirectory();
+      final dir = await getApplicationDocumentsDirectory();
       await dir.create(recursive: true);
-      var dbPath = join(dir.path, '$project$.db');
+      final dbPath = join(dir.path, '$project$.db');
       return await smbt_io.databaseFactoryIo.openDatabase(dbPath);
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
@@ -37,175 +37,175 @@ class AuthData {
     return null;
   }
 
-  Future<List<AuthModel>> fetchAll() async {
-    var _localList = <AuthModel>[];
-    smbt.Database? _db;
+Future<List<AuthModel>> fetchAll() async {
+    var localList = <AuthModel>[];
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        final _data = await _store.find(_db);
-        _localList = _data.map((snapshot) => AuthModel.fromMap(snapshot.value)).toList();
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        final data = await store.find(db);
+        localList = data.map((snapshot) => AuthModel.fromMap(snapshot.value)).toList();
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
-      return _localList;
+      return localList;
     } finally {
-      _db?.close();
+      db?.close();
     }
-    return _localList;
+    return localList;
   }
 
   Future<AuthModel?> get(int id) async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        final _data = await _store.findFirst(_db);
-        if (_data != null) {
-          return AuthModel.fromMap(_data.value);
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        final data = await store.findFirst(db);
+        if (data != null) {
+          return AuthModel.fromMap(data.value);
         }
         return null;
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return null;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return null;
   }
 
   Future<bool> save(AuthModel auth) async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      AgteCoreLogger().debug("Iniciado processo de save do AuthModel");
+      AgteCoreLogger().debug('Iniciado processo de save do AuthModel');
       await deleteAll();
-      AgteCoreLogger().debug("Iniciando o db");
-      _db = await initDb();
-      if (_db != null) {
-        AgteCoreLogger().debug("DB não nulo");
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        AgteCoreLogger().debug("Store criada");
-        await _store.add(_db, auth.toMap());
-        AgteCoreLogger().debug("Dados salvos: ${auth.toMap()}");
+      AgteCoreLogger().debug('Iniciando o db');
+      db = await initDb();
+      if (db != null) {
+        AgteCoreLogger().debug('DB não nulo');
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        AgteCoreLogger().debug('Store criada');
+        await store.add(db, auth.toMap());
+        AgteCoreLogger().debug('Dados salvos: ${auth.toMap()}');
         return true;
       }
-      AgteCoreLogger().debug("Finalizado processo de save do AuthModel");
+      AgteCoreLogger().debug('Finalizado processo de save do AuthModel');
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return false;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return false;
   }
 
   /// Método para salvar os dados do usuário logado localmente
   Future<bool> saveSignInData(AuthModel auth) async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        await _store.add(_db, auth.toMap());
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        await store.add(db, auth.toMap());
         return true;
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return false;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return false;
   }
 
   Future<bool> deleteAll() async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        await _store.delete(_db);
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        await store.delete(db);
         return true;
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return false;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return false;
   }
 
   Future<bool> delete(int id) async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        await _store.delete(_db);
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        await store.delete(db);
         return true;
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return false;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return false;
   }
 
   Future<bool> update(AuthModel auth) async {
-    smbt.Database? _db;
+    smbt.Database? db;
     try {
-      _db = await initDb();
-      if (_db != null) {
-        final _store = smbt.intMapStoreFactory.store(_storeName);
-        await _store.update(_db, auth.toMap());
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        await store.update(db, auth.toMap());
         return true;
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
       return false;
     } finally {
-      _db?.close();
+      db?.close();
     }
     return false;
   }
@@ -213,26 +213,26 @@ class AuthData {
   /// Método para consultar o Token JWT
   Future<String> getJWTToken() async {
     try {
-      final _data = await get(0);
-      if (_data != null) {
-        final String token = _data.token.isNotEmpty
-            ? _data.token
-            : _data.accessToken.isNotEmpty
-                ? _data.accessToken
-                : "";
+      final data = await get(0);
+      if (data != null) {
+        final String token = data.token.isNotEmpty
+            ? data.token
+            : data.accessToken.isNotEmpty
+                ? data.accessToken
+                : '';
         if (token.isNotEmpty) {
           return token;
         }
       }
     } catch (error, stackTrace) {
       ExceptionCustom.data(
-        "------DATA ERROR------",
+        '------DATA ERROR------',
         error.toString(),
         error,
         stackTrace,
       );
     }
-    return "";
+    return '';
   }
 
   /// Método para atualizar no banco de dados local do disposito
@@ -244,18 +244,18 @@ class AuthData {
   ///   void
   Future<void> updateRefreshToken(String refreshToken) async {
     try {
-      final _data = await get(0);
-      if (_data != null) {
-        final String token = refreshToken.isNotEmpty ? refreshToken : "";
+      final data = await get(0);
+      if (data != null) {
+        final String token = refreshToken.isNotEmpty ? refreshToken : '';
         if (token.isNotEmpty) {
-          _data.refreshToken = token;
-          await save(_data);
+          data.refreshToken = token;
+          await save(data);
         }
       }
     } catch (error, exception) {
       ExceptionCustom.data(
-        "Ocorreu no método updateRefreshToken do AuthData",
-        "Error: ${error.toString()}\nException: ${exception.toString()}",
+        'Ocorreu no método updateRefreshToken do AuthData',
+        'Error: ${error.toString()}\nException: ${exception.toString()}',
       );
     }
   }
@@ -270,18 +270,18 @@ class AuthData {
 
   Future<void> updateAccessToken(String accessToken) async {
     try {
-      final _data = await get(0);
-      if (_data != null) {
-        final String token = accessToken.isNotEmpty ? accessToken : "";
+      final data = await get(0);
+      if (data != null) {
+        final String token = accessToken.isNotEmpty ? accessToken : '';
         if (token.isNotEmpty) {
-          _data.accessToken = token;
-          await save(_data);
+          data.accessToken = token;
+          await save(data);
         }
       }
     } catch (error, exception) {
       ExceptionCustom.data(
-        "Ocorreu no método setRefreshToken do AuthData",
-        "Error: ${error.toString()}\nException: ${exception.toString()}",
+        'Ocorreu no método setRefreshToken do AuthData',
+        'Error: ${error.toString()}\nException: ${exception.toString()}',
       );
     }
   }
@@ -295,19 +295,19 @@ class AuthData {
   ///   Strng
   Future<String> getRefreshToken() async {
     try {
-      final _data = await get(0);
-      if (_data != null) {
-        final String token = _data.refreshToken.isNotEmpty ? _data.refreshToken : "";
+      final data = await get(0);
+      if (data != null) {
+        final String token = data.refreshToken.isNotEmpty ? data.refreshToken : '';
         if (token.isNotEmpty) {
           return token;
         }
       }
     } catch (error, exception) {
       ExceptionCustom.data(
-        "Ocorreu no método getJWTToken do AuthData",
-        "Error: ${error.toString()}\nException: ${exception.toString()}",
+        'Ocorreu no método getJWTToken do AuthData',
+        'Error: ${error.toString()}\nException: ${exception.toString()}',
       );
     }
-    return "";
+    return '';
   }
 }

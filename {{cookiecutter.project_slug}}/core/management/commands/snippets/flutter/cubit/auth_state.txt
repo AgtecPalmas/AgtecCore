@@ -18,7 +18,10 @@ class AuthSuccessState extends AuthState {
   final String successMessage;
   final AuthModel user;
 
-  AuthSuccessState({required this.successMessage, required this.user});
+  const AuthSuccessState({
+    required this.successMessage, 
+    required this.user,
+  });
 
   @override
   List<Object> get props => [];
@@ -27,7 +30,7 @@ class AuthSuccessState extends AuthState {
 class AuthErrorState extends AuthState {
   final String error;
 
-  AuthErrorState(this.error);
+  const AuthErrorState(this.error);
 
   @override
   List<Object> get props => [error];

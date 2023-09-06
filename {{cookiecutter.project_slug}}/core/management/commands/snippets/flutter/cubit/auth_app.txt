@@ -10,9 +10,9 @@
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
 import 'package:bloc/bloc.dart';
-import '../../core/agtec.logger.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../core/agtec.logger.dart';
 import 'model.dart';
 import 'service.dart';
 
@@ -30,9 +30,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
       _service.defaultAuthenticationFastAPI();
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit defaultAuthenticationFastAPI", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit defaultAuthenticationFastAPI', error, stackTrace);
     }
   }
 
@@ -40,9 +40,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit signUpUser", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUser', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -51,9 +51,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit signUpUserFirebase", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUserFirebase', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -65,14 +65,14 @@ class AuthCubit extends Cubit<AuthState> {
       if (result != null) {
         user.id = result;
         emit(AuthSuccessState(
-          successMessage: "Usuário cadastrado com sucesso",
+          successMessage: 'Usuário cadastrado com sucesso',
           user: user,
         ));
       } else {
-        emit(AuthErrorState("Ocorreu um erro ao tentar criar o usuário"));
+        emit(const AuthErrorState('Ocorreu um erro ao tentar criar o usuário'));
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit signUp", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit signUp', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -81,9 +81,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit signIn", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit signIn', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -92,9 +92,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit login", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit login', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -102,9 +102,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout(AuthModel auth) async {
     try {
       emit(AuthProcessState());
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit logout", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit logout', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -113,9 +113,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit changePassword", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit changePassword', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -124,9 +124,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit recoverPassword", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit recoverPassword', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -135,9 +135,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit createAccount", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit createAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -145,9 +145,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> disableAccount(AuthModel auth) async {
     try {
       emit(AuthProcessState());
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit disableAccount", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit disableAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -156,9 +156,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthProcessState());
 
-      emit(AuthSuccessState(user: user, successMessage: ""));
+      emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no AuthCubit excludeAccount", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit excludeAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }

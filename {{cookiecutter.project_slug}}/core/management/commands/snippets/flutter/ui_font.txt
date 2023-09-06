@@ -1,5 +1,10 @@
-/// Arquivo para configurar os widgets das fonts do aplicativo
-/// trabalhando família, tamanho e peso da font.
+/// [Arquivo gerado automatimante pelo AgtecCore ]
+///
+/// [Travado por default]
+/// Por ser um arquivo para configurar os widgets das fonts do aplicativo, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
 
 import 'package:flutter/material.dart';
 

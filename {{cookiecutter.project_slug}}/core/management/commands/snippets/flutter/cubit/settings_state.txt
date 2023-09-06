@@ -1,5 +1,3 @@
-
-
 part of 'cubit.dart';
 
 abstract class SettingsState extends Equatable {
@@ -18,7 +16,7 @@ class SettingsProcessState extends SettingsState {
 
 class SettingsSuccessState extends SettingsState {
   final String successMessage;
-  SettingsSuccessState({
+  const SettingsSuccessState({
     required this.successMessage,
   });
 
@@ -29,7 +27,7 @@ class SettingsSuccessState extends SettingsState {
 class SettingsErrorState extends SettingsState {
   final String error;
 
-  SettingsErrorState(this.error);
+  const SettingsErrorState(this.error);
 
   @override
   List<Object> get props => [error];

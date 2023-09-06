@@ -1,9 +1,9 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 /// Classe para centralizar as mensagens de logg do desenvolvimento
@@ -17,6 +17,7 @@
 ///    AgteCoreLogger.warning("Warning", "", StackTrace.current);
 ///    AgteCoreLogger.crash("Crash", "", StackTrace.current);
 ///    AgteCoreLogger().verbose({"chave": "valor"});
+///
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
@@ -42,7 +43,7 @@ import 'package:logger/logger.dart';
 /// AgteCoreLogger().verbose({"chave": "valor"});
 /// ```
 class AgteCoreLogger {
-  Logger _logger = Logger();
+  final Logger _logger = Logger();
 
   void erro(dynamic message, [dynamic error, StackTrace? stackTrace]) {
     if (kDebugMode) _logger.e(message, error, stackTrace);
