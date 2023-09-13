@@ -64,6 +64,7 @@ gunicorn = "^21.2.0"
 holidays = "^0.31"
 pillow = "^10.0.0"
 psycopg = "^3.1.10"
+psycopg-binary = "^3.1.10"
 python-decouple = "^3.8"
 sentry-sdk = "^1.30.0"
 
