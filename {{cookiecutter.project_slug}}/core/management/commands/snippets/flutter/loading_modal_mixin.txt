@@ -1,9 +1,9 @@
 /// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um mixin de exibição do modal, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 /// Mixin para facilitar a exibição de um modal de loading na tela.
 /// Para utilizar o mixin, basta adicionar o código [with CustomModalLoading]
@@ -20,7 +20,7 @@ import 'custom.colors.dart';
 
 mixin ModalLoadingMixin<T extends StatefulWidget> on State<T> {
   Widget showHideModal({bool show = true}) {
-    if (show == false) return SizedBox.shrink();
+    if (show == false) return const SizedBox.shrink();
     return Expanded(
       child: Center(
         child: LoadingAnimationWidget.twistingDots(

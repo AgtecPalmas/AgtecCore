@@ -1,3 +1,10 @@
+/// [Arquivo gerado automatimante pelo AgtecCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 final maskDateFormatter = MaskTextInputFormatter(mask: "##/##/####", filter: {"#": RegExp(r'[0-9]')});

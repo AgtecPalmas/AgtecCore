@@ -1,7 +1,10 @@
-/// [Travar o arquivo]
-/// Caso deseje \"travar\" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
+/// [Arquivo gerado automatimante pelo AgtecCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de autenticação que interage com o Auth da API, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
 /// #FileLocked
+///
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../core/user_interface/custom.style.dart';
 import '../../../core/agtec.logger.dart';
 import '../../../core/config.dart';
+import '../../../core/user_interface/custom.style.dart';
 import '../../../core/user_interface/font.dart';
 import '../../../core/user_interface/widget.dart';
 import '../../../core/util.dart';
@@ -22,33 +25,31 @@ import '../model.dart';
 import '../pages/termo_uso.dart';
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
-  _SignupPageState createState() => _SignupPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateMixin {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formSignup = GlobalKey<FormState>();
-  AnimationController? _animationController;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  bool _isProcessing = false;
   bool iAgree = false;
   bool _registerWithEmail = false;
   bool _registerWithOTP = false;
   bool _inputCodeConfirmationOTP = false;
   String? _verificationID;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _loginController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _phoneOTPController = TextEditingController();
-  TextEditingController _emailOTPController = TextEditingController();
-  TextEditingController _codeOTPController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneOTPController = TextEditingController();
+  final TextEditingController _emailOTPController = TextEditingController();
+  final TextEditingController _codeOTPController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this);
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _loadData();
     });
@@ -56,6 +57,12 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _loginController.dispose();
+    _passwordController.dispose();
+    _phoneOTPController.dispose();
+    _emailOTPController.dispose();
+    _codeOTPController.dispose();
     super.dispose();
   }
 
@@ -71,7 +78,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   Widget _buildBody() {
     return Stack(children: <Widget>[
-      HeadWidget(),
+      const HeadWidget(),
       _buildPage(),
     ]);
   }
@@ -83,8 +90,8 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          customTitleSection(context, "Registrar usando: "),
-          SizedBox(height: 8),
+          customTitleSection(context, 'Registrar usando: '),
+          const SizedBox(height: 8),
           Visibility(
             visible: enabledGoogleAccount && !_registerWithEmail && !_registerWithOTP,
             child: _buildGoogleAccount(context),
@@ -109,7 +116,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
             visible: _registerWithOTP && _inputCodeConfirmationOTP && !_registerWithEmail,
             child: _buildOTPInputCodeArea(context),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _buildIAgreeArea(context),
         ],
       ),
@@ -124,22 +131,23 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   _buildGoogleAccount(BuildContext context) {
     try {
-      return Container(
+      return SizedBox(
+        width: Util.getProportionScreenWidth(context, 0.61),
         child: SignInButton(
           Buttons.Google,
-          text: "Registrar com o Google",
+          text: 'Registrar com o Google',
           onPressed: iAgree
               ? () async {
                   signUpGoogle();
                 }
               : () {
-                  _showMessage("Antes de registrar é necessário concordar com os termos de uso");
+                  _showMessage('Antes de registrar é necessário concordar com os termos de uso');
                 },
         ),
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page _buildGoogleAccount", error, stackTrace);
-      return SizedBox.shrink();
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildGoogleAccount', error, stackTrace);
+      return const SizedBox.shrink();
     }
   }
 
@@ -151,9 +159,6 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
       String? accessToken, idToken;
       GoogleAuthCredential? credential;
       try {
-        setState(() {
-          _isProcessing = true;
-        });
         if (localUser.validateLocalUserSignInWithGoogle() == true) {
           accessToken = localUser.accessToken;
           idToken = localUser.idToken;
@@ -176,59 +181,43 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
           }
         }
         if (credential != null && accessToken != null && idToken != null) {
-          _showMessage("Usuário autorizado para registro, aguarde...");
+          _showMessage('Usuário autorizado para registro, aguarde...');
           signInGoogle(credential, accessToken, idToken);
         } else {
-          _showMessage("Erro ao recuperar credenciais do usuário, tente novamente", error: true);
-          setState(() {
-            _isProcessing = false;
-          });
+          _showMessage('Erro ao recuperar credenciais do usuário, tente novamente', error: true);
         }
-        return null;
+        return;
       } catch (error, stackTrace) {
-        AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page signUpGoogle", error, stackTrace);
-        setState(() {
-          _isProcessing = false;
-        });
+        AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpGoogle', error, stackTrace);
       }
     }
   }
 
   Future<void> signInGoogle(AuthCredential authCredential, String accessToken, String idToken) async {
     try {
-      setState(() {
-        _isProcessing = true;
-      });
       final user = await firebaseAuth.signInWithCredential(authCredential);
-      if (user != null) {
-        _showMessage("Registrando usuário, aguarde...");
-        // Cadastrando o usuário no Backend
-        AuthModel authModel = AuthModel(
-            name: user.user?.displayName ?? "",
-            email: user.user?.email ?? user.user?.providerData[0].email ?? "",
-            phoneNumber: user.user?.phoneNumber ?? "",
-            photoUrl: user.user?.photoURL ?? "",
-            firebaseId: user.user?.uid ?? "");
-        final authCubit = context.read<AuthCubit>();
-        await authCubit.signUp(authModel);
-        if (authCubit.state is AuthSuccessState) {
-          // Salvando os dados locais do usuário autenticado
-          final authSignInData = AuthData();
-          await authSignInData.saveSignInData(authModel);
-          signUpDjangoUser(authModel);
-        }
-        if (authCubit.state is AuthErrorState) {
-          _showMessage(authCubit.state.props[0].toString().replaceAll("Exception:", ""), error: true);
-        }
-      } else {
-        _showMessage("Ocorreu um erro ao tentar registrar o usuário, por favor tente novamente.");
+      _showMessage('Registrando usuário, aguarde...');
+      // Cadastrando o usuário no Backend
+      final AuthModel authModel = AuthModel(
+          name: user.user?.displayName ?? '',
+          email: user.user?.email ?? user.user?.providerData[0].email ?? '',
+          phoneNumber: user.user?.phoneNumber ?? '',
+          photoUrl: user.user?.photoURL ?? '',
+          firebaseId: user.user?.uid ?? '');
+      // ignore: use_build_context_synchronously
+      final authCubit = context.read<AuthCubit>();
+      await authCubit.signUp(authModel);
+      if (authCubit.state is AuthSuccessState) {
+        // Salvando os dados locais do usuário autenticado
+        final authSignInData = AuthData();
+        await authSignInData.saveSignInData(authModel);
+        signUpDjangoUser(authModel);
+      }
+      if (authCubit.state is AuthErrorState) {
+        _showMessage(authCubit.state.props[0].toString().replaceAll('Exception:', ''), error: true);
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page signInGoogle", error, stackTrace);
-    } finally {
-      setState(() {
-        _isProcessing = false;
-      });
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInGoogle', error, stackTrace);
     }
   }
 
@@ -242,7 +231,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
     try {
       return SignInButton(
         Buttons.Email,
-        text: "Registrar com email",
+        text: 'Registrar com email',
         onPressed: iAgree
             ? () {
                 setState(() {
@@ -250,12 +239,12 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                 });
               }
             : () {
-                _showMessage("Antes de registrar é necessário concordar com os termos de uso");
+                _showMessage('Antes de registrar é necessário concordar com os termos de uso');
               },
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page _buildEmailAccount", error, stackTrace);
-      return SizedBox.shrink();
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildEmailAccount', error, stackTrace);
+      return const SizedBox.shrink();
     }
   }
 
@@ -271,7 +260,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               TextFormField(
                 decoration: CustomTextFormFieldStyle.textFieldStyle(
                   hintText: 'Informe seu nome',
@@ -289,7 +278,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                   return null;
                 },
               ),
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               TextFormField(
                 decoration: CustomTextFormFieldStyle.textFieldStyle(
                   hintText: 'Informe seu email',
@@ -307,7 +296,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                   return null;
                 },
               ),
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               TextFormField(
                 decoration: CustomTextFormFieldStyle.textFieldStyle(
                   hintText: 'Informe sua senha',
@@ -322,14 +311,14 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                       return 'Esse campo é obrigatório';
                     } else {
                       if (value.length < 6) {
-                        return "A senha deve conter no mínimo 6 caracteres";
+                        return 'A senha deve conter no mínimo 6 caracteres';
                       }
                     }
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -339,7 +328,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                         signInEmail(_loginController.text.trim(), _passwordController.text.trim());
                       }
                     },
-                    child: Text("Cadastrar"),
+                    child: const Text('Cadastrar'),
                   ),
                   OutlinedButton(
                     onPressed: () {
@@ -347,7 +336,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                         _registerWithEmail = false;
                       });
                     },
-                    child: Text("Cancelar"),
+                    child: const Text('Cancelar'),
                   ),
                 ],
               )
@@ -360,12 +349,9 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   Future<void> signInEmail(String email, String password) async {
     try {
-      setState(() {
-        _isProcessing = true;
-      });
       UserCredential user;
       final localUser = await checkLocalUser();
-      if (localUser != null && localUser.validateLocalUserSignInWithEmail() == true) {
+      if (localUser.validateLocalUserSignInWithEmail() == true) {
         if (localUser.email == _loginController.text.trim()) {
           try {
             user = await firebaseAuth.signInWithEmailAndPassword(email: localUser.email, password: localUser.password);
@@ -382,14 +368,15 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
       } else {
         user = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       }
-      AuthModel authModel = AuthModel(
+      final AuthModel authModel = AuthModel(
         name: _nameController.text.trim(),
-        email: user.user?.email ?? user.user?.providerData[0].email ?? "",
-        phoneNumber: user.user?.phoneNumber ?? "",
-        photoUrl: user.user?.photoURL ?? "",
-        firebaseId: user.user?.uid ?? "",
+        email: user.user?.email ?? user.user?.providerData[0].email ?? '',
+        phoneNumber: user.user?.phoneNumber ?? '',
+        photoUrl: user.user?.photoURL ?? '',
+        firebaseId: user.user?.uid ?? '',
         password: _passwordController.text.trim(),
       );
+      // ignore: use_build_context_synchronously
       final authCubit = context.read<AuthCubit>();
       await authCubit.signUp(authModel);
       if (authCubit.state is AuthSuccessState) {
@@ -399,14 +386,10 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         signUpDjangoUser(authModel);
       }
       if (authCubit.state is AuthErrorState) {
-        _showMessage(authCubit.state.props[0].toString().replaceAll("Exception:", ""), error: true);
+        _showMessage(authCubit.state.props[0].toString().replaceAll('Exception:', ''), error: true);
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page signInEmail", error, stackTrace);
-    } finally {
-      setState(() {
-        _isProcessing = false;
-      });
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInEmail', error, stackTrace);
     }
   }
 
@@ -426,7 +409,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                 });
               }
             : () {
-                _showMessage("Antes de registrar é necessário concordar com os termos de uso");
+                _showMessage('Antes de registrar é necessário concordar com os termos de uso');
               },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 4),
@@ -436,20 +419,20 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
             color: Colors.orange,
             borderRadius: BorderRadius.circular(3.4),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(Icons.phone),
               SizedBox(width: 8),
-              Text("Registrar com número"),
+              Text('Registrar com número'),
             ],
           ),
         ),
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page _buildOTPAccount", error, stackTrace);
-      return SizedBox.shrink();
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPAccount', error, stackTrace);
+      return const SizedBox.shrink();
     }
   }
 
@@ -465,12 +448,11 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               TextFormField(
                 decoration: CustomTextFormFieldStyle.textFieldStyle(
                   hintText: 'Informe seu telefone',
                   hiddenCounter: true,
-                  
                 ),
                 controller: _phoneOTPController,
                 validator: (String? value) {
@@ -484,12 +466,11 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                   return null;
                 },
               ),
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               TextFormField(
                 decoration: CustomTextFormFieldStyle.textFieldStyle(
                   hintText: 'Informe seu email',
                   hiddenCounter: true,
-                  
                 ),
                 controller: _emailOTPController,
                 validator: (String? value) {
@@ -503,7 +484,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                   return null;
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -513,14 +494,14 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                           signUpWithOTP();
                         }
                       },
-                      child: Text("Cadastrar")),
+                      child: const Text('Cadastrar')),
                   OutlinedButton(
                     onPressed: () {
                       setState(() {
                         _registerWithOTP = false;
                       });
                     },
-                    child: Text("Cancelar"),
+                    child: const Text('Cancelar'),
                   ),
                 ],
               )
@@ -533,23 +514,19 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   Future<void> signUpWithOTP() async {
     try {
-      setState(() {
-        _isProcessing = true;
-      });
-      var phoneNumber = "+55${_phoneOTPController.text.trim()}";
+      final phoneNumber = '+55${_phoneOTPController.text.trim()}';
       await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: phoneNumber,
           // Método chamado quando o processo de validação do usuário baseado no telefone finalizar
           verificationCompleted: (PhoneAuthCredential credential) async {
             final userAuth = await firebaseAuth.signInWithCredential(credential);
-            if (userAuth != null) {
-            }
+            AgteCoreLogger().info('Usuário autenticado com sucesso', userAuth.user?.uid ?? '');
           },
           // Callback disparado quando ocorre algum erro no Firebase
           verificationFailed: (FirebaseAuthException e) {},
           // Callback chamado quando o timeout informado abaixo expirar
           codeAutoRetrievalTimeout: (String verificationID) {},
-          timeout: Duration(seconds: 120),
+          timeout: const Duration(seconds: 120),
           // Callback chamado quando o Firebase retorna o código baseado no número informado pelo usuário
           // deve ser utilizado para atualizar a tela seguindo as regras de negócio do projeto
           codeSent: (String verificationId, int? forceResendingToken) {
@@ -559,7 +536,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
             });
           });
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page signUpoWithOTP", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpoWithOTP', error, stackTrace);
     }
   }
 
@@ -569,12 +546,12 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         margin: const EdgeInsets.only(top: 12),
         child: Column(
           children: [
-            Text("Informe o código de validação"),
+            const Text('Informe o código de validação'),
             Form(
               child: TextFormField(
                 controller: _codeOTPController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.black45),
+                style: const TextStyle(color: Colors.black45),
                 decoration: const InputDecoration(
                   icon: Icon(Icons.email, color: Colors.black45),
                   hintText: 'Informe seu email',
@@ -592,6 +569,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                       return 'Esse campo é obrigatório';
                     }
                   }
+                  return null;
                 },
               ),
             ),
@@ -599,21 +577,23 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
               onPressed: () async {
                 try {
                   // Autenticando com o ID de verificação e o código SMS recebido anteriormente
-                  var verificationCode = _verificationID;
+                  final verificationCode = _verificationID;
                   if (verificationCode != null) {
-                    PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+                    final PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
                         verificationId: verificationCode, smsCode: _codeOTPController.text.trim());
                     await firebaseAuth.signInWithCredential(phoneAuthCredential);
                   }
-                } catch (e) {}
+                } catch (e) {
+                  AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', e, null);
+                }
               },
-              child: Text("Validar Código"),
+              child: const Text('Validar Código'),
             ),
           ],
         ),
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', error, stackTrace);
     }
   }
 
@@ -636,30 +616,30 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                         iAgree = value;
                       });
                     }),
-                Flexible(
+                const Flexible(
                   child: Text(
-                    "Aceito os termos",
+                    'Aceito os termos',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) => TermoUso()));
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const TermoUso()));
             },
             child: Text(
-              "Termos de uso e política de privacidade",
+              'Termos de uso e política de privacidade',
               style: TextStyle(color: Colors.grey[600], fontWeight: FontWeight.bold),
             ),
           )
         ],
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page _buildIAgreeArea", error, stackTrace);
-      return SizedBox.shrink();
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildIAgreeArea', error, stackTrace);
+      return const SizedBox.shrink();
     }
   }
 
@@ -680,11 +660,11 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
     try {
       final authData = AuthData();
       final List<AuthModel> users = await authData.fetchAll();
-      if (users != null && users.length > 0) {
+      if (users.isNotEmpty) {
         return users.last;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro no Auth SignUp Page checkLocalUser", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page checkLocalUser', error, stackTrace);
     }
     return AuthModel();
   }
@@ -694,34 +674,8 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
   Future<void> signUpDjangoUser(AuthModel authModel) async {
     final authCubit = context.read<AuthCubit>();
     if (authCubit.state is AuthErrorState) {
-      final error = authCubit.state.props.first.toString().split(":")[1];
+      final error = authCubit.state.props.first.toString().split(':')[1];
       _showMessage(error, error: true);
     } else {}
-  }
-
-  _hideKeyboard(BuildContext context) {
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
-
-  _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
   }
 }

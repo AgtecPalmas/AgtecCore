@@ -51,15 +51,15 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       $ModelClassCamelCase$List = await _service.fetch();
       emit(
         $ModelClass$SuccessState(
-          successMessage: "Dados carregados com sucesso.",
+          successMessage: 'Dados carregados com sucesso.',
           $ModelClassCamelCase$List: $ModelClassCamelCase$List,
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método fetch do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método fetch do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar consultar os dados."),);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'),);
     }
   }
 
@@ -68,15 +68,15 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit($ModelClass$ProcessState());
       $ModelClassCamelCase$List.clear();
       emit($ModelClass$SuccessState(
-          successMessage: "Dados carregados com sucesso.",
+          successMessage: 'Dados carregados com sucesso.',
           $ModelClassCamelCase$List: $ModelClassCamelCase$List,
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método reload do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método reload do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar recarregar os dados."));
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar recarregar os dados.'));
     }
   }
 
@@ -85,15 +85,15 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit($ModelClass$ProcessState());
       $ModelClassCamelCase$Model = await _service.post($ModelClassCamelCase$);
       emit($ModelClass$SuccessState(
-          successMessage: "Dados carregados com sucesso.",
+          successMessage: 'Dados carregados com sucesso.',
           $ModelClassCamelCase$List: $ModelClassCamelCase$List,
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método post do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método post do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar salvar."));
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar salvar.'));
     }
   }
 
@@ -102,14 +102,14 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit($ModelClass$ProcessState());
       $ModelClassCamelCase$Model = await _service.put($ModelClassCamelCase$);
       emit($ModelClass$SuccessState(
-        successMessage: "Dados carregados com sucesso.",
+        successMessage: 'Dados carregados com sucesso.',
         $ModelClassCamelCase$List: $ModelClassCamelCase$List,
         $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método put do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método put do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
     }
   }
 
@@ -118,15 +118,15 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit($ModelClass$ProcessState());
       $ModelClassCamelCase$Model = await _service.patch($ModelClassCamelCase$);
       emit($ModelClass$SuccessState(
-          successMessage: "Dados carregados com sucesso.",
+          successMessage: 'Dados carregados com sucesso.',
           $ModelClassCamelCase$List: $ModelClassCamelCase$List,
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método path do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método path do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar atualizar."));
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
     }
   }
 
@@ -135,15 +135,15 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit($ModelClass$ProcessState());
       await _service.patch($ModelClassCamelCase$);
       emit($ModelClass$SuccessState(
-          successMessage: "Dados carregados com sucesso.",
+          successMessage: 'Dados carregados com sucesso.',
           $ModelClassCamelCase$List: $ModelClassCamelCase$List,
           $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
         ),
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.state("Ocorreu um erro ou executar o método delete do $ModelClass$Controller", 
+      ExceptionCustom.state('Ocorreu um erro ou executar o método delete do $ModelClass$Controller', 
         error.toString(), error, stackTrace,);
-      emit(const $ModelClass$ErrorState("Ocorreu um erro ao tentar excluir o registro."));
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar excluir o registro.'));
     }
   }
 }

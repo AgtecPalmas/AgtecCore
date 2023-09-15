@@ -1,9 +1,9 @@
 /// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser o arquivo de criação de vários widgets, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 /// Arquivo contendo os Widgets componentizados da aplicação
 ///
@@ -126,7 +126,7 @@ Widget customRaisedButton(
       ),
     );
   } catch (error, stackTrace) {
-    AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
+    AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
     return const SizedBox.shrink();
   }
 }
@@ -201,7 +201,7 @@ Widget customButtonOutline(
       ),
     );
   } catch (error, stackTrace) {
-    AgteCoreLogger().erro("Ocorreu o erro no método customRaisedButton", error, stackTrace);
+    AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
     return const SizedBox.shrink();
   }
 }
@@ -214,6 +214,7 @@ Widget customButtonOutline(
 ///      context -> BuildContext contendo o contexto do App
 Widget customProcessingCardModal(BuildContext context) {
   return Container(
+    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2), 
     child: Align(
       alignment: Alignment.center,
       child: Card(
@@ -226,7 +227,7 @@ Widget customProcessingCardModal(BuildContext context) {
                 height: 16,
               ),
               Text(
-                AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
+                AppLocalizations.of(context)?.translate('custom_processing_card_label') ?? '',
               ),
             ],
           ),
@@ -257,7 +258,7 @@ Widget customProcessingCardModalCenter(BuildContext context) {
                 height: 16,
               ),
               Text(
-                AppLocalizations.of(context)?.translate("custom_processing_card_label") ?? "",
+                AppLocalizations.of(context)?.translate('custom_processing_card_label') ?? '',
               ),
             ],
           ),
@@ -272,7 +273,7 @@ Widget customProcessingCardModalCenter(BuildContext context) {
 customSuccessSnackbar(String message, {int secondsDuration = 4}) {
   return SnackBar(
     content: Text(message),
-    backgroundColor: const Color(0xfff799fcb),
+    backgroundColor: const Color(0xff799fcb),
     duration: Duration(seconds: secondsDuration),
   );
 }
@@ -309,7 +310,7 @@ Widget customProcessingWidget(
 customErrorSnackbar(String message, {int secondsDuration = 4}) {
   return SnackBar(
     content: Text(message),
-    backgroundColor: const Color(0xfffff6961),
+    backgroundColor: const Color(0xffff6961),
     duration: Duration(seconds: secondsDuration),
   );
 }
@@ -328,15 +329,15 @@ class HeadWidget extends StatefulWidget {
 
   const HeadWidget(
       {super.key,
-      this.assetImageHeadBackground = "",
-      this.webImageHeadBackground = "",
+      this.assetImageHeadBackground = '',
+      this.webImageHeadBackground = '',
       this.marginTitleTop = 80,
       this.marginTitleBottom = 12,
       this.marginTitleLeft = 12,
       this.marginTitleRight = 45});
 
   @override
-  _HeadWidgetState createState() => _HeadWidgetState();
+  State<HeadWidget> createState() => _HeadWidgetState();
 }
 
 /// Head da tela inicial
@@ -351,7 +352,7 @@ class _HeadWidgetState extends State<HeadWidget> {
   double marginTitleRight = 0.0;
 
   /// String contendo o caminho a ser renderizado como background do cabeçalho
-  String _urlPath = "";
+  String _urlPath = '';
 
   @override
   void initState() {
@@ -406,7 +407,7 @@ class _HeadWidgetState extends State<HeadWidget> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
-                  "",
+                  '',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall
@@ -430,7 +431,7 @@ class ContentWidget extends StatefulWidget {
   });
 
   @override
-  _ContentWidgetState createState() => _ContentWidgetState();
+  State<ContentWidget> createState() => _ContentWidgetState();
 }
 
 class _ContentWidgetState extends State<ContentWidget> {

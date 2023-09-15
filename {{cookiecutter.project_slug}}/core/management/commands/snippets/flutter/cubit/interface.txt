@@ -1,10 +1,10 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
-/// 
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
 /// Os Métodos padrões gerados são:
 ///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
 ///     detail()   -> Recupera os detalhes de $ModelClass$ da API.

@@ -1,29 +1,30 @@
-/// Page/View para controle das configurações da App.
-
 /// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// Caso deseje 'travar' o arquivo para não ser parseado novamente
 /// pelo manage do Django adicione um # antes da palavra abaixo
 /// FileLocked
+/// 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './cubit.dart';
-import '../../core/user_interface/widget.dart';
 import '../../core/localization.dart';
+import '../../core/user_interface/widget.dart';
 
 class SettingsIndexPage extends StatefulWidget {
+  const SettingsIndexPage({super.key});
+
   @override
-  _SettingsIndexPageState createState() => _SettingsIndexPageState();
+  State<SettingsIndexPage> createState() => _SettingsIndexPageState();
 }
 
 class _SettingsIndexPageState extends State<SettingsIndexPage> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)?.translate("page_label_configuration") ?? ""),
+        title: Text(
+          AppLocalizations.of(context)?.translate('page_label_configuration') ?? '',
+        ),
         centerTitle: true,
       ),
       body: _buildBody(),
@@ -31,7 +32,7 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
   }
 
   Widget _buildBody() {
-    return Container(
+    return SizedBox(
       height: 300,
       child: Center(
           child: Column(
@@ -39,14 +40,14 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
           BlocConsumer<SettingsCubit, SettingsState>(
             listener: (context, state) {},
             builder: (context, state) {
-              return Container(
+              return SizedBox(
                 height: 60,
                 width: MediaQuery.of(context).size.width * .9,
                 child: customButtonOutline(
                     borderColor: Colors.red,
                     textColor: Colors.red,
                     rounded: true,
-                    label: "Dark",
+                    label: 'Dark',
                     onPress: () {
                       context.read<SettingsCubit>().setDarkTheme();
                     },
@@ -54,14 +55,14 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
               );
             },
           ),
-          Container(
+          SizedBox(
             height: 60,
             width: MediaQuery.of(context).size.width * .9,
             child: customButtonOutline(
                 borderColor: Colors.white,
                 textColor: Colors.white,
                 rounded: true,
-                label: "Light",
+                label: 'Light',
                 onPress: () {
                   context.read<SettingsCubit>().setLightTheme();
                 },
@@ -70,19 +71,5 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
         ],
       )),
     );
-  }
-
-  /// Método para mostrar/ocultar a barra de mensagem para o usuário
-  ///    Params:
-  ///      message -> String contendo a mensagem a ser mostrada.
-  ///      error -> bool para determinar se a mensagem é de erro ou não.
-  _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false ? customSuccessSnackbar(message) : customErrorSnackbar(message),
-        );
-      });
-    }
   }
 }

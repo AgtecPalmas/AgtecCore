@@ -1,9 +1,9 @@
 /// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de customização do TextFormField, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 // )
 
 class CustomTextFormFieldStyle {
-  static InputDecoration textFieldStyle({String hintText = "", bool hiddenCounter = false}) {
+  static InputDecoration textFieldStyle({String hintText = '', bool hiddenCounter = false}) {
     return InputDecoration(
       hintText: hintText,
       counter: hiddenCounter ? const Offstage() : null,

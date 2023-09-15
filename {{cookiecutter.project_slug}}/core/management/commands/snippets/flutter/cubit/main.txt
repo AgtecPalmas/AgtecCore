@@ -1,9 +1,10 @@
-/// Página inicial da APP.
-
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Arquivo gerado automatimante pelo AgtecCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,16 +19,18 @@ import 'core/config.dart';
 
 $ImportCubit$
 
-String currentLanguage = "";
+String currentLanguage = '';
 
 void main() async {
   /// Descomentar as linhas abaixo para inicializar o Firebase
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -42,12 +45,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         $RegisterProviders$
-      ], child: MaterialAppWidget()  
+      ], child: const MaterialAppWidget()  
     );
   }
 }
 
 class MaterialAppWidget extends StatelessWidget {
+  const MaterialAppWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SettingsCubit, SettingsState>(
@@ -56,9 +61,9 @@ class MaterialAppWidget extends StatelessWidget {
         return ScreenUtilInit(
           designSize: const Size(widthScreenUtil, heightScreenUtil),
           builder: (_, __) => MaterialApp(
-            title: Config.app_title,
+            title: Config.appTitle,
             theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
-            home: const MyHomePage(title: '${Config.app_title}'),
+            home: const MyHomePage(title: Config.appTitle),
             onGenerateRoute: RouteGenerator.generateRoute,
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const[

@@ -1,11 +1,11 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// Classe contendo método auxiliares comportilhados por toda a APP
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 import 'dart:math';
 
@@ -27,18 +27,18 @@ class Process {
   static bool finishedSuccessfully = true;
   static bool isDioError = false;
   static int statusCode = 0;
-  static String resultMessage = "";
+  static String resultMessage = '';
   static String friendlyMessage = 'Ocorreu um erro, favor tentar novamente.';
-  static String httpHeader = "";
-  static String httpData = "";
-  static String resultException = "";
-  static String requestStr = "";
+  static String httpHeader = '';
+  static String httpData = '';
+  static String resultException = '';
+  static String requestStr = '';
 
   Process.finishSuccess(
     String message, {
     int status = 0,
-    String data = "",
-    String header = "",
+    String data = '',
+    String header = '',
   }) {
     finishedSuccessfully = true;
     resultMessage = message;
@@ -49,9 +49,9 @@ class Process {
     String message,
     String exception, {
     int status = 0,
-    String data = "",
-    String header = "",
-    String request = "",
+    String data = '',
+    String header = '',
+    String request = '',
     bool dioError = false,
   }) {
     finishedSuccessfully = false;
@@ -70,19 +70,19 @@ class Process {
 
   @override
   String toString() {
-    String _result =
-        "===\nProcesso:\nStatusCode -> $statusCode\nException -> $resultException\nError -> $resultMessage\nHttp Data -> $httpData\n Http Header -> $httpHeader\n===";
-    return _result;
+    final String result =
+        '===\nProcesso:\nStatusCode -> $statusCode\nException -> $resultException\nError -> $resultMessage\nHttp Data -> $httpData\n Http Header -> $httpHeader\n===';
+    return result;
   }
 }
 
 class Util {
-  final _imageDefault = "https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg";
+  final _imageDefault = 'https://cdn.pixabay.com/photo/2017/01/20/00/30/maldives-1993704_960_720.jpg';
 
   static String getRandomImage() {
-    final _random = Random();
-    final String _item = images[_random.nextInt(images.length)];
-    return _item;
+    final random = Random();
+    final String item = images[random.nextInt(images.length)];
+    return item;
   }
 
   /// Retornando a imagem default
@@ -107,22 +107,22 @@ class Util {
   ///
   static String parserDateTimeTimeZoneToBrasilianFormat(String dateTime) {
     try {
-      String _result = dateTime;
-      List<String> dateTimePart = dateTime.split("T");
+      String result = dateTime;
+      final List<String> dateTimePart = dateTime.split('T');
       if (dateTimePart.length == 2) {
         String datePart = dateTimePart[0];
         String timePart = dateTimePart[1];
         datePart = "${datePart.split("-")[2]}/${datePart.split("-")[1]}/${datePart.split("-")[0]}";
-        String? timePartSplit = timePart.split(".").length > 0 ? timePart.split(".")[0] : null;
+        final String? timePartSplit = timePart.split('.').isNotEmpty ? timePart.split('.')[0] : null;
         if (timePartSplit != null) {
           timePart = "${timePart.split(":")[0]}:${timePart.split(":")[1]}";
         }
-        _result = "$datePart às $timePart";
+        result = '$datePart às $timePart';
       }
-      return _result;
+      return result;
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro Util parserDateTimeTimeZoneToBrasilianFormat ", error, stackTrace);
-      return "";
+      AgteCoreLogger().erro('Ocorreu o erro Util parserDateTimeTimeZoneToBrasilianFormat ', error, stackTrace);
+      return '';
     }
   }
 
@@ -133,13 +133,13 @@ class Util {
   ///      Return:
   ///        DateTime
   ///
-  static DateTime? convertStrToDate(String stringDate, {String stringFormat = "dd/MM/yyyy HH:mm"}) {
+  static DateTime? convertStrToDate(String stringDate, {String stringFormat = 'dd/MM/yyyy HH:mm'}) {
     try {
-      final DateFormat format = new DateFormat(stringFormat);
+      final DateFormat format = DateFormat(stringFormat);
       final DateTime data = format.parse(stringDate);
       return data;
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro Util convertStrToDate ", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro Util convertStrToDate ', error, stackTrace);
       return null;
     }
   }
@@ -154,7 +154,7 @@ class Util {
   ///    Return:
   ///        List<String> or String
   ///
-  static dynamic stringDateTimeSplit(dynamic dateTime, {String returnType = "dt"}) {
+  static dynamic stringDateTimeSplit(dynamic dateTime, {String returnType = 'dt'}) {
     String? data;
     String? hora;
     try {
@@ -165,20 +165,20 @@ class Util {
         return null;
       }
       if (dateTime != null && dateTime.toString().isNotEmpty) {
-        final dataSplit = dateTime.toString().split(" ");
+        final dataSplit = dateTime.toString().split(' ');
         data = dataSplit[0];
         hora = dataSplit[1];
       }
       switch (returnType) {
-        case "d":
+        case 'd':
           return data;
-        case "t":
+        case 't':
           return hora;
         default:
           return [data, hora];
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro Util stringDateTimeSplit ", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro Util stringDateTimeSplit ', error, stackTrace);
       return null;
     }
   }
@@ -199,33 +199,33 @@ class Util {
       if (stringDate == null) return null;
       if (stringDate.isEmpty) return null;
       // Verificando se o Formato é 2019-08-23T12:52:46.697982Z
-      if (stringDate.contains("T") && stringDate.contains("-")) {
+      if (stringDate.contains('T') && stringDate.contains('-')) {
         return DateTime.parse(stringDate);
       }
-      if (stringDate.contains("-") && !stringDate.contains("/") && !stringDate.contains(":")) {
-        final DateFormat format = DateFormat("yyyy-MM-dd");
+      if (stringDate.contains('-') && !stringDate.contains('/') && !stringDate.contains(':')) {
+        final DateFormat format = DateFormat('yyyy-MM-dd');
         return format.parse(stringDate);
       }
       // Verificando se o Formato é dd/MM/YYYY HH:mm:ss
-      if (stringDate.contains("/") && stringDate.contains(":")) {
+      if (stringDate.contains('/') && stringDate.contains(':')) {
         // Data e Hora passados
-        final DateFormat format = new DateFormat("dd/MM/yyyy HH:mm");
+        final DateFormat format = DateFormat('dd/MM/yyyy HH:mm');
         return format.parse(stringDate);
       }
-      if (stringDate.contains("/") && !stringDate.contains(":")) {
+      if (stringDate.contains('/') && !stringDate.contains(':')) {
         // Apenas Data passado
-        final DateFormat format = new DateFormat("dd/MM/yyyy");
+        final DateFormat format = DateFormat('dd/MM/yyyy');
         return format.parse(stringDate);
         // return DateTime.parse("${stringDate}T14Z");
       }
-      if (!stringDate.contains("/") && stringDate.contains(":")) {
+      if (!stringDate.contains('/') && stringDate.contains(':')) {
         // Apenas Hora passado
-        final DateFormat format = new DateFormat("HH:mm");
+        final DateFormat format = DateFormat('HH:mm');
         return format.parse(stringDate);
         // return DateTime.parse("1000-01-01T$stringDate");
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro Util convertDate", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro Util convertDate', error, stackTrace);
       return null;
     }
     return null;
