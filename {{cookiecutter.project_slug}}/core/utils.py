@@ -42,41 +42,6 @@ def registro_existente(objeto, campo):
         return objeto._meta.model.objects.filter(filtro).exists()
 
 
-def is_valid_email(value):
-    user_regex = re.compile(
-        r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*$"
-        r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013'
-        r"""\014\016-\177])*"$)""",
-        re.IGNORECASE,
-    )
-    domain_regex = re.compile(
-        r"(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}|"
-        r"[A-Z0-9-]{2,})$|^\[(25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|"
-        r"2[0-4]\d|[0-1]?\d?\d)){3}\]$",
-        re.IGNORECASE,
-    )
-    domain_whitelist = ["localhost"]
-
-    if not value or "@" not in value:
-        raise CpfCnpjValidationError("Email inválido")
-
-    user_part, domain_part = value.rsplit("@", 1)
-
-    if not user_regex.match(user_part):
-        raise CpfCnpjValidationError("Email inválido")
-
-    if domain_part not in domain_whitelist and not domain_regex.match(domain_part):
-        # Try for possible IDN domain-part
-        with contextlib.suppress(UnicodeError):
-            domain_part = domain_part.encode("idna").decode("ascii")
-            if not domain_regex.match(domain_part):
-                raise CpfCnpjValidationError("Email inválido")
-            else:
-                return value
-        raise CpfCnpjValidationError("Email inválido")
-    return value
-
-
 def DV_maker(v):
     return 11 - v if v >= 2 else 0
 
