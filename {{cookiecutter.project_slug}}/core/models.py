@@ -225,18 +225,19 @@ class Base(models.Model):
             # Retornando as listas
             return object_list, many_fields
 
-    def delete(self, using="default", keep_parents=False):
+    def delete(self, using="soft_delete", keep_parents=False):
         """
         Sobrescrevendo o método para marcar os campos
         deleted como True e enabled como False. Assim o
         item não é excluído do banco de dados.
         """
         # Verificando se deve ser utilizado o manager costumizado
-        if USE_DEFAULT_MANAGER is False:
+        if using == "default" or USE_DEFAULT_MANAGER is True:
+            super(Base, self).delete()
 
+        else:
             # Iniciando uma transação para garantir a integridade dos dados
             with transaction.atomic():
-
                 # Recuperando as listas com os campos do objeto
                 object_list, many_fields = self.get_all_related_fields()
 
@@ -249,8 +250,6 @@ class Base(models.Model):
                 self.deleted = True
                 self.enabled = False
                 self.save(update_fields=["deleted", "enabled"])
-        else:
-            super(Base, self).delete()
 
     class Meta:
         """Configure abstract class"""
@@ -577,12 +576,13 @@ class BaseMetod(models.Model):
 
         return perms_needed, protected
 
-    def delete(self, using="default", keep_parents=False):
-        if USE_DEFAULT_MANAGER is False:
+    def delete(self, using="soft_delete", keep_parents=False):
+        if using == "default" or USE_DEFAULT_MANAGER is True:
+            super().delete()
 
+        else:
             # Iniciando uma transação para garantir a integridade dos dados
             with transaction.atomic():
-
                 # Recuperando as listas com os campos do objeto
                 object_list, many_fields = self.get_all_related_fields(
                     include_many_to_many=DELETED_MANY_TO_MANY
@@ -598,9 +598,6 @@ class BaseMetod(models.Model):
                 self.deleted = True
                 self.enabled = False
                 self.save(update_fields=["deleted", "enabled"])
-
-        else:
-            super().delete()
 
     class Meta:
         """Configure abstract class"""
