@@ -1,0 +1,23 @@
+<form action="{% block urilist %}{% endblock urilist %}"
+      method="get"
+      class="d-md-inline-flex d-flex p-2"
+      id="form_order">
+    <button type="submit"
+            class="br-button primary small m-1"
+            value="asc"
+            id="asc_order"
+            title="Ordenar por ordem crescente">
+        <spam class="fas fa-sort-amount-up"></spam>
+    </button>
+    <select name="sort_by" id="sort_by" class="form-control text-center">
+        <option value="">Ordenar por</option>
+        {% for campo, nome in model_fields.items %}<option value="{{ campo }}">{{ nome }}</option>{% endfor %}
+    </select>
+    <button type="submit"
+            class="br-button primary small m-1"
+            value="desc"
+            id="desc_order"
+            title="Ordenar por ordem decrescente">
+        <spam class="fas fa-sort-amount-down"></spam>
+    </button>
+</form>
