@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block content %}
   <div class="layout-content">
     {% include "./block/notifications.html" %}
@@ -11,11 +12,7 @@
         <div id="search-field">
           <div class="br-input large input-button">
             <form method="get">
-              <input id="input-search-large"
-                     id="pesquisa"
-                     type="search"
-                     name="q"
-                     placeholder="Pesquisar..."/>
+              <input id="pesquisa" type="search" name="q" placeholder="Pesquisar..." />
               <button class="br-button" type="submit" aria-label="Buscar">
                 <i class="fas fa-search" aria-hidden="true"></i>
               </button>
@@ -43,6 +40,7 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-datatable table-responsive">
+          {% include "./block/sort_and_order_by.html" %}
           {% block list_app %}
           {% endblock list_app %}
           <div class="card-body">
@@ -74,7 +72,7 @@
                       {% else %}
                         {% if i >= page_obj.number|add:-1 and i <= page_obj.number|add:1 or i <= 2 or i >= page_obj.paginator.num_pages|add:-1 %}
                           <li>
-                            <a class="page circle {% if page_obj.number == i %} active{% endif %}"
+                            <a class="page circle {% if page_obj.number == i %}active{% endif %}"
                                href="?page={{ i|stringformat:" s" }}&{{ url_pagination }}">{{ i|stringformat:"s" }}</a>
                           </li>
                         {% endif %}
@@ -98,3 +96,6 @@
     </div>
   </div>
 {% endblock content %}
+{% block extra_js %}
+  <script src="{% static 'core/js/sort_and_order_by.js' %}"></script>
+{% endblock extra_js %}

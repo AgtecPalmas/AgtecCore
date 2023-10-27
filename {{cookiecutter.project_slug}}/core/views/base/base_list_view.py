@@ -10,7 +10,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import FieldDoesNotExist, FieldError, ValidationError
-from django.db.models import ForeignKey, Q
+from django.db.models import ForeignKey, Q, QuerySet
 from django.db.models.fields import BooleanField as BooleanFieldModel
 from django.db.models.fields import DateField, DateTimeField
 from django.db.models.fields.related_descriptors import (
@@ -80,10 +80,58 @@ class BaseListView(
         # o retorno usa a função any para retornar True caso tenha pelo menos uma das permissões na lista perms
         return any(self.request.user.has_perm(perm) for perm in perms)
 
+    def sort_queryset(
+        self, queryset: QuerySet, sort_by: str, order_by: str
+    ) -> QuerySet:
+        """
+        Ordena a queryset com base no campo e ordem especificados.
+
+        Args:
+            queryset (QuerySet): A queryset a ser ordenada.
+            sort_by (str): O campo a ser ordenado.
+            order_by (str): A ordem em que a queryset será ordenada. Pode ser "asc" para ascendente ou "desc" para descendente.
+
+        Returns:
+            Queryset: A queryset ordenada.
+
+        Examples:
+            >>> queryset = MyModel.objects.all()
+            >>> sorted_queryset = sort_queryset(queryset, "campo", "asc")
+        """
+
+        if not hasattr(self.model, sort_by):
+            messages.error(
+                self.request,
+                f"O campo '{sort_by}' não existe no modelo '{self.model._meta.model_name}'!",
+                extra_tags="danger",
+            )
+            return queryset
+
+        if order_by == "desc":
+            return queryset.order_by(f"-{sort_by}")
+
+        else:
+            return queryset.order_by(sort_by)
+
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
 
-        if (
+        request = self.request.GET.copy()
+
+        sort_by = request.get("sort_by")
+        order_by = request.get("order_by")
+
+        if sort_by:
+            request.pop("sort_by")
+            request.pop("order_by")
+
+            queryset = self.sort_queryset(
+                queryset,
+                sort_by,
+                order_by,
+            )
+
+        elif (
             hasattr(self.model, "_meta")
             and hasattr(self.model._meta, "ordering")
             and self.model._meta.ordering
@@ -99,8 +147,8 @@ class BaseListView(
             )
 
         try:
-            param_filter = self.request.GET.get("q")
-            query_dict = self.request.GET
+            param_filter = request.get("q")
+            query_dict = request
             query_params = Q()
 
             if not param_filter:
@@ -429,6 +477,14 @@ class BaseListView(
             context = get_default_context_data(context, self)
             context["display"] = self.list_display_verbose_name()
             context["url_pagination"] = self.url_pagination
+
+            context["model_fields"] = {
+                field.name: field.verbose_name
+                for field in sorted(
+                    self.model._meta.fields, key=lambda field: field.verbose_name or ""
+                )
+                if field.name in self.list_display
+            }
 
             if query_params := dict(self.request.GET):
                 # retira o parametro page e add ele em outra variável, apensas dele

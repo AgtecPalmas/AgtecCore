@@ -15,6 +15,9 @@ FileLocked
 {% block uriadd %}
     {% url "$app_name$:$model_name$-create" %}
 {% endblock uriadd %}
+{% block urilist %}
+    {% url "$app_name$:$model_name$-list" %}
+{% endblock urilist %}
 {% block list_app %}
     <table>
         <thead>
