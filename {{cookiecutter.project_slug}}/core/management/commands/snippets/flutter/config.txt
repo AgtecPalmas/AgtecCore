@@ -1,9 +1,9 @@
 /// [Arquivo gerado automatimante pelo AgtecCore]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 
 import 'package:flutter/material.dart';
@@ -25,13 +25,13 @@ const bool releaseVersion = false;
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
 // TODO - Altere o valor dessa constante para o IP do projeto Django
-const String uriDeveloper = "http://192.168.1.82:8101/";
+const String uriDeveloper = 'http://192.168.1.82:8101/';
 
 // URI para produção
-const String uriRelease = "";
+const String uriRelease = '';
 
 // URL para os termos de uso
-const String urlTermoUso = "";
+const String urlTermoUso = '';
 
 // Área para configuração das modalidades de registro e login
 const bool enabledFacebookAccount = false;
@@ -41,18 +41,18 @@ const bool enabledOTPAccount = false;
 
 class Config {
   static const uri = releaseVersion ? uriRelease : uriDeveloper;
-  static const uriAuth = "";
+  static const uriAuth = '';
 
   // TODO - Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
-  static const DRFToken = "Token ";
+  static const drfToken = 'Token ';
 
   // TODO - Adicionar as credenciais caso esteja utilizando FastAPI.
   // Dados de acesso à camada FastAPI
-  static const fastAPIUserDevelopment = "admin";
-  static const fastAPIPasswordDevelopment = "asdf@1234";
+  static const fastAPIUserDevelopment = 'admin';
+  static const fastAPIPasswordDevelopment = 'asdf@1234';
 
-  static const String uri_media = "media/";
-  static const String app_title = "App Flutter";
+  static const String uriMedia = 'media/';
+  static const String appTitle = 'App Flutter';
   static const bool usingURL = false;
   static const double marginHead = 0.25;
 }
@@ -61,7 +61,7 @@ class Config {
 /// Customizando o Thema do aplicativo Flutter
 ///
 class CustomTheme {
- //Colors for theme
+  //Colors for theme
   static Color defaultColor = Colors.black;
   static Color lightPrimary = const Color(0xfffcfcff);
   static Color lightAccent = Colors.blue;
@@ -75,98 +75,98 @@ class CustomTheme {
   static Color mainCardLightTextColor = Colors.black38;
   static Color mainCardLightBackgroundColor = Colors.white;
   static Color mainCardLightShadowColor = Colors.black38;
-  static Color textStyleDefaultColor = Color(0xFF4a5c6a);
+  static Color textStyleDefaultColor = const Color(0xFF4a5c6a);
 
   // Classe estática para configuração do TextStyle padrão
   static final _defaultTextStyle = TextStyle(color: textStyleDefaultColor);
 
-static final _textThemeDefault = TextTheme(
-    headline1: _defaultTextStyle,
-    headline2: _defaultTextStyle,
-    headline3: _defaultTextStyle,
-    headline4: _defaultTextStyle,
-    headline5: _defaultTextStyle,
-    headline6: _defaultTextStyle,
-    subtitle1: _defaultTextStyle,
-    subtitle2: _defaultTextStyle,
-    bodyText1: _defaultTextStyle,
-    bodyText2: _defaultTextStyle,
-    caption: _defaultTextStyle,
-    button: _defaultTextStyle,
-    overline: _defaultTextStyle,
+  static final _textThemeDefault = TextTheme(
+    displayLarge: _defaultTextStyle,
+    displayMedium: _defaultTextStyle,
+    displaySmall: _defaultTextStyle,
+    headlineMedium: _defaultTextStyle,
+    headlineSmall: _defaultTextStyle,
+    titleLarge: _defaultTextStyle,
+    titleMedium: _defaultTextStyle,
+    titleSmall: _defaultTextStyle,
+    bodyLarge: _defaultTextStyle,
+    bodyMedium: _defaultTextStyle,
+    bodySmall: _defaultTextStyle,
+    labelLarge: _defaultTextStyle,
+    labelSmall: _defaultTextStyle,
   );
 
   static ThemeData lightTheme = ThemeData(
-    backgroundColor: lightBG,
-    primaryColor: lightPrimary,
-    scaffoldBackgroundColor: lightBG,
-    appBarTheme: AppBarTheme(
-      elevation: 0,
-      toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
-      ).bodyText2,
-      titleTextStyle: TextTheme(
-        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
-      ).headline6,
-    ),
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: lightAccent,
-    ),
-    textTheme: _textThemeDefault
-  );
+      primaryColor: lightPrimary,
+      scaffoldBackgroundColor: lightBG,
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        toolbarTextStyle: TextTheme(
+          titleMedium: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
+        ).bodyMedium,
+        titleTextStyle: TextTheme(
+          titleMedium: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
+        ).titleLarge,
+      ),
+      textTheme: _textThemeDefault,
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(
+            secondary: lightAccent,
+          )
+          .copyWith(background: lightBG));
 
   static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    backgroundColor: darkBG,
-    primaryColor: darkPrimary,
-    scaffoldBackgroundColor: darkBG,
-    appBarTheme: AppBarTheme(
-      elevation: 0,
-      toolbarTextStyle: TextTheme(
-        subtitle1: TextStyle( color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
-      ).bodyText2,
-      titleTextStyle: TextTheme(
-        subtitle1: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
-      ).headline6,
-    ),
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: darkAccent,
-    ),
-    textTheme: _textThemeDefault
-  );
+      brightness: Brightness.dark,
+      primaryColor: darkPrimary,
+      scaffoldBackgroundColor: darkBG,
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        toolbarTextStyle: TextTheme(
+          titleMedium: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
+        ).bodyMedium,
+        titleTextStyle: TextTheme(
+          titleMedium: TextStyle(color: lightBG, fontSize: 18.0, fontWeight: FontWeight.w800),
+        ).titleLarge,
+      ),
+      textTheme: _textThemeDefault,
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(
+            secondary: darkAccent,
+          )
+          .copyWith(background: darkBG));
 }
 
 // Área de definição das classes que encapsulam as String defaultas
 // das telas de listagem, inserção, edição, exclusão e detalhamento
 class ListStringConstants {
-  static const String loading = "Carregando...";
-  static const String error = "Erro ao carregar os dados";
-  static const String refreshError = "Erro ao recarregar os dados";
-  static const String loadingError = "Erro ao carregar os dados";
-  static const String success = "Dados carregados com sucesso";
-  static const String empty = "Nenhum registro encontrado";
+  static const String loading = 'Carregando...';
+  static const String error = 'Erro ao carregar os dados';
+  static const String refreshError = 'Erro ao recarregar os dados';
+  static const String loadingError = 'Erro ao carregar os dados';
+  static const String success = 'Dados carregados com sucesso';
+  static const String empty = 'Nenhum registro encontrado';
 }
 
 class DetailStringConstants {
-  static const String loading = "Detalhando...";
-  static const String loadingError = "Erro ao carregar os dados";
-  static const String error = "Erro ao detalhar o item";
-  static const String success = "Item detalhado com sucesso";
-  static const String empty = "Item não encontrado";
+  static const String loading = 'Detalhando...';
+  static const String loadingError = 'Erro ao carregar os dados';
+  static const String error = 'Erro ao detalhar o item';
+  static const String success = 'Item detalhado com sucesso';
+  static const String empty = 'Item não encontrado';
 }
 
 class InsertStringConstants {
-  static const String loading = "Cadastrando...";
-  static const String loadingError = "Erro ao carregar os dados";
-  static const String error = "Erro ao cadastrar o item";
-  static const String success = "Item cadastrado com sucesso";
-  static const String empty = "";
+  static const String loading = 'Cadastrando...';
+  static const String loadingError = 'Erro ao carregar os dados';
+  static const String error = 'Erro ao cadastrar o item';
+  static const String success = 'Item cadastrado com sucesso';
+  static const String empty = '';
 }
 
 class UpdateStringConstants {
-  static const String loading = "Atualizando...";
-  static const String loadingError = "Erro ao carregar os dados";
-  static const String error = "Erro ao atualizar o item";
-  static const String success = "Item atualizado com sucesso";
-  static const String empty = "";
+  static const String loading = 'Atualizando...';
+  static const String loadingError = 'Erro ao carregar os dados';
+  static const String error = 'Erro ao atualizar o item';
+  static const String success = 'Item atualizado com sucesso';
+  static const String empty = '';
 }

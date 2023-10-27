@@ -1,26 +1,26 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 import 'package:dio/dio.dart';
 
 import '../../../apps/auth/data.dart';
 import '../../../core/config.dart';
 
-class HeaderTokenInterceptor  extends Interceptor {
+class HeaderTokenInterceptor extends Interceptor {
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    String accessToken = await AuthData().getJWTToken();
+    final String accessToken = await AuthData().getJWTToken();
     if (accessToken.isNotEmpty) {
-      options.headers.addAll({"Authorization": "Bearer $accessToken"});
+      options.headers.addAll({'Authorization': 'Bearer $accessToken'});
     } else {
-      options.headers.addAll({"Authorization": "${Config.DRFToken}"});
+      options.headers.addAll({'Authorization': Config.drfToken});
     }
-    options.connectTimeout = Duration(seconds: 20);
-    options.receiveTimeout = Duration(seconds: 20);
+    options.connectTimeout = const Duration(seconds: 20);
+    options.receiveTimeout = const Duration(seconds: 20);
     return super.onRequest(options, handler);
   }
 }

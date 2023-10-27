@@ -23,7 +23,7 @@ import '../controller.dart';
 import '../model.dart';
 
 class $ModelClass$AddPage extends StatefulWidget {
-  static const routeName = "/$ModelClassCamelCase$AddPage";
+  static const routeName = '/$ModelClassCamelCase$AddPage';
 
   const $ModelClass$AddPage({super.key});
 
@@ -41,6 +41,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
 
   @override
   void dispose() {
+    $DisposeController$
     super.dispose();
   }
 
@@ -59,7 +60,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   Widget _buildBody() {
     return Stack(
       children: <Widget> [
-        HeadWidget(),
+        const HeadWidget(),
         _buildPage(),
       ]
     );
@@ -68,7 +69,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   Widget _buildPage(){
     return SingleChildScrollView(
       child: ConstrainedBox(
-        constraints: new BoxConstraints(
+        constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height
         ),
         child: Container(
@@ -91,10 +92,11 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
                     showError(InsertStringConstants.error);
-                    AgteCoreLogger().erro("Ocorreu o erro no BlocConsumer CreatePage", state.error.toString());
+                    AgteCoreLogger().erro('Ocorreu o erro no BlocConsumer CreatePage', state.error.toString());
                   }
                   if(state is $ModelClass$SuccessState){
                     showSuccess(InsertStringConstants.success);
+                    _clearForm();
                   }
                 },
                 builder: (context, state) {
@@ -137,7 +139,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       builder: (context, state) {
         return  Padding(
           padding: const EdgeInsets.only(top: 24.0),
-          child: Container(
+          child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: customRaisedButton(
                 label: 'Salvar',
@@ -159,14 +161,14 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   }
 
   void _post() async {
-    final _$Model$Controller = context.read<$ModelClass$Controller>();
+    final $Model$Controller = context.read<$ModelClass$Controller>();
     try{
       _$Model$Model = $ModelClass$Model();
       $GetValuesControllers$
-      _$Model$Controller.$Model$Model = _$Model$Model;
-      await _$Model$Controller.post(_$Model$Model);
+      $Model$Controller.$Model$Model = _$Model$Model;
+      await $Model$Controller.post(_$Model$Model);
     }catch (error, stackTrace){
-      AgteCoreLogger().erro("Ocorreu o erro no _post do PageCreate", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro no _post do PageCreate', error, stackTrace);
       showError(InsertStringConstants.error);
     }
   }

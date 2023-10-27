@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/user_interface/widget.dart';
 
 class $ModelClass$IndexPage extends StatefulWidget {
-  static const routeName = "/$ModelClassCamelCase$Index";
+  static const routeName = '/$ModelClassCamelCase$Index';
 
   const $ModelClass$IndexPage({super.key});
 
@@ -38,52 +38,9 @@ class _$ModelClass$IndexPageState extends State<$ModelClass$IndexPage>
   Widget _buildBody() {
     return Stack(
       children: <Widget>[
-        HeadWidget(),
-        ContentWidget()
+        const HeadWidget(),
+        ContentWidget(),
       ],
     );
   }
-
-  /// Método responsável por mostrar um SnackBar com uma mensagem
-  /// com o texto passada como parâmetro
-   _showMessage(String message, {bool error = false}) {
-    if (message.isNotEmpty) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          error == false
-              ? customSuccessSnackbar(message)
-              : customErrorSnackbar(message),
-        );
-      });
-    }
-  }
-
-  /// Método responsável por mostrar um modal com o texto informado
-  void _makeToast(String texto) async {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(''),
-          content: Text(texto),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text('Excluir'),
-              onPressed: () {},
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  /// Método para ocultar o teclado
-  _hideKeyboard(BuildContext context){
-    FocusScope.of(context).requestFocus(FocusNode());
-  }
-
 }

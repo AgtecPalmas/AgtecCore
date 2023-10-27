@@ -53,19 +53,19 @@ class $ModelClass$Model {
             deleted: deleted,
             nextUrl: nextUrl,
             previousUrl: previousUrl,
-            enabled: map.containsKey('enabled') ? map['enabled'] ?? true : true,
+            enabled: map['enabled'] ?? true,
             createdOn: map.containsKey('created_on')
-                ? DateFormat("yyyy-MM-ddTHH:mm:ss.SSSSSSZ").parse(map['created_on'])
+                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on'])
                 : null,
             updatedOn: map.containsKey('updated_on')
-                ? DateFormat("yyyy-MM-ddTHH:mm:ss.SSSSSSZ").parse(map['updated_on'])
+                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on'])
                 : null,
             $ParserfromMap$
           ),
-        _ => throw ArgumentError("Json inválido do $ModelClass$Model"),
+        _ => throw ArgumentError('Json inválido do $ModelClass$Model'),
       };
     } catch (error, stackTrace) {
-      ExceptionCustom.general("Ocorreu um erro no método fromMap do $ModelClass$Model", error.toString(), stackTrace);
+      ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
       return $ModelClass$Model();
     }
   }
@@ -76,7 +76,7 @@ class $ModelClass$Model {
       $ParserfromMap$
       );
     } catch (error, stackTrace) {
-      ExceptionCustom.general("Ocorreu um erro no método fromMap do $ModelClass$Model", error.toString(), stackTrace);
+      ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
       return $ModelClass$Model();
     }
   }
@@ -84,12 +84,12 @@ class $ModelClass$Model {
   Map<String, dynamic>? toMap(){
     try{
       return {
-        "nextUrl": nextUrl,
-        "previousUrl": previousUrl,
+        'nextUrl': nextUrl,
+        'previousUrl': previousUrl,
         $ParserToMap$
       };
     } catch (error, stackTrace) {
-      ExceptionCustom.general("Ocorreu um erro no método toMap do $ModelClass$Model", error.toString(), stackTrace);
+      ExceptionCustom.general('Ocorreu um erro no método toMap do $ModelClass$Model', error.toString(), stackTrace);
       return null;
     }
   }
@@ -101,7 +101,7 @@ class $ModelClass$Model {
   /// Sobscrevendo o método toString para retornar todos os atributos da classe.
   @override
   String toString() {
-    return "$StringReturn$";
+    return '$StringReturn$';
   }
 
 }

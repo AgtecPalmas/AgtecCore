@@ -20,7 +20,7 @@ import '../model.dart';
 import 'update.dart';
 
 class $ModelClass$DetailPage extends StatefulWidget {
-  static const routeName = "/$ModelClassCamelCase$DetailPage";
+  static const routeName = '/$ModelClassCamelCase$DetailPage';
 
   final $ModelClass$Model $ModelClassCamelCase$Model;
 
@@ -49,7 +49,7 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           showError(DetailStringConstants.error);
-          AgteCoreLogger().erro("Ocorreu o erro ao executar o Detail Page BlocConsumer", state.error.toString());
+          AgteCoreLogger().erro('Ocorreu o erro ao executar o Detail Page BlocConsumer', state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
           showSuccess(DetailStringConstants.success);
@@ -65,7 +65,7 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
           appBar: AppBar(backgroundColor: Colors.transparent),
           body: _buildBody(),
           floatingActionButton: FloatingActionButton(
-            child: Icon(
+            child: const Icon(
               Icons.update,
             ),
             onPressed: () {
@@ -80,15 +80,15 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
   Widget _buildBody() {
     return Stack(
       children: <Widget>[
-        HeadWidget(),
-        _buildPage()
+        const HeadWidget(),
+        _buildPage(),
       ],
     );
   }
 
   Widget _buildPage() {
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),

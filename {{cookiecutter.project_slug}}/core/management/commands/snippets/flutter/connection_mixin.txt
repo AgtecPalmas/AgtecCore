@@ -1,9 +1,9 @@
 /// [Arquivo gerado automatimante pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+/// [Travado por default]
+/// Por ser um mixin de verificação da conexão com a internet, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
 ///
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ mixin ConnectionMixin<T extends StatefulWidget> on State<T> {
         }
       });
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro("Ocorreu o erro ao executar o checarConexao ", error, stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro ao executar o checarConexao ', error, stackTrace);
     }
   }
 
@@ -43,13 +43,6 @@ mixin ConnectionMixin<T extends StatefulWidget> on State<T> {
     showTopSnackBar(
       Overlay.of(context),
       CustomSnackBar.info(message: message),
-    );
-  }
-
-  void _showSuccess(String message) {
-    showTopSnackBar(
-      Overlay.of(context),
-      CustomSnackBar.success(message: message),
     );
   }
 }

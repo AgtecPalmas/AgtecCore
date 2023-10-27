@@ -23,7 +23,7 @@ import '../controller.dart';
 import '../model.dart';
 
 class $ModelClass$UpdatePage extends StatefulWidget {
-  static const routeName = "/$ModelClassCamelCase$Update";
+  static const routeName = '/$ModelClassCamelCase$Update';
 
   final $ModelClass$Model $ModelClassCamelCase$Model;
 
@@ -51,6 +51,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
 
   @override
   void dispose() {
+    $DisposeController$
     super.dispose();
   }
 
@@ -71,16 +72,17 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           showError(UpdateStringConstants.error);
-          AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page BlocConsumer", state.error.toString());
+          AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page BlocConsumer', state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
           showSuccess(UpdateStringConstants.success);
+          _clearForm();
         }
       },
       builder: (context, state) {
         return Stack(
           children: <Widget>[
-            HeadWidget(),
+            const HeadWidget(),
             _buildPage(),
           ],
         );
@@ -91,7 +93,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   Widget _buildPage() {
     return SingleChildScrollView(
       child: ConstrainedBox(
-        constraints: new BoxConstraints(
+        constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height
         ),
         child: Container(
@@ -146,7 +148,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
       builder: (context, state) {
       return  Padding(
         padding: const EdgeInsets.only(top: 24.0),
-        child: Container(
+        child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: customRaisedButton(
               label: 'Salvar',
@@ -171,13 +173,13 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   }
 
   void _put() async {
-    final _$Model$Controller = context.read<$ModelClass$Controller>();
+    final $Model$Controller = context.read<$ModelClass$Controller>();
     try{
        $GetValuesControllers$
 
-      await _$Model$Controller.put(_$Model$Model);
+      await $Model$Controller.put(_$Model$Model);
     }catch (error, stackTrace){
-      AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page _put", error.toString(), stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page _put', error.toString(), stackTrace);
       showError(UpdateStringConstants.error);
     }
   }
@@ -186,7 +188,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     try{
       $EditedAttributes$
     }catch (error, stackTrace){
-      AgteCoreLogger().erro("Ocorreu o erro ao executar o Update Page _loadData", error.toString(), stackTrace);
+      AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
       showError(UpdateStringConstants.loadingError);
     }
   }

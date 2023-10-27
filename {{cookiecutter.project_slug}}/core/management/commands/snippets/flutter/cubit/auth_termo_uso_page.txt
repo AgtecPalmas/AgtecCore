@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/config.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class TermoUso extends StatelessWidget {
+  const TermoUso({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomTheme.defaultColor,
-        title: Text("Termos de Uso"),
+        title: const Text('Termos de Uso'),
         centerTitle: true,
       ),
       body: Center(

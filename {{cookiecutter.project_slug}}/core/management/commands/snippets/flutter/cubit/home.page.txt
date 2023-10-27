@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'core/user_interface/custom.colors.dart';
-import 'apps/configuracao/index.page.dart';
 import 'core/user_interface/widget.dart';
 import 'apps/configuracao/cubit.dart';
 import 'core/agtec.logger.dart';
@@ -28,7 +27,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
   
   const MyHomePage({Key? key, String? title})
-    : title = title ?? "",
+    : title = title ?? '',
       super(key: key);
 
   @override
@@ -83,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(Config.app_title),
+        title: const Text(Config.appTitle),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 8),
@@ -91,9 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 InkWell(
-                  child: Icon(Icons.settings),
+                  child: const Icon(Icons.settings),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsIndexPage(),),);
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsIndexPage(),),);
                   },
                 ),
               ],
@@ -123,9 +122,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildCupertinoTabScaffold(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Principal"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Configurações"),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Principal'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurações'),
         ],
       ),
       tabBuilder: (context, index) {
@@ -141,11 +140,11 @@ class _MyHomePageState extends State<MyHomePage> {
             return CupertinoTabView(
               onGenerateRoute: RouteGenerator.generateRoute,
               builder: (context) {
-                return CupertinoPageScaffold(child: SettingsIndexPage());
+                return const CupertinoPageScaffold(child: SettingsIndexPage());
               },
             );
           default:
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
         }
       },
     );
@@ -153,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildGridView(BuildContext context) {
     return Stack(children: <Widget>[
-      HeadWidget(),
+      const HeadWidget(),
       Container(
       margin: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * .18,
