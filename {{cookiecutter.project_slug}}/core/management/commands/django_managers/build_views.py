@@ -149,12 +149,14 @@ class ViewsBuild:
                 content = content.replace("$FormsModalUpdate$", "")
 
             if hasattr(_model._meta, "fields_display") is True:
+                sorted_fields = sorted(_model._meta.fields_display)
                 content = content.replace(
-                    "$ListFields$", f"list_display = {_model._meta.fields_display}"
-                )
+                    "$ListFields$", f"list_display = {sorted_fields}"
+                ).replace("$SearchFields$", f"search_fields = {sorted_fields}")
 
             else:
                 content = content.replace("$ListFields$", "")
+                content = content.replace("$SearchFields$", "")
 
             if Utils.check_file(self.path_model_views) is False:
                 with open(self.path_model_views, "w", encoding="utf-8") as arquivo:
