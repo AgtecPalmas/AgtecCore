@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.exceptions import ValidationError
 from django.views.generic import TemplateView
 
-from core.views.utils import get_default_context_data
+from core.views.utils import get_breadcrumbs, get_default_context_data
 
 
 class BaseTemplateView(TemplateView):
@@ -26,6 +26,7 @@ class BaseTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseTemplateView, self).get_context_data(**kwargs)
         context = get_default_context_data(context, self)
+        context["breadcrumbs"] = get_breadcrumbs(self.request.path)
         return context
 
 

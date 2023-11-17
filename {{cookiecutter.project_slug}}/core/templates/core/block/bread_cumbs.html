@@ -1,24 +1,26 @@
 {% load base %}
 {% load static %}
 {% if request.bread_crumbs and breadcrumbs %}
-    <div class="br-breadcrumb">
-        <ul class="crumb-list">
-            {% for breadcrumb in breadcrumbs %}
-                {% if forloop.first %}
-                    <li class="crumb home ml-2">
-                        <a class="br-button circle" href="{{ breadcrumb.url }}"><span class="sr-only">Página inicial</span><i class="fas fa-home"></i></a>
-                    </li>
-                {% else %}
-                    <li class="crumb" data-active="active">
-                        <i class="icon fas fa-chevron-right"></i>
-                        {% if breadcrumb.url %}
-                            <a href="{{ breadcrumb.url }}" class="rounded">{{ breadcrumb.slug }}</a>
-                        {% else %}
-                            <span>{{ breadcrumb.slug }}</span>
-                        {% endif %}
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+    <div class="row">
+        <div class="br-breadcrumb">
+            <ul class="crumb-list">
+                {% for breadcrumb in breadcrumbs %}
+                    {% if forloop.first %}
+                        <li class="crumb home ml-2">
+                            <a class="br-button circle" href="{{ breadcrumb.url }}"><span class="sr-only">Página inicial</span><i class="fas fa-home"></i></a>
+                        </li>
+                    {% else %}
+                        <li class="crumb" data-active="active">
+                            <i class="icon fas fa-chevron-right"></i>
+                            {% if breadcrumb.url %}
+                                <a href="{{ breadcrumb.url }}" class="rounder-sm pb-1">{{ breadcrumb.slug }}</a>
+                            {% else %}
+                                <span>{{ breadcrumb.slug }}</span>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endif %}
