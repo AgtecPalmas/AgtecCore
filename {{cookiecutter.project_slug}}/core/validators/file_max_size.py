@@ -18,7 +18,11 @@ class FileMaxSizeValidator:
 
     def __call__(self, file):
         """Valida o tamanho do arquivo"""
-        file_size = getattr(file, "size", 0)
+        try:
+            file_size = getattr(file, "size", 0)
+
+        except FileNotFoundError:
+            file_size = 0
 
         if file_size and file_size > self.max_size * self.MB_TO_BYTES:
             raise ValidationError(f"O tamanho máximo do arquivo é de {self.max_size}MB")

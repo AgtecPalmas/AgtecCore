@@ -6,7 +6,7 @@ from django.utils.deconstruct import deconstructible
 
 
 @deconstructible
-class CPFCPNJValidator:
+class CPFCNPJValidator:
     """Valida CPF e CNPJ"""
 
     def __init__(self, tipo: str = "ambos"):
