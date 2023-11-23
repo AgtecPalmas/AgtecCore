@@ -26,6 +26,7 @@ from django.db.models import (
 from django.urls import NoReverseMatch, reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from rest_framework.pagination import PageNumberPagination
 
 models.options.DEFAULT_NAMES += (
@@ -81,6 +82,7 @@ class Base(models.Model):
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+    deleted_on = models.DateTimeField(blank=True, null=True)
 
     # Verificação se deve ser usado o manager padrão ou o customizado
     if USE_DEFAULT_MANAGER is False:
@@ -241,15 +243,18 @@ class Base(models.Model):
                 # Recuperando as listas com os campos do objeto
                 object_list, many_fields = self.get_all_related_fields()
 
+                datetime_delete = timezone.now()
+
                 # Percorrendo todos os campos que possuem relacionamento com o objeto
                 for obj, values in many_fields:
                     if values is not None and values.all():
-                        values.all().update(deleted=True, enabled=False)
+                        values.all().update(deleted=True, enabled=False, deleted_on=datetime_delete)
 
                 # Atualizando o registro
                 self.deleted = True
                 self.enabled = False
-                self.save(update_fields=["deleted", "enabled"])
+                self.deleted_on = datetime_delete
+                self.save(update_fields=["deleted", "enabled", "deleted_on"])
 
     class Meta:
         """Configure abstract class"""
