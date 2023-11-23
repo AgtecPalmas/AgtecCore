@@ -5,11 +5,11 @@ class $ModelName$Serializer(ModelSerializer):
     """ Class do serializer do model $ModelClass$ para o POST, PUT, PATCH, DELETE """
     class Meta:
         model = $ModelName$
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
 
 
 class $ModelName$GETSerializer(FieldsListSerializerMixin, ModelSerializer):
     """ Class do serializer do model $ModelClass$ para o GET """
     class Meta:
         model = $ModelName$
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]

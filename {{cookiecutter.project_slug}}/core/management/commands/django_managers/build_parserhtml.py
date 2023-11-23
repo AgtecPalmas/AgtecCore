@@ -316,6 +316,7 @@ class ParserHTMLBuild:
                     "updated_on",
                     "created_on",
                     "deleted",
+                    "deleted_on",
                     "enabled",
                     "id",
                 )

@@ -28,7 +28,7 @@ class GestorForm(BaseForm):
         return self.cleaned_data["telefone"]
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = Gestor
 
 
@@ -61,7 +61,7 @@ class DadosGeraisForm(BaseForm):
             raise forms.ValidationError("Já existe uma configuração cadastrada")
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = DadosGerais
 
 
@@ -81,5 +81,5 @@ class ImagensSistemaForm(BaseForm):
         return self.cleaned_data
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = ImagensSistema

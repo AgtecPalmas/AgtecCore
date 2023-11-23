@@ -1,6 +1,7 @@
 IGNORE_FIELDS = [
     "id",
     "deleted",
+    "deleted_on",
     "enabled",
     "created_on",
     "updated_on"

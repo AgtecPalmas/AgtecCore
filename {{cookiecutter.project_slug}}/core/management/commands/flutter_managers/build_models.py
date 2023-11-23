@@ -22,7 +22,7 @@ class ModelsBuilder:
         self._content_from_json = ""
         self._content_to_map = ""
         self._content_constructor = ""
-        self._ignored_fields = ["enabled", "deleted", "createdOn", "updatedOn"]
+        self._ignored_fields = ["enabled", "deleted", "deletedOn", "createdOn", "updatedOn"]
         self._model_path_file = Path(
             "{}/lib/apps/{}/{}/model.dart".format(
                 self._path_flutter,
@@ -44,7 +44,7 @@ class ModelsBuilder:
                     continue
                 _field_type = str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
                 _atribute = FLUTTER_TYPES[DJANGO_TYPES.index(_field_type)]
-                if _name_dart not in ["enabled", "deleted", "createdOn", "updatedOn"]:
+                if _name_dart not in ["enabled", "deleted", "deletedOn", "createdOn", "updatedOn"]:
                     self._content_atributes += f"{_atribute} {_name_dart};\n  "
                 if _name_dart not in DJANGO_USER_FIELDS:
                     self._content_string_return += f"{_name_dart.upper()}: ${_name_dart}\\n"

@@ -24,6 +24,7 @@ class $ModelClass$Model {
   String previousUrl;
   bool enabled;
   bool deleted;
+  DateTime? deletedOn;
   DateTime? createdOn;
   DateTime? updatedOn;
   $AttributeClass$
@@ -34,6 +35,7 @@ class $ModelClass$Model {
     this.previousUrl = '',
     this.enabled = true,
     this.deleted = false,
+    DateTime? deletedOn,
     DateTime? createdOn,
     DateTime? updatedOn,
     $ConstructorModelClass$
@@ -54,6 +56,9 @@ class $ModelClass$Model {
             nextUrl: nextUrl,
             previousUrl: previousUrl,
             enabled: map['enabled'] ?? true,
+            deletedOn: map.containsKey('deleted_on')
+                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['deleted_on'])
+                : null,
             createdOn: map.containsKey('created_on')
                 ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on'])
                 : null,

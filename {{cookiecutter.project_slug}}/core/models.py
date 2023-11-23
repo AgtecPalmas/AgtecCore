@@ -263,7 +263,7 @@ class Base(models.Model):
         ordering = ["id"]
 
     def get_exclude_hidden_fields(self):
-        return ["enabled", "deleted"]
+        return ["enabled", "deleted", "deleted_on"]
 
     def get_meta(self):
         return self._meta

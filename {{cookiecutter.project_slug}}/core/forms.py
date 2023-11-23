@@ -58,7 +58,7 @@ class BaseForm(forms.ModelForm):
 
     class Meta:
         model = Base
-        exclude = ["enabled", "deleted"]
+        exclude = ["enabled", "deleted", "deleted_on"]
 
 
 """

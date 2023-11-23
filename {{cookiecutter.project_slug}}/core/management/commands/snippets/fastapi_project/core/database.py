@@ -32,6 +32,7 @@ class Base(DeclarativeBase):
 class CoreBase(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True, default=uuid.uuid4)
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
+    deleted_on: Mapped[datetime.datetime] = mapped_column(DateTime)
     created_on: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.now()
     )

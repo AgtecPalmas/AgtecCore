@@ -44,7 +44,7 @@ class CriarAgendamentosForm(BaseForm):
     )
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = CriarAgendamentos
 
     def clean(self):
@@ -104,7 +104,7 @@ class AtendenteForm(BaseForm):
     """Form padrão para o model Atendente"""
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = Atendente
 
 
@@ -138,7 +138,7 @@ class AtendimentoForm(BaseForm):
     )
 
     class Meta:
-        exclude = ["deleted", "enabled"]
+        exclude = ["deleted", "enabled", "deleted_on"]
         model = Atendimento
 
     def clean(self):

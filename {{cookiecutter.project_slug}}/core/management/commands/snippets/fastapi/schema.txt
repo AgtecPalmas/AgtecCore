@@ -21,6 +21,7 @@ class $ModelClass$InDBBase($ModelClass$Base):
     deleted: bool
     created_on: datetime.datetime
     updated_on: datetime.datetime
+    deleted_on: Optional[datetime.datetime]
 
     class Config:
         from_attributes = True
