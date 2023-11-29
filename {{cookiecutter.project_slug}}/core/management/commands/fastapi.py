@@ -320,12 +320,11 @@ class Command(BaseCommand):
         self.__init_app(self.path_app)
 
         with Utils.ProgressBar() as bar:
-            task = bar.add_task(
-                f"Gerando App [b green]{self.app}[/]",
-                total=len(models),
-            )
-
-            for model in models:
+            for i, model in enumerate(models):
+                task = bar.add_task(
+                    f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
+                    total=len(models),
+                )
                 Utils.show_message(
                     f"Model {app}:{model.__name__}",
                     title=True,
