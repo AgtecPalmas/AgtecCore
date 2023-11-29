@@ -1,4 +1,5 @@
 alembic==1.11.*
+elastic-apm==6.19.0
 email-validator==2.0.0.post2
 fastapi==0.100.*
 passlib==1.7.*
