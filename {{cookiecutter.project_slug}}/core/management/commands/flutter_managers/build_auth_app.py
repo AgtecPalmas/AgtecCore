@@ -37,7 +37,7 @@ class AuthAppBuilder:
             self._build_state_file()
             self._build_controller_file()
             self._build_pages_directory()
-            
+
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do main file: {error}")
 
@@ -96,7 +96,9 @@ class AuthAppBuilder:
         try:
             for page in ["index", "signin", "signup", "termo_uso"]:
                 _target_file = Path(f"{self._auth_dir}/pages/{page}.dart")
-                _content = Utils.get_snippet(Path(f"{self._snippet_dir}/auth_{page}_page.txt"))
+                _content = Utils.get_snippet(
+                    Path(f"{self._snippet_dir}/auth_{page}_page.txt")
+                )
                 with open(_target_file, "w", encoding="utf-8") as _file:
                     _file.write(_content)
         except Exception as error:

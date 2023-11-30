@@ -7,13 +7,12 @@ import sys
 import time
 from pathlib import Path
 
-from django.apps import apps
-from django.core.management.base import BaseCommand
-
-from decouple import config
-
 from base.settings import FLUTTER_APPS
-from core.management.commands.constants.flutter import DJANGO_TYPES, FLUTTER_TYPES, SQLLITE_TYPES
+from core.management.commands.constants.flutter import (
+    DJANGO_TYPES,
+    FLUTTER_TYPES,
+    SQLLITE_TYPES,
+)
 from core.management.commands.flutter_managers import (
     AddPackagesBuilder,
     AuthAppBuilder,
@@ -26,6 +25,7 @@ from core.management.commands.flutter_managers import (
     ExceptionClassBuilder,
     LoggerBuilder,
     MainFileBuilder,
+    MixinsClassBuilder,
     ModelsBuilder,
     NamedRoutesBuilder,
     PagesBuilder,
@@ -38,10 +38,12 @@ from core.management.commands.flutter_managers import (
     UserInterfaceBuilder,
     UtilsBuilder,
     WidgetBuilder,
-    MixinsClassBuilder,
 )
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
+from decouple import config
+from django.apps import apps
+from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("django_debug")
 
@@ -57,10 +59,16 @@ class AppModel:
             self.app = apps.get_app_config(self.app_name_lower)
             self.model_name = str(model_name).strip()
             self.model_name_lower = self.model_name.lower()
+
             if model_name is not None:
                 self.model = self.app.get_model(self.model_name)
+
             else:
-                self.models = ((x, x.__name__.strip(), x.__name__.strip().lower()) for x in self.app.get_models())
+                self.models = (
+                    (x, x.__name__.strip(), x.__name__.strip().lower())
+                    for x in self.app.get_models()
+                )
+
             self.operation_system = platform.system().lower()
 
         except Exception as error:
@@ -79,6 +87,7 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}")
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_app_dir: {error}")
 
@@ -95,7 +104,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_app_model_dir {error}")
 
@@ -112,7 +124,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/pages/")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/pages/"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_views_dir {error}")
 
@@ -127,13 +142,16 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            _path_root = f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/pages"
+            _path_root = (
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/pages"
+            )
             _create = Path(f"{_path_root}/create.dart")
             _detail = Path(f"{_path_root}/detail.dart")
             _index = Path(f"{_path_root}/index.dart")
             _list = Path(f"{_path_root}/list.dart")
             _update = Path(f"{_path_root}/update.dart")
             return _create, _detail, _index, _list, _update
+
         except Exception as error:
             Utils.show_error(f"Error in {error}")
 
@@ -150,7 +168,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/data.dart")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/data.dart"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_data_file: {error}")
 
@@ -167,7 +188,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/model.dart")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/model.dart"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_model_file {error}")
 
@@ -184,7 +208,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/cubit.dart")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/cubit.dart"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_provider_file {error}")
 
@@ -201,7 +228,10 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/state.dart")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/state.dart"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_provider_file {error}")
 
@@ -218,20 +248,12 @@ class AppModel:
             _path_flutter = self.path_flutter
             _app_name_lower = self.app_name_lower
             _model_name_lower = self.model_name_lower
-            return Path(f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/service.dart")
+            return Path(
+                f"{_path_flutter}/lib/apps/{_app_name_lower}/{_model_name_lower}/service.dart"
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in get_path_service_file {error}")
-
-    def print_string(self):
-        """
-        print_string _summary_
-        """
-        print("Models (Generator)")
-        if self.models is not None:
-            for __model in self.models:
-                print(f"Model: {__model[0]} Name: {__model[1]} - {__model[2]}")
-        else:
-            print("None")
 
     def get_app_model_name(self, title_case=False):
         """Método responsável por retornar o nome do Models das app do projeto Django"""
@@ -239,6 +261,7 @@ class AppModel:
             if title_case is True:
                 return f"{self.app_name.title()}{self.model_name}"
             return f"{self.app_name}{self.model_name}"
+
         except Exception as error:
             Utils.show_message(f"Error in get_app_model_name: {error}")
             return None
@@ -254,14 +277,13 @@ class Command(BaseCommand):
         self.path_root: Path = os.getcwd()
         self.path_core: Path = os.path.join(self.BASE_DIR, "core")
         self.path_base: Path = Path(f"{self.path_root}/base")
-        self.organization_flutter_name = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
+        self.organization_flutter_name = config(
+            "ORGANIZATION_FLUTTER_NAME", default="agtec_core"
+        )
 
         self.operation_system = platform.system().lower()
         self.path_command = Path(__file__).parent
 
-        _path_project = os.getcwd()
-
-        # Refatorando para Path
         self.project = Path.cwd().parts[-1]
         self.path_root = Path(*Path.cwd().parts[:-2]).as_posix()
         self.flutter_dir = str(Path(f"{self.path_root}/Flutter/{self.project.lower()}"))
@@ -272,51 +294,84 @@ class Command(BaseCommand):
         self.core_dir = str(Path(f"{self.flutter_dir}/lib/core"))
         self.ui_dir = str(Path(f"{self.core_dir}/user_interface"))
         self.ui_extensions = str(Path(f"{self.core_dir}/extensions"))
-        self.ui_extensions_file = str(Path(f"{self.ui_extensions}/size_screen_extension.dart"))
-        self.ui_string_extensions_file = str(Path(f"{self.ui_extensions}/string_methods_extensions.dart"))
+        self.ui_extensions_file = str(
+            Path(f"{self.ui_extensions}/size_screen_extension.dart")
+        )
+        self.ui_string_extensions_file = str(
+            Path(f"{self.ui_extensions}/string_methods_extensions.dart")
+        )
 
         self.config_file = str(Path(f"{self.core_dir}/config.dart"))
         self.util_file = str(Path(f"{self.core_dir}/util.dart"))
-        self.snippet_dir = str(Path(f"{self.path_core}/management/commands/snippets/flutter"))
+        self.snippet_dir = str(
+            Path(f"{self.path_core}/management/commands/snippets/flutter")
+        )
 
         self.app_configuration = str(Path(f"{self.flutter_dir}/lib/apps/configuracao"))
-        self.app_configuration_page_file = str(Path(f"{self.app_configuration}/index.page.dart"))
-        self.app_configuration_controller_file = str(Path(f"{self.app_configuration}/controller.dart"))
-        self.app_configuration_profile_file = str(Path(f"{self.app_configuration}/model.dart"))
-        self.app_configuration_cubit_file = str(Path(f"{self.app_configuration}/cubit.dart"))
-        self.app_configuration_cubit_state_file = str(Path(f"{self.app_configuration}/state.dart"))
+        self.app_configuration_page_file = str(
+            Path(f"{self.app_configuration}/index.page.dart")
+        )
+        self.app_configuration_controller_file = str(
+            Path(f"{self.app_configuration}/controller.dart")
+        )
+        self.app_configuration_profile_file = str(
+            Path(f"{self.app_configuration}/model.dart")
+        )
+        self.app_configuration_cubit_file = str(
+            Path(f"{self.app_configuration}/cubit.dart")
+        )
+        self.app_configuration_cubit_state_file = str(
+            Path(f"{self.app_configuration}/state.dart")
+        )
 
         self.current_app_model = None
 
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    BASE_DIR = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    )
 
     _django_types = DJANGO_TYPES
-
     _flutter_types = FLUTTER_TYPES
-
     _sqlite_types = SQLLITE_TYPES
 
     def add_arguments(self, parser):
         parser.add_argument("App", type=str, nargs="?")
         parser.add_argument("Model", type=str, nargs="?")
-        parser.add_argument("--app", action="store_true", dest="app", help="Criar a App e seus models")
         parser.add_argument(
-            "--app_model", action="store_true", dest="app_model", help="Criar a App e o Model informado"
+            "--app", action="store_true", dest="app", help="Criar a App e seus models"
         )
-        parser.add_argument("--main", action="store_true", dest="main", help="Renderizar a main.dart")
-        parser.add_argument("--yaml", action="store_true", dest="yaml", help="Refatorando o YAML")
+        parser.add_argument(
+            "--app_model",
+            action="store_true",
+            dest="app_model",
+            help="Criar a App e o Model informado",
+        )
+        parser.add_argument(
+            "--main", action="store_true", dest="main", help="Renderizar a main.dart"
+        )
+        parser.add_argument(
+            "--yaml", action="store_true", dest="yaml", help="Refatorando o YAML"
+        )
         parser.add_argument(
             "--init_cubit",
             action="store_true",
             dest="init_cubit",
             help="Gerar o projeto Flutter utilizando o Cubit como gerencia de estado.",
         )
-        parser.add_argument("--clear", action="store_true", dest="clear", help="Limpar projeto flutter.")
-        parser.add_argument("--routers", action="store_true", dest="routers", help="Criar o arquivo de rotas nomeadas.")
+        parser.add_argument(
+            "--clear", action="store_true", dest="clear", help="Limpar projeto flutter."
+        )
+        parser.add_argument(
+            "--routers",
+            action="store_true",
+            dest="routers",
+            help="Criar o arquivo de rotas nomeadas.",
+        )
 
     def _ignore_fields(self, field):
         try:
             return ignore_base_fields(field)
+
         except Exception as error:
             Utils.show_error(f"Error in _ignore_fields: {error}")
 
@@ -331,9 +386,11 @@ class Command(BaseCommand):
                 _flutter_dir = self.flutter_dir
                 _cmd = f"{_command}={_project_name} --org br.com.{_organization} {_platforms} {_flutter_dir}"
                 subprocess.call(_cmd, shell=True)
+                shutil.copyfile(
+                    f"{self.snippet_dir}/README.md", f"{self.flutter_dir}/README.md"
+                )
                 Utils.show_message("Projeto criado com sucesso.")
-                # Copiando o arquivo README.md que está no diretório snippets flutter para a raiz do projeto
-                shutil.copyfile(f"{self.snippet_dir}/README.md", f"{self.flutter_dir}/README.md")
+
         except Exception as error:
             Utils.show_error(f"Error in _init_flutter: {error}")
 
@@ -360,12 +417,14 @@ class Command(BaseCommand):
     def _build_auth_app(self):
         try:
             AuthAppBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __build_auth_app {error}")
 
     def _register_providers_controller(self) -> tuple:
         try:
             return RegisterProviderControllerBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _register_providers_controller: {error}")
             return None, None
@@ -375,7 +434,9 @@ class Command(BaseCommand):
             __widget_file = Path(f"{app.get_path_views_dir()}/widget.dart")
             if Utils.check_file_is_locked(__widget_file):
                 return
+
             WidgetBuilder(command=self, app=app).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_widget {error}")
 
@@ -395,6 +456,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(_path):
                 os.makedirs(_path)
             CustomDIOInterceptorsBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __build_custom_dio_interceptors {error}")
 
@@ -404,6 +466,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(_path_directory):
                 os.makedirs(_path_directory)
             CustomDIOBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __build_custom_dio {error}")
 
@@ -412,6 +475,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.ui_dir):
                 os.makedirs(self.ui_dir)
             CustomStyleBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_custom_style {error}")
 
@@ -420,6 +484,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.ui_extensions):
                 os.makedirs(self.ui_extensions)
             SizedExtensionsBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_sized_extensions {error}")
 
@@ -428,6 +493,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.ui_extensions):
                 os.makedirs(self.ui_extensions)
             StringExtensionsBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_string_extensions {error}")
 
@@ -436,6 +502,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.core_dir):
                 os.makedirs(self.core_dir)
             LoggerBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __build_logger_file {error}")
 
@@ -443,7 +510,9 @@ class Command(BaseCommand):
         try:
             if app.model is None:
                 return
+
             ControllerBuilder(command=self, app=app).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _controller_parser: {error}")
 
@@ -451,7 +520,9 @@ class Command(BaseCommand):
         try:
             if app.model is None:
                 return
+
             DataServiceLayerBuild(command=self, app=app).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _data_local_and_service_layer_parser: {error}")
 
@@ -459,16 +530,18 @@ class Command(BaseCommand):
         try:
             if app.model is None:
                 return
+
             ModelsBuilder(command=self, app=app).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _model_parser: {error}")
 
     def _build_custom_colors(self):
         try:
-            # Verificando se o diretório das extensions existe
             if not Utils.check_dir(self.ui_dir):
                 os.makedirs(self.ui_dir)
             CustomColorsBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_custom_colors {error}")
 
@@ -477,6 +550,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.core_dir):
                 os.makedirs(self.core_dir)
             UtilsBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __build_utils {error}")
 
@@ -485,9 +559,9 @@ class Command(BaseCommand):
             path_routes = Path(f"{self.flutter_dir}/lib/routers.dart")
             if Utils.check_file_is_locked(path_routes):
                 return
-            # for app in FLUTTER_APPS:
-            #     _current_app = AppModel(self.flutter_project, app)
+
             NamedRoutesBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
+
         except Exception as error:
             Utils.show_message(f"Error in __create_name_route: {error}")
 
@@ -496,6 +570,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.app_configuration):
                 os.makedirs(self.app_configuration)
                 SettingsControllerBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _buid_settings: {error}")
 
@@ -504,6 +579,7 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.ui_dir):
                 os.makedirs(self.ui_dir)
             UserInterfaceBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_user_interface: {error}")
 
@@ -512,25 +588,31 @@ class Command(BaseCommand):
             if not Utils.check_dir(self.ui_dir):
                 os.makedirs(self.ui_dir)
             MixinsClassBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_user_interface: {error}")
 
     def _add_packages(self):
         try:
             AddPackagesBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _add_packages: {error}")
 
     def _build_translate_strings(self):
         try:
             TranslateStringBuilder(command=self).build()
+
         except Exception as error:
             Utils.show_error(f"Error in _build_translate_strings: {error}")
 
     def _create_source_from_model(self):
         Utils.show_message("Criando as apps baseado na App e no Model")
         try:
-            self._create_source_files(self.current_app_model.app_name, self.current_app_model.model_name)
+            self._create_source_files(
+                self.current_app_model.app_name, self.current_app_model.model_name
+            )
+
         except Exception as error:
             Utils.show_error(f"Error in __create_source_from_model: {error}")
 
@@ -539,6 +621,7 @@ class Command(BaseCommand):
         try:
             for model in self.current_app_model.models:
                 self._create_source_files(self.current_app_model.app_name, model[1])
+
         except Exception as error:
             Utils.show_error(f"Error in __create_source_from_generators: {error}")
 
@@ -554,12 +637,14 @@ class Command(BaseCommand):
 
             _source_class = AppModel(self.flutter_dir, app_name, model_name)
 
-            # Refatorado para manager externo - OK
-            SourceFileBuilder(command=self, source_app=_source_class, app_name=app_name, model_name=model_name).build()
-            # Refatorado para manager externo - OK
-            PagesBuilder(command=self, source_app=_source_class).build()
+            SourceFileBuilder(
+                command=self,
+                source_app=_source_class,
+                app_name=app_name,
+                model_name=model_name,
+            ).build()
 
-            # Refatorado para manager externo - OK
+            PagesBuilder(command=self, source_app=_source_class).build()
             self._build_widget(_source_class)
             self._model_parser(_source_class)
             self._data_local_and_service_layer_parser(_source_class)
@@ -571,13 +656,20 @@ class Command(BaseCommand):
     def _replace_main(self):
         try:
             MainFileBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
+
         except Exception as error:
             Utils.show_error(f"Error in __replace_main: {error}")
 
     def _check_flutter_installation(self) -> bool:
-        if subprocess.call("flutter --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE):
+        if subprocess.call(
+            "flutter --version",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        ):
             Utils.show_error("Flutter não está instalado na máquina.")
             return False
+
         return True
 
     def call_methods(self, options):
@@ -588,12 +680,15 @@ class Command(BaseCommand):
         if options["main"]:
             self._replace_main()
             return
+
         elif options["yaml"]:
             self._add_packages()
             return
+
         elif options["routers"]:
             self._build_named_routes()
             return
+
         elif options["clear"]:
             self._clear_project()
             sys.exit()
@@ -649,7 +744,9 @@ class Command(BaseCommand):
         if not FLUTTER_APPS:
             Utils.show_error("Não foram informadas as APPS a serem mapeadas")
             return
+
         self.call_methods(options)
+
         for _app in FLUTTER_APPS:
             self.current_app_model = AppModel(self.flutter_project, _app)
             self._create_source_from_generators()
@@ -658,5 +755,6 @@ class Command(BaseCommand):
         try:
             _path = path or f"{self.flutter_dir}"
             shutil.rmtree(_path)
+
         except Exception as error:
             Utils.show_message(f"Error in __clear_project: {error}")

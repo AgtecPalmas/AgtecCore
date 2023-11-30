@@ -1,8 +1,10 @@
 import logging
 import os
+
 from core.management.commands.utils import Utils
 
 logger = logging.getLogger("django_debug")
+
 
 class SourceFileBuilder:
     def __init__(self, command, source_app, app_name, model_name) -> None:
@@ -32,7 +34,9 @@ class SourceFileBuilder:
     def build(self):
         try:
             if Utils.check_dir(self._model_dir) is False:
-                Utils.show_message(f"Criando o Source do Model: {self._app_name}.{self._model_name}")
+                Utils.show_message(
+                    f"Criando o Source do Model: {self._app_name}.{self._model_name}"
+                )
                 os.makedirs(self._model_dir)
 
             self._build_views()
@@ -40,32 +44,45 @@ class SourceFileBuilder:
             self._build_model_file()
             self._build_data_file()
 
-                
         except Exception as e:
-            logger.error(f"Ocorreu o erro: {e} ao executar o build do SourceFileBuilder")
+            logger.error(
+                f"Ocorreu o erro: {e} ao executar o build do SourceFileBuilder"
+            )
 
     def _build_views(self):
         try:
             if Utils.check_dir(self._views_dir) is False:
-                Utils.show_message(f"Criando o diretório das Views: {self._app_name}.{self._model_name}")
+                Utils.show_message(
+                    f"Criando o diretório das Views: {self._app_name}.{self._model_name}"
+                )
                 os.makedirs(self._views_dir)
                 if self._views is not None:
                     with open(self._views[0], "w", encoding="utf-8") as _file:
-                        _file.write(f"// Create Page {self._app_name} {self._model_name}")
+                        _file.write(
+                            f"// Create Page {self._app_name} {self._model_name}"
+                        )
 
                     with open(self._views[1], "w", encoding="utf-8") as _file:
-                        _file.write(f"// Detail Page {self._app_name} {self._model_name}")
+                        _file.write(
+                            f"// Detail Page {self._app_name} {self._model_name}"
+                        )
 
                     with open(self._views[2], "w", encoding="utf-8") as _file:
-                        _file.write(f"// Index Page {self._app_name} {self._model_name}")
+                        _file.write(
+                            f"// Index Page {self._app_name} {self._model_name}"
+                        )
 
                     with open(self._views[3], "w", encoding="utf-8") as _file:
                         _file.write(f"// List Page {self._app_name} {self._model_name}")
 
                     with open(self._views[4], "w", encoding="utf-8") as _file:
-                        _file.write(f"// Update Page {self._app_name} {self._model_name}")
+                        _file.write(
+                            f"// Update Page {self._app_name} {self._model_name}"
+                        )
         except Exception as e:
-            Utils.show_error(f"Ocorreu o erro: {e} ao executar o _build_views do SourceFileBuilder")
+            Utils.show_error(
+                f"Ocorreu o erro: {e} ao executar o _build_views do SourceFileBuilder"
+            )
 
     def _build_model_file(self):
         try:
@@ -73,7 +90,9 @@ class SourceFileBuilder:
                 with open(self._model_file, "w", encoding="utf-8") as _file:
                     _file.write(f"// Modelo do {self._model_name}")
         except Exception as e:
-            Utils.show_error(f"Ocorreu o erro: {e} ao executar o _build_model_file do SourceFileBuilder")
+            Utils.show_error(
+                f"Ocorreu o erro: {e} ao executar o _build_model_file do SourceFileBuilder"
+            )
 
     def _build_data_file(self):
         try:
@@ -81,7 +100,9 @@ class SourceFileBuilder:
                 with open(self._data_file, "w", encoding="utf-8") as _file:
                     _file.write(f"// Persistência do {self._model_name}")
         except Exception as e:
-            Utils.show_error(f"Ocorreu o erro: {e} ao executar o _build_data_file do SourceFileBuilder")
+            Utils.show_error(
+                f"Ocorreu o erro: {e} ao executar o _build_data_file do SourceFileBuilder"
+            )
 
     def _build_service_file(self):
         try:
@@ -89,7 +110,9 @@ class SourceFileBuilder:
                 with open(self._service_file, "w", encoding="utf-8") as _file:
                     _file.write(f"// Service do {self._model_name}")
         except Exception as e:
-            Utils.show_error(f"Ocorreu o erro: {e} ao executar o _build_service_file do SourceFileBuilder")
+            Utils.show_error(
+                f"Ocorreu o erro: {e} ao executar o _build_service_file do SourceFileBuilder"
+            )
 
     def _build_controller_files(self):
         try:
@@ -100,4 +123,6 @@ class SourceFileBuilder:
                 with open(self._controller_state_file, "w", encoding="utf-8") as _file:
                     _file.write(f"// Controller do {self._model_name}")
         except Exception as e:
-            Utils.show_error(f"Ocorreu o erro: {e} ao executar o _build_service_file do SourceFileBuilder")
+            Utils.show_error(
+                f"Ocorreu o erro: {e} ao executar o _build_service_file do SourceFileBuilder"
+            )

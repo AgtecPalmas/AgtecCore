@@ -51,7 +51,9 @@ class ControllerBuilder:
             if Utils.check_file_is_locked(str(self._controller_path_file)):
                 Utils.show_error(f"File is locked: {self._controller_path_file}")
                 return
-            _snippet = Utils.get_snippet(str(Path(f"{self.snippet_dir}/controller.txt")))
+            _snippet = Utils.get_snippet(
+                str(Path(f"{self.snippet_dir}/controller.txt"))
+            )
             _content = self._parser_content(_snippet)
             with open(self._controller_path_file, "w", encoding="utf-8") as file:
                 file.write(_content)

@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from core.management.commands.flutter_managers.utils import convert_to_camel_case
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
