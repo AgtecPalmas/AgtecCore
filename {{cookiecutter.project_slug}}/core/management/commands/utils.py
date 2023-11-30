@@ -18,7 +18,7 @@ from rich.progress import (
 from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
 from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 
-from .constants.fastapi import *
+from .constants.fastapi import IGNORE_FIELDS
 
 
 class Utils(object):
