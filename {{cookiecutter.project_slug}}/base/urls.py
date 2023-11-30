@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from core.views.base import BaseIndexTemplate
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -21,6 +20,14 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from core.views.base import BaseIndexTemplate
+from core.views.errors import (
+    BadRequestView,
+    PageNotFoundView,
+    PermissionDeniedView,
+    ServerErrorView,
+)
 
 from . import urls_api
 
@@ -67,3 +74,8 @@ if settings.DEBUG:
     urlpatterns += [
         path("__debug__/", include(debug_toolbar.urls)),
     ]
+
+handler400 = BadRequestView.as_view()
+handler403 = PermissionDeniedView.as_view()
+handler404 = PageNotFoundView.as_view()
+handler500 = ServerErrorView.as_view()
