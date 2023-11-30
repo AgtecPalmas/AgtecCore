@@ -17,7 +17,7 @@ class AddPackagesBuilder:
 
     def build(self):
         """
-        build _summary_
+        Método responsável por executar o build do arquivo de AddPackages
         """
         try:
             _snippet_content = Utils.get_snippet(str(self._yaml_file_snippet))

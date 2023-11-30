@@ -24,17 +24,17 @@ def convert_to_camel_case(text: str) -> str:
     Parameters
     ----------
     text : str
-        _description_
+        Texto a ser convertido
 
     Returns
     -------
     str
-        _description_
+        Texto convertido
 
     Raises
     ------
     error
-        _description_
+        Erro ao converter o texto
     """
     try:
         components = text.split("_")

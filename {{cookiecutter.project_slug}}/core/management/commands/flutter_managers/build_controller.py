@@ -23,12 +23,12 @@ class ControllerBuilder:
 
     def build(self):
         """
-        build _summary_
+        Método responsável por executar o build do arquivo de Controller
 
         Raises
         ------
         error
-            _description_
+            Erro ao executar o build do arquivo de Controller
         """
         Utils.show_message(
             f"Building controller layer from: {self._app_name} | {self._model_name_lower}",
