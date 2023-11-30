@@ -26,12 +26,14 @@ class NamedRoutesBuilder:
         self._imports_apps = ""
         self._app_name_lower = ""
         self._snippet_imports = "import 'apps/$APP$/$model$/pages/$page$.dart';"
-        self._snippet_route = "case $ClassName$$PageName$.routeName:\n"
-        self._snippet_route += "    return CupertinoPageRoute(builder: (_) => const $ClassName$$PageName$(),);\n"
-
-        # Snippet para rotas de edição e detalhamento
-        self._snippet_route_created_updated = "case $ClassName$$PageName$.routeName:\n"
-        self._snippet_route_created_updated += "  if(args is $ClassName$Model) {\n"
+        self._snippet_route = (
+            "case $ClassName$$PageName$.routeName:\n"
+            + "    return CupertinoPageRoute(builder: (_) => const $ClassName$$PageName$(),);\n"
+        )
+        self._snippet_route_created_updated = (
+            "case $ClassName$$PageName$.routeName:\n"
+            + "  if(args is $ClassName$Model) {\n"
+        )
         self._snippet_route_created_updated += (
             "    return CupertinoPageRoute(builder: (_) => $ClassName$$PageName$("
             "$ModelClassCamelCase$Model: args,),);}\n"
@@ -46,12 +48,12 @@ class NamedRoutesBuilder:
 
     def build(self):
         """
-        build _summary_
+        Método responsável por executar o build do arquivo de NamedRoutes
 
         Raises
         ------
         error
-            _description_
+            Erro ao executar o build do arquivo de NamedRoutes
         """
         from core.management.commands.flutter import AppModel
 

@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from core.management.commands.flutter_managers.utils import convert_to_camel_case
@@ -16,25 +15,13 @@ class DataServiceLayerBuild:
         self._app_name_lower = self.app.app_name_lower
         self._model_name_lower = self.app.model_name_lower
         self._interface_path_file = Path(
-            "{}/lib/apps/{}/{}/interface.dart".format(
-                self._path_flutter,
-                self._app_name_lower,
-                self._model_name_lower,
-            )
+            f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/interface.dart"
         )
         self._service_path_file = Path(
-            "{}/lib/apps/{}/{}/service.dart".format(
-                self._path_flutter,
-                self._app_name_lower,
-                self._model_name_lower,
-            )
+            f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/service.dart"
         )
         self._local_data_path_file = Path(
-            "{}/lib/apps/{}/{}/data.dart".format(
-                self._path_flutter,
-                self._app_name_lower,
-                self._model_name_lower,
-            )
+            f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/data.dart"
         )
 
     def build(self):

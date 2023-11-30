@@ -28,11 +28,7 @@ class ModelsBuilder:
         self._content_constructor = ""
         self._ignored_fields = ["enabled", "deleted", "createdOn", "updatedOn"]
         self._model_path_file = Path(
-            "{}/lib/apps/{}/{}/model.dart".format(
-                self._path_flutter,
-                self._app_name_lower,
-                self._model_name_lower,
-            )
+            f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/model.dart"
         )
         self._snippet_model = Utils.get_snippet(
             str(Path(f"{self.snippet_dir}/model.txt"))
@@ -75,16 +71,12 @@ class ModelsBuilder:
                         self._content_constructor += f"DateTime? {_name_dart},"
 
                     if default_value is not None:
-                        self._content_constructor += "this.{} = {},\n".format(
-                            _name_dart, default_value
+                        self._content_constructor += (
+                            f"this.{_name_dart} = {default_value},\n"
                         )
 
-                if _name_dart not in self._ignored_fields:
                     if str(_atribute) == "DateTime?":
-                        self._content_from_json += "{}: map.containsKey('{}')? Util.convertDate(map['{}']): null, \n".format(
-                            _name_dart, _name, _name
-                        )
-                        # self._content_from_json += "? null:  Util.convertDate(map['{}']),\n".format(_name, " " * 8)
+                        self._content_from_json += f"{_name_dart}: map.containsKey('{_name}')? Util.convertDate(map['{_name}']): null, \n"
                     elif str(_atribute) == "double":
                         self._content_from_json += (
                             "{1}: map['{2}'] ?? 0.0,\n{0}".format(
@@ -97,45 +89,34 @@ class ModelsBuilder:
                                 " " * 8, _name_dart, _name
                             )
                         )
+                    elif _name_dart.startswith("fk"):
+                        self._content_from_json += "{1}: map['{2}'] ?? '',\n{0}".format(
+                            " " * 8, _name_dart, _name
+                        )
                     else:
-                        if _name_dart.startswith("fk"):
-                            self._content_from_json += (
-                                "{1}: map['{2}'] ?? '',\n{0}".format(
-                                    " " * 8, _name_dart, _name
-                                )
-                            )
-                        else:
-                            self._content_from_json += (
-                                "{1}: map['{2}'] ?? '',\n{0}".format(
-                                    " " * 8, _name_dart, _name
-                                )
-                            )
+                        self._content_from_json += "{1}: map['{2}'] ?? '',\n{0}".format(
+                            " " * 8, _name_dart, _name
+                        )
 
-                if str(_field_type) == "DateTimeField":
-                    self._content_to_map += "'{}': Util.stringDateTimeSplit".format(
-                        _name
-                    )
-                    self._content_to_map += "({}, returnType: 'dt'),\n{}".format(
-                        _name_dart, " " * 8
+                if _field_type == "DateTimeField":
+                    self._content_to_map += f"'{_name}': Util.stringDateTimeSplit"
+                    self._content_to_map += (
+                        f"""({_name_dart}, returnType: 'dt'),\n{" " * 8}"""
                     )
                     continue
-                if str(_field_type) == "DateField":
-                    self._content_to_map += "'{}': Util.stringDateTimeSplit".format(
-                        _name
-                    )
-                    self._content_to_map += "({}, returnType: 'd'),\n{}".format(
-                        _name_dart, " " * 8
+                if _field_type == "DateField":
+                    self._content_to_map += f"'{_name}': Util.stringDateTimeSplit"
+                    self._content_to_map += (
+                        f"""({_name_dart}, returnType: 'd'),\n{" " * 8}"""
                     )
                     continue
-                if str(_field_type) == "TimeField":
-                    self._content_to_map += "'{}': Util.stringDateTimeSplit".format(
-                        _name
-                    )
-                    self._content_to_map += "({}, returnType: 't'),\n{}".format(
-                        _name_dart, " " * 8
+                if _field_type == "TimeField":
+                    self._content_to_map += f"'{_name}': Util.stringDateTimeSplit"
+                    self._content_to_map += (
+                        f"""({_name_dart}, returnType: 't'),\n{" " * 8}"""
                     )
                     continue
-                if str(_field_type) in ["FloatField", "DecimalField"]:
+                if _field_type in {"FloatField", "DecimalField"}:
                     self._content_to_map += "'{0}': {1},\n{2}".format(
                         _name, _name_dart, " " * 8
                     )
