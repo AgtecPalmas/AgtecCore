@@ -6,21 +6,16 @@ FileLocked
 {% extends "core/index_app.html" %}
 {% load base %}
 {% block title %}
-    Core
+    {{ system_name }}
 {% endblock title %}
-{% block title_modulo %}
-    Core
-{% endblock title_modulo %}
 {% block content %}
     <div class="row clearfix">
         {% for app in apps %}
             {% comment %} Verificando permissão ao App {% endcomment %}
             {% if app.real_name_app.lower in perms %}
-                    {% if not forloop.first and forloop.counter0|divisibleby:2 %}
-                        <div class="w-100"></div>
-                    {% endif %}
+                {% if not app_name or app_name and app.real_name_app.lower == '$app_name$' %}
                     <div class="col-md-6 col-sm-12 mb-5">
-                        <div class="p-3 bg-white rounded shadow-sm h-100">
+                        <div class="p-3 br-card h-100 rounder-md">
                             <h4 class="mb-15 text-blue">{{ app.name_app }}</h4>
                             <div class="card-body">
                                 <div class="row">
@@ -28,7 +23,7 @@ FileLocked
                                         {% comment %} Checa permissão de view {% endcomment %}
                                         {% if model|has_view_permission:request %}
                                             {% comment %} Quantidade impar de modelos usa largura total {% endcomment %}
-                                            <div class="col-{% if forloop.revcounter0|divisibleby:2 and forloop.first %}md-12 {% else %}md-6 {% endif %} mb-3">
+                                            <div class="col-{% if forloop.revcounter0|divisibleby:2 and forloop.first %}md-12 {% else %}md-6{% endif %} mb-3">
                                                 <a class="br-button secondary block large text-wrap"
                                                    href="{% url model.path_url %}">{{ model.name_model }}</a>
                                             </div>
@@ -38,6 +33,7 @@ FileLocked
                             </div>
                         </div>
                     </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>
