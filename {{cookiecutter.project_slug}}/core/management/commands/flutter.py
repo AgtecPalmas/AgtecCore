@@ -76,12 +76,12 @@ class AppModel:
 
     def get_path_app_dir(self) -> Path:
         """
-        get_path_app_dir _summary_
+        Retorna o path da app do projeto Flutter
 
         Returns
         -------
         Path
-            _description_
+            Path da app do projeto Flutter
         """
         try:
             _path_flutter = self.path_flutter
@@ -93,12 +93,12 @@ class AppModel:
 
     def get_path_app_model_dir(self) -> Path:
         """
-        get_path_app_model_dir _summary_
+        Retorna o path do model da app do projeto Flutter
 
         Returns
         -------
         Path
-            _description_
+            Path do model da app do projeto Flutter
         """
         try:
             _path_flutter = self.path_flutter
@@ -113,12 +113,12 @@ class AppModel:
 
     def get_path_views_dir(self) -> Path:
         """
-        get_path_views_dir _summary_
+        Retorna o path das views da app do projeto Flutter
 
         Returns
         -------
         Path
-            _description_
+            Path das views da app do projeto Flutter
         """
         try:
             _path_flutter = self.path_flutter
@@ -157,7 +157,7 @@ class AppModel:
 
     def get_path_data_file(self) -> Path:
         """
-        get_path_data_file Método para retornar o path do arquivo data.dart
+        Método para retornar o path do arquivo data.dart
 
         Returns
         -------
@@ -177,12 +177,12 @@ class AppModel:
 
     def get_path_model_file(self) -> Path:
         """
-        get_path_model_file _summary_
+        Retorna o path do arquivo model.dart
 
         Returns
         -------
         Path
-            _description_
+            Path do arquivo model.dart
         """
         try:
             _path_flutter = self.path_flutter
@@ -197,12 +197,12 @@ class AppModel:
 
     def get_path_cubit_file(self) -> Path:
         """
-        get_path_cubit_file _summary_
+        Retorna o path do arquivo cubit.dart
 
         Returns
         -------
         Path
-            _description_
+            Path do arquivo cubit.dart
         """
         try:
             _path_flutter = self.path_flutter
@@ -217,12 +217,12 @@ class AppModel:
 
     def get_path_cubit_state_file(self) -> Path:
         """
-        get_path_cubit_state_file _summary_
+        Retorna o path do arquivo state.dart
 
         Returns
         -------
         Path
-            _description_
+            Path do arquivo state.dart
         """
         try:
             _path_flutter = self.path_flutter
@@ -237,12 +237,12 @@ class AppModel:
 
     def get_path_service_file(self) -> Path:
         """
-        get_path_service_file _summary_
+        Retorna o path do arquivo service.dart
 
         Returns
         -------
         Path
-            _description_
+            Path do arquivo service.dart
         """
         try:
             _path_flutter = self.path_flutter
