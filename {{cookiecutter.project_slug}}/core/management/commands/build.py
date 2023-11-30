@@ -397,12 +397,7 @@ class Command(BaseCommand):
         return
 
     def handle(self, *args, **options):
-        print(
-            Panel(
-                Text("AGTEC CORE", justify="center", style="cyan bold"),
-                border_style="cyan",
-            )
-        )
+        Utils.show_core_box("", tipo="core")
 
         self.options = options
         app = Utils.clear_string(options.get("App"))
@@ -426,9 +421,7 @@ class Command(BaseCommand):
         self.path_api_urls = Path(f"{self.path_api}/api_urls.py")
         self.path_serializer = Path(f"{self.path_api}/serializers.py")
 
-        Utils.show_message(
-            f"App {self.app}", title=True, emoji="toolbox", box_style=box.ASCII2
-        )
+        Utils.show_core_box(f"App {self.app}", tipo="app")
 
         models = []
 
@@ -440,17 +433,12 @@ class Command(BaseCommand):
             models = list(self.app_instance.get_models())
 
         with Utils.ProgressBar() as bar:
-            task = bar.add_task(
-                f"Gerando [b green]{self.app}[/]",
-                total=len(models),
-            )
-
-            for model in models:
-                Utils.show_message(
-                    f"Model {self.app}:{model.__name__}",
-                    title=True,
-                    emoji="hourglass_flowing_sand",
+            for i, model in enumerate(models):
+                task = bar.add_task(
+                    f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
+                    total=len(models),
                 )
+                Utils.show_core_box(f"Model {self.app}:{model.__name__}", tipo="model")
                 model = model.__name__
                 self.model = model.strip()
                 self.model_lower = model.lower()
