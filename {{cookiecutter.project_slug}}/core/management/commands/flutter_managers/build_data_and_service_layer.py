@@ -53,47 +53,32 @@ class DataServiceLayerBuild:
     def _parser_interface(self):
         try:
             if Utils.check_file_is_locked(str(self._interface_path_file)):
-                Utils.show_message(
-                    f"File is locked: {self._interface_path_file}",
-                    title=True,
-                    border_color="red",
-                )
                 return
             content = self._parser_content(
                 Utils.get_snippet(str(Path(f"{self.snippet_dir}/interface.txt")))
             )
             with open(self._interface_path_file, "w", encoding="utf-8") as service_file:
                 service_file.write(content)
-            Utils.show_message(f"Builb interface to model: {self._app_name}")
+            Utils.show_message("Interfaces criadas com sucesso")
         except Exception as error:
             raise error
 
     def _parser_service(self):
         try:
             if Utils.check_file_is_locked(str(self._service_path_file)):
-                Utils.show_message(
-                    f"File is locked: {self._service_path_file}",
-                    title=True,
-                    border_color="red",
-                )
                 return
             content = self._parser_content(
                 Utils.get_snippet(str(Path(f"{self.snippet_dir}/service.txt")))
             )
             with open(self._service_path_file, "w", encoding="utf-8") as service_file:
                 service_file.write(content)
-            Utils.show_message(f"Builb service to model: {self._app_name}")
+            Utils.show_message("Services criados com sucesso")
         except Exception as error:
             raise error
 
     def _parser_local_data(self):
         try:
             if Utils.check_file_is_locked(str(self._local_data_path_file)):
-                Utils.show_message(
-                    f"File is locked: {self._local_data_path_file}",
-                    title=True,
-                    border_color="red",
-                )
                 return
             content = self._parser_content(
                 Utils.get_snippet(str(Path(f"{self.snippet_dir}/data.txt")))
@@ -102,6 +87,6 @@ class DataServiceLayerBuild:
                 self._local_data_path_file, "w", encoding="utf-8"
             ) as service_file:
                 service_file.write(content)
-            Utils.show_message(f"Builb local data to model: {self._app_name}")
+            Utils.show_message("Local Data criada com sucesso")
         except Exception as error:
             raise error

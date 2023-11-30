@@ -37,7 +37,6 @@ class ModelsBuilder:
     def build(self):
         try:
             if Utils.check_file_is_locked(str(self._model_path_file)):
-                Utils.show_error(f"File is locked: {self._model_path_file}")
                 return
             for field in iter(self.app.model._meta.fields):
                 _app, _model, _name = str(field).split(".")

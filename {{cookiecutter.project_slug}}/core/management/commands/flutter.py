@@ -4,7 +4,6 @@ import platform
 import shutil
 import subprocess
 import sys
-import time
 from pathlib import Path
 
 from base.settings import FLUTTER_APPS
@@ -64,10 +63,10 @@ class AppModel:
                 self.model = self.app.get_model(self.model_name)
 
             else:
-                self.models = (
+                self.models = [
                     (x, x.__name__.strip(), x.__name__.strip().lower())
                     for x in self.app.get_models()
-                )
+                ]
 
             self.operation_system = platform.system().lower()
 
@@ -378,18 +377,23 @@ class Command(BaseCommand):
     def _init_flutter(self):
         try:
             if not Utils.check_dir(self.flutter_dir):
-                Utils.show_message("Criando o projeto flutter.")
+                Utils.show_message("Criando projeto Flutter")
                 _command = "flutter create --project-name"
                 _project_name = self.flutter_project.lower()
                 _organization = self.organization_flutter_name
                 _platforms = '--platforms="android,ios"'
                 _flutter_dir = self.flutter_dir
                 _cmd = f"{_command}={_project_name} --org br.com.{_organization} {_platforms} {_flutter_dir}"
-                subprocess.call(_cmd, shell=True)
+                subprocess.call(
+                    _cmd,
+                    shell=True,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
                 shutil.copyfile(
                     f"{self.snippet_dir}/README.md", f"{self.flutter_dir}/README.md"
                 )
-                Utils.show_message("Projeto criado com sucesso.")
 
         except Exception as error:
             Utils.show_error(f"Error in _init_flutter: {error}")
@@ -397,19 +401,22 @@ class Command(BaseCommand):
     def _build_flutter(self):
         try:
             if Utils.check_dir(self.flutter_dir):
-                Utils.show_message("Atualizando o arquivo de dependências.")
+                Utils.show_message("Atualizando dependências")
                 self._add_packages()
-                time.sleep(3)
 
                 current_path = os.getcwd()
                 os.chdir(self.flutter_dir)
-                subprocess.run("flutter pub get", shell=True)
+                subprocess.run(
+                    "flutter pub get",
+                    shell=True,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
                 os.chdir(current_path)
-                time.sleep(3)
 
-                Utils.show_message("Atualizando o arquivo main.dart.")
+                Utils.show_message("Atualizando main.dart")
                 self._replace_main()
-                time.sleep(3)
 
         except Exception as error:
             Utils.show_error(f"Error in __build_flutter: {error}")
@@ -563,7 +570,7 @@ class Command(BaseCommand):
             NamedRoutesBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
 
         except Exception as error:
-            Utils.show_message(f"Error in __create_name_route: {error}")
+            Utils.show_error(f"Error in __create_name_route: {error}", exit=False)
 
     def _buid_settings(self):
         try:
@@ -607,8 +614,9 @@ class Command(BaseCommand):
             Utils.show_error(f"Error in _build_translate_strings: {error}")
 
     def _create_source_from_model(self):
-        Utils.show_message("Criando as apps baseado na App e no Model")
         try:
+            Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
+
             self._create_source_files(
                 self.current_app_model.app_name, self.current_app_model.model_name
             )
@@ -617,10 +625,19 @@ class Command(BaseCommand):
             Utils.show_error(f"Error in __create_source_from_model: {error}")
 
     def _create_source_from_generators(self):
-        Utils.show_message("Criando as apps baseado na App e nos Generators")
         try:
-            for model in self.current_app_model.models:
-                self._create_source_files(self.current_app_model.app_name, model[1])
+            Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
+
+            with Utils.ProgressBar() as bar:
+                task = bar.add_task("")
+                for i, model in enumerate(self.current_app_model.models):
+                    bar.update(
+                        task,
+                        total=len(self.current_app_model.models),
+                        description=f"Gerando Apps [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i+1}/{len(self.current_app_model.models)}]",
+                    )
+                    self._create_source_files(self.current_app_model.app_name, model[1])
+                    bar.advance(task, 1)
 
         except Exception as error:
             Utils.show_error(f"Error in __create_source_from_generators: {error}")
@@ -634,6 +651,8 @@ class Command(BaseCommand):
             if model_name is None:
                 Utils.show_message("É necessário passar o Model")
                 return
+
+            Utils.show_core_box(f"Model {app_name}:{model_name}", tipo="model")
 
             _source_class = AppModel(self.flutter_dir, app_name, model_name)
 
@@ -674,7 +693,6 @@ class Command(BaseCommand):
 
     def call_methods(self, options):
         if self._check_flutter_installation() is False:
-            Utils.show_error("Flutter não está instalado na máquina.", exit=True)
             return
 
         if options["main"]:
@@ -714,6 +732,7 @@ class Command(BaseCommand):
             self._build_config_utils_file()
 
     def handle(self, *args, **options):
+        Utils.show_core_box("", tipo="core")
         app = options["App"] or None
         model = options["Model"] or None
 
@@ -729,27 +748,33 @@ class Command(BaseCommand):
                 return
 
             self.current_app_model = AppModel(self.flutter_project, app, model)
-            self._create_source_from_model()
-            return
+            with Utils.ProgressBar() as bar:
+                bar.add_task(
+                    f"Gerando App [b green]{app}[/]:[b cyan]{model}[/] - [1/1]",
+                    total=1,
+                )
+                self._create_source_from_model()
 
-        if app and model is None:
+        elif app and model is None:
             if Utils.contain_number(app):
                 Utils.show_error("Nome da app contendo números")
                 return
 
             self.current_app_model = AppModel(self.flutter_project, app)
             self._create_source_from_generators()
-            return
 
-        if not FLUTTER_APPS:
+        elif not FLUTTER_APPS:
             Utils.show_error("Não foram informadas as APPS a serem mapeadas")
             return
 
-        self.call_methods(options)
+        else:
+            self.call_methods(options)
 
-        for _app in FLUTTER_APPS:
-            self.current_app_model = AppModel(self.flutter_project, _app)
-            self._create_source_from_generators()
+            for _app in FLUTTER_APPS:
+                self.current_app_model = AppModel(self.flutter_project, _app)
+                self._create_source_from_generators()
+
+        Utils.show_message("Processo concluído", title=True, emoji="rocket")
 
     def _clear_project(self, path=None):
         try:

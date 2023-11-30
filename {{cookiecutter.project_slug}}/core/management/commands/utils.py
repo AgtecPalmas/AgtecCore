@@ -3,6 +3,8 @@ import os
 import re
 import sys
 
+from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
+from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from rich import box, print
@@ -14,9 +16,7 @@ from rich.progress import (
     TaskProgressColumn,
     TimeRemainingColumn,
 )
-
-from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
-from core.views.constants import IGNORED_APPS, IGNORED_MODELS
+from rich.text import Text
 
 from .constants.fastapi import IGNORE_FIELDS
 
@@ -106,6 +106,41 @@ class Utils(object):
                 print(emoji, self)
         except Exception as error:
             logging.error(error)
+
+    @staticmethod
+    def show_core_box(texto: str, tipo: str):
+        """Método para mostrar uma mensagem no console do python
+
+        Arguments:
+            texto {str} -- String contendo a mensagem que será mostrada no console
+            tipo {str} -- String contendo o tipo da mensagem que será mostrada no console
+        """
+        if tipo == "core":
+            print(
+                Panel(
+                    Text("AGTEC CORE", justify="center", style="cyan bold"),
+                    border_style="cyan",
+                )
+            )
+
+        else:
+            modelos = {
+                "model": {
+                    "emoji": "toolbox",
+                    "box_style": box.HEAVY_EDGE,
+                },
+                "app": {
+                    "emoji": "hourglass_flowing_sand",
+                    "box_style": box.ASCII2,
+                },
+            }
+
+            Utils.show_message(
+                texto,
+                emoji=modelos[tipo]["emoji"],
+                title=True,
+                box_style=modelos[tipo]["box_style"],
+            )
 
     @staticmethod
     def contain_number(text: str) -> bool:
