@@ -312,9 +312,9 @@ class Command(BaseCommand):
 
     def __generate_app_models(self, app: str, models: list, options: dict) -> None:
         """Método responsável por gerar os models"""
-        Utils.show_message(
-            f"App {app}", title=True, emoji="toolbox", box_style=box.ASCII2
-        )
+
+        Utils.show_core_box(f"App {app}", tipo="app")
+
         self.__set_paths(app)
         self.app_instance = apps.get_app_config(app)
         self.__init_app(self.path_app)
@@ -325,10 +325,9 @@ class Command(BaseCommand):
                     f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
                     total=len(models),
                 )
-                Utils.show_message(
+                Utils.show_core_box(
                     f"Model {app}:{model.__name__}",
-                    title=True,
-                    emoji="hourglass_flowing_sand",
+                    tipo="model",
                 )
                 self.model: str = model.__name__.strip()
                 self.model_lower: str = model.__name__.lower().strip()
@@ -338,6 +337,7 @@ class Command(BaseCommand):
                 bar.advance(task, 1)
 
     def handle(self, *args, **options):
+        Utils.show_core_box("", tipo="core")
         app = options["App"] or None
         model = options["Model"] or None
 
