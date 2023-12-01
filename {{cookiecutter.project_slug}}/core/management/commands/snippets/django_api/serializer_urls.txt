@@ -1,2 +1,0 @@
-from rest_framework.serializers import ModelSerializer
-from $app_name$.models import $ModelName$

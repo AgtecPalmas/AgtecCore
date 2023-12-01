@@ -1,5 +1,8 @@
-
 from drf_jsonmask.serializers import FieldsListSerializerMixin
+from rest_framework.serializers import ModelSerializer
+
+from $app_name$.models import $ModelName$
+
 
 class $ModelName$Serializer(ModelSerializer):
     """ Class do serializer do model $ModelClass$ para o POST, PUT, PATCH, DELETE """

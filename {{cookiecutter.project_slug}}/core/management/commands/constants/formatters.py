@@ -1,8 +1,8 @@
 AUTOFLAKE = "autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place --exclude __init__.py"
 
-AUTOPEP8 = "autopep8 --in-place --aggressive --max-line-length 120 --aggressive"
+AUTOPEP8 = "autopep8 --in-place --aggressive --max-line-length 88 --aggressive"
 
-ISORT = "isort"
+ISORT = "isort --float-to-top"
 
 BLACK = "black"
 

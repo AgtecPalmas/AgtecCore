@@ -1,9 +1,12 @@
 from drf_jsonmask.views import OptimizedQuerySetMixin
 from rest_framework import filters
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from $app_name$.models import $ModelName$
+from $app_name$.api.serializers import $ModelName$Serializer, $ModelName$GETSerializer
 
 
 class $ModelName$ViewAPI(ModelViewSet):

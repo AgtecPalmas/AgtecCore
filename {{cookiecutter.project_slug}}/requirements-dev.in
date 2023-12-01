@@ -10,6 +10,7 @@ django-extensions==3.2.*
 djlint==1.34.*
 Faker==20.1.*
 html5lib==1.1.*
+isort==5.12.*
 mkdocs==1.5.*
 mkdocs-material==9.4.*
 mkdocs-with-pdf==0.9.*
