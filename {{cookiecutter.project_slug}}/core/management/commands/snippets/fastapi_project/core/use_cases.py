@@ -31,7 +31,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def get(self, db: Session, id: Any) -> Optional[ModelType]:
         query = db.query(self.model).filter(self.model.id == id)
         if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
+            query = query.filter(self.model.deleted == False) # noqa: E712
         return query.first()
 
     def get_multi(
@@ -39,7 +39,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> List[ModelType]:
         query = db.query(self.model)
         if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
+            query = query.filter(self.model.deleted == False) # noqa: E712
         return query.offset(skip).limit(limit).all()
 
     def get_paginate(
@@ -47,7 +47,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> PaginationBase:
         query = db.query(self.model)
         if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
+            query = query.filter(self.model.deleted == False) # noqa: E712
         url = "https://" if request.url.is_secure else "http://"
         url = f"{url}{request.url.hostname}"
         if request.url.port != 80:
@@ -122,7 +122,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         try:
             query = db.query(self.model).filter(self.model.id == id)
             if hasattr(self.model, "deleted"):
-                query = query.filter(self.model.deleted == False)
+                query = query.filter(self.model.deleted == False) # noqa: E712
             query = query.first()
 
             url = "https://" if request.url.is_secure else "http://"
@@ -145,7 +145,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     ) -> ModelType:
         usuarios = db.query(self.model)
         if hasattr(self.model, "deleted"):
-            usuarios = usuarios.filter(self.model.deleted == False)
+            usuarios = usuarios.filter(self.model.deleted == False) # noqa: E712
         usuarios = usuarios.offset(offset).limit(limit).all()
 
         url = "https://" if request.url.is_secure else "http://"
