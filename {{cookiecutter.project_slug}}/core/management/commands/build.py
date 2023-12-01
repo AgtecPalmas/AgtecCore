@@ -433,10 +433,11 @@ class Command(BaseCommand):
             models = list(self.app_instance.get_models())
 
         with Utils.ProgressBar() as bar:
+            task = bar.add_task("", total=len(models), start=False)
             for i, model in enumerate(models):
-                task = bar.add_task(
-                    f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
-                    total=len(models),
+                bar.update(
+                    task,
+                    description=f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
                 )
                 Utils.show_core_box(f"Model {self.app}:{model.__name__}", tipo="model")
                 model = model.__name__

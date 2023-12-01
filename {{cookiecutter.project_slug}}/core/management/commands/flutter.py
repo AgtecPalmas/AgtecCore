@@ -629,12 +629,13 @@ class Command(BaseCommand):
             Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
 
             with Utils.ProgressBar() as bar:
-                task = bar.add_task("")
+                task = bar.add_task(
+                    "", total=len(self.current_app_model.models), start=False
+                )
                 for i, model in enumerate(self.current_app_model.models):
                     bar.update(
                         task,
-                        total=len(self.current_app_model.models),
-                        description=f"Gerando Apps [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i+1}/{len(self.current_app_model.models)}]",
+                        description=f"Gerando App [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i+1}/{len(self.current_app_model.models)}]",
                     )
                     self._create_source_files(self.current_app_model.app_name, model[1])
                     bar.advance(task, 1)
@@ -741,6 +742,20 @@ class Command(BaseCommand):
                 "Você não configurou o FLUTTER_APPS no settings e também não informou uma APP para ser gerada.",
             )
             return
+
+        if app:
+            try:
+                apps.get_app_config(app)
+            except LookupError:
+                Utils.show_error(f"App {app} não encontrada")
+                return
+
+            if model:
+                try:
+                    apps.get_app_config(app).get_model(model)
+                except LookupError:
+                    Utils.show_error(f"Modelo {model} não encontrado")
+                    return
 
         if app and model:
             if Utils.contain_number(app) or Utils.contain_number(model):
