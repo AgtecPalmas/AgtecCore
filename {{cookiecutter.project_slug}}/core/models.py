@@ -82,7 +82,7 @@ class Base(models.Model):
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    deleted_on = models.DateTimeField(blank=True, null=True)
+    deleted_on = models.DateTimeField(blank=True, null=True, default='1900-01-01')
 
     # Verificação se deve ser usado o manager padrão ou o customizado
     if USE_DEFAULT_MANAGER is False:
