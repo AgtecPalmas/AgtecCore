@@ -27,6 +27,7 @@ from django.urls import NoReverseMatch, reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from datetime import timezone as tz
 from rest_framework.pagination import PageNumberPagination
 
 models.options.DEFAULT_NAMES += (
@@ -82,7 +83,11 @@ class Base(models.Model):
     deleted = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    deleted_on = models.DateTimeField(blank=True, null=True, default='1900-01-01')
+    deleted_on = models.DateTimeField(
+        blank=True,
+        null=True,
+        default=timezone.datetime(1900, 1, 1, tzinfo=tz.utc)
+    )
 
     # Verificação se deve ser usado o manager padrão ou o customizado
     if USE_DEFAULT_MANAGER is False:
