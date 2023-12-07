@@ -481,7 +481,7 @@ class BaseListView(
             context["model_fields"] = {
                 field.name: field.verbose_name
                 for field in sorted(
-                    self.model._meta.fields, key=lambda field: field.verbose_name or ""
+                    self.model._meta.fields, key=lambda field: field.name
                 )
                 if field.name in self.list_display
             }

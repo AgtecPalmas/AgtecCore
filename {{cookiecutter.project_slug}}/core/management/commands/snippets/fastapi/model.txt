@@ -1,6 +1,17 @@
 import datetime
-from sqlalchemy import ForeignKey, String, Table, Column
-from sqlalchemy.sql.sqltypes import String, Integer, Boolean, Date, DateTime, Time, List, Float
+from sqlalchemy import (
+    UUID,
+    Boolean,
+    Column,
+    Date,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Time,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.database import CoreBase

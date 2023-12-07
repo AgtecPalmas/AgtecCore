@@ -26,7 +26,9 @@ class MixinsClassBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(f"Erro ao executar o _build_modal_mixin de MixinsClassBuilder: {e}")
+            Utils.show_error(
+                f"Erro ao executar o _build_modal_mixin de MixinsClassBuilder: {e}"
+            )
             return
 
     def _build_message_mixin(self):
@@ -39,7 +41,9 @@ class MixinsClassBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(f"Erro ao executar o _build_message_mixin de MixinsClassBuilder: {e}")
+            Utils.show_error(
+                f"Erro ao executar o _build_message_mixin de MixinsClassBuilder: {e}"
+            )
             return
 
     def _build_connection_mixin(self):
@@ -52,5 +56,7 @@ class MixinsClassBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(f"Erro ao executar o _build_connection_mixin de MixinsClassBuilder: {e}")
+            Utils.show_error(
+                f"Erro ao executar o _build_connection_mixin de MixinsClassBuilder: {e}"
+            )
             return

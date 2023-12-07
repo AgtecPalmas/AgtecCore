@@ -382,6 +382,17 @@ class ParserHTMLBuild:
                 f"Error in RenderTemplatesBuid.manage_create_update_templates: {error}",
             )
 
+    def __render_list_boolean(self, field_name: str) -> str:
+        """Método responsável por renderizar o boolean field na listagem"""
+        boolean = Template(
+            """<td>
+                <span class="badge badge-{{ item.$field_name|yesno:'success,danger' }}">
+                    {{ item.$field_name|yesno:'Sim,Não' }}
+                </span>
+            </td>"""
+        )
+        return boolean.substitute(field_name=field_name)
+
     def manage_list_template(self, model):
         try:
             if (
@@ -427,6 +438,7 @@ class ParserHTMLBuild:
                     ),
                     None,
                 )
+
                 if app_field is not None:
                     field_name = (
                         app_field.verbose_name.title()
@@ -434,9 +446,15 @@ class ParserHTMLBuild:
                         else "Não Definido."
                     )
                     thead += f"<th>{field_name}</th>\n"
-                    tline += "<td>{{{{ item.{} }}}}</td>\n".format(
-                        item.replace("__", ".")
-                    )
+
+                    if app_field.get_internal_type() == "BooleanField":
+                        tline += self.__render_list_boolean(item)
+
+                    else:
+                        tline += "<td>{{{{ item.{} }}}}</td>\n".format(
+                            item.replace("__", ".")
+                        )
+
             list_template = Path(
                 f"{self.model_template_path}/{self.model_lower}_list.html"
             )

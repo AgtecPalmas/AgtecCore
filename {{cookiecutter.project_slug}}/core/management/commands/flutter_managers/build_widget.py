@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from core.management.commands.flutter_managers.utils import convert_to_camel_case
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
@@ -16,9 +15,7 @@ class WidgetBuilder:
         self._model_name_lower = self.app.model_name_lower
         self._snippet_file = Path(f"{self.command.snippet_dir}/widget.txt")
         self._target_file = Path(
-            "{}/lib/apps/{}/{}/pages/widget.dart".format(
-                self._path_flutter, self._app_name_lower, self._model_name_lower
-            )
+            f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/pages/widget.dart"
         )
 
     def build(self):

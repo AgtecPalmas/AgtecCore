@@ -17,7 +17,7 @@ class AddPackagesBuilder:
 
     def build(self):
         """
-        build _summary_
+        Método responsável por executar o build do arquivo de AddPackages
         """
         try:
             _snippet_content = Utils.get_snippet(str(self._yaml_file_snippet))
@@ -28,7 +28,7 @@ class AddPackagesBuilder:
                         self._project.lower(),
                         f"Projeto Flutter do sistema Django {self._project}",
                     ],
-                    _snippet_content
+                    _snippet_content,
                 ).replace()
                 _file.write(_content)
         except Exception as error:
