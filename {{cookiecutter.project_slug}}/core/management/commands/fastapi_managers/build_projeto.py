@@ -53,9 +53,7 @@ class ProjetoBuild:
 
             subprocess.run(command, shell=True)
 
-            Utils.show_message(
-                "Projeto base criado com sucesso."
-            )
+            Utils.show_message("Projeto base criado com sucesso.")
 
         except Exception as error:
             Utils.show_error(f"Error in __init_Fastapi: {error}")
@@ -82,17 +80,17 @@ class ProjetoBuild:
         file = Path(self.fastapi_dir) / ".env"
 
         replace_dict = {
-            "SECRET_KEY": secret,
-            "DB_NAME": db_name,
-            "DB_USER": db_user,
-            "DB_PASSWORD": db_password,
+            "__secret_key__": secret,
+            "__db_name__": db_name,
+            "__db_user__": db_user,
+            "__db_password__": db_password,
         }
 
         with open(file, "r") as f:
             env_file = f.read()
 
         for key, value in replace_dict.items():
-            env_file = env_file.replace(f"{key}=", f"{key}={value}")
+            env_file = env_file.replace(key, value)
 
         with open(file, "w") as f:
             f.write(env_file)
