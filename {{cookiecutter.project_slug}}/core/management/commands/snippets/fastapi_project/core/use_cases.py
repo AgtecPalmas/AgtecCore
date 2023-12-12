@@ -3,6 +3,7 @@ import json
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import HTTPException, Request
+from fastapi.datastructures import URL
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import func, select
@@ -56,56 +57,63 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         return db.scalars(query.offset(skip).limit(limit))
 
+    @staticmethod
+    def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
+        hasNextPage = total // limit > offset
+        hasPreviousPage = total > limit and total // limit <= offset
+
+        url = url._url.split("?")[0]
+        next_page = (
+            f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
+        )
+        previous_page = (
+            f"{url}?offset={offset - limit}&limit={limit}" if hasPreviousPage else None
+        )
+        return (next_page, previous_page)
+
+    @staticmethod
+    def __load_results(results: list, model_pydantic: Type[BaseModel]) -> list:
+        return [
+            json.loads(model_pydantic(**item.__dict__).model_dump_json())
+            for item in results
+        ]
+
+    @staticmethod
+    def __validate_limit_offset(limit: int, offset: int) -> None:
+        if offset < 0 or limit <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Offset must be greater than or equal to 0 and limit must be greater than 0",
+            )
+        return
+
     def get_paginate(
         self,
         db: Session,
+        query: select = None,
         *,
         request: Request,
         offset: int = 0,
         limit: int = 5,
         model_pydantic: Type[BaseModel] = None,
     ) -> PaginationBase:
-        if offset < 0 or limit <= 0:
-            raise HTTPException(
-                status_code=400,
-                detail="Offset must be greater than or equal to 0 and limit must be greater than 0",
-            )
+        self.__validate_limit_offset(limit, offset)
 
-        if hasattr(self.model, "deleted"):
-            query = select(self.model).where(self.model.deleted.is_(False))
-
-        else:
+        if query is None:
             query = select(self.model)
+            if hasattr(self.model, "deleted"):
+                query = select(self.model).where(self.model.deleted.is_(False))
 
+        results = self.__load_results(
+            db.scalars(query.offset(offset).limit(limit)).all(),
+            model_pydantic,
+        )
         total = db.query(func.count()).select_from(query).scalar()
-        results = db.scalars(query.offset(offset).limit(limit)).all()
+        next_page, previous_page = self.__get_pages(request.url, total, limit, offset)
 
-        url = "https://" if request.url.is_secure else "http://"
-        url = f"{url}{request.url.hostname}"
-
-        if request.url.port != 80:
-            url = f"{url}:{request.url.port}"
-
-        url += request.url.path
-
-        hasNextPage = int(total / limit) > offset
-        hasPreviousPage = total > limit and int(total / limit) <= offset
-
-        data = PaginationBase()
-        data.count = total
-        data.results = [
-            json.loads(model_pydantic(**item.__dict__).model_dump_json())
-            for item in results
-        ]
-
-        data.next = (
-            f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
+        return PaginationBase(
+            count=total, next=next_page, previous=previous_page, results=results
         )
-        data.previous = (
-            f"{url}?offset={offset - limit}&limit={limit}" if hasPreviousPage else None
-        )
-
-        return data
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
