@@ -28,7 +28,7 @@ class UseCasesBuild:
                 Utils.show_message("[cyan]CRUDs[/] criados com sucesso")
                 return
 
-            if Utils.check_content(self.path_crud, f"class CRUD{self.model}"):
+            if Utils.check_content(self.path_crud, f"class {self.model}UseCase"):
                 Utils.show_message("[cyan]CRUDs[/] já existem")
                 return
 

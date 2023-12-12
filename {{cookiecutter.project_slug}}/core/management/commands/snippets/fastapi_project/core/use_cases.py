@@ -3,9 +3,10 @@ import json
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import HTTPException, Request
+from fastapi.datastructures import URL
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
-from sqlalchemy.exc import DataError
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from .database import CoreBase
@@ -29,52 +30,90 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self.model = model
 
     def get(self, db: Session, id: Any) -> Optional[ModelType]:
-        query = db.query(self.model).filter(self.model.id == id)
         if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        return query.first()
+            query = select(self.model).where(
+                self.model.id == id, self.model.deleted.is_(False)
+            )
+
+        else:
+            query = select(self.model).where(self.model.id == id)
+
+        return db.scalar(query)
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 25
     ) -> List[ModelType]:
-        query = db.query(self.model)
+        if skip <= 0 or limit <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Skip and limit must be greater than 0",
+            )
+
         if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        return query.offset(skip).limit(limit).all()
+            query = select(self.model).where(self.model.deleted.is_(False))
 
-    def get_paginate(
-        self, db: Session, *, request: Request, offset: int = 0, limit: int = 5, model_pydantic: Type[BaseModel] = None
-    ) -> PaginationBase:
-        query = db.query(self.model)
-        if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        url = "https://" if request.url.is_secure else "http://"
-        url = f"{url}{request.url.hostname}"
-        if request.url.port != 80:
-            url = f"{url}:{request.url.port}"
-        url += request.url.path
-        total = query.count()
+        else:
+            query = select(self.model)
 
-        hasNextPage = int(total / limit) > offset
-        hasPreviousPage = total > limit and int(total / limit) <= offset
+        return db.scalars(query.offset(skip).limit(limit))
 
-        data = PaginationBase()
-        data.count = total
-        data.results = []
+    @staticmethod
+    def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
+        hasNextPage = total // limit > offset
+        hasPreviousPage = total > limit and total // limit <= offset
 
-        for item in query.offset(offset).limit(limit).all():
-            modelo_pydantic = model_pydantic(**item.__dict__)
-            modelo_json = modelo_pydantic.model_dump_json()
-            data.results.append(json.loads(modelo_json))
-
-        data.next = (
+        url = url._url.split("?")[0]
+        next_page = (
             f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
         )
-        data.previous = (
+        previous_page = (
             f"{url}?offset={offset - limit}&limit={limit}" if hasPreviousPage else None
         )
+        return (next_page, previous_page)
 
-        return data
+    @staticmethod
+    def __load_results(results: list, model_pydantic: Type[BaseModel]) -> list:
+        return [
+            json.loads(model_pydantic(**item.__dict__).model_dump_json())
+            for item in results
+        ]
+
+    @staticmethod
+    def __validate_limit_offset(limit: int, offset: int) -> None:
+        if offset < 0 or limit <= 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Offset must be greater than or equal to 0 and limit must be greater than 0",
+            )
+        return
+
+    def get_paginate(
+        self,
+        db: Session,
+        query: select = None,
+        *,
+        request: Request,
+        offset: int = 0,
+        limit: int = 5,
+        model_pydantic: Type[BaseModel] = None,
+    ) -> PaginationBase:
+        self.__validate_limit_offset(limit, offset)
+
+        if query is None:
+            query = select(self.model)
+            if hasattr(self.model, "deleted"):
+                query = select(self.model).where(self.model.deleted.is_(False))
+
+        results = self.__load_results(
+            db.scalars(query.offset(offset).limit(limit)).all(),
+            model_pydantic,
+        )
+        total = db.query(func.count()).select_from(query).scalar()
+        next_page, previous_page = self.__get_pages(request.url, total, limit, offset)
+
+        return PaginationBase(
+            count=total, next=next_page, previous=previous_page, results=results
+        )
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         obj_in_data = jsonable_encoder(obj_in)
@@ -101,7 +140,10 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def remove(self, db: Session, *, id: int) -> ModelType:
         db_obj = db.query(self.model).get(id)
-        db_obj.deleted = True
+        if hasattr(self.model, "deleted"):
+            db_obj.deleted = True
+        else:
+            db.delete(db_obj)
         return self._add_commit_and_refresh(db, db_obj)
 
     def _add_commit_and_refresh(self, db, db_obj):
@@ -115,47 +157,3 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.delete(obj)
         db.commit()
         return obj
-
-    def get_paginate_django_user(
-        self, db: Session, request: Request, id: Any
-    ) -> ModelType:
-        try:
-            query = db.query(self.model).filter(self.model.id == id)
-            if hasattr(self.model, "deleted"):
-                query = query.filter(self.model.deleted == False)
-            query = query.first()
-
-            url = "https://" if request.url.is_secure else "http://"
-            url = f"{url}{request.url.hostname}"
-            if request.url.port != 80:
-                url = f"{url}:{request.url.port}"
-            query.django_user = (
-                f"{url}/api/v1/authentication/users/{query.django_user_id}"
-            )
-            return query
-        except DataError:
-            raise HTTPException(
-                status_code=404, detail="Item usuario inexistente no sistema"
-            )
-        except Exception as exception:
-            raise exception
-
-    def get_multi_paginate_django_user(
-        self, db: Session, *, request: Request, offset: int = 0, limit: int = 25
-    ) -> ModelType:
-        usuarios = db.query(self.model)
-        if hasattr(self.model, "deleted"):
-            usuarios = usuarios.filter(self.model.deleted == False)
-        usuarios = usuarios.offset(offset).limit(limit).all()
-
-        url = "https://" if request.url.is_secure else "http://"
-        url = f"{url}{request.url.hostname}"
-        if request.url.port != 80:
-            url = f"{url}:{request.url.port}"
-
-        for usuario in usuarios:
-            usuario.django_user = (
-                f"{url}/api/v1/authentication/users/{usuario.django_user_id}"
-            )
-
-        return usuarios

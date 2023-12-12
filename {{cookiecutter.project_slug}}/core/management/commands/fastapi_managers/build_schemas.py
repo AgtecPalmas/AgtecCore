@@ -26,7 +26,7 @@ class SchemasBuild:
 
     def __add_attr_null(self, field, attribute):
         if getattr(field, "null", None):
-            attribute = f"Optional[{attribute}]"
+            attribute = f"Optional[{attribute}] = None"
         return attribute
 
     def __add_attr_default(self, field, attribute):
