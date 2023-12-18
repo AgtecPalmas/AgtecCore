@@ -49,6 +49,8 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 detail="Skip and limit must be greater than 0",
             )
 
+        self.__validate_limit_offset(limit, skip, skip)
+
         if hasattr(self.model, "deleted"):
             query = select(self.model).where(self.model.deleted.is_(False))
 
@@ -79,11 +81,11 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         ]
 
     @staticmethod
-    def __validate_limit_offset(limit: int, offset: int) -> None:
-        if offset < 0 or limit <= 0:
+    def __validate_limit_offset(limit: int, offset: int, skip: int) -> None:
+        if offset < 0 or limit <= 0 or skip < 0:
             raise HTTPException(
                 status_code=400,
-                detail="Offset must be greater than or equal to 0 and limit must be greater than 0",
+                detail="Offset and skip must be greater than 0 and limit must be greater than or equal to 0",
             )
         return
 
@@ -97,7 +99,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         limit: int = 5,
         model_pydantic: Type[BaseModel] = None,
     ) -> PaginationBase:
-        self.__validate_limit_offset(limit, offset)
+        self.__validate_limit_offset(limit, offset, offset)
 
         if query is None:
             query = select(self.model)

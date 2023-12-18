@@ -1,0 +1,2 @@
+from $app$.routers import router as $app$_router
+api_router.include_router($app$_router, prefix="/$app$")

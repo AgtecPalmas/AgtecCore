@@ -2,18 +2,18 @@ import os
 import platform
 from pathlib import Path
 
-from base.settings import FASTAPI_APPS
 from django.apps import apps
 from django.core.management.base import BaseCommand
-from rich import box
+
+from base.settings import FASTAPI_APPS
 
 from .fastapi_managers import (
-    RoutersBuild,
-    UseCasesBuild,
     DockerBuild,
     ModelsBuild,
     ProjetoBuild,
+    RoutersBuild,
     SchemasBuild,
+    UseCasesBuild,
 )
 from .formatters import PythonFormatter
 from .utils import Utils
@@ -147,7 +147,7 @@ class Command(BaseCommand):
     def __manage_api(self):
         try:
             RoutersBuild(self, apps).build()
-            RoutersBuild(self, apps).add_route_core()
+            RoutersBuild(self, apps).add_route_to_core()
         except Exception as error:
             Utils.show_error(f"Error in __manage_crud: {error}")
 

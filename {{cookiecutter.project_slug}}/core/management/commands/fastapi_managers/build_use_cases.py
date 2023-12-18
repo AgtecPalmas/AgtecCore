@@ -17,6 +17,10 @@ class UseCasesBuild:
 
     def build(self):
         try:
+            if Utils.check_content(self.path_crud, f"class {self.model}UseCase"):
+                Utils.show_message("[cyan]CRUDs[/] já existem")
+                return
+
             content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/use_cases.txt")))
             content = content.replace("$ModelClass$", self.model)
             content = content.replace("$app$", self.app)
@@ -28,13 +32,10 @@ class UseCasesBuild:
                 Utils.show_message("[cyan]CRUDs[/] criados com sucesso")
                 return
 
-            if Utils.check_content(self.path_crud, f"class {self.model}UseCase"):
-                Utils.show_message("[cyan]CRUDs[/] já existem")
-                return
-
             with open(self.path_crud, "a") as crud:
                 crud.write("\n")
                 crud.write(content)
+
             PythonFormatter(self.path_crud).format()
             Utils.show_message("[cyan]CRUDs[/] criados com sucesso")
 
