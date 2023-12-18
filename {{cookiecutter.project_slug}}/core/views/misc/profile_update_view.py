@@ -7,6 +7,9 @@ from django.views import View
 class ProfileUpdateView(LoginRequiredMixin, View):
     """Views para atualizar os dados do perfil do usuario"""
 
+    def get(self, request, *args, **kwargs):
+        return redirect("core:profile")
+
     def post(self, request, *args, **kwargs):
         try:
             data = request.POST

@@ -54,11 +54,11 @@ class ImagemLogin(Base):
 
             if backgrounds:
                 background = backgrounds[randint(0, len(backgrounds) - 1)].imagem.url
-                save_to_cache("background", background)
 
             else:
-                background = get_full_url_static("core/images/background_login.jpg")
-                save_to_cache("background", background)
+                background = get_full_url_static("core/images/background_login.webp")
+
+            save_to_cache("background", background)
 
         return background
 
@@ -91,11 +91,11 @@ class LogoSistema(Base):
 
             if logos:
                 logo = logos[randint(0, len(logos) - 1)].imagem.url
-                save_to_cache("logo", logo)
 
             else:
                 logo = get_full_url_static("core/images/logo_sistema.png")
-                save_to_cache("logo", logo)
+
+            save_to_cache("logo", logo)
 
         return logo
 

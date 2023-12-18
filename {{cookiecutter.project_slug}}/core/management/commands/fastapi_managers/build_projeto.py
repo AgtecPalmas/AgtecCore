@@ -18,7 +18,9 @@ class ProjetoBuild:
     def __create_base_project(self):
         """Decide a criação do projeto base FastAPI"""
         try:
-            if Utils.check_dir(str(self.fastapi_dir)):
+            if Utils.check_dir(str(self.fastapi_dir)) and Utils.check_dir(
+                f"{self.fastapi_dir}/core"
+            ):
                 if (
                     Prompt.ask(
                         "Mudanças nos arquivos\

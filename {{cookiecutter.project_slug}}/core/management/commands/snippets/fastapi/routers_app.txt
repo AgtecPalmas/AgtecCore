@@ -1,0 +1,2 @@
+from .$model$.routers import router as $model$_router
+router.include_router($model$_router)

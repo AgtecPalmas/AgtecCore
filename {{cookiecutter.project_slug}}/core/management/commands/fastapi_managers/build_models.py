@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ..constants.fastapi import *
+from ..constants.fastapi import FIELDS_TYPES
 from ..formatters import PythonFormatter
 from ..utils import Utils
 
@@ -21,7 +21,9 @@ class ModelsBuild:
         return field in self._fields_types.keys()
 
     def __get_field_django_type(self, field):
-        return str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
+        return (
+            str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
+        )
 
     def __add_attr_default(self, field, attribute):
         if field.get_default() is not None and field.get_default() != "":
@@ -68,8 +70,12 @@ class ModelsBuild:
                     "django_type": self.__get_field_django_type(field),
                 }
 
-                if not self.__check_django_type_in_fields_types(item.get("django_type")):
-                    Utils.show_error(f"Campo {item.get('django_type')} desconhecido.", exit=False)
+                if not self.__check_django_type_in_fields_types(
+                    item.get("django_type")
+                ):
+                    Utils.show_error(
+                        f"Campo {item.get('django_type')} desconhecido.", exit=False
+                    )
                     continue
 
                 if not Utils.check_ignore_field(item["name"]):
@@ -91,12 +97,16 @@ class ModelsBuild:
                             if item.get("name") != "django_user":
                                 relationship = f"\t{item.get('name')} = relationship('{__model.object_name}', foreign_keys=[{field_name}])\n"
 
-                    attribute = f"{attribute}, nullable={(getattr(field, 'null', None))}"
+                    attribute = (
+                        f"{attribute}, nullable={(getattr(field, 'null', None))}"
+                    )
 
                     if item.get("name") == "django_user":
                         mapped_field = "Integer"
                     else:
-                        mapped_field = self._fields_types.get(item["django_type"]).get("model")
+                        mapped_field = self._fields_types.get(item["django_type"]).get(
+                            "model"
+                        )
 
                     if field.has_default():
                         attribute = self.__add_attr_default(field, mapped_field)
@@ -122,21 +132,29 @@ class ModelsBuild:
                     __model = related_field.related_model._meta
                     table = f"{related_item.get('app')}_{_model_name}_{related_item.get('name')}"
                     # Variável contendo o nome da tabela ManyToMany que é utilizado na tabela de ligação
-                    table_related_name = f"{model._meta.db_table}_{related_item.get('name')}"
-                    many_to_many += f'{table} = Table("{table_related_name}", CoreBase.metadata,'
-                    many_to_many += "Column('id', Integer, primary_key=True, index=True),"
+                    table_related_name = (
+                        f"{model._meta.db_table}_{related_item.get('name')}"
+                    )
+                    many_to_many += (
+                        f'{table} = Table("{table_related_name}", CoreBase.metadata,'
+                    )
+                    many_to_many += (
+                        "Column('id', Integer, primary_key=True, index=True),"
+                    )
 
                     # Verificando se o relacionamento é com ele mesmo
-                    if _model_name == _related_model_name and _app_name == _related_model_app:
-                        many_to_many += (
-                            f"Column('from_{_model_name}_id', ForeignKey('{model._meta.db_table}.id')),"
-                        )
+                    if (
+                        _model_name == _related_model_name
+                        and _app_name == _related_model_app
+                    ):
+                        many_to_many += f"Column('from_{_model_name}_id', ForeignKey('{model._meta.db_table}.id')),"
                         many_to_many += f"Column('to_{_related_model_name}_id', ForeignKey('{__model.db_table}.id')))\n"
                     else:
                         many_to_many += f"Column('{_model_name}_id', ForeignKey('{model._meta.db_table}.id')),"
                         many_to_many += f"Column('{_related_model_name}_id', ForeignKey('{__model.db_table}.id')))\n"
 
-                    result += f'\t{related_item.get("name")}: Mapped[List["{__model.object_name}"]] = relationship(secondary={table}, backref="{table.replace("_", "")}", lazy="joined")\n'
+                    result += f'\t{related_item.get("name")}: Mapped[list["{__model.object_name}"]] = relationship(secondary={table}, backref="{table.replace("_", "")}", lazy="joined")\n'
+                    imports += f"from {__model.app_label}.{__model.object_name.lower()}.models import {__model.object_name}\n"
 
             content = content.replace("$columns$", result)
             content = content.replace("$imports$", imports)
