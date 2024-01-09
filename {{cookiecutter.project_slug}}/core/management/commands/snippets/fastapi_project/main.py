@@ -17,11 +17,19 @@ if settings.backend_cors_origins:
     )
 
 if settings.debug is False:
+    from elasticapm.contrib.starlette import ElasticAPM
+
     from core.elastic import ELASTIC_APM
 
     app.add_middleware(
         ElasticAPM,
         client=ELASTIC_APM,
     )
+else:
+    from starlette.middleware.base import BaseHTTPMiddleware
+
+    from core.middlewares.log import log_middleware
+
+    app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)
 
 app.include_router(api_router)
