@@ -1,7 +1,9 @@
 alembic==1.13.*
+asyncpg==0.29.*
 elastic-apm==6.19.*
 email-validator==2.1.*
-fastapi==0.104.*
+fastapi==0.108.*
+loguru==0.7.*
 passlib==1.7.*
 psycopg2-binary==2.9.*
 pydantic==2.5.*
@@ -9,6 +11,8 @@ pydantic-settings==2.1.*
 python-dotenv==1.0.*
 python-jose==3.3.*
 python-multipart==0.0.*
-requests==2.31.*
+requests==2.26.*
+rich==12.2.*
+scanapi==2.9.*
 SQLAlchemy==2.0.*
-uvicorn==0.24.*
+uvicorn==0.25.*

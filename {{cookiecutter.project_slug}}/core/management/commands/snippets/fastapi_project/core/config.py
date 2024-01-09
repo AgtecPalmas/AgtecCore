@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     # Projeto
     app_name: str
     app_url: AnyHttpUrl
-    debug: str
+    debug: bool
     environment: str
 
     # FastAPI

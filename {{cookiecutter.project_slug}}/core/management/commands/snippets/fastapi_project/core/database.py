@@ -2,7 +2,9 @@ import datetime
 import uuid
 from typing import Generator
 
+from fastapi import Depends
 from sqlalchemy import UUID, Boolean, DateTime, String, create_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -53,10 +55,10 @@ DB_NAME = settings.db_name
 DB_PORT = settings.db_port
 DB_HOST = settings.db_host
 
+# Default DB
 SQLALCHEMY_DATABASE_URI: str = (
     f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
-
 engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -67,3 +69,27 @@ def get_db() -> Generator:
         yield db
     finally:
         db.close()
+
+
+# Async DB
+ASYNC_SQLALCHEMY_DATABASE_URI: str = (
+    f"{DB_ENGINE}+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+async_engine = create_async_engine(ASYNC_SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
+AsyncSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=async_engine, class_=AsyncSession
+)
+
+
+async def get_async_db() -> Generator:
+    async with AsyncSessionLocal() as db:
+        try:
+            yield db
+        except Exception as e:
+            await db.rollback()
+            raise e
+        finally:
+            await db.close()
+
+
+ActiveAsyncSession = Depends(get_async_db)
