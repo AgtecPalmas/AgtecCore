@@ -26,10 +26,10 @@ if settings.debug is False:
         client=ELASTIC_APM,
     )
 else:
-    from starlette.middleware.base import BaseHTTPMiddleware
+    from core.middlewares.log import CustomLog
 
-    from core.middlewares.log import log_middleware
-
-    app.add_middleware(BaseHTTPMiddleware, dispatch=log_middleware)
+    app.add_middleware(
+        CustomLog,
+    )
 
 app.include_router(api_router)

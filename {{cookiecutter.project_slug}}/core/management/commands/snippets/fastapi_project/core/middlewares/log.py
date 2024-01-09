@@ -2,14 +2,34 @@ import json
 import time
 import uuid
 from collections.abc import Callable
+from string import Template
 
-from core.config import settings
-from fastapi import Request, Response
+from fastapi import FastAPI, Request, Response
 from rich.console import Console
 from starlette.concurrency import iterate_in_threadpool
+from starlette.middleware.base import BaseHTTPMiddleware
+
+LOG_TEMPLATE = Template(
+    """
+    Logger: $logger_id
+    Hora da requisição: $request_time
+    Tempo de execução: $time
+
+    Status Code: $status_code
+    Method: $method
+    Content-Type: $content_type
+    Content-Length: $content_length
+    Accept: $content_accept
+    Path: $path
+    Token: $token
+    
+    Body:
+    $body
+    """
+)
 
 
-class CustomLog(object):
+class LogObject:
     def __init__(
         self,
         log_id: str,
@@ -21,9 +41,8 @@ class CustomLog(object):
         request_path: str,
         execute_time: int,
         status_code: str,
-        body: str = None,
-    ) -> None:
-        self.status_code = status_code
+        body: str,
+    ):
         self.logger_id = log_id
         self.autorization = autorization
         self.content_type = content_type
@@ -32,12 +51,11 @@ class CustomLog(object):
         self.request_method = request_method
         self.request_path = request_path
         self.execute_time = execute_time
+        self.status_code = status_code
         self.body = body
         self.color = "green"
         self._errors_status_code = ["4", "5"]
-        self._warnings_status_code = [
-            "3",
-        ]
+        self._warnings_status_code = ["3"]
 
     def show_log(self) -> None:
         if str(self.status_code)[0] in self._errors_status_code:
@@ -56,70 +74,63 @@ class CustomLog(object):
 
     def _log(self, title: str) -> None:
         _console = Console()
-        _status_code = f"Status Code: {self.status_code}"
-        _request_time = f"Hora da requisição: {time.strftime('%H:%M:%S')}"
-        _logger_id = f"Logger: {self.logger_id}"
-        _method = f"Method: {self.request_method}"
-        _path = f"Path: {self.request_path}"
-        _token = f"Token: {self.autorization}"
-        _time = f"Tempo: {self.execute_time} milisegundos"
-        _content_type = f"Content-Type: {self.content_type}"
-        _content_length = f"Content-Length: {self.content_length}"
-        _content_accept = f"Accept: {self.content_accept}"
+        _request_time = time.strftime("%H:%M:%S")
         _console.print()
         _console.rule(
-            f"[{self.color}] {_logger_id} > {title} | {_status_code} | {_time}[/] ",
+            f"[{self.color}] {self.logger_id} - {title} | {self.status_code} | {self.execute_time} ms[/] ",
             style=f"{self.color}",
         )
-        _console.print(self._create_line_message(_request_time))
-        _console.print(self._create_line_message(_method))
-        _console.print(self._create_line_message(_content_type))
-        _console.print(self._create_line_message(_content_length))
-        _console.print(self._create_line_message(_content_accept))
-        _console.print(self._create_line_message(_path))
-        _console.print(self._create_line_message(_token))
-        _console.print("BODY:")
-        _console.print(self.body)
-        _console.print()
-        _console.rule(
-            f"[{self.color}]{self.execute_time} miliseconds[/]", style=f"{self.color}"
+
+        _console.print(
+            LOG_TEMPLATE.substitute(
+                status_code=self.status_code,
+                request_time=_request_time,
+                logger_id=self.logger_id,
+                method=self.request_method,
+                path=self.request_path,
+                token=self.autorization,
+                time=f"{self.execute_time} ms",
+                content_type=self.content_type,
+                content_length=self.content_length,
+                content_accept=self.content_accept,
+                body=json.dumps(self.body, indent=4, sort_keys=True),
+            )
         )
+
         _console.print()
+        _console.rule(f"[{self.color}]{self.execute_time} ms[/]", style=f"{self.color}")
         _console.print()
 
 
-async def log_middleware(request: Request, call_next: Callable) -> Response:
-    if settings.debug == "false":
-        return await call_next(request)
+class CustomLog(BaseHTTPMiddleware):
+    def __init__(
+        self,
+        app: FastAPI,
+    ) -> None:
+        super().__init__(app)
 
-    try:
-        _log_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
-        _authorization = request.headers.get("Authorization", None)
-        _content_type = request.headers.get("Content-Type", None)
-        _content_length = request.headers.get("Content-Length", None)
-        _content_accept = request.headers.get("Accept", None)
-        start_time = time.time()
-        response = await call_next(request)
-        process_time = (time.time() - start_time) * 1000
-        response_body = [section async for section in response.body_iterator]
-        response.body_iterator = iterate_in_threadpool(iter(response_body))
-        _response_body = json.loads(b"".join(response_body))
+    async def dispatch(self, request: Request, call_next: Callable) -> Response:
+        try:
+            start_time = time.time()
+            response = await call_next(request)
+            response_body = [section async for section in response.body_iterator]
+            response.body_iterator = iterate_in_threadpool(iter(response_body))
 
-        CustomLog(
-            log_id=_log_id,
-            autorization=_authorization,
-            content_type=_content_type,
-            content_length=_content_length,
-            content_accept=_content_accept,
-            request_method=request.method,
-            request_path=request.url.path,
-            execute_time=round(process_time, 3),
-            body=_response_body,
-            status_code=response.status_code,
-        ).show_log()
+            LogObject(
+                log_id=request.headers.get("X-Request-ID", str(uuid.uuid4())),
+                autorization=request.headers.get("Authorization", None),
+                content_type=request.headers.get("Content-Type", None),
+                content_length=request.headers.get("Content-Length", None),
+                content_accept=request.headers.get("Accept", None),
+                request_method=request.method,
+                request_path=request.url.path,
+                execute_time=round((time.time() - start_time) * 1000, 3),
+                body=json.loads(b"".join(response_body)),
+                status_code=response.status_code,
+            ).show_log()
 
-        return response
+            return response
 
-    except Exception:
-        print(f"Error no middleware: {Exception}")
-        return await call_next(request)
+        except Exception:
+            print(f"Error no middleware: {Exception}")
+            return await call_next(request)
