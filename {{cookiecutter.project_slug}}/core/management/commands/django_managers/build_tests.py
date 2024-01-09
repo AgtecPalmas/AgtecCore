@@ -9,29 +9,23 @@ class TestsBuild:
         self.apps = apps
         self.path_core = self.command.path_core
 
-        self.core_snippets: Path = Path(
-            f"{self.path_core}/management/commands/snippets/"
+        self.snippets_dir: Path = Path(
+            f"{self.path_core}/management/commands/snippets/django/tests"
         )
-        self.snippet_forms: Path = Path(f"{self.core_snippets}/django_tests/forms.txt")
-        self.snippet_views: Path = Path(f"{self.core_snippets}/django_tests/views.txt")
-        self.snippet_models: Path = Path(
-            f"{self.core_snippets}/django_tests/models.txt"
-        )
+        self.snippet_forms: Path = Path(f"{self.snippets_dir}/forms.txt")
+        self.snippet_views: Path = Path(f"{self.snippets_dir}/views.txt")
+        self.snippet_models: Path = Path(f"{self.snippets_dir}/models.txt")
         self.snippet_models_import: Path = Path(
-            f"{self.core_snippets}/django_tests/models_import.txt"
+            f"{self.snippets_dir}/models_import.txt"
         )
-        self.snippet_views_import: Path = Path(
-            f"{self.core_snippets}/django_tests/views_import.txt"
-        )
-        self.snippet_forms_import: Path = Path(
-            f"{self.core_snippets}/django_tests/forms_import.txt"
-        )
-        self.snippet_views_index: Path = Path(
-            f"{self.core_snippets}/django_tests/views_index.txt"
-        )
+        self.snippet_views_import: Path = Path(f"{self.snippets_dir}/views_import.txt")
+        self.snippet_forms_import: Path = Path(f"{self.snippets_dir}/forms_import.txt")
+        self.snippet_views_index: Path = Path(f"{self.snippets_dir}/views_index.txt")
 
         self.path_tests: Path = self.command.path_tests
-        self.path_tests_model: Path = Path(f"{self.path_tests}/tests_{self.command.model_lower}")
+        self.path_tests_model: Path = Path(
+            f"{self.path_tests}/tests_{self.command.model_lower}"
+        )
         self.app = self.command.app
         self.model = self.command.model
         self.model_lower = self.command.model_lower
@@ -40,8 +34,7 @@ class TestsBuild:
 
     def build(self):
         Utils.create_directory(self.path_tests)
-        Utils.create_directory(self.path_tests_model)
-        Utils.create_file(f"{self.path_tests_model}/__init__.py")
+        Utils.create_directory(self.path_tests_model, True)
 
         for build_type in self.build_types:
             novo_conteudo = Utils.get_snippet(
@@ -74,7 +67,10 @@ class TestsBuild:
                 novo_conteudo = novo_conteudo + "\n" + views_index_template
 
             # Verifica se o arquivo já existe
-            if Utils.check_file(f"{self.path_tests_model}/tests_{build_type}.py") is False:
+            if (
+                Utils.check_file(f"{self.path_tests_model}/tests_{build_type}.py")
+                is False
+            ):
                 Utils.write_file(
                     f"{self.path_tests_model}/tests_{build_type}.py",
                     novo_import + "\n" + novo_conteudo,
@@ -86,7 +82,9 @@ class TestsBuild:
 
             # Verifica se o arquivo está bloqueado
             if (
-                Utils.check_file_is_locked(f"{self.path_tests_model}/tests_{build_type}.py")
+                Utils.check_file_is_locked(
+                    f"{self.path_tests_model}/tests_{build_type}.py"
+                )
                 is True
             ):
                 return
@@ -104,7 +102,9 @@ class TestsBuild:
                 f"{self.path_tests_model}/tests_{build_type}.py",
                 "import pytest",
             ):
-                arquivo = Utils.read_file(f"{self.path_tests_model}/tests_{build_type}.py")
+                arquivo = Utils.read_file(
+                    f"{self.path_tests_model}/tests_{build_type}.py"
+                )
                 data = []
 
                 for line in arquivo:

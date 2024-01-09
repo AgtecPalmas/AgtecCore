@@ -55,9 +55,9 @@ class Command(BaseCommand):
         self.path_urls: Path = None
         self.path_template_dir: Path = None
         self.path_api: Path = None
-        self.path_serializer: Path = None
+        self.path_api_serializers: Path = None
         self.path_api_views: Path = None
-        self.path_api_urls: Path = None
+        self.path_api_routers: Path = None
         self.path_tests: Path = None
 
         self.force_templates: bool = False
@@ -140,7 +140,6 @@ class Command(BaseCommand):
         a responsabilidade de criar as views dos models da app"""
         try:
             ViewsBuild(self, apps).build()
-            ViewsBuild(self, apps).build_init_file()
             PythonFormatter(self.path_views).format()
 
         except Exception as error:
@@ -199,11 +198,11 @@ class Command(BaseCommand):
 
     # Métodos da APIRest
 
-    def __manage_serializer(self):
+    def __manage_api_serializer(self):
         """Método responsável por criar/configurar o arquivo de serializer para a APIRest (DRF)"""
         try:
             DRFBuild(self, apps).manage_serializers()
-            PythonFormatter(self.path_serializer).format()
+            PythonFormatter(self.path_api_serializers).format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_serializer : {error}")
@@ -217,11 +216,11 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __manage_api_view: {error}")
 
-    def __manage_api_url(self):
+    def __manage_api_router(self):
         """Método responsável por criar/configurar o arquivo de urls para a APIRest (DRF)"""
         try:
-            DRFBuild(self, apps).manage_router_urls()
-            PythonFormatter(self.path_api_urls).format()
+            DRFBuild(self, apps).manage_routers()
+            PythonFormatter(self.path_api_routers).format()
 
         except Exception as error:
             Utils.show_error(f"Ocorreu o erro : {error} no __manage_api_url")
@@ -229,7 +228,7 @@ class Command(BaseCommand):
     def __manage_urls_api_app(self):
         """Método para adicionar o path da app ao arquivo urls_api.py"""
         try:
-            DRFBuild(self, apps).manage_urls_api()
+            DRFBuild(self, apps).manage_routers_base()
             PythonFormatter(self.path_base_api_urls).format()
 
         except Exception as error:
@@ -238,9 +237,10 @@ class Command(BaseCommand):
     def __manage_api(self):
         """Método que chama os métodos responsáveis por criar os arquivos da APIRest"""
         try:
-            self.__manage_serializer()
+            DRFBuild(self, apps).create_folders()
+            self.__manage_api_serializer()
             self.__manage_api_view()
-            self.__manage_api_url()
+            self.__manage_api_router()
             self.__manage_urls_api_app()
 
         except Exception as error:
@@ -255,9 +255,9 @@ class Command(BaseCommand):
             PythonFormatter(self.path_views).format()
             PythonFormatter(self.path_urls).format()
             PythonFormatter(self.path_base_urls).format()
-            PythonFormatter(self.path_serializer).format()
+            PythonFormatter(self.path_api_serializers).format()
             PythonFormatter(self.path_api_views).format()
-            PythonFormatter(self.path_api_urls).format()
+            PythonFormatter(self.path_api_routers).format()
             PythonFormatter(self.path_base_api_urls).format()
             PythonFormatter(self.path_tests).format()
 
@@ -410,16 +410,16 @@ class Command(BaseCommand):
         self.app_instance = apps.get_app_config(self.app_lower)
 
         self.path_model = Path(f"{self.path_app}/models.py")
-        self.path_form = Path(f"{self.path_app}/forms.py")
+        self.path_form = Path(f"{self.path_app}/forms")
         self.path_views = Path(f"{self.path_app}/views")
         self.path_urls = Path(f"{self.path_app}/urls.py")
         self.path_template_dir = Path(f"{self.path_app}/templates/{self.app}")
         self.path_tests = Path(f"{self.path_app}/tests/")
 
         self.path_api = Path(f"{self.path_app}/api")
-        self.path_api_views = Path(f"{self.path_api}/api_views.py")
-        self.path_api_urls = Path(f"{self.path_api}/api_urls.py")
-        self.path_serializer = Path(f"{self.path_api}/serializers.py")
+        self.path_api_views = Path(f"{self.path_api}/views")
+        self.path_api_routers = Path(f"{self.path_api}/routers.py")
+        self.path_api_serializers = Path(f"{self.path_api}/serializers")
 
         Utils.show_core_box(f"App {self.app}", tipo="app")
 

@@ -10,7 +10,9 @@ class TemplatesBuild:
         self.command = command
         self.apps = apps
         self.path_core = self.command.path_core
-        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django"
+        self.snippets_dir = (
+            f"{self.path_core}/management/commands/snippets/django/templates"
+        )
         self.templates_dir = f"{self.command.path_template_dir}"
         self.app = self.command.app
         self.app_lower = self.command.app_lower
@@ -20,12 +22,24 @@ class TemplatesBuild:
 
         self.model_template_path = Path(f"{self.templates_dir}/{self.model_lower}")
         self.index_template = Path(f"{self.templates_dir}/index.html")
-        self.detail_template = Path(f"{self.model_template_path}/{self.model_lower}_detail.html")
-        self.list_template = Path(f"{self.model_template_path}/{self.model_lower}_list.html")
-        self.create_template = Path(f"{self.model_template_path}/{self.model_lower}_create.html")
-        self.delete_template = Path(f"{self.model_template_path}/{self.model_lower}_delete.html")
-        self.update_template = Path(f"{self.model_template_path}/{self.model_lower}_update.html")
-        self.restore_template = Path(f"{self.model_template_path}/{self.model_lower}_restore.html")
+        self.detail_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_detail.html"
+        )
+        self.list_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_list.html"
+        )
+        self.create_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_create.html"
+        )
+        self.delete_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_delete.html"
+        )
+        self.update_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_update.html"
+        )
+        self.restore_template = Path(
+            f"{self.model_template_path}/{self.model_lower}_restore.html"
+        )
 
     def get_file_path(self, template_name: str) -> str:
         if template_name == "index":
@@ -45,37 +59,24 @@ class TemplatesBuild:
 
     def get_snippet_content(self, template_name: str) -> str:
         if template_name == "index":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/indextemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/index.txt")))
         if template_name == "detail":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/detailtemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/detail.txt")))
         if template_name == "list":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/listtemplate.txt")))
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/list.txt")))
         if template_name == "create":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/createtemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/create.txt")))
         if template_name == "update":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/updatetemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/update.txt")))
         if template_name == "delete":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/deletetemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/delete.txt")))
         if template_name == "restore":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/restoretemplate.txt"))
-            )
+            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/restore.txt")))
 
     def get_verbose_name(self) -> str:
         """Método para retornar o verbose_name da app"""
         return (
-            Utils.get_verbose_name(self.apps, app_name=self.app_lower)
-            or self.app_lower
+            Utils.get_verbose_name(self.apps, app_name=self.app_lower) or self.app_lower
         )
 
     def build(self):

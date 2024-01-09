@@ -276,12 +276,14 @@ class Utils(object):
             return __content
 
     @staticmethod
-    def create_directory(path: str) -> bool:
+    def create_directory(path: str, init: bool = False) -> bool:
         """Crie um diretório no caminho passado como parâmetro"""
         __process_result = False
         if not Utils.check_dir(path):
             try:
                 os.makedirs(path)
+                if init:
+                    Utils.create_file(f"{path}/__init__.py")
                 __process_result = True
             except Exception as error:
                 Utils.show_error(f"Error in Utils.create_directory: {error}")
