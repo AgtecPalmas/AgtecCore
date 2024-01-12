@@ -7,7 +7,8 @@ from core.database import AsyncDBDependency, get_db
 from authentication import security
 from authentication import use_cases as crud_auth
 
-from . import schemas, use_cases
+from usuario import schemas
+from usuario.use_cases import usuario as use_cases
 
 router = APIRouter()
 
@@ -17,63 +18,65 @@ router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
 
 @router_$model$.get("/", response_model=List[schemas.$ModelClass$],
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-async def read_$model$s(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
+async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
     """
     Retrieve $model$s.
     """
-    $model$s = await use_cases.$model$.get_multi(db, skip=skip, limit=limit)
-    for $model$ in $model$s:
-        $model$.django_user = crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
-    return $model$s
+    itens = await use_cases.get_multi(db, skip=skip, limit=limit)
+    for item in itens:
+        item.django_user = crud_auth.user.get_by_id(db=db, id=item.django_user_id)
+    return itens
 
 
 @router_$model$.post("/", response_model=schemas.$ModelClass$,
                      dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
-async def create_$model$(*, db: AsyncDBDependency, $model$_in: schemas.$ModelClass$Create) -> Any:
+async def create(*, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
     """
     Create new $model$.
     """
-    $model$ = await use_cases.$model$.create(db, obj_in=$model$_in)
-    return $model$
+    result = await use_cases.create(db, data)
+    return result
 
 
-@router_$model$.get("/{$model$_id}", response_model=schemas.$ModelClass$,
+@router_$model$.get("/{id}", response_model=schemas.$ModelClass$,
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-async def read_$model$_by_id($model$_id: str, db: AsyncDBDependency) -> Any:
+async def get(id: str, db: AsyncDBDependency) -> Any:
     """
     Get a specific $model$ by id.
     """
-    $model$ = await use_cases.$model$.get(db, id=$model$_id)
-    if not $model$:
+    item = await use_cases.get(db, id)
+    if not item:
         raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
-    $model$.django_user = await crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
-    return $model$
+    item.django_user = await crud_auth.user.get_by_id(db=db, id=item.django_user_id)
+    return item
 
 
-@router_$model$.put("/{$model$_id}", response_model=schemas.$ModelClass$,
+@router_$model$.put("/{id}", response_model=schemas.$ModelClass$,
                     dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
-async def update_$model$(*, db: AsyncDBDependency, $model$_id: str, $model$_in: schemas.$ModelClass$Update) -> Any:
+async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
     """
     Update a $model$.
     """
-    $model$ = await use_cases.$model$.get(db, id=$model$_id)
+    item = await use_cases.get(db, id)
+
     if not $model$:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = await use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
-    return $model$
+
+    result = await use_cases.update(db, item, data)
+    return result
 
 
 @router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
                        dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
-async def delete_$model$(*, db: AsyncDBDependency, id: str) -> Any:
+async def delete(*, db: AsyncDBDependency, id: str) -> Any:
     """
     Delete a $model$.
     """
-    $model$ = await use_cases.$model$.get(db=db, id=id)
-    if not $model$:
+    item = await use_cases.get(db=db, id=id)
+    if not item:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = await use_cases.$model$.delete(db=db, id=id)
-    return $model$
+    result = await use_cases.delete(db=db, id=id)
+    return result
 
 
 router.include_router(router_$model$)

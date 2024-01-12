@@ -121,29 +121,25 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             count=total, next=next_page, previous=previous_page, results=results
         )
 
-    async def create(
-        self, db: AsyncDBDependency, *, obj_in: CreateSchemaType
-    ) -> ModelType:
-        db_obj = self.model(**obj_in.model_dump())
-        db_obj = await self._add_commit_and_refresh(db, db_obj)
-        return db_obj
+    async def create(self, db: AsyncDBDependency, data: CreateSchemaType) -> ModelType:
+        data = self.model(**data.model_dump())
+        return await self._add_commit_and_refresh(db, data)
 
     async def update(
         self,
         db: AsyncDBDependency,
-        *,
-        db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, Dict[str, Any]],
+        objeto: ModelType,
+        data: Union[UpdateSchemaType, Dict[str, Any]],
     ) -> ModelType:
-        data = obj_in.model_dump(exclude_unset=True)
+        data = data.model_dump(exclude_unset=True)
         data["updated_on"] = datetime.datetime.now()
 
         for field in data:
-            setattr(db_obj, field, data[field])
+            setattr(objeto, field, data[field])
 
-        return await self._add_commit_and_refresh(db, db_obj)
+        return await self._add_commit_and_refresh(db, objeto)
 
-    async def delete(self, db: AsyncDBDependency, *, id: int) -> ModelType:
+    async def delete(self, db: AsyncDBDependency, id: int) -> ModelType:
         db_obj = await self.get(db, id=id)
 
         if not db_obj:
