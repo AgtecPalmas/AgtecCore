@@ -15,4 +15,5 @@ requests==2.26.*
 rich==12.2.*
 scanapi==2.9.*
 SQLAlchemy==2.0.*
+taskipy==1.12.*
 uvicorn==0.25.*

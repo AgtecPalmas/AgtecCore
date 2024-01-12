@@ -11,13 +11,19 @@ class GenericException(HTTPException):
         self.detail = error
 
 
-class CustomNotFoundException(GenericException):
+class NotFoundException(GenericException):
     def __init__(self, error: Optional[str] = None):
         super().__init__(error or "Not found")
         self.status_code = 404
 
 
-class CustomUUIDValueException(GenericException):
+class UUIDValueException(GenericException):
     def __init__(self, error: Optional[str] = None):
         super().__init__(error or "Invalid UUID value")
         self.status_code = 400
+
+
+class InternalServerException(GenericException):
+    def __init__(self, error: Optional[str] = None):
+        super().__init__(error or "Internal server error")
+        self.status_code = 500
