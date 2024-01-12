@@ -3,7 +3,7 @@ from typing import Any, List
 from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from core.database import get_db
+from core.database import AsyncDBDependency, get_db
 from authentication import security
 from authentication import use_cases as crud_auth
 
@@ -17,11 +17,11 @@ router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
 
 @router_$model$.get("/", response_model=List[schemas.$ModelClass$],
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-def read_$model$s(db: Session = Depends(get_db), skip: int = 0, limit: int = 25) -> Any:
+async def read_$model$s(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
     """
     Retrieve $model$s.
     """
-    $model$s = use_cases.$model$.get_multi(db, skip=skip, limit=limit)
+    $model$s = await use_cases.$model$.get_multi(db, skip=skip, limit=limit)
     for $model$ in $model$s:
         $model$.django_user = crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
     return $model$s
@@ -29,50 +29,50 @@ def read_$model$s(db: Session = Depends(get_db), skip: int = 0, limit: int = 25)
 
 @router_$model$.post("/", response_model=schemas.$ModelClass$,
                      dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
-def create_$model$(*, db: Session = Depends(get_db), $model$_in: schemas.$ModelClass$Create) -> Any:
+async def create_$model$(*, db: AsyncDBDependency, $model$_in: schemas.$ModelClass$Create) -> Any:
     """
     Create new $model$.
     """
-    $model$ = use_cases.$model$.create(db, obj_in=$model$_in)
+    $model$ = await use_cases.$model$.create(db, obj_in=$model$_in)
     return $model$
 
 
 @router_$model$.get("/{$model$_id}", response_model=schemas.$ModelClass$,
                     dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-def read_$model$_by_id($model$_id: str, db: Session = Depends(get_db)) -> Any:
+async def read_$model$_by_id($model$_id: str, db: AsyncDBDependency) -> Any:
     """
     Get a specific $model$ by id.
     """
-    $model$ = use_cases.$model$.get(db, id=$model$_id)
+    $model$ = await use_cases.$model$.get(db, id=$model$_id)
     if not $model$:
         raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
-    $model$.django_user = crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
+    $model$.django_user = await crud_auth.user.get_by_id(db=db, id=$model$.django_user_id)
     return $model$
 
 
 @router_$model$.put("/{$model$_id}", response_model=schemas.$ModelClass$,
                     dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
-def update_$model$(*, db: Session = Depends(get_db), $model$_id: str, $model$_in: schemas.$ModelClass$Update) -> Any:
+async def update_$model$(*, db: AsyncDBDependency, $model$_id: str, $model$_in: schemas.$ModelClass$Update) -> Any:
     """
     Update a $model$.
     """
-    $model$ = use_cases.$model$.get(db, id=$model$_id)
+    $model$ = await use_cases.$model$.get(db, id=$model$_id)
     if not $model$:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
+    $model$ = await use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
     return $model$
 
 
 @router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
                        dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
-def delete_$model$(*, db: Session = Depends(get_db), id: str) -> Any:
+async def delete_$model$(*, db: AsyncDBDependency, id: str) -> Any:
     """
     Delete a $model$.
     """
-    $model$ = use_cases.$model$.get(db=db, id=id)
+    $model$ = await use_cases.$model$.get(db=db, id=id)
     if not $model$:
         raise HTTPException(status_code=404, detail="$model$ inexistente no sistema")
-    $model$ = use_cases.$model$.remove(db=db, id=id)
+    $model$ = await use_cases.$model$.delete(db=db, id=id)
     return $model$
 
 

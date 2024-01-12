@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from core import security
 from core.config import settings
-from core.database import get_db
+from core.database import AsyncDBDependency, get_db
 
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -15,8 +15,8 @@ reusable_oauth2 = OAuth2PasswordBearer(
 )
 
 
-def get_current_user(
-    db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
+async def get_current_user(
+    db: AsyncDBDependency, token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
         payload = jwt.decode(
@@ -28,7 +28,7 @@ def get_current_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Não foi possível validar as credenciais",
         )
-    user = use_cases.user.get(db, id=token_data.sub)
+    user = await use_cases.user.get(db, id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrador")
     return user

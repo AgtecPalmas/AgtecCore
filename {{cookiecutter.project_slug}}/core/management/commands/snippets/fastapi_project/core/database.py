@@ -1,6 +1,6 @@
 import datetime
 import uuid
-from typing import Generator
+from typing import Annotated, Generator
 
 from fastapi import Depends
 from sqlalchemy import UUID, Boolean, DateTime, String, create_engine
@@ -93,3 +93,5 @@ async def get_async_db() -> Generator:
 
 
 ActiveAsyncSession = Depends(get_async_db)
+
+AsyncDBDependency = Annotated[AsyncSession, ActiveAsyncSession]

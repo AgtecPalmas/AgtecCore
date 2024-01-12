@@ -4,13 +4,12 @@ from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import HTTPException, Request
 from fastapi.datastructures import URL
-from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import func, select
-from sqlalchemy.orm import Session
 
-from .database import CoreBase
-from .schemas import PaginationBase
+from core.database import AsyncDBDependency, CoreBase
+from core.exceptions import InternalServerException
+from core.schemas import PaginationBase
 
 ModelType = TypeVar("ModelType", bound=CoreBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -29,19 +28,17 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def get(self, db: Session, id: Any) -> Optional[ModelType]:
+    async def get(self, db: AsyncDBDependency, id: Any) -> Optional[ModelType]:
+        query = select(self.model).where(self.model.id == id)
+
         if hasattr(self.model, "deleted"):
-            query = select(self.model).where(
-                self.model.id == id, self.model.deleted.is_(False)
-            )
+            query = query.where(self.model.deleted.is_(False))
 
-        else:
-            query = select(self.model).where(self.model.id == id)
+        result = await db.execute(query)
+        return result.scalar()
 
-        return db.scalar(query)
-
-    def get_multi(
-        self, db: Session, *, skip: int = 0, limit: int = 25
+    async def get_multi(
+        self, db: AsyncDBDependency, *, skip: int = 0, limit: int = 25
     ) -> List[ModelType]:
         if skip <= 0 or limit <= 0:
             raise HTTPException(
@@ -57,7 +54,8 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         else:
             query = select(self.model)
 
-        return db.scalars(query.offset(skip).limit(limit))
+        result = await db.execute(query.offset(skip).limit(limit))
+        return result.scalars().all()
 
     @staticmethod
     def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
@@ -89,9 +87,9 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             )
         return
 
-    def get_paginate(
+    async def get_paginate(
         self,
-        db: Session,
+        db: AsyncDBDependency,
         query: select = None,
         *,
         request: Request,
@@ -106,56 +104,76 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             if hasattr(self.model, "deleted"):
                 query = select(self.model).where(self.model.deleted.is_(False))
 
+        results = await db.execute(query.offset(offset).limit(limit))
+        results = results.scalars().all()
         results = self.__load_results(
-            db.scalars(query.offset(offset).limit(limit)).all(),
+            results,
             model_pydantic,
         )
-        total = db.query(func.count()).select_from(query).scalar()
+
+        total = select(func.count()).select_from(query)
+        total = await db.execute(total)
+        total = total.scalar()
+
         next_page, previous_page = self.__get_pages(request.url, total, limit, offset)
 
         return PaginationBase(
             count=total, next=next_page, previous=previous_page, results=results
         )
 
-    def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data)  # type: ignore
-        return self._add_commit_and_refresh(db, db_obj)
+    async def create(
+        self, db: AsyncDBDependency, *, obj_in: CreateSchemaType
+    ) -> ModelType:
+        db_obj = self.model(**obj_in.model_dump())
+        db_obj = await self._add_commit_and_refresh(db, db_obj)
+        return db_obj
 
-    def update(
+    async def update(
         self,
-        db: Session,
+        db: AsyncDBDependency,
         *,
         db_obj: ModelType,
         obj_in: Union[UpdateSchemaType, Dict[str, Any]],
     ) -> ModelType:
-        obj_data = jsonable_encoder(db_obj)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.dict(exclude_unset=True)
-        update_data["updated_on"] = datetime.datetime.now()
-        for field in obj_data:
-            if field in update_data:
-                setattr(db_obj, field, update_data[field])
-        return self._add_commit_and_refresh(db, db_obj)
+        data = obj_in.model_dump(exclude_unset=True)
+        data["updated_on"] = datetime.datetime.now()
 
-    def remove(self, db: Session, *, id: int) -> ModelType:
-        db_obj = db.query(self.model).get(id)
+        for field in data:
+            setattr(db_obj, field, data[field])
+
+        return await self._add_commit_and_refresh(db, db_obj)
+
+    async def delete(self, db: AsyncDBDependency, *, id: int) -> ModelType:
+        db_obj = await self.get(db, id=id)
+
+        if not db_obj:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Item {self.model.__name__} inexistente no sistema",
+            )
+
         if hasattr(self.model, "deleted"):
             db_obj.deleted = True
+            db_obj.enabled = False
+
         else:
             db.delete(db_obj)
-        return self._add_commit_and_refresh(db, db_obj)
 
-    def _add_commit_and_refresh(self, db, db_obj):
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+        return await self._add_commit_and_refresh(db, db_obj)
 
-    def hard_remove(self, db: Session, *, id: int) -> ModelType:
+    async def _add_commit_and_refresh(self, db, db_obj):
+        try:
+            db.add(db_obj)
+            await db.commit()
+            await db.refresh(db_obj)
+            return db_obj
+
+        except Exception as e:
+            await db.rollback()
+            raise InternalServerException()
+
+    async def hard_remove(self, db: AsyncDBDependency, *, id: int) -> ModelType:
         obj = db.query(self.model).get(id)
         db.delete(obj)
-        db.commit()
+        await db.commit()
         return obj
