@@ -74,3 +74,7 @@ def has_permission(permission_name: str):
         return True
 
     return has_permission_
+
+
+ACTIVE_USER_DEPENDENCY = Depends(get_current_active_user)
+SUPERUSER_DEPENDENCY = Depends(get_current_active_superuser)

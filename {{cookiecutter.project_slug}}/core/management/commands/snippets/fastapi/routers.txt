@@ -4,7 +4,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
-from core.database import AsyncDBDependency, get_db
+from core.database import AsyncDBDependency
 from authentication import security
 from core.schemas import PaginationBase
 
@@ -13,11 +13,24 @@ from .use_cases import $model$ as use_cases
 
 router = APIRouter()
 
-router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
-                           dependencies=[Depends(security.get_current_active_user)])
+GET_DEPENDENCY = Depends(security.has_permission("$app$.view_$model$"))
+CREATE_DEPENDENCY = Depends(security.has_permission("$app$.add_$model$"))
+UPDATE_DEPENDENCY = Depends(security.has_permission("$app$.change_$model$"))
+DELETE_DEPENDENCY = Depends(security.has_permission("$app$.delete_$model$"))
 
-@router_$model$.get("/", response_model=PaginationBase,
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+MODEL_NAME = "$model$"
+
+router_$model$ = APIRouter(
+        prefix=f"/{MODEL_NAME}",
+        tags=[f"{MODEL_NAME}"],
+        dependencies=[security.ACTIVE_USER_DEPENDENCY]
+    )
+
+@router_$model$.get(
+    "/",
+    response_model=PaginationBase,
+    dependencies=[GET_DEPENDENCY]
+)
 async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
     itens = await use_cases.get_paginate(
         db,
@@ -28,14 +41,20 @@ async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit:
     )
     return itens
 
-@router_$model$.post("/", response_model=schemas.$ModelClass$Create,
-                    dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
+@router_$model$.post(
+    "/",
+    response_model=schemas.$ModelClass$Create,
+    dependencies=[CREATE_DEPENDENCY]
+)
 async def create(*, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
     result = await use_cases.create(db, data)
     return result
 
-@router_$model$.get("/{id}", response_model=schemas.$ModelClass$,
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+@router_$model$.get(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[GET_DEPENDENCY]
+)
 async def get(id: str, db: AsyncDBDependency) -> Any:
     try:
         id = uuid.UUID(id)
@@ -49,8 +68,11 @@ async def get(id: str, db: AsyncDBDependency) -> Any:
     
     return item
 
-@router_$model$.put("/{id}", response_model=schemas.$ModelClass$Update,
-                    dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
+@router_$model$.put(
+    "/{id}",
+    response_model=schemas.$ModelClass$Update,
+    dependencies=[UPDATE_DEPENDENCY]
+)
 async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
     item = await use_cases.get(db, id)
 
@@ -60,8 +82,11 @@ async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Up
     item = await use_cases.update(db, item, data)
     return item
 
-@router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
-                     dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
+@router_$model$.delete(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[DELETE_DEPENDENCY]
+)
 async def delete(db: AsyncDBDependency, id: str) -> Any:
     item = await use_cases.get(db=db, id=id)
 

@@ -3,7 +3,7 @@ from typing import Any, List
 from fastapi import APIRouter, Body, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from core.database import AsyncDBDependency, get_db
+from core.database import AsyncDBDependency
 from authentication import security
 from authentication import use_cases as crud_auth
 
@@ -12,12 +12,24 @@ from usuario.use_cases import usuario as use_cases
 
 router = APIRouter()
 
-router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
-                           dependencies=[Depends(security.get_current_active_user)])
+GET_DEPENDENCY = Depends(security.has_permission("$app$.view_$model$"))
+CREATE_DEPENDENCY = Depends(security.has_permission("$app$.add_$model$"))
+UPDATE_DEPENDENCY = Depends(security.has_permission("$app$.change_$model$"))
+DELETE_DEPENDENCY = Depends(security.has_permission("$app$.delete_$model$"))
 
+MODEL_NAME = "$model$"
 
-@router_$model$.get("/", response_model=List[schemas.$ModelClass$],
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+router_$model$ = APIRouter(
+        prefix=f"/{MODEL_NAME}",
+        tags=[f"{MODEL_NAME}"],
+        dependencies=[security.ACTIVE_USER_DEPENDENCY]
+    )
+
+@router_$model$.get(
+    "/",
+    response_model=List[schemas.$ModelClass$],
+    dependencies=[GET_DEPENDENCY]
+)
 async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
     """
     Retrieve $model$s.
@@ -28,8 +40,11 @@ async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
     return itens
 
 
-@router_$model$.post("/", response_model=schemas.$ModelClass$,
-                     dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
+@router_$model$.post(
+    "/",
+    response_model=schemas.$ModelClass$,
+    dependencies=[CREATE_DEPENDENCY]
+)
 async def create(*, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
     """
     Create new $model$.
@@ -38,8 +53,11 @@ async def create(*, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> 
     return result
 
 
-@router_$model$.get("/{id}", response_model=schemas.$ModelClass$,
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
+@router_$model$.get(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[GET_DEPENDENCY]
+)
 async def get(id: str, db: AsyncDBDependency) -> Any:
     """
     Get a specific $model$ by id.
@@ -51,8 +69,11 @@ async def get(id: str, db: AsyncDBDependency) -> Any:
     return item
 
 
-@router_$model$.put("/{id}", response_model=schemas.$ModelClass$,
-                    dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
+@router_$model$.put(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[UPDATE_DEPENDENCY],
+)
 async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
     """
     Update a $model$.
@@ -66,8 +87,11 @@ async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Up
     return result
 
 
-@router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
-                       dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
+@router_$model$.delete(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[DELETE_DEPENDENCY]
+)
 async def delete(*, db: AsyncDBDependency, id: str) -> Any:
     """
     Delete a $model$.
