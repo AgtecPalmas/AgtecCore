@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from sqlalchemy import func, select
 
 from core.database import AsyncDBDependency, CoreBase
-from core.exceptions import InternalServerException
+from core.exceptions import InternalServerException, NotFoundException
 from core.schemas import PaginationBase
 
 ModelType = TypeVar("ModelType", bound=CoreBase)
@@ -37,7 +37,12 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             query = query.where(self.model.deleted.is_(False))
 
         result = await db.execute(query)
-        return result.scalar()
+        item = result.scalar()
+
+        if not item:
+            raise NotFoundException()
+
+        return item
 
     async def get_multi(
         self, db: AsyncDBDependency, *, skip: int = 0, limit: int = 25
