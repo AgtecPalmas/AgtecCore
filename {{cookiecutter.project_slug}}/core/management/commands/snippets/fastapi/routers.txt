@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Response, status
 
 from authentication import security
 from core.database import AsyncDBDependency
@@ -47,7 +47,7 @@ async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit:
     response_model=schemas.$ModelClass$Create,
     dependencies=[CREATE_DEPENDENCY]
 )
-async def create(*, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
+async def create(db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
     return await use_cases.create(db, data)
 
 @model_router.get(
@@ -63,7 +63,7 @@ async def get(id: str, db: AsyncDBDependency) -> Any:
     response_model=schemas.$ModelClass$Update,
     dependencies=[UPDATE_DEPENDENCY, Depends(valid_uuid)]
 )
-async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
+async def update(db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
     item = await use_cases.get(db, id)
     return await use_cases.update(db, item, data)
 
@@ -74,7 +74,8 @@ async def update(*, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Up
 )
 async def delete(db: AsyncDBDependency, id: str) -> Any:
     await use_cases.get(db=db, id=id)
-    return await use_cases.delete(db, id)
+    await use_cases.delete(db, id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @model_router.put(
     "/restore/{id}",
