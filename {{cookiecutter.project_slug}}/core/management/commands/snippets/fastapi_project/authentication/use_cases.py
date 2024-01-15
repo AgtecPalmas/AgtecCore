@@ -1,5 +1,9 @@
 from typing import Any, Dict, Optional, Union
 
+from fastapi.encoders import jsonable_encoder
+from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+
 from authentication.models import Group, Permission, User
 from authentication.schemas import (
     GroupCreate,
@@ -9,22 +13,25 @@ from authentication.schemas import (
     UserCreate,
     UserUpdate,
 )
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-
 from core.security import get_password_hash, verify_password
 from core.use_cases import BaseUseCases
 
 
 class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
-    def get_by_email(self, db: Session, *, email: str) -> Optional[User]:
-        return db.query(User).filter(User.email == email).first()
+    async def get_by_email(self, db: Session, *, email: str) -> Optional[User]:
+        query = select(User).where(User.email == email)
+        result = await db.execute(query)
+        return result.scalar()
 
-    def get_by_username(self, db: Session, *, username: str) -> Optional[User]:
-        return db.query(User).filter(User.username == username).first()
+    async def get_by_username(self, db: Session, *, username: str) -> Optional[User]:
+        query = select(User).where(User.username == username)
+        result = await db.execute(query)
+        return result.scalar()
 
-    def get_by_id(self, db: Session, *, id: int) -> Optional[User]:
-        return db.query(User).filter(User.id == id).first()
+    async def get_by_id(self, db: Session, *, id: int) -> Optional[User]:
+        query = select(User).where(User.id == id)
+        result = await db.execute(query)
+        return result.scalar()
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         db_obj = User(
@@ -68,10 +75,10 @@ class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
         db.refresh(db_obj)
         return db_obj
 
-    def authenticate(
+    async def authenticate(
         self, db: Session, *, username: str, password: str
     ) -> Optional[User]:
-        current_user = self.get_by_username(db, username=username)
+        current_user = await self.get_by_username(db, username=username)
         if not current_user:
             return None
         if not verify_password(password, current_user.password):
