@@ -96,4 +96,18 @@ async def delete(db: AsyncDBDependency, id: str) -> Any:
     result = await use_cases.delete(db, id)
     return result
 
+@router_$model$.put(
+    "/restore/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[DELETE_DEPENDENCY, UPDATE_DEPENDENCY]
+)
+async def restore(db: AsyncDBDependency, id: str) -> Any:
+    item = await use_cases.get(db=db, id=id, deleted=True)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Modelo $model$ inexistente no sistema")
+
+    result = await use_cases.restore(db, item)
+    return result
+
 router.include_router(router_$model$)

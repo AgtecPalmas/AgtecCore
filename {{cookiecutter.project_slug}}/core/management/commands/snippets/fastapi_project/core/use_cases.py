@@ -28,10 +28,12 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    async def get(self, db: AsyncDBDependency, id: Any) -> Optional[ModelType]:
+    async def get(
+        self, db: AsyncDBDependency, id: Any, deleted: bool = False
+    ) -> Optional[ModelType]:
         query = select(self.model).where(self.model.id == id)
 
-        if hasattr(self.model, "deleted"):
+        if hasattr(self.model, "deleted") and not deleted:
             query = query.where(self.model.deleted.is_(False))
 
         result = await db.execute(query)
@@ -157,6 +159,18 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         return await self._add_commit_and_refresh(db, db_obj)
 
+    async def restore(self, db: AsyncDBDependency, model: ModelType) -> ModelType:
+        if not hasattr(self.model, "deleted"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Item {self.model.__name__} não possui soft delete",
+            )
+
+        model.deleted = False
+        model.enabled = True
+        model.updated_on = datetime.datetime.now()
+        return await self._add_commit_and_refresh(db, model)
+
     async def _add_commit_and_refresh(self, db, db_obj):
         try:
             db.add(db_obj)
@@ -166,7 +180,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         except Exception as e:
             await db.rollback()
-            raise InternalServerException()
+            raise InternalServerException() from e
 
     async def hard_remove(self, db: AsyncDBDependency, *, id: int) -> ModelType:
         obj = db.query(self.model).get(id)
