@@ -45,15 +45,9 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return item
 
     async def get_multi(
-        self, db: AsyncDBDependency, *, skip: int = 0, limit: int = 25
+        self, db: AsyncDBDependency, *, offset: int = 0, limit: int = 25
     ) -> List[ModelType]:
-        if skip <= 0 or limit <= 0:
-            raise HTTPException(
-                status_code=400,
-                detail="Skip and limit must be greater than 0",
-            )
-
-        self.__validate_limit_offset(limit, skip, skip)
+        self.__validate_limit_offset(limit, offset)
 
         if hasattr(self.model, "deleted"):
             query = select(self.model).where(self.model.deleted.is_(False))
@@ -61,7 +55,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         else:
             query = select(self.model)
 
-        result = await db.execute(query.offset(skip).limit(limit))
+        result = await db.execute(query.offset(offset).limit(limit))
         return result.scalars().all()
 
     @staticmethod
@@ -86,25 +80,25 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         ]
 
     @staticmethod
-    def __validate_limit_offset(limit: int, offset: int, skip: int) -> None:
-        if offset < 0 or limit <= 0 or skip < 0:
+    def __validate_limit_offset(limit: int, offset: int) -> None:
+        if offset < 0 or limit <= 0:
             raise HTTPException(
                 status_code=400,
-                detail="Offset and skip must be greater than 0 and limit must be greater than or equal to 0",
+                detail="Offset must be greater than 0 and limit must be greater than or equal to 0",
             )
         return
 
     async def get_paginate(
         self,
         db: AsyncDBDependency,
-        query: select = None,
         *,
+        query: select = None,
         request: Request,
         offset: int = 0,
         limit: int = 5,
         model_pydantic: Type[BaseModel] = None,
     ) -> PaginationBase:
-        self.__validate_limit_offset(limit, offset, offset)
+        self.__validate_limit_offset(limit, offset)
 
         if query is None:
             query = select(self.model)

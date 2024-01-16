@@ -17,8 +17,8 @@ router_user = APIRouter(prefix="/users", tags=["users"])
     response_model=List[schemas.User],
     dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
-async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
-    return await use_cases.user.get_multi(db, skip=skip, limit=limit)
+async def fetch(db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
+    return await use_cases.user.get_multi(db, offset=offset, limit=limit)
 
 
 @router_user.post("/", response_model=schemas.User)
@@ -140,8 +140,8 @@ router_permission = APIRouter(
     response_model=List[schemas.Permission],
     dependencies=[Depends(security.has_permission("authentication.permission_view"))],
 )
-async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
-    return await use_cases.permission.get_multi(db, skip=skip, limit=limit)
+async def fetch(db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
+    return await use_cases.permission.get_multi(db, offset=offset, limit=limit)
 
 
 @router_permission.post("/", response_model=schemas.Permission)
@@ -183,8 +183,8 @@ router_group = APIRouter(
 
 
 @router_group.get("/", response_model=List[schemas.Group])
-async def fetch(db: AsyncDBDependency, skip: int = 0, limit: int = 25) -> Any:
-    return await use_cases.group.get_multi(db, skip=skip, limit=limit)
+async def fetch(db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
+    return await use_cases.group.get_multi(db, offset=offset, limit=limit)
 
 
 @router_group.post("/", response_model=schemas.Group)
