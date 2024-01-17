@@ -1,4 +1,4 @@
-from typing import Optional, Set
+from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
@@ -22,13 +22,13 @@ class UserBase(BaseModel):
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     password: str
-    groups: Optional[Set[int]] = []
+    groups: Optional[list] = []
 
 
 # Properties to receive via API on update
 class UserUpdate(UserBase):
     password: Optional[str] = None
-    groups: Optional[Set[int]] = []
+    groups: Optional[list] = []
 
 
 class UserInDBBase(UserBase):
@@ -60,6 +60,8 @@ class TokenPayload(BaseModel):
 # Permisions
 class PermissionBase(BaseModel):
     name: str
+    content_type_id: int
+    codename: str
 
 
 class PermissionCreate(PermissionBase):
@@ -93,11 +95,11 @@ class GroupBase(BaseModel):
 
 
 class GroupCreate(GroupBase):
-    permissions: Set[int] = []
+    permissions: list[int] = []
 
 
 class GroupUpdate(GroupBase):
-    permissions: Set[int] = []
+    permissions: list[int] = []
 
 
 class GroupInDBBase(GroupBase):

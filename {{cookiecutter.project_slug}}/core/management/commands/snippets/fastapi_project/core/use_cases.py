@@ -133,7 +133,9 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         data: Union[UpdateSchemaType, Dict[str, Any]],
     ) -> ModelType:
         data = data.model_dump(exclude_unset=True)
-        data["updated_on"] = datetime.datetime.now()
+
+        if hasattr(self.model, "updated_on"):
+            data["updated_on"] = datetime.datetime.now()
 
         for field in data:
             setattr(objeto, field, data[field])
@@ -149,13 +151,11 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 detail=f"Item {self.model.__name__} inexistente no sistema",
             )
 
-        if hasattr(self.model, "deleted"):
-            db_obj.deleted = True
-            db_obj.enabled = False
+        if not hasattr(self.model, "deleted"):
+            return await self.hard_remove(db, id=id)
 
-        else:
-            db.delete(db_obj)
-
+        db_obj.deleted = True
+        db_obj.enabled = False
         return await self._add_commit_and_refresh(db, db_obj)
 
     async def restore(self, db: AsyncDBDependency, model: ModelType) -> ModelType:
@@ -182,7 +182,15 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             raise InternalServerException() from e
 
     async def hard_remove(self, db: AsyncDBDependency, *, id: int) -> ModelType:
-        obj = db.query(self.model).get(id)
-        db.delete(obj)
-        await db.commit()
-        return obj
+        item = await self.get(db, id=id)
+        try:
+            await db.delete(item)
+            await db.commit()
+
+        except Exception as e:
+            await db.rollback()
+            raise InternalServerException(
+                error=f"Erro ao deletar permanentemente {self.model.__name__}"
+            ) from e
+
+        return item
