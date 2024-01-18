@@ -19,7 +19,8 @@ pwd_context = CryptContext(
 )
 
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 8  # 8 days
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 1
+ACCESS_REFRESHTOKEN_EXPIRE_MINUTES = 60 * 24 * 2
 
 """
 Arquivo de configuração de segurança dos tokens JWT
@@ -44,6 +45,13 @@ def create_access_token(
         expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode = {"exp": expire, "sub": str(subject)}
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def create_refresh_token(subject: Union[str, Any]) -> str:
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_REFRESHTOKEN_EXPIRE_MINUTES)
     to_encode = {"exp": expire, "sub": str(subject)}
     encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
     return encoded_jwt
