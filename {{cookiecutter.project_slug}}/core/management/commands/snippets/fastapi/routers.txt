@@ -73,7 +73,6 @@ async def update(db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Updat
     dependencies=[DELETE_DEPENDENCY, Depends(valid_uuid)]
 )
 async def delete(db: AsyncDBDependency, id: str) -> Any:
-    await use_cases.get(db=db, id=id)
     await use_cases.delete(db, id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 

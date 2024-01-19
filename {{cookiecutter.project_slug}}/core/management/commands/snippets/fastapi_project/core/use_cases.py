@@ -28,38 +28,32 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    async def get(
-        self, db: AsyncDBDependency, id: Any, deleted: bool = False
-    ) -> Optional[ModelType]:
-        query = select(self.model).where(self.model.id == id)
-
-        if hasattr(self.model, "deleted") and not deleted:
-            query = query.where(self.model.deleted.is_(False))
-
-        result = await db.execute(query)
-        item = result.scalar()
-
-        if not item:
-            raise NotFoundException()
-
-        return item
-
-    async def get_multi(
-        self, db: AsyncDBDependency, *, offset: int = 0, limit: int = 25
-    ) -> List[ModelType]:
-        self.__validate_limit_offset(limit, offset)
-
-        if hasattr(self.model, "deleted"):
-            query = select(self.model).where(self.model.deleted.is_(False))
-
-        else:
-            query = select(self.model)
-
-        result = await db.execute(query.offset(offset).limit(limit))
-        return result.scalars().all()
-
     @staticmethod
     def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
+        """
+        __get_pages
+        ----------
+        Método estático responsável por calcular as URLs de paginação
+
+        Parameters
+        ----------
+        url : str
+            URL requisição
+
+        total : int
+            Total de registros encontrados
+
+        limit : int
+            Limite de registros por página
+
+        offset : int
+            Offset da página atual
+
+        Returns
+        -------
+        tuple[str, str]
+            Tupla contendo a URL da próxima página e da página anterior
+        """
         url = url._url.split("?")[0]
         _next = limit + offset < total
         _previous = offset > 0
@@ -81,6 +75,25 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     @staticmethod
     def __load_results(results: list, model_pydantic: Type[BaseModel]) -> list:
+        """
+        __load_results
+        --------------
+        Método estático responsável por carregar os resultados da consulta em um Schema
+
+        Parameters
+        ----------
+        results : list
+            Lista de resultados da consulta
+
+        model_pydantic : Type[BaseModel]
+            Schema do modelo
+
+        Returns
+        -------
+        list
+            Lista de resultados carregados no Schema
+        """
+
         return [
             json.loads(model_pydantic(**item.__dict__).model_dump_json())
             for item in results
@@ -88,6 +101,25 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     @staticmethod
     def __validate_limit_offset(limit: int, offset: int) -> None:
+        """
+        __validate_limit_offset
+        -----------------------
+        Método estático responsável por validar os valores de limit e offset
+
+        Parameters
+        ----------
+        limit : int
+            Limite de registros por página
+
+        offset : int
+            Offset da página atual
+
+        Raises
+        ------
+        HTTPException
+            Exceção lançada quando o valor de limit ou offset são inválidos
+        """
+
         if offset < 0 or limit <= 0:
             raise HTTPException(
                 status_code=400,
@@ -105,6 +137,37 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         limit: int = 5,
         model_pydantic: Type[BaseModel] = None,
     ) -> PaginationBase:
+        """
+        get_paginate
+        ------------
+        Método assíncrono responsável por buscar e paginar uma lista de registros no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        query : select
+            Query de consulta
+
+        request : Request
+            Requisição HTTP
+
+        offset : int
+            Offset da página atual
+
+        limit : int
+            Limite de registros por página
+
+        model_pydantic : Type[BaseModel]
+            Schema do modelo
+
+        Returns
+        -------
+        PaginationBase
+            Objeto de paginação contendo os resultados da consulta
+        """
+
         self.__validate_limit_offset(limit, offset)
 
         if query is None:
@@ -129,7 +192,63 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             count=total, next=next_page, previous=previous_page, results=results
         )
 
+    async def get(
+        self, db: AsyncDBDependency, id: Any, deleted: bool = False
+    ) -> Optional[ModelType]:
+        """
+        get
+        -------------
+        Método assíncrono responsável por buscar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            id : str
+                UUID do registro a ser buscado
+
+            deleted : Optional[bool]
+                Flag que indica se deve buscar registros deletados
+
+        Returns
+        -------
+            ModelType
+                Schema do modelo do registro encontrado no banco de dados
+        """
+
+        query = select(self.model).where(self.model.id == id)
+
+        if hasattr(self.model, "deleted") and not deleted:
+            query = query.where(self.model.deleted.is_(False))
+
+        result = await db.execute(query)
+        item = result.scalar()
+
+        if not item:
+            raise NotFoundException()
+
+        return item
+
     async def create(self, db: AsyncDBDependency, data: CreateSchemaType) -> ModelType:
+        """
+        create
+        ------------
+            Método assíncrono responsável por criar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            data : CreateSchemaType
+                Objeto do modelo (Schema) a ser persistido no banco de dados
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) persistido no banco de dados
+        """
         data = self.model(**data.model_dump())
         return await self._add_commit_and_refresh(db, data)
 
@@ -139,6 +258,28 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         objeto: ModelType,
         data: Union[UpdateSchemaType, Dict[str, Any]],
     ) -> ModelType:
+        """
+        update
+        -------------
+            Método assíncrono responsável por atualizar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Session assíncrona do banco de dados
+
+            model : ModelType
+                Instância do model a ser atualizado no banco de dados
+
+            data : Union[UpdateSchemaType, Dict[str, any]]
+                Valores a serem atualizados no banco de dados baseado
+                no Schema do UpdateSchemaType
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) atualizado no banco de dados
+        """
         data = data.model_dump(exclude_unset=True)
 
         if hasattr(self.model, "updated_on"):
@@ -150,45 +291,56 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return await self._add_commit_and_refresh(db, objeto)
 
     async def delete(self, db: AsyncDBDependency, id: int) -> ModelType:
-        db_obj = await self.get(db, id=id)
+        """
+        delete
+        -------------
+            Método assíncrono responsável por deletar um registro no banco de dados
 
-        if not db_obj:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Item {self.model.__name__} inexistente no sistema",
-            )
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
 
+            id : str
+                UUID do registro a ser deletado
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) deletado no banco de dados
+        """
         if not hasattr(self.model, "deleted"):
             return await self.hard_remove(db, id=id)
 
+        db_obj = await self.get(db, id=id)
         db_obj.deleted = True
         db_obj.enabled = False
         return await self._add_commit_and_refresh(db, db_obj)
 
-    async def restore(self, db: AsyncDBDependency, model: ModelType) -> ModelType:
-        if not hasattr(self.model, "deleted"):
-            raise HTTPException(
-                status_code=400,
-                detail=f"Item {self.model.__name__} não possui soft delete",
-            )
-
-        model.deleted = False
-        model.enabled = True
-        model.updated_on = datetime.datetime.now()
-        return await self._add_commit_and_refresh(db, model)
-
-    async def _add_commit_and_refresh(self, db, db_obj):
-        try:
-            db.add(db_obj)
-            await db.commit()
-            await db.refresh(db_obj)
-            return db_obj
-
-        except Exception as e:
-            await db.rollback()
-            raise InternalServerException() from e
-
     async def hard_remove(self, db: AsyncDBDependency, *, id: int) -> ModelType:
+        """
+        hard_remove
+        ------------
+        Método assíncrono responsável por deletar permanentemente um registro no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        id : str
+            UUID do registro a ser deletado
+
+        Returns
+        -------
+        ModelType
+            Objeto do modelo (Schema) deletado permanentemente no banco de dados
+
+        Raises
+        ------
+        InternalServerException
+            Exceção lançada quando ocorre algum erro ao deletar permanentemente os dados no banco de dados
+        """
         item = await self.get(db, id=id)
         try:
             await db.delete(item)
@@ -201,3 +353,72 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             ) from e
 
         return item
+
+    async def restore(self, db: AsyncDBDependency, model: ModelType) -> ModelType:
+        """
+        restore
+        ---------------
+        Método assíncrono responsável por restaurar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            data : ModelType
+                Objeto do modelo (Schema) a ser restaurado no banco de dados
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) restaurado no banco de dados
+
+        Raises
+        ------
+            HTTPException
+                Exceção lançada quando o modelo não possuir soft delete
+        """
+        if not hasattr(self.model, "deleted"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Item {self.model.__name__} não possui soft delete",
+            )
+
+        model.deleted = False
+        model.enabled = True
+        model.updated_on = datetime.datetime.now()
+        return await self._add_commit_and_refresh(db, model)
+
+    async def _add_commit_and_refresh(self, db, db_obj):
+        """
+        _add_commit_and_refresh
+        -----------------------
+        Método 'Privado' responsável por persistir os dados no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        db_obj : ModelType
+            Objeto do modelo (Schema) a ser persistido no banco de dados
+
+        Returns
+        -------
+        ModelType
+            Objeto do modelo (Schema) persistido no banco de dados
+
+        Raises
+        ------
+        InternalServerException
+            Exceção lançada quando ocorre algum erro ao persistir os dados no banco de dados
+        """
+        try:
+            db.add(db_obj)
+            await db.commit()
+            await db.refresh(db_obj)
+            return db_obj
+
+        except Exception as e:
+            await db.rollback()
+            raise InternalServerException() from e
