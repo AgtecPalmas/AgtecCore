@@ -60,16 +60,23 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     @staticmethod
     def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
-        hasNextPage = total // limit > offset
-        hasPreviousPage = total > limit and total // limit <= offset
-
         url = url._url.split("?")[0]
-        next_page = (
-            f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
-        )
-        previous_page = (
-            f"{url}?offset={offset - limit}&limit={limit}" if hasPreviousPage else None
-        )
+        _next = limit + offset < total
+        _previous = offset > 0
+
+        next_page, previous_page = None, None
+        max_offset_previous = total - (total % limit)
+
+        if _next:
+            next_page = f"{url}?offset={offset + limit}&limit={limit}"
+
+        if _previous and offset != 0:
+            if offset <= max_offset_previous:
+                previous_page = f"{url}?offset={offset - limit}&limit={limit}"
+
+            else:
+                previous_page = f"{url}?offset={max_offset_previous}&limit={limit}"
+
         return (next_page, previous_page)
 
     @staticmethod
