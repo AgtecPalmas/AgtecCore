@@ -7,7 +7,7 @@ from pydantic.networks import EmailStr
 from authentication import schemas, security, use_cases
 from core.database import AsyncDBDependency
 from core.schemas import PaginationBase
-from core.security import create_access_token
+from core.security import create_access_token, create_refresh_token
 
 router_user = APIRouter(prefix="/users", tags=["users"])
 
@@ -86,9 +86,12 @@ async def login_access_token(
     elif not use_cases.user.is_active(user):
         raise HTTPException(status_code=403, detail="Inactive user")
 
+    refresh_token = create_refresh_token(user.id)
+
     return {
         **user.__dict__,
         "access_token": create_access_token(user.id),
+        "refresh_token": refresh_token,
         "token_type": "bearer",
     }
 
