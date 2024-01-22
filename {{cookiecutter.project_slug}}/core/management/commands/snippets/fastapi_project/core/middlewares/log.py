@@ -88,7 +88,7 @@ class LogObject:
                 logger_id=self.logger_id,
                 method=self.request_method,
                 path=self.request_path,
-                token=self.autorization,
+                token=self.autorization[:20],
                 time=f"{self.execute_time} ms",
                 content_type=self.content_type,
                 content_length=self.content_length,
@@ -110,27 +110,37 @@ class CustomLog(BaseHTTPMiddleware):
         super().__init__(app)
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
+        error: bool = False
+        start_time = time.time()
+
         try:
-            start_time = time.time()
             response = await call_next(request)
             response_body = [section async for section in response.body_iterator]
             response.body_iterator = iterate_in_threadpool(iter(response_body))
 
-            LogObject(
-                log_id=request.headers.get("X-Request-ID", str(uuid.uuid4())),
-                autorization=request.headers.get("Authorization", None),
-                content_type=request.headers.get("Content-Type", None),
-                content_length=request.headers.get("Content-Length", None),
-                content_accept=request.headers.get("Accept", None),
+        except Exception as e:
+            error = True
+            response = e
+
+        finally:
+            execute_time = int((time.time() - start_time) * 1000)
+            log_id = uuid.uuid4().hex
+            log = LogObject(
+                log_id=log_id,
+                autorization=request.headers.get("Authorization"),
+                content_type=request.headers.get("Content-Type"),
+                content_length=request.headers.get("Content-Length"),
+                content_accept=request.headers.get("Accept"),
                 request_method=request.method,
                 request_path=request.url.path,
-                execute_time=round((time.time() - start_time) * 1000, 3),
-                body=json.loads(b"".join(response_body)),
-                status_code=response.status_code,
-            ).show_log()
+                execute_time=execute_time,
+                status_code=500 if error else response.status_code,
+                body=response.args if error else json.loads(b"".join(response_body)),
+            )
+            log.show_log()
 
-            return response
-
-        except Exception:
-            print(f"Error no middleware: {Exception}")
-            return await call_next(request)
+        return (
+            Response(status_code=500, content="Internal server error")
+            if error
+            else await call_next(request)
+        )
