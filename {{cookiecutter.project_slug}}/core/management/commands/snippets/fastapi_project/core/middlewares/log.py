@@ -54,8 +54,8 @@ class LogObject:
         self.status_code = status_code
         self.body = body
         self.color = "green"
-        self._errors_status_code = ["4", "5"]
-        self._warnings_status_code = ["3"]
+        self._errors_status_code = {"4", "5"}
+        self._warnings_status_code = {"3"}
 
     def show_log(self) -> None:
         if str(self.status_code)[0] in self._errors_status_code:
@@ -88,7 +88,7 @@ class LogObject:
                 logger_id=self.logger_id,
                 method=self.request_method,
                 path=self.request_path,
-                token=self.autorization[:20],
+                token=self.autorization[:20] if self.autorization else None,
                 time=f"{self.execute_time} ms",
                 content_type=self.content_type,
                 content_length=self.content_length,
@@ -110,7 +110,6 @@ class CustomLog(BaseHTTPMiddleware):
         super().__init__(app)
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        error: bool = False
         start_time = time.time()
 
         try:
@@ -118,9 +117,17 @@ class CustomLog(BaseHTTPMiddleware):
             response_body = [section async for section in response.body_iterator]
             response.body_iterator = iterate_in_threadpool(iter(response_body))
 
+            if not response_body:
+                response_body = None
+
+            elif "text/html" in response.headers["content-type"]:
+                response_body = b"".join(response_body).decode("utf-8")
+
+            else:
+                response_body = json.loads(b"".join(response_body))
+
         except Exception as e:
-            error = True
-            response = e
+            raise e
 
         finally:
             execute_time = int((time.time() - start_time) * 1000)
@@ -134,13 +141,9 @@ class CustomLog(BaseHTTPMiddleware):
                 request_method=request.method,
                 request_path=request.url.path,
                 execute_time=execute_time,
-                status_code=500 if error else response.status_code,
-                body=response.args if error else json.loads(b"".join(response_body)),
+                status_code=response.status_code,
+                body=response_body,
             )
             log.show_log()
 
-        return (
-            Response(status_code=500, content="Internal server error")
-            if error
-            else await call_next(request)
-        )
+        return response
