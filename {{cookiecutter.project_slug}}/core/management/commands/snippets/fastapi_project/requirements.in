@@ -15,9 +15,7 @@ python-jose==3.3.*
 python-multipart==0.0.*
 requests==2.26.*
 rich==12.2.*
-rocketry==2.5.*
 scanapi==2.9.*
 SQLAlchemy==2.0.*
 taskipy==1.12.*
-trio==0.24.*
 uvicorn[standard]==0.26.*
