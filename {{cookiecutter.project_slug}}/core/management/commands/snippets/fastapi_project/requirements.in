@@ -10,8 +10,8 @@ passlib==1.7.*
 psycopg2-binary==2.9.*
 pydantic==2.5.*
 pydantic-settings==2.1.*
+pyjwt==2.8.*
 python-dotenv==1.0.*
-python-jose==3.3.*
 python-multipart==0.0.*
 requests==2.26.*
 rich==12.2.*

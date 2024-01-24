@@ -1,10 +1,10 @@
-from authentication import use_cases, models, schemas
+import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
+from authentication import models, schemas, use_cases
 from core import security
 from core.config import settings
 from core.database import AsyncDBDependency, get_db
@@ -23,11 +23,11 @@ async def get_current_user(
             token, settings.secret_key, algorithms=[security.ALGORITHM]
         )
         token_data = schemas.TokenPayload(**payload)
-    except (jwt.JWTError, ValidationError):
+    except (jwt.PyJWTError, ValidationError) as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Não foi possível validar as credenciais",
-        )
+        ) from e
     user = await use_cases.user.get(db, id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrador")
