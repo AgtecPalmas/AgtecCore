@@ -111,6 +111,7 @@ class CustomLog(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         start_time = time.time()
+        error: bool = False
 
         try:
             response = await call_next(request)
@@ -127,6 +128,8 @@ class CustomLog(BaseHTTPMiddleware):
                 response_body = json.loads(b"".join(response_body))
 
         except Exception as e:
+            error = True
+            response_body = str(e)
             raise e
 
         finally:
@@ -141,7 +144,7 @@ class CustomLog(BaseHTTPMiddleware):
                 request_method=request.method,
                 request_path=request.url.path,
                 execute_time=execute_time,
-                status_code=response.status_code,
+                status_code=500 if error else response.status_code,
                 body=response_body,
             )
             log.show_log()
