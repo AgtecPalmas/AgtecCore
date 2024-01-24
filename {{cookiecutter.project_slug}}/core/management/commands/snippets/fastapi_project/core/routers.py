@@ -4,7 +4,7 @@ from fastapi import APIRouter, Response
 from .config import settings
 from .health_check import HealthCheck
 
-router_core = APIRouter(prefix="/core")
+router_core = APIRouter(prefix="/core", tags=["core"])
 
 
 @router_core.get("/")
@@ -16,4 +16,5 @@ async def health_check():
 
 
 api_router = APIRouter(prefix=settings.api_str)
+api_router.include_router(router_core)
 api_router.include_router(router_users, prefix="/authentication")
