@@ -1,6 +1,6 @@
 import datetime
 import uuid
-from typing import Annotated, Generator
+from typing import Annotated, AsyncGenerator, Generator
 
 from fastapi import Depends
 from sqlalchemy import UUID, Boolean, DateTime, String, create_engine
@@ -81,7 +81,7 @@ AsyncSessionLocal = sessionmaker(
 )
 
 
-async def get_async_db() -> Generator:
+async def get_async_db() -> AsyncGenerator:
     async with AsyncSessionLocal() as db:
         try:
             yield db

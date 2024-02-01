@@ -109,8 +109,9 @@ async def update_current_user(
     first_name: str = Body(None),
     last_name: str = Body(None),
     email: EmailStr = Body(None),
-    current_user: schemas.User = security.ACTIVE_USER_DEPENDENCY,
 ) -> Any:
+    current_user = security.ACTIVE_USER_DEPENDENCY
+
     if (
         email
         and await use_cases.user.get_by_email(db, email)
