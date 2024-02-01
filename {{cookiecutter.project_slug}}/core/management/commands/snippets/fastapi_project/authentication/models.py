@@ -19,7 +19,6 @@ Arquivo com os  models da app de autenticação
 """
 
 
-
 class ContentType(Base):
     __tablename__ = "django_content_type"
 
@@ -53,7 +52,7 @@ class Group(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String, nullable=False)
-    permissions = relationship("Permission", secondary=group_permission)
+    permissions = relationship("Permission", secondary=group_permission, lazy="subquery")
 
 
 user_group = Table(
@@ -75,6 +74,6 @@ class User(Base):
     password: Mapped[str] = mapped_column(String, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)
-    groups = relationship("Group", secondary=user_group)
+    groups = relationship("Group", secondary=user_group, lazy="subquery")
     is_staff = mapped_column(Boolean, default=False)
     date_joined = mapped_column(DateTime, default=datetime.datetime.now)

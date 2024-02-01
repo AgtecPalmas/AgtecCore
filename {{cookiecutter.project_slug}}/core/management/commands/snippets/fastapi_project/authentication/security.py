@@ -1,13 +1,13 @@
-from authentication import use_cases, models, schemas
+import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
+from authentication import models, schemas, use_cases
 from core import security
 from core.config import settings
-from core.database import get_db
+from core.database import AsyncDBDependency, get_db
 
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -15,20 +15,20 @@ reusable_oauth2 = OAuth2PasswordBearer(
 )
 
 
-def get_current_user(
-    db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
+async def get_current_user(
+    db: AsyncDBDependency, token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
         payload = jwt.decode(
             token, settings.secret_key, algorithms=[security.ALGORITHM]
         )
         token_data = schemas.TokenPayload(**payload)
-    except (jwt.JWTError, ValidationError):
+    except (jwt.PyJWTError, ValidationError) as e:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Não foi possível validar as credenciais",
-        )
-    user = use_cases.user.get(db, id=token_data.sub)
+        ) from e
+    user = await use_cases.user.get(db, id=token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrador")
     return user
@@ -74,3 +74,7 @@ def has_permission(permission_name: str):
         return True
 
     return has_permission_
+
+
+ACTIVE_USER_DEPENDENCY = Depends(get_current_active_user)
+SUPERUSER_DEPENDENCY = Depends(get_current_active_superuser)

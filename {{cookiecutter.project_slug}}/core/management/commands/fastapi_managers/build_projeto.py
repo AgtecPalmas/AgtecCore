@@ -2,8 +2,12 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from rich.prompt import Prompt
+
 from decouple import config
+from rich.prompt import Prompt
+
+from base.settings import SYSTEM_NAME
+
 from ..utils import Utils
 
 
@@ -78,6 +82,7 @@ class ProjetoBuild:
         db_name: str = config("DB_NAME")
         db_user: str = config("DB_USER")
         db_password: str = config("DB_PASSWORD")
+        project_name: str = f"{SYSTEM_NAME}_FastAPI"
 
         file = Path(self.fastapi_dir) / ".env"
 
@@ -86,6 +91,7 @@ class ProjetoBuild:
             "__db_name__": db_name,
             "__db_user__": db_user,
             "__db_password__": db_password,
+            "__project_name__": project_name,
         }
 
         with open(file, "r") as f:
