@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from ..constants.fastapi import *
+from ..constants.fastapi import FIELDS_TYPES
 from ..formatters import PythonFormatter
 from ..utils import Utils
 
@@ -19,14 +19,16 @@ class SchemasBuild:
         self._fields_types = FIELDS_TYPES
 
     def __get_field_django_type(self, field):
-        return str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
+        return (
+            str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
+        )
 
     def __check_django_type_in_fields_types(self, field):
         return field.__class__.__name__ in self._fields_types.keys()
 
     def __add_attr_null(self, field, attribute):
         if getattr(field, "null", None):
-            attribute = f"Optional[{attribute}]"
+            attribute = f"Optional[{attribute}] = None"
         return attribute
 
     def __add_attr_default(self, field, attribute):
@@ -57,11 +59,16 @@ class SchemasBuild:
 
     def build(self):
         try:
+            if Utils.check_content(self.path_schema, f"class {self.model}"):
+                Utils.show_message("[cyan]Schemas[/] já existem")
+                return
+
             content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/schema.txt")))
             content = content.replace("$ModelClass$", self.model)
             model = self.app_instance.get_model(self.model)
             fields = model._meta.fields
             result = ""
+
             for field in iter(fields):
                 item = {
                     "app": (str(field).split("."))[0],
@@ -91,9 +98,7 @@ class SchemasBuild:
                     attribute = self.__add_attr_default(field, attribute)
 
                     if item.get("django_type") in ["ForeignKey", "OneToOneField"]:
-                        if (
-                            str(field_name).endswith("_id")
-                        ):
+                        if str(field_name).endswith("_id"):
                             result += f"\t {field_name}: Optional[UUID]\n"
                             continue
 
@@ -101,12 +106,11 @@ class SchemasBuild:
                     result += f"\t {field_name}: {attribute}\n"
 
             # Many to Many
-            for related_field in iter(model._meta.related_objects):
-                if related_field.field.many_to_many:
-                    attribute = "Set"
-                    attribute = self.__add_attr_null(field, attribute)
-                    attribute = self.__add_attr_default(field, attribute)
-                    result += f"\t {related_field.field.name}: {attribute}\n"
+            for related_field in iter(model._meta.many_to_many):
+                attribute = "Set"
+                attribute = self.__add_attr_null(related_field, attribute)
+                attribute = self.__add_attr_default(related_field, attribute)
+                result += f"\t {related_field.name}: {attribute}\n"
 
             content = content.replace("$auth_import$", "")
             content = content.replace("$fields$", result)
@@ -114,19 +118,16 @@ class SchemasBuild:
             if Utils.check_file(self.path_schema) is False:
                 with open(self.path_schema, "w") as arquivo:
                     arquivo.write(content)
-                PythonFormatter(self.path_schema).format()
-                Utils.show_message("[cyan]Schemas[/] criados com sucesso")
-                return
 
-            if Utils.check_content(self.path_schema, f"class {self.model}"):
-                Utils.show_message("[cyan]Schemas[/] já existem")
-                return
+            else:
+                with open(self.path_schema, "a") as schema:
+                    schema.write("\n")
+                    schema.write(content)
 
-            with open(self.path_schema, "a") as schema:
-                schema.write("\n")
-                schema.write(content)
             PythonFormatter(self.path_schema).format()
             Utils.show_message("[cyan]Schemas[/] criados com sucesso")
 
         except Exception as e:
-            Utils.show_message(f"Erro ao criar o Schema do model {self.model}. Erro: {e}")
+            Utils.show_message(
+                f"Erro ao criar o Schema do model {self.model}. Erro: {e}"
+            )

@@ -50,6 +50,9 @@ def get_breadcrumbs(url_str):
     ]
     url = "/"
 
+    if url_str in ["/", "/core/"]:
+        return []
+
     array_url = url_str.strip("/").split("/")
     for cont, slug in enumerate(array_url, start=1):
         breadcrumb = {}

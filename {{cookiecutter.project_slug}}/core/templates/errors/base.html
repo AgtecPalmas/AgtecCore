@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% block content %}
+    <div class="br-message info rounder-md">
+        <div class="content">
+            <span class="message-title">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                {% block mensagem %}
+                {% endblock mensagem %}
+                <div class="flex-buttons-start mt-2">
+                    <div>
+                        <button class="br-button block" onclick="history.back()">Voltar</button>
+                    </div>
+                </div>
+            </span><span class="message-body"></span>
+        </div>
+    </div>
+    {% block extra %}
+    {% endblock extra %}
+{% endblock content %}

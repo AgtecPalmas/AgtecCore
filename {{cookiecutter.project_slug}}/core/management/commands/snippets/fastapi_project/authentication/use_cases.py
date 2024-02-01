@@ -1,6 +1,10 @@
 from typing import Any, Dict, Optional, Union
 
-from authentication.models import Group, Permission, User
+from fastapi.encoders import jsonable_encoder
+from sqlalchemy.future import select
+from sqlalchemy.orm import Session
+
+from authentication.models import ContentType, Group, Permission, User
 from authentication.schemas import (
     GroupCreate,
     GroupUpdate,
@@ -9,73 +13,77 @@ from authentication.schemas import (
     UserCreate,
     UserUpdate,
 )
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-
+from core.database import AsyncDBDependency
+from core.exceptions import GenericException
 from core.security import get_password_hash, verify_password
 from core.use_cases import BaseUseCases
 
 
 class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
-    def get_by_email(self, db: Session, *, email: str) -> Optional[User]:
-        return db.query(User).filter(User.email == email).first()
+    async def get_by_email(self, db: AsyncDBDependency, email: str) -> Optional[User]:
+        query = select(User).where(User.email == email)
+        result = await db.execute(query)
+        return result.scalar()
 
-    def get_by_username(self, db: Session, *, username: str) -> Optional[User]:
-        return db.query(User).filter(User.username == username).first()
-
-    def get_by_id(self, db: Session, *, id: int) -> Optional[User]:
-        return db.query(User).filter(User.id == id).first()
-
-    def create(self, db: Session, *, obj_in: UserCreate) -> User:
-        db_obj = User(
-            email=obj_in.email,
-            password=get_password_hash(obj_in.password),
-            username=obj_in.username,
-            first_name=obj_in.first_name,
-            last_name=obj_in.last_name,
-            is_superuser=obj_in.is_superuser,
-            is_active=obj_in.is_active,
-        )
-        if hasattr(obj_in, "groups"):
-            groups = db.query(Group).filter(Group.id.in_(obj_in.groups)).all()
-            db_obj.groups = groups
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
-
-    def update(
-        self, db: Session, *, db_obj: User, obj_in: Union[UserUpdate, Dict[str, Any]]
-    ) -> User:
-        obj_data = jsonable_encoder(db_obj)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.dict(exclude_unset=True)
-        if "password" in update_data:
-            password = get_password_hash(update_data["password"])
-            del update_data["password"]
-            update_data["password"] = password
-        for field in obj_data:
-            if field in update_data:
-                setattr(db_obj, field, update_data[field])
-        if "groups" in update_data:
-            db_obj.groups.clear()
-            groups = db.query(Group).filter(Group.id.in_(obj_in.groups)).all()
-            db_obj.groups = groups
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
-
-    def authenticate(
-        self, db: Session, *, username: str, password: str
+    async def get_by_username(
+        self, db: AsyncDBDependency, username: str
     ) -> Optional[User]:
-        current_user = self.get_by_username(db, username=username)
+        query = select(User).where(User.username == username)
+        result = await db.execute(query)
+        return result.scalar()
+
+    async def get_by_id(self, db: AsyncDBDependency, id: int) -> Optional[User]:
+        query = select(User).where(User.id == id)
+        result = await db.execute(query)
+        return result.scalar()
+
+    async def create(self, db: AsyncDBDependency, data: UserCreate) -> User:
+        _query = select(Group).where(Group.id.in_(data.groups))
+        _result = await db.execute(_query)
+        _result = _result.scalars().all()
+
+        if len(_result) != len(data.groups):
+            raise GenericException(
+                error="One or more groups does not exist in the system.",
+            )
+        
+        data.groups = _result
+
+        return await super().create(db, data)
+
+    async def update(
+        self,
+        db: AsyncDBDependency,
+        objeto: User,
+        data: Union[UserUpdate, Dict[str, Any]],
+    ) -> User:
+        _query = select(Group).where(Group.id.in_(data.groups))
+        _result = await db.execute(_query)
+        _result = _result.scalars().all()
+
+        if len(_result) != len(data.groups):
+            raise GenericException(
+                error="One or more groups does not exist in the system.",
+            )
+        
+        data.groups = _result
+
+        if data.password:
+            data.password = get_password_hash(data.password)
+
+        return await super().update(db, objeto, data)
+
+    async def authenticate(
+        self, db: Session, username: str, password: str
+    ) -> Optional[User]:
+        current_user = await self.get_by_username(db, username)
+
         if not current_user:
             return None
+
         if not verify_password(password, current_user.password):
             return None
+
         return current_user
 
     def is_active(self, current_user: User) -> bool:
@@ -91,42 +99,95 @@ user = UserAuthUseCases(User)
 class PermissionAuthUseCases(
     BaseUseCases[Permission, PermissionCreate, PermissionUpdate]
 ):
-    pass
+    async def check_permission_db(
+        self, db: AsyncDBDependency, content_type_id: int, codename: str
+    ) -> bool:
+        content_type = select(ContentType).where(ContentType.id == content_type_id)
+        result = await db.execute(content_type)
+        result = result.scalar()
+
+        if not result:
+            raise GenericException(
+                error=f"Content type with id {content_type_id} does not exist in the system.",
+            )
+
+        query = select(Permission).where(
+            Permission.content_type_id == content_type_id,
+            Permission.codename == codename,
+        )
+        result = await db.execute(query)
+        result = result.scalar()
+
+        if result:
+            raise GenericException(
+                error=f"Permission with codename {codename} and content_type_id {content_type_id} already exists in the system.",
+            )
+
+    async def create(self, db: AsyncDBDependency, data: PermissionCreate) -> Permission:
+        await self.check_permission_db(
+            db, content_type_id=data.content_type_id, codename=data.codename
+        )
+
+        return await super().create(db, data)
+
+    async def update(
+        self,
+        db: AsyncDBDependency,
+        objeto: Permission,
+        data: Union[PermissionUpdate, Dict[str, Any]],
+    ) -> Permission:
+        await self.check_permission_db(db, data.content_type_id, data.codename)
+
+        return await super().update(db, objeto, data)
 
 
 permission = PermissionAuthUseCases(Permission)
 
 
 class GroupAuthUseCases(BaseUseCases[Group, GroupCreate, GroupUpdate]):
-    def create(self, db: Session, *, obj_in: GroupCreate) -> Group:
-        db_obj = Group(name=obj_in.name)
-        permissions = (
-            db.query(Permission).filter(Permission.id.in_(obj_in.permissions)).all()
-        )
-        db_obj.permissions = permissions
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+    async def get_by_name(self, db: AsyncDBDependency, name: str) -> Optional[Group]:
+        query = select(Group).where(Group.name == name)
+        result = await db.execute(query)
+        return result.scalar()
 
-    def update(self, db: Session, *, db_obj: Group, obj_in: GroupUpdate) -> Group:
-        obj_data = jsonable_encoder(db_obj)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.dict(exclude_unset=True)
-        for field in obj_data:
-            if field in update_data:
-                setattr(db_obj, field, update_data[field])
-        db_obj.permissions.clear()
-        permissions = (
-            db.query(Permission).filter(Permission.id.in_(obj_in.permissions)).all()
-        )
-        db_obj.permissions = permissions
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+    async def create(self, db: AsyncDBDependency, data: GroupCreate) -> Group:
+        if await self.get_by_name(db, data.name):
+            raise GenericException(
+                error=f"Group with name {data.name} already exists in the system.",
+            )
+
+        _query = select(Permission).where(Permission.id.in_(data.permissions))
+        _result = await db.execute(_query)
+        _result = _result.scalars().all()
+
+        if len(_result) != len(data.permissions):
+            raise GenericException(
+                error="One or more permissions does not exist in the system.",
+            )
+        
+        data.permissions = _result
+
+        return await super().create(db, data)
+
+    async def update(
+        self, db: AsyncDBDependency, objeto: Group, data: GroupUpdate
+    ) -> Group:
+        if await self.get_by_name(db, data.name):
+            raise GenericException(
+                error=f"Group with name {data.name} already exists in the system.",
+            )
+        _query = select(Permission).where(Permission.id.in_(data.permissions))
+        _result = await db.execute(_query)
+        _result = _result.scalars().all()
+
+        if len(_result) != len(data.permissions):
+            raise GenericException(
+                error="One or more permissions does not exist in the system.",
+            )
+        
+        data.permissions = _result
+
+        return await super().update(db, objeto, data)
 
 
 group = GroupAuthUseCases(Group)

@@ -2,18 +2,18 @@ import os
 import platform
 from pathlib import Path
 
-from base.settings import FASTAPI_APPS
 from django.apps import apps
 from django.core.management.base import BaseCommand
-from rich import box
+
+from base.settings import FASTAPI_APPS
 
 from .fastapi_managers import (
-    RoutersBuild,
-    UseCasesBuild,
     DockerBuild,
     ModelsBuild,
     ProjetoBuild,
+    RoutersBuild,
     SchemasBuild,
+    UseCasesBuild,
 )
 from .formatters import PythonFormatter
 from .utils import Utils
@@ -147,7 +147,7 @@ class Command(BaseCommand):
     def __manage_api(self):
         try:
             RoutersBuild(self, apps).build()
-            RoutersBuild(self, apps).add_route_core()
+            RoutersBuild(self, apps).add_route_to_core()
         except Exception as error:
             Utils.show_error(f"Error in __manage_crud: {error}")
 
@@ -312,24 +312,23 @@ class Command(BaseCommand):
 
     def __generate_app_models(self, app: str, models: list, options: dict) -> None:
         """Método responsável por gerar os models"""
-        Utils.show_message(
-            f"App {app}", title=True, emoji="toolbox", box_style=box.ASCII2
-        )
+
+        Utils.show_core_box(f"App {app}", tipo="app")
+
         self.__set_paths(app)
         self.app_instance = apps.get_app_config(app)
         self.__init_app(self.path_app)
 
         with Utils.ProgressBar() as bar:
-            task = bar.add_task(
-                f"Gerando App [b green]{self.app}[/]",
-                total=len(models),
-            )
-
-            for model in models:
-                Utils.show_message(
+            task = bar.add_task("", total=len(models), start=False)
+            for i, model in enumerate(models):
+                bar.update(
+                    task,
+                    description=f"Gerando App [b green]{self.app}[/]:[b cyan]{model.__name__}[/] - [{i+1}/{len(models)}]",
+                )
+                Utils.show_core_box(
                     f"Model {app}:{model.__name__}",
-                    title=True,
-                    emoji="hourglass_flowing_sand",
+                    tipo="model",
                 )
                 self.model: str = model.__name__.strip()
                 self.model_lower: str = model.__name__.lower().strip()
@@ -339,6 +338,7 @@ class Command(BaseCommand):
                 bar.advance(task, 1)
 
     def handle(self, *args, **options):
+        Utils.show_core_box("", tipo="core")
         app = options["App"] or None
         model = options["Model"] or None
 

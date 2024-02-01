@@ -23,19 +23,17 @@ class ControllerBuilder:
 
     def build(self):
         """
-        build _summary_
+        Método responsável por executar o build do arquivo de Controller
 
         Raises
         ------
         error
-            _description_
+            Erro ao executar o build do arquivo de Controller
         """
-        Utils.show_message(
-            f"Building controller layer from: {self._app_name} | {self._model_name_lower}",
-        )
         try:
             self._parser_controller()
             self._parser_controller_state()
+            Utils.show_message("Controllers criados com sucesso")
         except Exception as error:
             raise error
 
@@ -49,9 +47,10 @@ class ControllerBuilder:
     def _parser_controller(self):
         try:
             if Utils.check_file_is_locked(str(self._controller_path_file)):
-                Utils.show_error(f"File is locked: {self._controller_path_file}")
                 return
-            _snippet = Utils.get_snippet(str(Path(f"{self.snippet_dir}/controller.txt")))
+            _snippet = Utils.get_snippet(
+                str(Path(f"{self.snippet_dir}/controller.txt"))
+            )
             _content = self._parser_content(_snippet)
             with open(self._controller_path_file, "w", encoding="utf-8") as file:
                 file.write(_content)
@@ -61,7 +60,6 @@ class ControllerBuilder:
     def _parser_controller_state(self):
         try:
             if Utils.check_file_is_locked(str(self._controller_state_path_file)):
-                Utils.show_error(f"File is locked: {self._controller_state_path_file}")
                 return
             _snippet = Utils.get_snippet(str(Path(f"{self.snippet_dir}/state.txt")))
             _content = self._parser_content(_snippet)

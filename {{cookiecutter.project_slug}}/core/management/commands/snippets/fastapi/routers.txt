@@ -1,60 +1,88 @@
 import uuid
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Request
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, Request, Response, status
 
-from core.database import get_db
 from authentication import security
+from core.database import AsyncDBDependency
+from core.exceptions import NotFoundException, UUIDValueException
+from core.functions import valid_uuid
 from core.schemas import PaginationBase
 
-from . import schemas, use_cases
+from . import schemas
+from .use_cases import $model$ as use_cases
 
 router = APIRouter()
 
-router_$model$ = APIRouter(prefix="/$model$", tags=['$model$'],
-                           dependencies=[Depends(security.get_current_active_user)])
+GET_DEPENDENCY = Depends(security.has_permission("$app$.view_$model$"))
+CREATE_DEPENDENCY = Depends(security.has_permission("$app$.add_$model$"))
+UPDATE_DEPENDENCY = Depends(security.has_permission("$app$.change_$model$"))
+DELETE_DEPENDENCY = Depends(security.has_permission("$app$.delete_$model$"))
+RESTORE_DEPENDENCY = [UPDATE_DEPENDENCY, DELETE_DEPENDENCY]
 
-@router_$model$.get("/", response_model=PaginationBase,
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-def read_$model$s(request: Request, db: Session = Depends(get_db), offset: int = 0, limit: int = 25) -> Any:
-    $model$s = use_cases.$model$.get_paginate(db, request=request, offset=offset, limit=limit, model_pydantic=schemas.$ModelClass$)
-    return $model$s
+MODEL_NAME = "$model$"
 
-@router_$model$.post("/", response_model=schemas.$ModelClass$Create,
-                    dependencies=[Depends(security.has_permission("$app$.add_$model$"))])
-def create_$model$(*, db: Session = Depends(get_db), $model$_in: schemas.$ModelClass$Create) -> Any:
-    $model$ = use_cases.$model$.create(db, obj_in=$model$_in)
-    return $model$
+model_router = APIRouter(
+        prefix=f"/{MODEL_NAME}",
+        tags=[f"{MODEL_NAME}"],
+        dependencies=[security.ACTIVE_USER_DEPENDENCY]
+    )
 
-@router_$model$.get("/{$model$_id}", response_model=schemas.$ModelClass$,
-                    dependencies=[Depends(security.has_permission("$app$.view_$model$"))])
-def read_$model$_by_id($model$_id: str, db: Session = Depends(get_db)) -> Any:
-    try:
-        $model$_id = uuid.UUID($model$_id)
-    except ValueError as value_error:
-        raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
-    $model$ = use_cases.$model$.get(db, id=$model$_id)
-    if not $model$:
-      raise HTTPException(status_code=404, detail="Item $model$ inexistente no sistema")
-    return $model$
+@model_router.get(
+    "/",
+    response_model=PaginationBase,
+    dependencies=[GET_DEPENDENCY]
+)
+async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
+    return await use_cases.get_paginate(
+        db,
+        request=request,
+        offset=offset,
+        limit=limit,
+        model_pydantic=schemas.$ModelClass$
+    )
 
-@router_$model$.put("/{$model$_id}", response_model=schemas.$ModelClass$Update,
-                    dependencies=[Depends(security.has_permission("$app$.change_$model$"))])
-def update_$model$(*, db: Session = Depends(get_db), $model$_id: str,$model$_in: schemas.$ModelClass$Update) -> Any:
-    $model$ = use_cases.$model$.get(db, id=$model$_id)
-    if not $model$:
-        raise HTTPException(status_code=404,detail="Modelo $model$ inexistente no sistema")
-    $model$ = use_cases.$model$.update(db, db_obj=$model$, obj_in=$model$_in)
-    return $model$
+@model_router.post(
+    "/",
+    response_model=schemas.$ModelClass$Create,
+    dependencies=[CREATE_DEPENDENCY]
+)
+async def create(db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
+    return await use_cases.create(db, data)
 
-@router_$model$.delete("/{id}", response_model=schemas.$ModelClass$,
-                     dependencies=[Depends(security.has_permission("$app$.delete_$model$"))])
-def delete_$model$(*, db: Session = Depends(get_db), id: str) -> Any:
-    $model$ = use_cases.$model$.get(db=db, id=id)
-    if not $model$:
-        raise HTTPException(status_code=404, detail="Modelo $model$ inexistente no sistema")
-    $model$ = use_cases.$model$.remove(db=db, id=id)
-    return $model$
+@model_router.get(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[GET_DEPENDENCY, Depends(valid_uuid)]
+)
+async def get(id: str, db: AsyncDBDependency) -> Any:
+    return await use_cases.get(db, id)
 
-router.include_router(router_$model$)
+@model_router.put(
+    "/{id}",
+    response_model=schemas.$ModelClass$Update,
+    dependencies=[UPDATE_DEPENDENCY, Depends(valid_uuid)]
+)
+async def update(db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
+    item = await use_cases.get(db, id)
+    return await use_cases.update(db, item, data)
+
+@model_router.delete(
+    "/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[DELETE_DEPENDENCY, Depends(valid_uuid)]
+)
+async def delete(db: AsyncDBDependency, id: str) -> Any:
+    await use_cases.delete(db, id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+@model_router.put(
+    "/restore/{id}",
+    response_model=schemas.$ModelClass$,
+    dependencies=[*RESTORE_DEPENDENCY, Depends(valid_uuid)]
+)
+async def restore(db: AsyncDBDependency, id: str) -> Any:
+    item = await use_cases.get(db=db, id=id, deleted=True)
+    return await use_cases.restore(db, item)
+
+router.include_router(model_router)

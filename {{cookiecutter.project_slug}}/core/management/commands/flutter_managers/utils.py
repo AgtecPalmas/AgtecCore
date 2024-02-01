@@ -18,23 +18,23 @@ def ignore_base_fields(field) -> bool:
 
 def convert_to_camel_case(text: str) -> str:
     """
-    Método para converter um texto para o padrão Camel 
+    Método para converter um texto para o padrão Camel
     Case no padrão do Flutter
 
     Parameters
     ----------
     text : str
-        _description_
+        Texto a ser convertido
 
     Returns
     -------
     str
-        _description_
+        Texto convertido
 
     Raises
     ------
     error
-        _description_
+        Erro ao converter o texto
     """
     try:
         components = text.split("_")

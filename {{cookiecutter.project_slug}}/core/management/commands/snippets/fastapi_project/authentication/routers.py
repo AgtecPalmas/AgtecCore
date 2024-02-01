@@ -1,256 +1,228 @@
-from typing import Any, List
+from typing import Any
 
-from authentication import use_cases, schemas, security
-from fastapi import APIRouter, Body, Depends, HTTPException
-from fastapi.encoders import jsonable_encoder
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic.networks import EmailStr
-from sqlalchemy.orm import Session
 
-from core.database import get_db
-from core.security import create_access_token
-
+from authentication import schemas, security, use_cases
+from core.database import AsyncDBDependency
+from core.schemas import PaginationBase
+from core.security import create_access_token, create_refresh_token
 
 router_user = APIRouter(prefix="/users", tags=["users"])
 
 
 @router_user.get(
     "/",
-    response_model=List[schemas.User],
-    dependencies=[Depends(security.get_current_active_user)],
+    response_model=PaginationBase,
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
-def read_users(db: Session = Depends(get_db), skip: int = 0, limit: int = 25) -> Any:
-    users = use_cases.user.get_multi(db, skip=skip, limit=limit)
-    return users
+async def fetch(
+    db: AsyncDBDependency, request: Request, offset: int = 0, limit: int = 25
+) -> Any:
+    return await use_cases.user.get_paginate(
+        db, request=request, offset=offset, limit=limit, model_pydantic=schemas.User
+    )
 
 
 @router_user.post("/", response_model=schemas.User)
-def create_user(*, db: Session = Depends(get_db), user_in: schemas.UserCreate) -> Any:
-    user = use_cases.user.get_by_email(db, email=user_in.email)
-    if user:
+async def create(db: AsyncDBDependency, data: schemas.UserCreate) -> Any:
+    if await use_cases.user.get_by_username(db, username=data.username):
         raise HTTPException(
             status_code=403,
             detail="The user with this username already exists in the system.",
         )
-    user = use_cases.user.create(db, obj_in=user_in)
-    return user
+    if await use_cases.user.get_by_email(db, email=data.email):
+        raise HTTPException(
+            status_code=403,
+            detail="The user with this email already exists in the system.",
+        )
+    return await use_cases.user.create(db, data)
 
 
 @router_user.get(
-    "/{user_id}",
+    "/{id}",
     response_model=schemas.User,
-    dependencies=[Depends(security.get_current_active_user)],
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
-def read_user_by_id(user_id: int, db: Session = Depends(get_db)) -> Any:
-    user = use_cases.user.get(db, id=user_id)
-    if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="The user with this id does not exist in the system",
-        )
-    return user
+async def get(db: AsyncDBDependency, id: int) -> Any:
+    return await use_cases.user.get(db, id)
 
 
 @router_user.put(
-    "/{user_id}",
+    "/{id}",
     response_model=schemas.User,
-    dependencies=[Depends(security.get_current_active_user)],
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
-def update_user(
-    *, db: Session = Depends(get_db), user_id: int, user_in: schemas.UserUpdate
-) -> Any:
-    user = use_cases.user.get(db, id=user_id)
-    if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="The user with this id does not exist in the system",
-        )
-    user = use_cases.user.update(db, db_obj=user, obj_in=user_in)
-    return user
+async def update(db: AsyncDBDependency, id: int, data: schemas.UserUpdate) -> Any:
+    item = await use_cases.user.get(db, id)
+    return await use_cases.user.update(db, item, data)
 
 
 @router_user.delete(
     "/{id}",
     response_model=schemas.User,
-    dependencies=[Depends(security.get_current_active_user)],
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
-def delete_note(*, db: Session = Depends(get_db), id: int) -> Any:
-    user = use_cases.user.get(db=db, id=id)
-    if not user:
-        raise HTTPException(
-            status_code=404,
-            detail="The user with this id does not exist in the system",
-        )
-    user = use_cases.user.remove(db=db, id=id)
-    return user
+async def delete(db: AsyncDBDependency, id: int) -> Any:
+    await use_cases.user.delete(db, id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 router_auth = APIRouter(tags=["auth"])
 
 
 @router_auth.post("/login", response_model=schemas.UserToken)
-def login_access_token(
-    db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
+async def login_access_token(
+    db: AsyncDBDependency, form_data: OAuth2PasswordRequestForm = Depends()
 ) -> Any:
-    user = use_cases.user.authenticate(
+    user = await use_cases.user.authenticate(
         db, username=form_data.username, password=form_data.password
     )
+
     if not user:
         raise HTTPException(status_code=403, detail="Incorrect email or password")
+
     elif not use_cases.user.is_active(user):
         raise HTTPException(status_code=403, detail="Inactive user")
+
+    refresh_token = create_refresh_token(user.id)
+
     return {
         **user.__dict__,
         "access_token": create_access_token(user.id),
+        "refresh_token": refresh_token,
         "token_type": "bearer",
     }
 
 
 @router_auth.get("/profile", response_model=schemas.User)
-def read_user_me(
-    current_user: schemas.User = Depends(security.get_current_active_user),
+def read_current_user(
+    current_user: schemas.User = security.ACTIVE_USER_DEPENDENCY,
 ) -> Any:
     return current_user
 
 
 @router_auth.put("/profile", response_model=schemas.User)
-def update_user_me(
-    *,
-    db: Session = Depends(get_db),
+async def update_current_user(
+    db: AsyncDBDependency,
     first_name: str = Body(None),
     last_name: str = Body(None),
     email: EmailStr = Body(None),
-    current_user: schemas.User = Depends(security.get_current_active_user)
 ) -> Any:
-    current_user_data = jsonable_encoder(current_user)
-    user_in = schemas.UserUpdate(**current_user_data)
-    if first_name is not None:
-        user_in.first_name = first_name
-    if last_name is not None:
-        user_in.last_name = last_name
-    if email is not None:
-        user_in.email = email
-    user = use_cases.user.update(db, db_obj=current_user, obj_in=user_in)
-    return user
+    current_user = security.ACTIVE_USER_DEPENDENCY
+
+    if (
+        email
+        and await use_cases.user.get_by_email(db, email)
+        and email != current_user.email
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="The user with this email already exists in the system.",
+        )
+
+    current_user.first_name = first_name or current_user.first_name
+    current_user.last_name = last_name or current_user.last_name
+    current_user.email = email or current_user.email
+
+    db.add(current_user)
+    await db.commit()
+    await db.refresh(current_user)
+    return current_user
 
 
 router_permission = APIRouter(
     prefix="/permisions",
     tags=["permisions"],
-    dependencies=[Depends(security.get_current_active_user)],
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
 
 
 @router_permission.get(
     "/",
-    response_model=List[schemas.Permission],
+    response_model=PaginationBase,
     dependencies=[Depends(security.has_permission("authentication.permission_view"))],
 )
-def read_permissions(
-    db: Session = Depends(get_db), skip: int = 0, limit: int = 25
+async def fetch(
+    db: AsyncDBDependency, request: Request, offset: int = 0, limit: int = 25
 ) -> Any:
-    permissions = use_cases.permission.get_multi(db, skip=skip, limit=limit)
-    return permissions
+    return await use_cases.permission.get_paginate(
+        db,
+        request=request,
+        offset=offset,
+        limit=limit,
+        model_pydantic=schemas.Permission,
+    )
 
 
 @router_permission.post("/", response_model=schemas.Permission)
-def create_permission(
-    *, db: Session = Depends(get_db), permission_in: schemas.PermissionCreate
+async def create(db: AsyncDBDependency, data: schemas.PermissionCreate) -> Any:
+    return await use_cases.permission.create(db, data)
+
+
+@router_permission.get("/{id}", response_model=schemas.Permission)
+async def get(db: AsyncDBDependency, id: int) -> Any:
+    return await use_cases.permission.get(db, id)
+
+
+@router_permission.put("/{id}", response_model=schemas.Permission)
+async def update(
+    db: AsyncDBDependency,
+    id: int,
+    data: schemas.PermissionUpdate,
 ) -> Any:
-    permission = use_cases.permission.create(db, obj_in=permission_in)
-    return permission
-
-
-@router_permission.get("/{permission_id}", response_model=schemas.Permission)
-def read_permission_by_id(permission_id: int, db: Session = Depends(get_db)) -> Any:
-    permission = use_cases.permission.get(db, id=permission_id)
-    if not permission:
-        raise HTTPException(
-            status_code=404, detail="The permission does not exist in the system"
-        )
-    return permission
-
-
-@router_permission.put("/{permission_id}", response_model=schemas.Permission)
-def update_permission(
-    *,
-    db: Session = Depends(get_db),
-    permission_id: int,
-    permission_in: schemas.PermissionUpdate
-) -> Any:
-    permission = use_cases.permission.get(db, id=permission_id)
-    if not permission:
-        raise HTTPException(
-            status_code=404, detail="The permission does not exist in the system"
-        )
-    permission = use_cases.permission.update(db, db_obj=permission, obj_in=permission_in)
-    return permission
+    item = await use_cases.permission.get(db, id)
+    return await use_cases.permission.update(db, item, data)
 
 
 @router_permission.delete("/{id}", response_model=schemas.Permission)
-def delete_permission(*, db: Session = Depends(get_db), id: int) -> Any:
-    permission = use_cases.permission.get(db=db, id=id)
-    if not permission:
-        raise HTTPException(
-            status_code=404, detail="The permission does not exist in the system"
-        )
-    permission = use_cases.permission.remove(db=db, id=id)
-    return permission
+async def delete(db: AsyncDBDependency, id: int) -> Any:
+    await use_cases.permission.get(db, id)
+    await use_cases.permission.delete(db, id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 router_group = APIRouter(
     prefix="/groups",
     tags=["groups"],
-    dependencies=[Depends(security.get_current_active_user)],
+    dependencies=[security.ACTIVE_USER_DEPENDENCY],
 )
 
 
-@router_group.get("/", response_model=List[schemas.Group])
-def read_groups(db: Session = Depends(get_db), skip: int = 0, limit: int = 25) -> Any:
-    groups = use_cases.group.get_multi(db, skip=skip, limit=limit)
-    return groups
+@router_group.get("/", response_model=PaginationBase)
+async def fetch(
+    db: AsyncDBDependency,
+    request: Request,
+    offset: int = 0,
+    limit: int = 25,
+) -> Any:
+    return await use_cases.group.get_paginate(
+        db, request=request, offset=offset, limit=limit, model_pydantic=schemas.Group
+    )
 
 
 @router_group.post("/", response_model=schemas.Group)
-def create_group(
-    *, db: Session = Depends(get_db), group_in: schemas.GroupCreate
-) -> Any:
-    group = use_cases.group.create(db, obj_in=group_in)
-    return group
+async def create(db: AsyncDBDependency, data: schemas.GroupCreate) -> Any:
+    return await use_cases.group.create(db, data)
 
 
-@router_group.get("/{group_id}", response_model=schemas.Group)
-def read_group_by_id(group_id: int, db: Session = Depends(get_db)) -> Any:
-    group = use_cases.group.get(db, id=group_id)
-    if not group:
-        raise HTTPException(
-            status_code=404, detail="The group does not exist in the system"
-        )
-    return group
+@router_group.get("/{id}", response_model=schemas.Group)
+async def get(db: AsyncDBDependency, id: int) -> Any:
+    return await use_cases.group.get(db, id)
 
 
-@router_group.put("/{group_id}", response_model=schemas.Group)
-def update_group(
-    *, db: Session = Depends(get_db), group_id: int, group_in: schemas.GroupUpdate
-) -> Any:
-    group = use_cases.group.get(db, id=group_id)
-    if not group:
-        raise HTTPException(
-            status_code=404, detail="The group does not exist in the system"
-        )
-    group = use_cases.group.update(db, db_obj=group, obj_in=group_in)
-    return group
+@router_group.put("/{id}", response_model=schemas.Group)
+async def update(db: AsyncDBDependency, id: int, data: schemas.GroupUpdate) -> Any:
+    item = await use_cases.group.get(db, id)
+    return await use_cases.group.update(db, item, data)
 
 
 @router_group.delete("/{id}", response_model=schemas.Group)
-def delete_note(*, db: Session = Depends(get_db), id: int) -> Any:
-    group = use_cases.group.get(db=db, id=id)
-    if not group:
-        raise HTTPException(
-            status_code=404, detail="The group does not exist in the system"
-        )
-    group = use_cases.group.remove(db=db, id=id)
-    return group
+async def delete(db: AsyncDBDependency, id: int) -> Any:
+    await use_cases.group.get(db, id)
+    await use_cases.group.delete(db, id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 router = APIRouter()

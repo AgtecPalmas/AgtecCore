@@ -24,3 +24,12 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
+
+plugins:
+  - with-pdf:
+      author: AGTEC Core
+#      Por padrão, o título do PDF é o mesmo do site_name, ultilizando o cover_title é possível alterar o título do PDF.
+#      cover_title: Documentação AGTEC Core
+      cover_subtitle: Documentação para utilização do AGTEC Core
+      toc_level: 6
+      toc_title: Índice

@@ -3,13 +3,13 @@ import json
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import HTTPException, Request
-from fastapi.encoders import jsonable_encoder
+from fastapi.datastructures import URL
 from pydantic import BaseModel
-from sqlalchemy.exc import DataError
-from sqlalchemy.orm import Session
+from sqlalchemy import func, select
 
-from .database import CoreBase
-from .schemas import PaginationBase
+from core.database import AsyncDBDependency, CoreBase
+from core.exceptions import InternalServerException, NotFoundException
+from core.schemas import PaginationBase
 
 ModelType = TypeVar("ModelType", bound=CoreBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -28,134 +28,397 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         self.model = model
 
-    def get(self, db: Session, id: Any) -> Optional[ModelType]:
-        query = db.query(self.model).filter(self.model.id == id)
-        if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        return query.first()
+    @staticmethod
+    def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
+        """
+        __get_pages
+        ----------
+        Método estático responsável por calcular as URLs de paginação
 
-    def get_multi(
-        self, db: Session, *, skip: int = 0, limit: int = 25
-    ) -> List[ModelType]:
-        query = db.query(self.model)
-        if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        return query.offset(skip).limit(limit).all()
+        Parameters
+        ----------
+        url : str
+            URL requisição
 
-    def get_paginate(
-        self, db: Session, *, request: Request, offset: int = 0, limit: int = 5, model_pydantic: Type[BaseModel] = None
-    ) -> PaginationBase:
-        query = db.query(self.model)
-        if hasattr(self.model, "deleted"):
-            query = query.filter(self.model.deleted == False)
-        url = "https://" if request.url.is_secure else "http://"
-        url = f"{url}{request.url.hostname}"
-        if request.url.port != 80:
-            url = f"{url}:{request.url.port}"
-        url += request.url.path
-        total = query.count()
+        total : int
+            Total de registros encontrados
 
-        hasNextPage = int(total / limit) > offset
-        hasPreviousPage = total > limit and int(total / limit) <= offset
+        limit : int
+            Limite de registros por página
 
-        data = PaginationBase()
-        data.count = total
-        data.results = []
+        offset : int
+            Offset da página atual
 
-        for item in query.offset(offset).limit(limit).all():
-            modelo_pydantic = model_pydantic(**item.__dict__)
-            modelo_json = modelo_pydantic.model_dump_json()
-            data.results.append(json.loads(modelo_json))
+        Returns
+        -------
+        tuple[str, str]
+            Tupla contendo a URL da próxima página e da página anterior
+        """
+        url = url._url.split("?")[0]
+        _next = limit + offset < total
+        _previous = offset > 0
 
-        data.next = (
-            f"{url}?offset={offset + limit}&limit={limit}" if hasNextPage else None
-        )
-        data.previous = (
-            f"{url}?offset={offset - limit}&limit={limit}" if hasPreviousPage else None
-        )
+        next_page, previous_page = None, None
+        max_offset_previous = total - (total % limit)
 
-        return data
+        if _next:
+            next_page = f"{url}?offset={offset + limit}&limit={limit}"
 
-    def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data)  # type: ignore
-        return self._add_commit_and_refresh(db, db_obj)
+        if _previous and offset != 0:
+            if offset <= max_offset_previous:
+                previous_page = f"{url}?offset={offset - limit}&limit={limit}"
 
-    def update(
-        self,
-        db: Session,
-        *,
-        db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, Dict[str, Any]],
-    ) -> ModelType:
-        obj_data = jsonable_encoder(db_obj)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.dict(exclude_unset=True)
-        update_data["updated_on"] = datetime.datetime.now()
-        for field in obj_data:
-            if field in update_data:
-                setattr(db_obj, field, update_data[field])
-        return self._add_commit_and_refresh(db, db_obj)
+            else:
+                previous_page = f"{url}?offset={max_offset_previous}&limit={limit}"
 
-    def remove(self, db: Session, *, id: int) -> ModelType:
-        db_obj = db.query(self.model).get(id)
-        db_obj.deleted = True
-        return self._add_commit_and_refresh(db, db_obj)
+        return (next_page, previous_page)
 
-    def _add_commit_and_refresh(self, db, db_obj):
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+    @staticmethod
+    def __load_results(results: list, model_pydantic: Type[BaseModel]) -> list:
+        """
+        __load_results
+        --------------
+        Método estático responsável por carregar os resultados da consulta em um Schema
 
-    def hard_remove(self, db: Session, *, id: int) -> ModelType:
-        obj = db.query(self.model).get(id)
-        db.delete(obj)
-        db.commit()
-        return obj
+        Parameters
+        ----------
+        results : list
+            Lista de resultados da consulta
 
-    def get_paginate_django_user(
-        self, db: Session, request: Request, id: Any
-    ) -> ModelType:
-        try:
-            query = db.query(self.model).filter(self.model.id == id)
-            if hasattr(self.model, "deleted"):
-                query = query.filter(self.model.deleted == False)
-            query = query.first()
+        model_pydantic : Type[BaseModel]
+            Schema do modelo
 
-            url = "https://" if request.url.is_secure else "http://"
-            url = f"{url}{request.url.hostname}"
-            if request.url.port != 80:
-                url = f"{url}:{request.url.port}"
-            query.django_user = (
-                f"{url}/api/v1/authentication/users/{query.django_user_id}"
-            )
-            return query
-        except DataError:
+        Returns
+        -------
+        list
+            Lista de resultados carregados no Schema
+        """
+
+        return [
+            json.loads(model_pydantic(**item.__dict__).model_dump_json())
+            for item in results
+        ]
+
+    @staticmethod
+    def __validate_limit_offset(limit: int, offset: int) -> None:
+        """
+        __validate_limit_offset
+        -----------------------
+        Método estático responsável por validar os valores de limit e offset
+
+        Parameters
+        ----------
+        limit : int
+            Limite de registros por página
+
+        offset : int
+            Offset da página atual
+
+        Raises
+        ------
+        HTTPException
+            Exceção lançada quando o valor de limit ou offset são inválidos
+        """
+
+        if offset < 0 or limit <= 0:
             raise HTTPException(
-                status_code=404, detail="Item usuario inexistente no sistema"
+                status_code=400,
+                detail="Offset must be greater than 0 and limit must be greater than or equal to 0",
             )
-        except Exception as exception:
-            raise exception
+        return
 
-    def get_multi_paginate_django_user(
-        self, db: Session, *, request: Request, offset: int = 0, limit: int = 25
+    async def get_paginate(
+        self,
+        db: AsyncDBDependency,
+        *,
+        query: select = None,
+        request: Request,
+        offset: int = 0,
+        limit: int = 5,
+        model_pydantic: Type[BaseModel] = None,
+    ) -> PaginationBase:
+        """
+        get_paginate
+        ------------
+        Método assíncrono responsável por buscar e paginar uma lista de registros no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        query : select
+            Query de consulta
+
+        request : Request
+            Requisição HTTP
+
+        offset : int
+            Offset da página atual
+
+        limit : int
+            Limite de registros por página
+
+        model_pydantic : Type[BaseModel]
+            Schema do modelo
+
+        Returns
+        -------
+        PaginationBase
+            Objeto de paginação contendo os resultados da consulta
+        """
+
+        self.__validate_limit_offset(limit, offset)
+
+        if query is None:
+            query = select(self.model)
+            if hasattr(self.model, "deleted"):
+                query = select(self.model).where(self.model.deleted.is_(False))
+
+        results = await db.execute(query.offset(offset).limit(limit))
+        results = results.scalars().all()
+        results = self.__load_results(
+            results,
+            model_pydantic,
+        )
+
+        total = select(func.count()).select_from(query)
+        total = await db.execute(total)
+        total = total.scalar()
+
+        next_page, previous_page = self.__get_pages(request.url, total, limit, offset)
+
+        return PaginationBase(
+            count=total, next=next_page, previous=previous_page, results=results
+        )
+
+    async def get(
+        self, db: AsyncDBDependency, id: Any, deleted: bool = False
+    ) -> Optional[ModelType]:
+        """
+        get
+        -------------
+        Método assíncrono responsável por buscar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            id : str
+                UUID do registro a ser buscado
+
+            deleted : Optional[bool]
+                Flag que indica se deve buscar registros deletados
+
+        Returns
+        -------
+            ModelType
+                Schema do modelo do registro encontrado no banco de dados
+        """
+
+        query = select(self.model).where(self.model.id == id)
+
+        if hasattr(self.model, "deleted") and not deleted:
+            query = query.where(self.model.deleted.is_(False))
+
+        result = await db.execute(query)
+        item = result.scalar()
+
+        if not item:
+            raise NotFoundException()
+
+        return item
+
+    async def create(self, db: AsyncDBDependency, data: CreateSchemaType) -> ModelType:
+        """
+        create
+        ------------
+            Método assíncrono responsável por criar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            data : CreateSchemaType
+                Objeto do modelo (Schema) a ser persistido no banco de dados
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) persistido no banco de dados
+        """
+        data = self.model(**data.model_dump())
+        return await self._add_commit_and_refresh(db, data)
+
+    async def update(
+        self,
+        db: AsyncDBDependency,
+        objeto: ModelType,
+        data: Union[UpdateSchemaType, Dict[str, Any]],
     ) -> ModelType:
-        usuarios = db.query(self.model)
-        if hasattr(self.model, "deleted"):
-            usuarios = usuarios.filter(self.model.deleted == False)
-        usuarios = usuarios.offset(offset).limit(limit).all()
+        """
+        update
+        -------------
+            Método assíncrono responsável por atualizar um registro no banco de dados
 
-        url = "https://" if request.url.is_secure else "http://"
-        url = f"{url}{request.url.hostname}"
-        if request.url.port != 80:
-            url = f"{url}:{request.url.port}"
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Session assíncrona do banco de dados
 
-        for usuario in usuarios:
-            usuario.django_user = (
-                f"{url}/api/v1/authentication/users/{usuario.django_user_id}"
+            model : ModelType
+                Instância do model a ser atualizado no banco de dados
+
+            data : Union[UpdateSchemaType, Dict[str, any]]
+                Valores a serem atualizados no banco de dados baseado
+                no Schema do UpdateSchemaType
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) atualizado no banco de dados
+        """
+        data = data.model_dump(exclude_unset=True)
+
+        if hasattr(self.model, "updated_on"):
+            data["updated_on"] = datetime.datetime.now()
+
+        for field in data:
+            setattr(objeto, field, data[field])
+
+        return await self._add_commit_and_refresh(db, objeto)
+
+    async def delete(self, db: AsyncDBDependency, id: int) -> ModelType:
+        """
+        delete
+        -------------
+            Método assíncrono responsável por deletar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            id : str
+                UUID do registro a ser deletado
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) deletado no banco de dados
+        """
+        if not hasattr(self.model, "deleted"):
+            return await self.hard_remove(db, id=id)
+
+        db_obj = await self.get(db, id=id)
+        db_obj.deleted = True
+        db_obj.enabled = False
+        return await self._add_commit_and_refresh(db, db_obj)
+
+    async def hard_remove(self, db: AsyncDBDependency, *, id: int) -> ModelType:
+        """
+        hard_remove
+        ------------
+        Método assíncrono responsável por deletar permanentemente um registro no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        id : str
+            UUID do registro a ser deletado
+
+        Returns
+        -------
+        ModelType
+            Objeto do modelo (Schema) deletado permanentemente no banco de dados
+
+        Raises
+        ------
+        InternalServerException
+            Exceção lançada quando ocorre algum erro ao deletar permanentemente os dados no banco de dados
+        """
+        item = await self.get(db, id=id)
+        try:
+            await db.delete(item)
+            await db.commit()
+
+        except Exception as e:
+            await db.rollback()
+            raise InternalServerException(
+                error=f"Erro ao deletar permanentemente {self.model.__name__}"
+            ) from e
+
+        return item
+
+    async def restore(self, db: AsyncDBDependency, model: ModelType) -> ModelType:
+        """
+        restore
+        ---------------
+        Método assíncrono responsável por restaurar um registro no banco de dados
+
+        Parameters
+        ----------
+            db : AsyncDBDependency
+                Sessão assíncrona do banco de dados
+
+            data : ModelType
+                Objeto do modelo (Schema) a ser restaurado no banco de dados
+
+        Returns
+        -------
+            ModelType
+                Objeto do modelo (Schema) restaurado no banco de dados
+
+        Raises
+        ------
+            HTTPException
+                Exceção lançada quando o modelo não possuir soft delete
+        """
+        if not hasattr(self.model, "deleted"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Item {self.model.__name__} não possui soft delete",
             )
 
-        return usuarios
+        model.deleted = False
+        model.enabled = True
+        model.updated_on = datetime.datetime.now()
+        return await self._add_commit_and_refresh(db, model)
+
+    async def _add_commit_and_refresh(self, db, db_obj):
+        """
+        _add_commit_and_refresh
+        -----------------------
+        Método 'Privado' responsável por persistir os dados no banco de dados
+
+        Parameters
+        ----------
+        db : AsyncDBDependency
+            Sessão assíncrona do banco de dados
+
+        db_obj : ModelType
+            Objeto do modelo (Schema) a ser persistido no banco de dados
+
+        Returns
+        -------
+        ModelType
+            Objeto do modelo (Schema) persistido no banco de dados
+
+        Raises
+        ------
+        InternalServerException
+            Exceção lançada quando ocorre algum erro ao persistir os dados no banco de dados
+        """
+        try:
+            db.add(db_obj)
+            await db.commit()
+            await db.refresh(db_obj)
+            return db_obj
+
+        except Exception as e:
+            await db.rollback()
+            raise InternalServerException() from e

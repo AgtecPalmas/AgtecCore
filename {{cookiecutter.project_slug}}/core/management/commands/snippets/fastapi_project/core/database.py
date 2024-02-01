@@ -1,13 +1,10 @@
 import datetime
 import uuid
-from typing import Generator
+from typing import Annotated, AsyncGenerator, Generator
 
-from sqlalchemy import (
-    create_engine,
-    String,
-    Boolean,
-    DateTime,
-)
+from fastapi import Depends
+from sqlalchemy import UUID, Boolean, DateTime, String, create_engine
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -25,12 +22,15 @@ Arquivo responsável pelo banco de dados
 - Cria uma instância do banco e finaliza ao finalizar a transação
 """
 
+
 class Base(DeclarativeBase):
     __abstract__ = True
 
 
 class CoreBase(Base):
-    id: Mapped[str] = mapped_column(String, primary_key=True, default=uuid.uuid4)
+    id: Mapped[str] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
+    )
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
     created_on: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.now()
@@ -41,7 +41,6 @@ class CoreBase(Base):
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     __name__: Mapped[str] = mapped_column(String)
     __abstract__ = True
-
 
     # Generate __tablename__ automatically
     @declared_attr
@@ -56,10 +55,10 @@ DB_NAME = settings.db_name
 DB_PORT = settings.db_port
 DB_HOST = settings.db_host
 
+# Default DB
 SQLALCHEMY_DATABASE_URI: str = (
     f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
-
 engine = create_engine(SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -70,3 +69,29 @@ def get_db() -> Generator:
         yield db
     finally:
         db.close()
+
+
+# Async DB
+ASYNC_SQLALCHEMY_DATABASE_URI: str = (
+    f"{DB_ENGINE}+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+async_engine = create_async_engine(ASYNC_SQLALCHEMY_DATABASE_URI, pool_pre_ping=True)
+AsyncSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=async_engine, class_=AsyncSession
+)
+
+
+async def get_async_db() -> AsyncGenerator:
+    async with AsyncSessionLocal() as db:
+        try:
+            yield db
+        except Exception as e:
+            await db.rollback()
+            raise e
+        finally:
+            await db.close()
+
+
+ActiveAsyncSession = Depends(get_async_db)
+
+AsyncDBDependency = Annotated[AsyncSession, ActiveAsyncSession]

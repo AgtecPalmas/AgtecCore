@@ -153,15 +153,15 @@ FIELDS_TYPES = {
         "model": "String"
     },
     "UUIDField": {
-        "schema": "str",
-        "model": "String"
+        "schema": "UUID",
+        "model": "UUID"
     },
     "ForeignKey": {
-        "schema": "str",
-        "model": "String"
+        "schema": "UUID",
+        "model": "UUID"
     },
     "OneToOneField": {
-        "schema": "str",
-        "model": "String"
+        "schema": "UUID",
+        "model": "UUID"
     },
 }
