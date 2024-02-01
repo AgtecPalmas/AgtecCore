@@ -114,6 +114,7 @@ class ModelsBuilder:
                     self._content_to_map += (
                         f"""({_name_dart}, returnType: 't'),\n{" " * 8}"""
                     )
+
                     continue
                 if _field_type in {"FloatField", "DecimalField"}:
                     self._content_to_map += "'{0}': {1},\n{2}".format(
