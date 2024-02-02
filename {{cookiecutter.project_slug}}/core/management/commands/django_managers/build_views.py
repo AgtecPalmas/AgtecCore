@@ -13,7 +13,7 @@ class ViewsBuild:
 
         # Paths
         self.path_core = self.command.path_core
-        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django"
+        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django/views"
         self.templates_dir = f"{self.command.path_template_dir}"
         self.path_root_views: Path = Path(f"{self.command.path_views}")
         self.path_indexview: Path = Path(f"{self.path_root_views}/index.py")
@@ -84,15 +84,6 @@ class ViewsBuild:
             content = __snippet_index_template
             Utils.write_file(self.path_indexview, content)
 
-    def build_init_file(self):
-        """Método responsável por criar o arquivo __init__.py na pasta views"""
-        content = "".join(
-            f"from .{file.name.split('.')[0]} import *\n"
-            for file in self.path_root_views.iterdir()
-            if file.name not in ["__init__.py", "__pycache__"]
-        )
-        Utils.write_file(self.path_root_views / "__init__.py", content)
-
     def build(self):
         try:
             content = Utils.get_snippet(self.snippet_crud_views)
@@ -102,11 +93,12 @@ class ViewsBuild:
             content = content.replace("$model_name$", self.model.lower())
             content_urls = content_urls.replace("$ModelClass$", self.model)
             content_urls = content_urls.replace("$app_name$", self.app.lower())
+            content_urls = content_urls.replace("$model_name$", self.model.lower())
             _import_forms_modal = ""
             _model = self.get_model()
 
             if Utils.check_dir(self.path_root_views) is False:
-                Utils.create_directory(self.path_root_views)
+                Utils.create_directory(self.path_root_views, True)
 
             self.__build_index_view()
 

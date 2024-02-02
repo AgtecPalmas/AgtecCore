@@ -1,7 +1,6 @@
 import uuid
 
 from base.settings import DELETED_MANY_TO_MANY, USE_DEFAULT_MANAGER
-from core.middleware.current_user import get_current_user
 from django.contrib.admin.utils import NestedObjects, quote
 from django.contrib.auth import get_permission_codename
 from django.contrib.contenttypes.fields import (
@@ -61,12 +60,7 @@ class BaseManager(models.Manager):
                 *(self.model._meta.ordering or self.model.Meta.ordering)
             )
 
-        user = get_current_user()
-        return (
-            queryset.filter(deleted=False)
-            if not user or not user.is_superuser
-            else queryset
-        )
+        return queryset
 
 
 class Base(models.Model):

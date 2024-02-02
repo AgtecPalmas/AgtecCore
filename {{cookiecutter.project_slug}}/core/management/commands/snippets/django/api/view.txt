@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from $app_name$.models import $ModelName$
-from $app_name$.api.serializers import $ModelName$Serializer, $ModelName$GETSerializer
+from $app_name$.api.serializers.$model_name$ import $ModelName$Serializer, $ModelName$GETSerializer
 
 
 class $ModelName$ViewAPI(ModelViewSet):

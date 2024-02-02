@@ -12,7 +12,7 @@ dj-rest-auth==5.0.*
 elastic-apm==6.19.*
 gunicorn==21.2.*
 holidays==0.37.*
-Pillow==10.1.*
+Pillow==10.2.*
 psycopg[binary]==3.1.*
 python-decouple==3.8.*
 sentry-sdk==1.38.*

@@ -1,8 +1,5 @@
-app_name = "$app_name$"
-
 # URLs do Models $ModelClass$
-urlpatterns = [
-    path("$app_name$/", $app_title$IndexTemplateView.as_view(), name="$app_name$-index"),
+urlpatterns += [
     path("$app_name$/$model_name$/", $ModelClass$ListView.as_view(), name="$model_name$-list"),
     path("$app_name$/$model_name$/create/", $ModelClass$CreateView.as_view(), name="$model_name$-create"),
     path("$app_name$/$model_name$/<uuid:pk>/", $ModelClass$DetailView.as_view(), name="$model_name$-detail"),

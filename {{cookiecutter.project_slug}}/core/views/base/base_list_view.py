@@ -116,6 +116,12 @@ class BaseListView(
     def get_queryset(self):
         queryset = super(BaseListView, self).get_queryset()
 
+        if self.request.user.is_superuser:
+            queryset = queryset.all()
+
+        else:
+            queryset = queryset.filter(deleted=False)
+
         request = self.request.GET.copy()
 
         sort_by = request.get("sort_by")
