@@ -47,7 +47,7 @@ class UrlsBuild:
             new_imports = Utils.get_snippet(self.snippets_urls_imports)
 
             # Verificando se existe a entrada do nome da app
-            content_app_name = 'app_name = "{}"'.format(self.app.lower())
+            content_app_name = f'app_name = "{self.app.lower()}"'
             if Utils.check_content(self.path_urls, content_app_name):
                 content = content.replace('app_name = "$app_name$"', "")
 
@@ -70,7 +70,7 @@ class UrlsBuild:
             self.__build_index_view_url()
 
             # Verificando se o arquivo já possui o conteúdo
-            if Utils.check_content(self.path_urls, " {}ListView".format(self.model)):
+            if Utils.check_content(self.path_urls, f" {self.model}ListView"):
                 Utils.show_message("[cyan]URLs[/] já existem")
                 return
 

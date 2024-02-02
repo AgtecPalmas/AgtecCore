@@ -125,7 +125,6 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 status_code=400,
                 detail="Offset must be greater than 0 and limit must be greater than or equal to 0",
             )
-        return
 
     async def get_paginate(
         self,

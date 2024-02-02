@@ -366,6 +366,12 @@ class Command(BaseCommand):
             dest="routers",
             help="Criar o arquivo de rotas nomeadas.",
         )
+        parser.add_argument(
+            "--all",
+            action="store_true",
+            dest="all",
+            help="Criar o projeto Flutter e todos os arquivos necessários.",
+        )
 
     def _ignore_fields(self, field):
         try:
@@ -712,7 +718,7 @@ class Command(BaseCommand):
             self._clear_project()
             sys.exit()
 
-        else:
+        elif options["all"]:
             self._init_flutter()
             self._build_auth_app()
             self._build_flutter()
@@ -731,11 +737,30 @@ class Command(BaseCommand):
             self._build_string_extensions()
             self._build_sized_extensions()
             self._build_config_utils_file()
+        return
+
+    def __verify_valid_flags(self, options):
+        """Verificações comuns para as flags"""
+        if not bool(
+            (
+                options.get("all")
+                or options.get("clear")
+                or options.get("main")
+                or options.get("routers")
+                or options.get("yaml")
+            )
+        ):
+            Utils.show_error(
+                "Para gerar o projeto é necessário informar uma das flags:\
+                \n[b cyan]--all\n--clear\n--main\n--routers\n--yaml[/]"
+            )
 
     def handle(self, *args, **options):
         Utils.show_core_box("", tipo="core")
         app = options["App"] or None
         model = options["Model"] or None
+
+        self.__verify_valid_flags(options)
 
         if app is None and model is None and not FLUTTER_APPS:
             Utils.show_error(

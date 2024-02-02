@@ -7,9 +7,6 @@ from pathlib import Path
 
 from django.apps import apps
 from django.core.management.base import BaseCommand
-from rich import box, print
-from rich.panel import Panel
-from rich.text import Text
 
 from .django_managers import (
     DRFBuild,
