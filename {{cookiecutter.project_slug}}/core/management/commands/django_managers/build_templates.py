@@ -44,34 +44,10 @@ class TemplatesBuild:
     def get_file_path(self, template_name: str) -> str:
         if template_name == "index":
             return f"{self.templates_dir}/index.html"
-        if template_name == "detail":
-            return f"{self.model_template_path}/{self.model_lower}_detail.html"
-        if template_name == "list":
-            return f"{self.model_template_path}/{self.model_lower}_list.html"
-        if template_name == "create":
-            return f"{self.model_template_path}/{self.model_lower}_create.html"
-        if template_name == "delete":
-            return f"{self.model_template_path}/{self.model_lower}_delete.html"
-        if template_name == "update":
-            return f"{self.model_template_path}/{self.model_lower}_update.html"
-        if template_name == "restore":
-            return f"{self.model_template_path}/{self.model_lower}_restore.html"
+        return f"{self.model_template_path}/{self.model_lower}_{template_name}.html"
 
     def get_snippet_content(self, template_name: str) -> str:
-        if template_name == "index":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/index.txt")))
-        if template_name == "detail":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/detail.txt")))
-        if template_name == "list":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/list.txt")))
-        if template_name == "create":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/create.txt")))
-        if template_name == "update":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/update.txt")))
-        if template_name == "delete":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/delete.txt")))
-        if template_name == "restore":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/restore.txt")))
+        return Utils.get_snippet(str(Path(f"{self.snippets_dir}/{template_name}.txt")))
 
     def get_verbose_name(self) -> str:
         """Método para retornar o verbose_name da app"""
@@ -139,7 +115,7 @@ class TemplatesBuild:
             content = content.replace("$title$", _title)
             content = content.replace("$model_name$", self.model_lower)
             content = content.replace(
-                "$url_back$", "{}:{}-list".format(self.app_lower, self.model_lower)
+                "$url_back$", f"{self.app_lower}:{self.model_lower}-list"
             ).replace("FileLocked", "#FileLocked")
             content = content.replace("$app_name$", self.app_lower)
             content = content.replace("$app_title$", self.app.title())
