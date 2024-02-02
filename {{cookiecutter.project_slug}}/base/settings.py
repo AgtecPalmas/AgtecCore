@@ -210,6 +210,8 @@ FLUTTER_APPS = [
     "usuario",
 ]
 
+ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
+
 # TODO Configure o caminho da API no arquivo .env criado para utilizar o Python Decouple
 API_PATH = config("API_PATH")
 
