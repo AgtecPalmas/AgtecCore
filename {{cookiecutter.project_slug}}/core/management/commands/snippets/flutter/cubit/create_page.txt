@@ -70,7 +70,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
     return SingleChildScrollView(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height
+          minHeight: MediaQuery.sizeOf(context).height
         ),
         child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
@@ -140,7 +140,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
         return  Padding(
           padding: const EdgeInsets.only(top: 24.0),
           child: SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.sizeOf(context).width,
               child: customRaisedButton(
                 label: 'Salvar',
                 context: context,

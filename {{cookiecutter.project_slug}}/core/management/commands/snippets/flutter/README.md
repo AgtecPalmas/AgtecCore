@@ -28,6 +28,7 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
     prefer_single_quotes: true
     prefer_final_locals: true
     prefer_relative_imports: true
+    dangling_library_doc_comments: false
 ```
 
 ## Etapas para rodar o projeto
@@ -42,6 +43,13 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
             multiDexEnabled true 
             ...
         }
+    ```
+
+    2.2 Alterar o arquivo build.gradle no caminho **android/build.gradle** para a versão '1.9.10' do kotlin
+    ```code
+        buildscript {
+           ext.kotlin_version = '1.9.10'
+           ...
     ```
 
 1. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
@@ -70,9 +78,6 @@ void main() async {
 projeto flutter
 ├── android - diretório padrão do android
 ├── ios - diretório padrão do ios
-├── lang - diretório contendo arquivos de tradução (caso queira utilizar)
-│   ├── en.json
-│   ├── pt.json
 ├── lib
 │   ├── apps - Diretório contendo as apps do projeto (geradas baseadas no projeto Django)
 │   |    ├── auth - App gerada automaticamente para trabalhar com autenticação

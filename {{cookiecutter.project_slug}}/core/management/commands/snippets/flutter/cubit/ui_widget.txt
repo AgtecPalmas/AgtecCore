@@ -214,7 +214,7 @@ Widget customButtonOutline(
 ///      context -> BuildContext contendo o contexto do App
 Widget customProcessingCardModal(BuildContext context) {
   return Container(
-    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2), 
+    margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height / 2), 
     child: Align(
       alignment: Alignment.center,
       child: Card(
@@ -245,7 +245,7 @@ Widget customProcessingCardModal(BuildContext context) {
 ///      context -> BuildContext contendo o contexto do App
 Widget customProcessingCardModalCenter(BuildContext context) {
   return Container(
-    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2),
+    margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height / 2),
     child: Align(
       alignment: Alignment.center,
       child: Card(
@@ -448,7 +448,7 @@ class _ContentWidgetState extends State<ContentWidget> {
 class CustomTextFormFieldLabel extends StatelessWidget {
   final String labelText;
 
-  const CustomTextFormFieldLabel({Key? key, required this.labelText}) : super(key: key);
+  const CustomTextFormFieldLabel({super.key, required this.labelText});
 
   @override
   Widget build(BuildContext context) {

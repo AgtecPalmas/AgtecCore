@@ -26,9 +26,7 @@ $ImportViews$
 class MyHomePage extends StatefulWidget {
   final String title;
   
-  const MyHomePage({Key? key, String? title})
-    : title = title ?? '',
-      super(key: key);
+  const MyHomePage({super.key, String? title}) : title = title ?? '';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -61,10 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
+    return PopScope(
+      canPop: false,
       child: enabledBottomNavigationBar ? _buildScaffoldWithBottomNavigationBar(context) : _buildScaffold(context),
     );
   }
@@ -83,22 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(Config.appTitle),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                InkWell(
-                  child: const Icon(Icons.settings),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsIndexPage(),),);
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
       ),
       body: _buildBody(context),
     );
@@ -155,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
       const HeadWidget(),
       Container(
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * .18,
+          top: MediaQuery.sizeOf(context).height * .18,
           bottom: 10,
         ),
         child: GridView.count(
@@ -217,7 +197,7 @@ class Itens {
     //     title: 'arquivo importacao',
     //     icon: null,
     //     imageIcon: Image.asset("assets/icons/icons8-calendar-500.png",
-    //         width: MediaQuery.of(context).size.width / 4, color: Colors.red),
+    //         width: MediaQuery.sizeOf(context).width / 4, color: Colors.red),
     //     uri: Container()));
 
     $ItenMenu$

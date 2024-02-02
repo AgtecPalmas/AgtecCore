@@ -27,7 +27,7 @@ class $ModelClass$UpdatePage extends StatefulWidget {
 
   final $ModelClass$Model $ModelClassCamelCase$Model;
 
-  const $ModelClass$UpdatePage({Key? key, required this.$ModelClassCamelCase$Model}) : super(key: key);
+  const $ModelClass$UpdatePage({super.key, required this.$ModelClassCamelCase$Model});
 
   @override
   State<$ModelClass$UpdatePage> createState() => _$ModelClass$AddPageState();
@@ -94,7 +94,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     return SingleChildScrollView(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height
+          minHeight: MediaQuery.sizeOf(context).height
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
@@ -149,7 +149,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
       return  Padding(
         padding: const EdgeInsets.only(top: 24.0),
         child: SizedBox(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.sizeOf(context).width,
             child: customRaisedButton(
               label: 'Salvar',
               context: context,

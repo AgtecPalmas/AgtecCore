@@ -141,7 +141,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       height: Util.getProportionScreenHeight(context, 0.8),
       child: GridView.count(
         crossAxisCount: 1,
-        childAspectRatio: MediaQuery.of(context).size.height / 380,
+        childAspectRatio: MediaQuery.sizeOf(context).height / 380,
         crossAxisSpacing: 2.0,
         mainAxisSpacing: 4.0,
         physics: const ScrollPhysics(),

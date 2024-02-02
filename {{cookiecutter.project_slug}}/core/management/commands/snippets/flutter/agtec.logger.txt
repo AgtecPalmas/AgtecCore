@@ -46,26 +46,26 @@ class AgteCoreLogger {
   final Logger _logger = Logger();
 
   void erro(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (kDebugMode) _logger.e(message, error, stackTrace);
+    if (kDebugMode) _logger.e(message, error: error, stackTrace: stackTrace);
   }
 
   void info(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (kDebugMode) _logger.i(message, error, stackTrace);
+    if (kDebugMode) _logger.i(message, error: error, stackTrace: stackTrace);
   }
 
   void debug(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (kDebugMode) _logger.d(message, error, stackTrace);
+    if (kDebugMode) _logger.d(message, error: error, stackTrace: stackTrace);
   }
 
   void warning(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (kDebugMode) _logger.w(message, error, stackTrace);
+    if (kDebugMode) _logger.w(message, error: error, stackTrace: stackTrace);
   }
 
   void crash(dynamic message, [dynamic error, StackTrace? stackTrace]) {
-    if (kDebugMode) _logger.wtf(message, error, stackTrace);
+    if (kDebugMode) _logger.i(message, error: error, stackTrace: stackTrace);
   }
 
   void verbose(dynamic message) {
-    if (kDebugMode) _logger.v(message);
+    if (kDebugMode) _logger.i(message);
   }
 }

@@ -24,7 +24,7 @@ const bool releaseVersion = false;
 
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
-// TODO - Altere o valor dessa constante para o IP do projeto Django
+// TODO - Altere o valor dessa constante para o DNS ou IP da camada de API
 const String uriDeveloper = 'http://192.168.1.82:8101/';
 
 // URI para produção
@@ -43,10 +43,9 @@ class Config {
   static const uri = releaseVersion ? uriRelease : uriDeveloper;
   static const uriAuth = '';
 
-  // TODO - Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
+  // Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
   static const drfToken = 'Token ';
 
-  // TODO - Adicionar as credenciais caso esteja utilizando FastAPI.
   // Dados de acesso à camada FastAPI
   static const fastAPIUserDevelopment = 'admin';
   static const fastAPIPasswordDevelopment = 'asdf@1234';

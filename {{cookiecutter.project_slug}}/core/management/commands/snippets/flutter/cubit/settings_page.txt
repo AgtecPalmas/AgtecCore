@@ -42,7 +42,7 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
             builder: (context, state) {
               return SizedBox(
                 height: 60,
-                width: MediaQuery.of(context).size.width * .9,
+                width: MediaQuery.sizeOf(context).width * .9,
                 child: customButtonOutline(
                     borderColor: Colors.red,
                     textColor: Colors.red,
@@ -57,7 +57,7 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
           ),
           SizedBox(
             height: 60,
-            width: MediaQuery.of(context).size.width * .9,
+            width: MediaQuery.sizeOf(context).width * .9,
             child: customButtonOutline(
                 borderColor: Colors.white,
                 textColor: Colors.white,

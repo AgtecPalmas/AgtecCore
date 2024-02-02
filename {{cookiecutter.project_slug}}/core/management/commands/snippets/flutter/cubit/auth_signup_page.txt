@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/agtec.logger.dart';
@@ -133,17 +132,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
     try {
       return SizedBox(
         width: Util.getProportionScreenWidth(context, 0.61),
-        child: SignInButton(
-          Buttons.Google,
-          text: 'Registrar com o Google',
-          onPressed: iAgree
-              ? () async {
-                  signUpGoogle();
-                }
-              : () {
-                  _showMessage('Antes de registrar é necessário concordar com os termos de uso');
-                },
-        ),
+        // #TODO Pesquisar um outro pacote para substituir o SignInButton
       );
     } catch (error, stackTrace) {
       AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildGoogleAccount', error, stackTrace);
@@ -229,18 +218,9 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
 
   _buildEmailAccount(BuildContext context) {
     try {
-      return SignInButton(
-        Buttons.Email,
-        text: 'Registrar com email',
-        onPressed: iAgree
-            ? () {
-                setState(() {
-                  _registerWithEmail = true;
-                });
-              }
-            : () {
-                _showMessage('Antes de registrar é necessário concordar com os termos de uso');
-              },
+      return SizedBox(
+        width: Util.getProportionScreenWidth(context, 0.61),
+        // #TODO Pesquisar um outro pacote para substituir o SignInButton
       );
     } catch (error, stackTrace) {
       AgteCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildEmailAccount', error, stackTrace);
