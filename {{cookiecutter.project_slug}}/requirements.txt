@@ -6,7 +6,7 @@
 #
 asgiref==3.7.2
     # via django
-certifi==2023.11.17
+certifi==2024.2.2
     # via
     #   elastic-apm
     #   requests
@@ -17,7 +17,7 @@ dateparser==1.2.0
     # via -r requirements.in
 dj-rest-auth==5.0.2
     # via -r requirements.in
-django==4.2.7
+django==4.2.9
     # via
     #   -r requirements.in
     #   dj-rest-auth
@@ -32,11 +32,11 @@ django==4.2.7
     #   drf-yasg
 django-ckeditor==6.7.0
     # via -r requirements.in
-django-filter==23.4
+django-filter==23.5
     # via -r requirements.in
 django-image-optimizer==1.0.3
     # via -r requirements.in
-django-js-asset==2.1.0
+django-js-asset==2.2.0
     # via django-ckeditor
 django-tempus-dominus==5.1.2.17
     # via -r requirements.in
@@ -47,19 +47,19 @@ djangorestframework==3.14.0
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-yasg
-djangorestframework-simplejwt==5.3.0
+djangorestframework-simplejwt==5.3.1
     # via -r requirements.in
-drf-jsonmask==0.3.0
+drf-jsonmask==0.4.0
     # via -r requirements.in
 drf-yasg==1.21.7
     # via -r requirements.in
 ecs-logging==2.1.0
     # via elastic-apm
-elastic-apm==6.19.0
+elastic-apm==6.20.0
     # via -r requirements.in
 gunicorn==21.2.0
     # via -r requirements.in
-holidays==0.37
+holidays==0.41
     # via -r requirements.in
 idna==3.6
     # via requests
@@ -71,16 +71,14 @@ packaging==23.2
     # via
     #   drf-yasg
     #   gunicorn
-pillow==10.1.0
+pillow==10.2.0
     # via
     #   -r requirements.in
     #   django-image-optimizer
     #   python-resize-image
-psycopg[binary]==3.1.13
-    # via
-    #   -r requirements.in
-    #   psycopg
-psycopg-binary==3.1.13
+psycopg[binary]==3.1.17
+    # via -r requirements.in
+psycopg-binary==3.1.17
     # via psycopg
 pyjwt==2.8.0
     # via djangorestframework-simplejwt
@@ -92,21 +90,21 @@ python-decouple==3.8
     # via -r requirements.in
 python-resize-image==1.1.20
     # via django-image-optimizer
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   dateparser
     #   djangorestframework
     #   drf-yasg
 pyyaml==6.0.1
     # via drf-yasg
-regex==2023.10.3
+regex==2023.12.25
     # via dateparser
 requests==2.31.0
     # via
     #   django-image-optimizer
     #   python-resize-image
     #   tinify
-sentry-sdk==1.38.0
+sentry-sdk==1.40.0
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
@@ -114,7 +112,7 @@ sqlparse==0.4.4
     # via django
 tinify==1.6.0
     # via django-image-optimizer
-typing-extensions==4.8.0
+typing-extensions==4.9.0
     # via
     #   asgiref
     #   psycopg
@@ -122,7 +120,7 @@ tzlocal==5.2
     # via dateparser
 uritemplate==4.1.1
     # via drf-yasg
-urllib3==2.1.0
+urllib3==2.2.0
     # via
     #   elastic-apm
     #   requests

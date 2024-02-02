@@ -1,6 +1,6 @@
 from django.urls import include, path
 from rest_framework import routers
-from $app_name$.api.api_views import $ModelName$CustomViewAPI, $ModelName$ViewAPI
+from $app_name$.api.views.$model_name$ import $ModelName$CustomViewAPI, $ModelName$ViewAPI
 
 router = routers.DefaultRouter()
 

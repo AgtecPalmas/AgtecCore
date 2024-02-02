@@ -11,7 +11,7 @@ class UrlsBuild:
         self.apps = apps
         self.path_core = self.command.path_core
         self.path_base_urls = self.command.path_base_urls
-        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django"
+        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django/urls"
         self.templates_dir = f"{self.command.path_template_dir}"
         self.path_urls = self.command.path_urls
         self.snippets_urls_imports = f"{self.snippets_dir}/url_imports.txt"
@@ -26,100 +26,55 @@ class UrlsBuild:
             or self.app.lower()
         )
 
-    @staticmethod
-    def __get_views_from_content_urls(content: str) -> str:
-        content = content.replace("(", "").replace(")", "").split("from ")
-        views = []
+    def __build_index_view_url(self):
+        if Utils.check_content(
+            self.path_urls, f"{self.app.title()}IndexTemplateView.as_view()"
+        ):
+            return
 
-        for item in content:
-            if item.startswith(".views"):
-                item = item.split("import ")[1]
-                views.extend(
-                    view.strip() for view in item.split(",") if "AppIndex" not in view
-                )
-        return views
+        content = (
+            f"from {self.app}.views.index import {self.app.title()}IndexTemplateView\n"
+        )
+        content += f"app_name = '{self.app}'\n"
+        content += f"urlpatterns = [path('{self.app.lower()}/', {self.app.title()}IndexTemplateView.as_view(), name='{self.app.lower()}-index'),]\n"
+
+        Utils.append_file(self.path_urls, content)
+        Utils.show_message("[cyan]IndexView[/] adicionada à urls.py")
 
     def build(self):
         try:
             content = Utils.get_snippet(self.snippets_url)
-            content_urls = Utils.get_snippet(self.snippets_urls_imports)
+            new_imports = Utils.get_snippet(self.snippets_urls_imports)
+
             # Verificando se existe a entrada do nome da app
-            content_app_name = 'app_name = "{}"'.format(self.app.lower())
+            content_app_name = f'app_name = "{self.app.lower()}"'
             if Utils.check_content(self.path_urls, content_app_name):
                 content = content.replace('app_name = "$app_name$"', "")
+
             content = content.replace("$app_name$", self.app.lower())
             content = content.replace("$app_title$", self.app.lower().title())
             content = content.replace("$model_name$", self.model.lower())
             content = content.replace("$ModelClass$", self.model)
-            content_urls = content_urls.replace("$ModelClass$", self.model)
+
+            new_imports = new_imports.replace("$ModelClass$", self.model)
+            new_imports = new_imports.replace("$app_name$", self.app.lower())
+            new_imports = new_imports.replace("$model_name$", self.model.lower())
+
+            if Utils.check_file(self.path_urls) is False:
+                Utils.write_file(self.path_urls, "")
 
             # Verificando se o arquivo está bloqueado para escrita
             if Utils.check_file_is_locked(f"{self.path_urls}"):
                 return
 
+            self.__build_index_view_url()
+
             # Verificando se o arquivo já possui o conteúdo
-            if Utils.check_content(self.path_urls, " {}ListView".format(self.model)):
+            if Utils.check_content(self.path_urls, f" {self.model}ListView"):
                 Utils.show_message("[cyan]URLs[/] já existem")
                 return
 
-            content_include = "path('api/$app_name$/', include('$app_name$.api_urls')),"
-            content_include = content_include.replace("$app_name$", self.app.lower())
-            if Utils.check_content(self.path_urls, content_include):
-                content = content.replace(content_include, "").strip()
-
-            if Utils.check_content(
-                self.path_urls, "{}IndexTemplateView".format(self.app.title())
-            ):
-                content_urls = content_urls.replace(", $AppIndexTemplate$", "")
-            else:
-                content_urls = content_urls.replace(
-                    "$AppIndexTemplate$", "{}IndexTemplateView".format(self.app.title())
-                )
-            if Utils.check_file(self.path_urls) is False:
-                with open(self.path_urls, "w", encoding="utf-8") as url_file:
-                    url_file.write(content_urls + "\n" + content)
-                return
-
-            if Utils.check_content(self.path_urls, "from .views import"):
-                content_views = self.__get_views_from_content_urls(content_urls)
-                url_file = open(self.path_urls, "r", encoding="utf-8")
-                data = []
-                for line in url_file:
-                    if line.startswith("from .views import"):
-                        models = line.split("import")[-1].rstrip()
-                        import_model = ", ".join(content_views)
-                        models += f", {import_model}"
-                        line = "from .views import{}\n".format(models)
-                    data.append(line)
-                url_file.close()
-                url_file = open(self.path_urls, "w", encoding="utf-8")
-                url_file.writelines(data)
-                url_file.close()
-            else:
-                with open(self.path_urls, "a", encoding="utf-8") as views:
-                    views.write(content_urls)
-
-            if Utils.check_content(self.path_urls, "urlpatterns = ["):
-                content = content.replace("urlpatterns = [", "urlpatterns += [")
-                content = content.replace(
-                    "path('api/{}/', include(router.urls)),\n    ".format(
-                        self.app.lower()
-                    ),
-                    "",
-                )
-                _url_index_page = "path('{}/', {}IndexTemplateView.as_view(), name='{}-index'),\n    ".format(
-                    self.app.lower(), self.app.title(), self.app.lower()
-                )
-                content = content.replace(_url_index_page, "")
-
-            if Utils.check_content(self.path_urls, "app_name = '{}'".format(self.app)):
-                content = content.replace("app_name = '{}'".format(self.app), "")
-
-            if Utils.check_file_is_locked(self.path_urls) is True:
-                return
-
-            with open(self.path_urls, "a", encoding="utf-8") as urls:
-                urls.write(content)
+            Utils.append_file(self.path_urls, f"{new_imports}\n{content}")
 
         except Exception as error:
             Utils.show_error(

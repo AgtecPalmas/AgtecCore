@@ -40,7 +40,9 @@ class ParserHTMLBuild:
         self.command = command
         self.apps = apps
         self.path_core = self.command.path_core
-        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django"
+        self.snippets_dir = (
+            f"{self.path_core}/management/commands/snippets/django/templates"
+        )
         self.templates_dir = f"{self.command.path_template_dir}"
         self.app = self.command.app
         self.app_lower = self.command.app_lower
@@ -57,54 +59,6 @@ class ParserHTMLBuild:
             f"{self.templates_dir}/{self.model_lower}_create.html"
         )
         self.template_list = Path(f"{self.templates_dir}/{self.model_lower}_list.html")
-
-    def get_file_path(self, template_name: str) -> str:
-        if template_name == "index":
-            return f"{self.templates_dir}/index.html"
-
-        if template_name == "detail":
-            return f"{self.model_template_path}/{self.model_lower}_detail.html"
-
-        if template_name == "list":
-            return f"{self.model_template_path}/{self.model_lower}_list.html"
-
-        if template_name == "create":
-            return f"{self.model_template_path}/{self.model_lower}_create.html"
-
-        if template_name == "delete":
-            return f"{self.model_template_path}/{self.model_lower}_delete.html"
-
-        if template_name == "update":
-            return f"{self.model_template_path}/{self.model_lower}_update.html"
-
-    def get_snippet_content(self, template_name: str) -> str:
-        if template_name == "index":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/indextemplate.txt"))
-            )
-
-        if template_name == "detail":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/detailtemplate.txt"))
-            )
-
-        if template_name == "list":
-            return Utils.get_snippet(str(Path(f"{self.snippets_dir}/listtemplate.txt")))
-
-        if template_name == "create":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/createtemplate.txt"))
-            )
-
-        if template_name == "update":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/updatetemplate.txt"))
-            )
-
-        if template_name == "delete":
-            return Utils.get_snippet(
-                str(Path(f"{self.snippets_dir}/deletetemplate.txt"))
-            )
 
     def get_verbose_name(self) -> str:
         """Método para retornar o verbose_name da app"""
@@ -230,31 +184,33 @@ class ParserHTMLBuild:
                     tag_result += label
                     _foreign_key_field = "\n{{{{ form.{} }}}}".format(campo.name)
 
-                    if hasattr(_model._meta, "fk_fields_modal") is True:
-                        if campo.name in _model._meta.fk_fields_modal:
-                            _foreign_key_field = '\n<div class="input-group">'
-                            _foreign_key_field += "{{{{ form.{} }}}}\n".format(
-                                campo.name
+                    if (
+                        hasattr(_model._meta, "fk_fields_modal") is True
+                        and campo.name in _model._meta.fk_fields_modal
+                    ):
+                        _foreign_key_field = (
+                            '\n<div class="input-group">'
+                            + "{{{{ form.{} }}}}\n".format(campo.name)
+                        )
+                        _foreign_key_field += (
+                            "{{% if form.{0}.field.queryset.model|{1} %}}".format(
+                                campo.name, "has_add_permission:request"
                             )
-                            _foreign_key_field += (
-                                "{{% if form.{0}.field.queryset.model|{1} %}}".format(
-                                    campo.name, "has_add_permission:request"
-                                )
-                            )
-                            _foreign_key_field += '<button type="button" class="btn btn-outline-secondary"'
-                            _foreign_key_field += (
-                                ' data-bs-toggle="modal" data-bs-target='
-                            )
-                            _foreign_key_field += '"#form{}Modal"><i class="fas fa-plus"></i></button>{{% endif %}}'.format(
-                                field.related_model._meta.object_name
-                            )
-                            _foreign_key_field += "</div>"
-                            self.html_modals += self.render_modal_foreign_key(
-                                field.related_model._meta.object_name,
-                                campo.app,
-                                field.related_model._meta.model_name,
-                                campo.name,
-                            )
+                        )
+                        _foreign_key_field += (
+                            '<button type="button" class="btn btn-outline-secondary"'
+                        )
+                        _foreign_key_field += ' data-bs-toggle="modal" data-bs-target='
+                        _foreign_key_field += '"#form{}Modal"><i class="fas fa-plus"></i></button>{{% endif %}}'.format(
+                            field.related_model._meta.object_name
+                        )
+                        _foreign_key_field += "</div>"
+                        self.html_modals += self.render_modal_foreign_key(
+                            field.related_model._meta.object_name,
+                            campo.app,
+                            field.related_model._meta.model_name,
+                            campo.name,
+                        )
 
                     tag_result += _foreign_key_field
 
@@ -288,10 +244,7 @@ class ParserHTMLBuild:
                 tag_result += error_template.substitute(field_name=campo.name)
                 tag_result += "</div>"
 
-                # Adicionando o teste para verificar se o campo está oculto no init do Form
-                tag_result = f"{{% if form.{field.name} in form.visible_fields %}}{tag_result}{{% endif %}}\n\t"
-                return tag_result
-
+                return f"{{% if form.{field.name} in form.visible_fields %}}{tag_result}{{% endif %}}\n\t"
             else:
                 Utils.show_message(
                     f"⚠️ Campo {field} desconhecido, favor verificar o tipo do campo."

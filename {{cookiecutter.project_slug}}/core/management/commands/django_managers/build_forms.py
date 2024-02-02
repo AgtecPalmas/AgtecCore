@@ -7,12 +7,13 @@ class FormsBuild:
         self.apps = apps
         self.path_core = self.command.path_core
         self.snippet_form = (
-            f"{self.path_core}/management/commands/snippets/django/form.txt"
+            f"{self.path_core}/management/commands/snippets/django/forms/form.txt"
         )
         self.snippet_form_url = (
-            f"{self.path_core}/management/commands/snippets/django/form_urls.txt"
+            f"{self.path_core}/management/commands/snippets/django/forms/form_urls.txt"
         )
-        self.path_form = f"{self.command.path_form}"
+        self.path_form = f"{self.command.path_form}/{self.command.model_lower}.py"
+        self.path_root_form = self.command.path_form
         self.app = self.command.app
         self.model = self.command.model
 
@@ -22,6 +23,10 @@ class FormsBuild:
             content_urls = Utils.get_snippet(str(self.snippet_form_url))
             content = content.replace("$ModelClass$", self.model)
             content_urls = content_urls.replace("$ModelClass$", self.model)
+            content_urls = content_urls.replace("$app$", self.app)
+
+            if Utils.check_dir(self.path_root_form) is False:
+                Utils.create_directory(self.path_root_form, True)
 
             if Utils.check_file(self.path_form) is False:
                 with open(self.path_form, "w", encoding="utf-8") as arquivo:

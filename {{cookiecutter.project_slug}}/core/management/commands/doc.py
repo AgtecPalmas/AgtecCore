@@ -1,10 +1,12 @@
+import contextlib
 import os
 import subprocess
+
 from django.apps import apps
 from django.core.management.base import BaseCommand
-from core.management.commands.utils import Utils
-from base.settings import DOC_APPS
 
+from base.settings import DOC_APPS
+from core.management.commands.utils import Utils
 
 class Command(BaseCommand):
     help = (
@@ -32,7 +34,8 @@ class Command(BaseCommand):
     def __parser_documentation(self):
         apps_instaladas = self.verificar_apps_instaladas()
         self.path_core = os.path.join(self.path_root, "core")
-        try:
+
+        with contextlib.suppress(Exception):
             content = Utils.get_snippet(
                 os.path.join(
                     self.path_core, "management/commands/snippets/sphinx_doc/config.txt"
@@ -44,10 +47,8 @@ class Command(BaseCommand):
 
             with open(f"{self.__docs_path}/source/conf.py", "w") as arquivo:
                 arquivo.write(content)
-        except:
-            pass
 
-        try:
+        with contextlib.suppress(Exception):
             __make_content = Utils.get_snippet(
                 os.path.join(
                     self.path_core, "management/commands/snippets/sphinx_doc/make.txt"
@@ -56,9 +57,8 @@ class Command(BaseCommand):
 
             with open(f"{self.__docs_path}/Makefile", "w") as arquivo:
                 arquivo.write(__make_content)
-        except:
-            pass
-        try:
+
+        with contextlib.suppress(Exception):
             __make_content = Utils.get_snippet(
                 os.path.join(
                     self.path_core, "management/commands/snippets/sphinx_doc/make.txt"
@@ -67,9 +67,8 @@ class Command(BaseCommand):
 
             with open(f"{self.__docs_path}/Makefile", "w") as arquivo:
                 arquivo.write(__make_content)
-        except:
-            pass
-        try:
+
+        with contextlib.suppress(Exception):
             __make_bat_content = Utils.get_snippet(
                 os.path.join(
                     self.path_core,
@@ -79,40 +78,11 @@ class Command(BaseCommand):
 
             with open(f"{self.__docs_path}/make.bat", "w") as arquivo:
                 arquivo.write(__make_bat_content)
-        except:
-            pass
-        try:
-            __modules_content = Utils.get_snippet(
-                os.path.join(
-                    self.path_core,
-                    "management/commands/snippets/sphinx_doc/modules.txt",
-                )
-            )
 
-            __module_apps = ""
-            for __app in apps_instaladas:
-                __module_apps += f"   {__app}\n"
+        with contextlib.suppress(Exception):
+            self.__sphinx_modules(apps_instaladas)
 
-            __modules_content = __modules_content.replace(
-                "$App$", self.__title(self.projeto)
-            )
-            __modules_content = __modules_content.replace("$Modules$", __module_apps)
-
-            with open(f"{self.__docs_path}/source/modules.rst", "w") as arquivo:
-                arquivo.write(__modules_content)
-
-            __rst_content = Utils.get_snippet(
-                os.path.join(
-                    self.path_core,
-                    "management/commands/snippets/sphinx_doc/index_rst.txt",
-                )
-            )
-
-            with open(f"{self.__docs_path}/source/index.rst", "w") as arquivo:
-                arquivo.write(__rst_content)
-        except:
-            pass
-        try:
+        with contextlib.suppress(Exception):
             for app in apps_instaladas:
                 __content = Utils.get_snippet(
                     os.path.join(
@@ -120,13 +90,11 @@ class Command(BaseCommand):
                         "management/commands/snippets/sphinx_doc/rst.txt",
                     )
                 )
-                __content = __content.replace('$App$', app.title())
-                __content = __content.replace('$app$', app)
+                __content = __content.replace("$App$", app.title())
+                __content = __content.replace("$app$", app)
                 arquivo_rst = f"{self.__docs_path}/source/{app.lower()}.rst"
 
-                with open(
-                        arquivo_rst, "w"
-                ) as arquivo:
+                with open(arquivo_rst, "w") as arquivo:
                     arquivo.write(__content)
 
                 self.build_rst(self, arquivo_rst, "views", app)
@@ -134,8 +102,33 @@ class Command(BaseCommand):
 
             subprocess.run(["sphinx-apidoc", "-f", "-o", "doc", "source"])
             subprocess.run(["sphinx-build", "-M", "html", "doc/source", "doc/source"])
-        except:
-            pass
+
+    def __sphinx_modules(self, apps_instaladas):
+        __modules_content = Utils.get_snippet(
+            os.path.join(
+                self.path_core,
+                "management/commands/snippets/sphinx_doc/modules.txt",
+            )
+        )
+
+        __module_apps = "".join(f"   {__app}\n" for __app in apps_instaladas)
+        __modules_content = __modules_content.replace(
+            "$App$", self.__title(self.projeto)
+        )
+        __modules_content = __modules_content.replace("$Modules$", __module_apps)
+
+        with open(f"{self.__docs_path}/source/modules.rst", "w") as arquivo:
+            arquivo.write(__modules_content)
+
+        __rst_content = Utils.get_snippet(
+            os.path.join(
+                self.path_core,
+                "management/commands/snippets/sphinx_doc/index_rst.txt",
+            )
+        )
+
+        with open(f"{self.__docs_path}/source/index.rst", "w") as arquivo:
+            arquivo.write(__rst_content)
 
     @staticmethod
     def build_rst(self, arquivo_rst, modulo, app):
@@ -160,7 +153,10 @@ class Command(BaseCommand):
             if apps.is_installed(__app):
                 apps_instaladas.append(__app)
             else:
-                Utils.show_error(f"  A aplicação '{__app}' não está no INSTALLED_APPS do settings.", exit=False)
+                Utils.show_error(
+                    f"  A aplicação '{__app}' não está no INSTALLED_APPS do settings.",
+                    exit=False,
+                )
 
         return apps_instaladas
 
@@ -171,7 +167,7 @@ class Command(BaseCommand):
             f"{docs_path}/build",
             f"{docs_path}/source",
             f"{docs_path}/source/_templates",
-            f"{docs_path}/source/_static"
+            f"{docs_path}/source/_static",
         ]
 
         for directory in directories:
@@ -180,7 +176,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not DOC_APPS:
             Utils.show_error(
-                "É obrigatório a configuração no settings do projeto das DOC_APPS", exit=False
+                "É obrigatório a configuração no settings do projeto das DOC_APPS",
+                exit=False,
             )
             return
 

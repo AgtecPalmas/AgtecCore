@@ -88,10 +88,6 @@ class ModelsBuilder:
                                 " " * 8, _name_dart, _name
                             )
                         )
-                    elif _name_dart.startswith("fk"):
-                        self._content_from_json += "{1}: map['{2}'] ?? '',\n{0}".format(
-                            " " * 8, _name_dart, _name
-                        )
                     else:
                         self._content_from_json += "{1}: map['{2}'] ?? '',\n{0}".format(
                             " " * 8, _name_dart, _name
@@ -116,19 +112,7 @@ class ModelsBuilder:
                     )
 
                     continue
-                if _field_type in {"FloatField", "DecimalField"}:
-                    self._content_to_map += "'{0}': {1},\n{2}".format(
-                        _name, _name_dart, " " * 8
-                    )
-                    continue
-                if str(_atribute) == "bool":
-                    self._content_to_map += "'{0}': {1},\n{2}".format(
-                        _name, _name_dart, " " * 8
-                    )
-                    continue
-                self._content_to_map += "'{0}': {1},\n{2}".format(
-                    _name, _name_dart, " " * 8
-                )
+                self._content_to_map += f"'{_name}': {_name_dart},\n{8 * ' '}"
 
             if not Utils.check_file(self._model_path_file):
                 os.makedirs(self._model_path_file)

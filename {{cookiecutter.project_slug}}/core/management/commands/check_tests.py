@@ -1,7 +1,8 @@
 import subprocess
 from collections import defaultdict
-from django.core.management.base import BaseCommand
+
 from core.management.commands.utils import Utils
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -12,13 +13,14 @@ class Command(BaseCommand):
     @staticmethod
     def get_pytest_tests():
         # Função para obter a lista de todos os testes existentes no projeto usando o pytest
-        result = subprocess.run(['pytest', '--collect-only'], stdout=subprocess.PIPE)
-        output = result.stdout.decode('utf-8')
-        tests_list = output.split('\n')[2:]
-        return tests_list
+        result = subprocess.run(["pytest", "--collect-only"], stdout=subprocess.PIPE)
+        output = result.stdout.decode("utf-8")
+        return output.split("\n")[2:]
 
     def obter_modelos_sem_testes(self):
-        modelos_sem_testes = defaultdict(list)  # Dicionário para agrupar as models por app
+        modelos_sem_testes = defaultdict(
+            list
+        )  # Dicionário para agrupar as models por app
         apps_models = Utils.get_apps()
 
         # Obter a lista de todos os testes existentes no projeto
@@ -32,17 +34,23 @@ class Command(BaseCommand):
                 test_view_nome = f"Test{model_nome}Views"
 
                 # Verificar se o modelo possui teste nas categorias (models, forms, views)
-                has_model_test = any(test_class_nome in teste for teste in testes_existentes)
-                has_form_test = any(test_form_nome in teste for teste in testes_existentes)
-                has_view_test = any(test_view_nome in teste for teste in testes_existentes)
+                has_model_test = any(
+                    test_class_nome in teste for teste in testes_existentes
+                )
+                has_form_test = any(
+                    test_form_nome in teste for teste in testes_existentes
+                )
+                has_view_test = any(
+                    test_view_nome in teste for teste in testes_existentes
+                )
 
                 # Adicionar o modelo à lista de modelos sem testes na categoria correspondente
                 if not has_model_test:
-                    modelos_sem_testes[app].append(('models', model_nome))
+                    modelos_sem_testes[app].append(("models", model_nome))
                 if not has_form_test:
-                    modelos_sem_testes[app].append(('forms', model_nome))
+                    modelos_sem_testes[app].append(("forms", model_nome))
                 if not has_view_test:
-                    modelos_sem_testes[app].append(('views', model_nome))
+                    modelos_sem_testes[app].append(("views", model_nome))
 
         return modelos_sem_testes
 
@@ -56,7 +64,9 @@ class Command(BaseCommand):
             for app, models in modelos_sem_testes.items():
                 print(f"App: {app}")
                 if models:
-                    categories = defaultdict(list)  # Dicionário para agrupar os modelos por categoria
+                    categories = defaultdict(
+                        list
+                    )  # Dicionário para agrupar os modelos por categoria
                     for category, model in models:
                         categories[category].append(model)
 
