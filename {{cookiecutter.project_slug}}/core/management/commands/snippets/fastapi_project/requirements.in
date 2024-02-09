@@ -13,9 +13,7 @@ pydantic-settings==2.1.*
 pyjwt==2.8.*
 python-dotenv==1.0.*
 python-multipart==0.0.*
-requests==2.26.*
 rich==12.2.*
-scanapi==2.9.*
 SQLAlchemy==2.0.*
 taskipy==1.12.*
 uvicorn[standard]==0.27.*
