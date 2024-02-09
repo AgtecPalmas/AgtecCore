@@ -11,7 +11,7 @@ from core.views.base import (
     BaseUpdateView,
 )
 from core.views.utils import get_default_context_data
-from usuario.forms import UsuarioForm
+from usuario.forms.usuario import UsuarioForm
 from usuario.models import Usuario
 
 # Views Inicial Usuario
