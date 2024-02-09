@@ -27,8 +27,8 @@ class ProjetoBuild:
             ):
                 if (
                     Prompt.ask(
-                        "Mudanças nos arquivos\
-                        \n[b red]base, authentication, core e usuario[/]\
+                        "Alterações feitas nos arquivos\
+                        \n[b red]authentication, core e usuario[/]\
                         \npoderão ser perdidos.\
                         \n\nProjeto base já existe, deseja sobrescrever?",
                         default="n",
@@ -36,29 +36,34 @@ class ProjetoBuild:
                     )
                     == "s"
                 ):
-                    self.__init_fastapi()
+                    self.__overwrite_project()
             else:
                 self.__init_fastapi()
 
         except Exception as error:
             Utils.show_message(f"Ocorreu o erro {error} ao executar a criação")
 
-    def __init_fastapi(self):
+    def __overwrite_project(self):
+        """Sobrescreve o projeto FastAPI"""
+        try:
+            shutil.rmtree(f"{self.fastapi_dir}/core")
+            shutil.rmtree(f"{self.fastapi_dir}/authentication")
+            shutil.rmtree(f"{self.fastapi_dir}/usuario")
+
+            shutil.copytree(f"{self.fastapi_project}/core", f"{self.fastapi_dir}/core")
+            shutil.copytree(
+                f"{self.fastapi_project}/authentication",
+                f"{self.fastapi_dir}/authentication",
+            )
+
+        except Exception as error:
+            Utils.show_error(f"Error in __overwrite_project: {error}")
+
+    def __init_fastapi(self) -> None:
         """Copia o projeto base do FastAPI substituindo arquivos existentes"""
         try:
-            if not Utils.check_dir(str(self.fastapi_dir)):
-                os.makedirs(self.fastapi_dir)
-
             Utils.show_message("Criando o projeto Fastapi.")
-            command = f"cp -R {self.fastapi_project}/* {self.fastapi_dir} \
-                && cp -R {self.fastapi_project}/.env.example {self.fastapi_dir}"
-
-            if self.operation_system == "windows":
-                command = f"Xcopy /E /I {str(self.fastapi_project)} \
-                    {str(self.fastapi_dir)} /Y /Q"
-
-            subprocess.run(command, shell=True)
-
+            shutil.copytree(self.fastapi_project, self.fastapi_dir)
             Utils.show_message("Projeto base criado com sucesso.")
 
         except Exception as error:
