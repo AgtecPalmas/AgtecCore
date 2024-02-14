@@ -1,8 +1,6 @@
 from pathlib import Path
 
-from core.management.commands.flutter_managers.build_register_controller import (
-    RegisterProviderControllerBuilder,
-)
+from core.management.commands.flutter_managers.build_register_controller import RegisterProviderControllerBuilder
 from core.management.commands.utils import Utils
 
 
@@ -34,35 +32,20 @@ class MainFileBuilder:
                     _model = model[1]
                     _app_model = f"{_app.title()}{_model}"
                     _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
-                    _imports_views += f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
-                    _list_views += f"Itens(title: '{model[0]._meta.verbose_name}', "
-                    _list_views += (
-                        f"icon: FontAwesomeIcons.folderOpen, uri: {_app_model}."
+                    _imports_views += (
+                        f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
                     )
+                    _list_views += f"Itens(title: '{model[0]._meta.verbose_name}', "
+                    _list_views += f"icon: FontAwesomeIcons.folderOpen, uri: {_app_model}."
                     _list_views += f"{_model}ListPage()),\n"
                     _imports_controllers += f"import 'apps/{_app.lower()}/{_model.lower()}/controller.dart' "
-                    _imports_controllers += (
-                        f"as {_app.title()}{_model.title()}Controller;\n"
-                    )
-                    __controller_model = (
-                        f"{_app.title()}{_model.title()}Controller.{_model}"
-                    )
-                    _controllers_models += (
-                        f"getIt.registerSingleton<{__controller_model}Controller>"
-                    )
-                    _controllers_models += (
-                        f"({__controller_model}Controller(), instanceName: "
-                    )
-                    _controllers_models += (
-                        f"'{_app.title()}{_model.title()}Controller');\n    "
-                    )
+                    _imports_controllers += f"as {_app.title()}{_model.title()}Controller;\n"
+                    __controller_model = f"{_app.title()}{_model.title()}Controller.{_model}"
+                    _controllers_models += f"getIt.registerSingleton<{__controller_model}Controller>"
+                    _controllers_models += f"({__controller_model}Controller(), instanceName: "
+                    _controllers_models += f"'{_app.title()}{_model.title()}Controller');\n    "
 
-            return (
-                _imports_views,
-                _imports_controllers,
-                _controllers_models,
-                _list_views,
-            )
+            return _imports_views, _imports_controllers, _controllers_models, _list_views
 
         except Exception as error:
             Utils.show_error(f"Error: {error}")
@@ -89,9 +72,7 @@ class MainFileBuilder:
         try:
             self._import_controllers += "import 'apps/configuracao/model.dart';"
             self._import_views += "import 'apps/configuracao/index.page.dart';\n"
-            self._register_controller += (
-                "getIt.registerSingleton<SettingsController>(SettingsController());"
-            )
+            self._register_controller += "getIt.registerSingleton<SettingsController>(SettingsController());"
             if Utils.check_file_is_locked(str(self._target_file)):
                 return
 
@@ -99,31 +80,21 @@ class MainFileBuilder:
 
             _controllers += "import 'apps/configuracao/model.dart';"
             _imports += "import 'apps/configuracao/index.page.dart';\n"
-            _registers += (
-                "getIt.registerSingleton<SettingsController>(SettingsController());"
-            )
+            _registers += "getIt.registerSingleton<SettingsController>(SettingsController());"
 
             if _imports is None or _controllers is None:
                 return
 
             _snippet = Utils.get_snippet(self._snippet_file)
-            _snippet_content = _snippet.replace(
-                "$project$", self._command.flutter_project
-            )
+            _snippet_content = _snippet.replace("$project$", self._command.flutter_project)
 
             _controllers += "import 'apps/configuracao/cubit.dart"
 
-            _import, _register = RegisterProviderControllerBuilder(
-                command=self._command
-            ).build()
+            _import, _register = RegisterProviderControllerBuilder(command=self._command).build()
 
-            _snippet_content = _snippet_content.replace(
-                "$ImportController$", _controllers
-            )
+            _snippet_content = _snippet_content.replace("$ImportController$", _controllers)
             _snippet_content = _snippet_content.replace("$ImportCubit$", _import)
-            _snippet_content = _snippet_content.replace(
-                "$RegisterProviders$", _register
-            )
+            _snippet_content = _snippet_content.replace("$RegisterProviders$", _register)
 
             _snippet_content = _snippet_content.replace("$Listviews$", _views)
             with open(self._target_file, "w", encoding="utf-8") as _file:

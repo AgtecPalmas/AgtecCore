@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from base.settings import API_PATH, SYSTEM_NAME
+from base.settings import API_PASSWORD_DEV, API_PATH, API_USER_DEV, SYSTEM_NAME
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
@@ -26,18 +26,22 @@ class UtilsBuilder:
     def _parser_config_file(self):
         try:
             if Utils.check_file_is_locked(str(self._config_target_file)):
-                return
+                return 
             _content = ParserContent(
-                ["$AppName$", "$DjangoAPIPath$"],
-                [SYSTEM_NAME, API_PATH],
+                [
+                    "$AppName$",
+                    "$DjangoAPIPath$",
+                    "$UriAPIDeveloper$",
+                    "$FastAPIPasswordDevelopment$",
+                    "$FastAPIUserDevelopment$",
+                ],
+                [SYSTEM_NAME, API_PATH, API_PATH, API_PASSWORD_DEV, API_USER_DEV],
                 Utils.get_snippet(str(self._config_snippet_file)),
             ).replace()
             with open(self._config_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(
-                f"Erro ao executar o _parser_config_file do UtilsBuilder: {e}"
-            )
+            Utils.show_error(f"Erro ao executar o _parser_config_file do UtilsBuilder: {e}")
             return
 
     def _parser_util_file(self):
@@ -52,7 +56,5 @@ class UtilsBuilder:
             with open(self._util_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_error(
-                f"Erro ao executar o _parser_util_file do UtilsBuilder: {e}"
-            )
+            Utils.show_error(f"Erro ao executar o _parser_util_file do UtilsBuilder: {e}")
             return

@@ -37,7 +37,7 @@ class AuthAppBuilder:
             self._build_state_file()
             self._build_controller_file()
             self._build_pages_directory()
-
+            
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do main file: {error}")
 
@@ -54,42 +54,49 @@ class AuthAppBuilder:
 
     def _build_model_file(self):
         try:
-            self._write_content_into_snippet("/auth_model.txt", "/model.dart")
+            _snippet = Path(f"{self._snippet_dir}/auth_model.txt")
+            _target_file = Path(f"{self._auth_dir}/model.dart")
+            _content = Utils.get_snippet(_snippet)
+            with open(_target_file, "w", encoding="utf-8") as _file:
+                _file.write(_content)
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do model file: {error}")
 
     def _build_service_file(self):
         try:
-            self._write_content_into_snippet("/auth_service.txt", "/service.dart")
+            _snippet = Path(f"{self._snippet_dir}/auth_service.txt")
+            _target_file = Path(f"{self._auth_dir}/service.dart")
+            _content = Utils.get_snippet(_snippet)
+            with open(_target_file, "w", encoding="utf-8") as _file:
+                _file.write(_content)
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do service file: {error}")
 
     def _build_state_file(self):
         try:
-            self._write_content_into_snippet("/auth_state.txt", "/state.dart")
+            _snippet = Path(f"{self._snippet_dir}/auth_state.txt")
+            _target_file = Path(f"{self._auth_dir}/state.dart")
+            _content = Utils.get_snippet(_snippet)
+            with open(_target_file, "w", encoding="utf-8") as _file:
+                _file.write(_content)
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do service file: {error}")
 
     def _build_controller_file(self):
         try:
-            self._write_content_into_snippet("/auth_app.txt", "/cubit.dart")
+            _snippet = Path(f"{self._snippet_dir}/auth_app.txt")
+            _target_file = Path(f"{self._auth_dir}/cubit.dart")
+            _content = Utils.get_snippet(_snippet)
+            with open(_target_file, "w", encoding="utf-8") as _file:
+                _file.write(_content)
         except Exception as error:
             Utils.show_error(f"Erro ao executar build do service file: {error}")
-
-    def _write_content_into_snippet(self, snippet, target_file):
-        _snippet = Path(f"{self._snippet_dir}{snippet}")
-        _target_file = Path(f"{self._auth_dir}{target_file}")
-        _content = Utils.get_snippet(_snippet)
-        with open(_target_file, "w", encoding="utf-8") as _file:
-            _file.write(_content)
 
     def _build_pages_directory(self):
         try:
             for page in ["index", "signin", "signup", "termo_uso"]:
                 _target_file = Path(f"{self._auth_dir}/pages/{page}.dart")
-                _content = Utils.get_snippet(
-                    Path(f"{self._snippet_dir}/auth_{page}_page.txt")
-                )
+                _content = Utils.get_snippet(Path(f"{self._snippet_dir}/auth_{page}_page.txt"))
                 with open(_target_file, "w", encoding="utf-8") as _file:
                     _file.write(_content)
         except Exception as error:

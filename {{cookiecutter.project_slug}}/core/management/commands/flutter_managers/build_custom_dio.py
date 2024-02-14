@@ -8,9 +8,7 @@ class CustomDIOBuilder:
     def __init__(self, command) -> None:
         self.command = command
         self._snippet_dir = Path(f"{self.command.path_command}/snippets/flutter/")
-        self._target_file = Path(
-            f"{self.command.flutter_dir}/lib/core/dio/custom_dio.dart"
-        )
+        self._target_file = Path(f"{self.command.flutter_dir}/lib/core/dio/custom_dio.dart")
         self._snippet_file = Path(f"{self.command.snippet_dir}/custom_dio.txt")
 
     def build(self):
@@ -26,7 +24,5 @@ class CustomDIOBuilder:
 
     def _parser_content(self):
         return ParserContent(
-            ["$project$"],
-            [self.command.flutter_project],
-            Utils.get_snippet(str(self._snippet_file)),
+            ["$project$"], [self.command.flutter_project], Utils.get_snippet(str(self._snippet_file))
         ).replace()

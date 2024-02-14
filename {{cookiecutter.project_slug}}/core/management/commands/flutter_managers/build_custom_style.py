@@ -11,9 +11,7 @@ class CustomStyleBuilder:
 
     def build(self):
         try:
-            _content = Utils.get_snippet(
-                str(Path(f"{self._snippet_dir}/custom.style.txt"))
-            )
+            _content = Utils.get_snippet(str(Path(f"{self._snippet_dir}/custom.style.txt")))
             with open(self._path_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:

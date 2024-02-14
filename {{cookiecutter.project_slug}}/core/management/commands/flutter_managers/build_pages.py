@@ -1,10 +1,7 @@
 from pathlib import Path
 
 from core.management.commands.constants.flutter import DJANGO_TYPES, FLUTTER_TYPES
-from core.management.commands.flutter_managers.utils import (
-    convert_to_camel_case,
-    ignore_base_fields,
-)
+from core.management.commands.flutter_managers.utils import convert_to_camel_case, ignore_base_fields
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
@@ -17,7 +14,9 @@ class PagesBuilder:
         self._app_name_lower = self._source_app.app_name_lower
         self._snippet_dir = Path(f"{self.command.path_command}/snippets/flutter/")
         self._snippet_dir_cubit = Path(f"{self._snippet_dir}/cubit")
-        self._pages_target_path = f"{self._source_app.path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/pages/"
+        self._pages_target_path = (
+            f"{self._source_app.path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/pages/"
+        )
 
     def build(self):
         """
@@ -30,9 +29,7 @@ class PagesBuilder:
             self._build_create_or_update_page()
             self._build_create_or_update_page(update=True)
         except Exception as error:
-            Utils.show_error(
-                f"Ocorreu o erro: {error} ao executar o build do PagesBuilder"
-            )
+            Utils.show_error(f"Ocorreu o erro: {error} ao executar o build do PagesBuilder")
 
     def _get_controllers_data(self, attribute, model_name, name, name_title) -> str:
         _controllers_data = ""
@@ -42,23 +39,24 @@ class PagesBuilder:
         try:
             if attribute == "int":
                 if f"id{model_name.lower()}" == name.lower():
-                    _controllers_data = f"{_space}_{_model_cc}Model.id = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    _controllers_data = (
+                        f"{_space}_{_model_cc}Model.id = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    )
                 else:
-                    _controllers_data = f"{_space}_{_model_cc}Model.{name} = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    _controllers_data = (
+                        f"{_space}_{_model_cc}Model.{name} = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    )
             elif attribute == "double":
-                _controllers_data = f"{_space}_{_model_cc}Model.{name} = double.tryParse(_{_model_cc}Form{_title}.text) ?? 0.0;\n"
+                _controllers_data = (
+                    f"{_space}_{_model_cc}Model.{name} = double.tryParse(_{_model_cc}Form{_title}.text) ?? 0.0;\n"
+                )
             elif attribute == "bool":
                 _field_is_empty = f"_{_model_cc}Form{_title}.text.isNotEmpty"
-                _fields_contains_zero = (
-                    f"_{_model_cc}Form{_title}.text.contains('0') ? true: false : false"
-                )
+                _fields_contains_zero = f"_{_model_cc}Form{_title}.text.contains('0') ? true: false : false"
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = {_field_is_empty} ? {_fields_contains_zero};\n"
             elif attribute == "DateTime?":
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text != ''?"
-
-                _controllers_data += (
-                    f" Util.convertDate(_{_model_cc}Form{_title}.text) : null;\n"
-                )
+                _controllers_data += f" Util.convertDate(_{_model_cc}Form{_title}.text) : null;\n"
             else:
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text;\n"
             return _controllers_data
@@ -78,15 +76,17 @@ class PagesBuilder:
                 if f"id{model_name.lower()}" == name.lower():
                     _attribute = f"{_space}_{_model_cc}Model.id = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
                 else:
-                    _attribute = f"{_space}_{_model_cc}Model.{name} = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    _attribute = (
+                        f"{_space}_{_model_cc}Model.{name} = int.tryParse(_{_model_cc}Form{_title}.text) ?? 0;\n"
+                    )
 
             elif attribute == "double":
-                _attribute = f"{_space}_{_model_cc}Model.{name} = double.tryParse(_{_model_cc}Form{_title}.text) ?? 0.0;\n"
+                _attribute = (
+                    f"{_space}_{_model_cc}Model.{name} = double.tryParse(_{_model_cc}Form{_title}.text) ?? 0.0;\n"
+                )
             elif attribute == "bool":
                 _check_field = f"_{_model_cc}Form{_title}.text.isNotEmpty"
-                _i_contains = (
-                    f"_{_model_cc}Form{_title}.text.contains('0') ? true: false : false"
-                )
+                _i_contains = f"_{_model_cc}Form{_title}.text.contains('0') ? true: false : false"
                 _attribute = f"{_space}_{_model_cc}Model.{name} = {_check_field} ? {_i_contains};\n"
             elif attribute == "DateTime?":
                 _convert = f"?Util.convertDate(_{_model_cc}Form{name_title}.text): null"
@@ -142,27 +142,18 @@ class PagesBuilder:
                 if ignore_base_fields(_name):
                     continue
 
-                field_type = (
-                    str(str(type(field)).split(".")[-1:])
-                    .replace('["', "")
-                    .replace("'>\"]", "")
-                )
+                field_type = str(str(type(field)).split(".")[-1:]).replace('["', "").replace("'>\"]", "")
 
                 attribute = FLUTTER_TYPES[DJANGO_TYPES.index(field_type)]
-                _model_name_camel_case = convert_to_camel_case(
-                    self._source_app.model_name
-                )
-                _content_attributes += f"  final _{_model_name_camel_case}Form{_name_title} = TextEditingController();\n"
-                _dispose_attributes += (
-                    f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
+                _model_name_camel_case = convert_to_camel_case(self._source_app.model_name)
+                _content_attributes += (
+                    f"  final _{_model_name_camel_case}Form{_name_title} = TextEditingController();\n"
                 )
                 _dispose_attributes += f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
                 text_field = _content_form
                 controller = f"_{_model_name_camel_case}Form{_name_title}"
                 text_field = text_field.replace("$controller$", controller)
-                text_field = text_field.replace(
-                    "$Field$", str(field.verbose_name).replace("R$", "R\$")
-                )
+                text_field = text_field.replace("$Field$", str(field.verbose_name).replace("R$", "R\$"))
                 _text_fields += text_field
                 _attributes_data += self._get_attributes_data(
                     attribute, self._source_app.model_name, _name, _name_title
@@ -216,9 +207,7 @@ class PagesBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(content)
         except Exception as error:
-            Utils.show_error(
-                f"Ocorreu o erro: {error} ao executar o _build_create_update_page do PagesBuilder"
-            )
+            Utils.show_error(f"Ocorreu o erro: {error} ao executar o _build_create_update_page do PagesBuilder")
 
     def _build_detail_page(self):
         try:
@@ -228,15 +217,7 @@ class PagesBuilder:
                 return
             _snippet_content = Utils.get_snippet(_snippet_file)
             _content = ParserContent(
-                [
-                    "$App$",
-                    "$app$",
-                    "$Model$",
-                    "$ModelClassCamelCase$",
-                    "$model$",
-                    "$ModelClass$",
-                    "$project$",
-                ],
+                ["$App$", "$app$", "$Model$", "$ModelClassCamelCase$", "$model$", "$ModelClass$", "$project$"],
                 [
                     self._source_app.app_name,
                     self._source_app.app_name.lower(),
@@ -251,10 +232,7 @@ class PagesBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as error:
-            Utils.show_error(
-                f"Ocorreu o erro: {error} ao executar o _build_detail_page do PagesBuilder",
-                exit=True,
-            )
+            Utils.show_error(f"Ocorreu o erro: {error} ao executar o _build_detail_page do PagesBuilder", exit=True)
 
     def _build_index_page(self):
         try:
@@ -276,9 +254,7 @@ class PagesBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(content)
         except Exception as error:
-            Utils.show_error(
-                f"Ocorreu o erro: {error} ao executar o _build_index_page do PagesBuilder"
-            )
+            Utils.show_error(f"Ocorreu o erro: {error} ao executar o _build_index_page do PagesBuilder")
 
     def _build_list_page(self):
         try:
@@ -308,6 +284,4 @@ class PagesBuilder:
             with open(_target_file, "w", encoding="utf-8") as _file:
                 _file.write(content)
         except Exception as error:
-            Utils.show_error(
-                f"Ocorreu o erro: {error} ao executar o _build_list_page do PagesBuilder"
-            )
+            Utils.show_error(f"Ocorreu o erro: {error} ao executar o _build_list_page do PagesBuilder")

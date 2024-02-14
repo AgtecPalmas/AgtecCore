@@ -11,13 +11,9 @@ class SizedExtensionsBuilder:
 
     def build(self):
         try:
-            _content = Utils.get_snippet(
-                str(Path(f"{self._snippet_dir}/agtec.size_screen_extensions.txt"))
-            )
+            _content = Utils.get_snippet(str(Path(f"{self._snippet_dir}/agtec.size_screen_extensions.txt")))
             with open(self._path_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:
-            Utils.show_message(
-                f"Erro ao executar o build de SizedExtensionsBuilder: {e}"
-            )
+            Utils.show_message(f"Erro ao executar o build de SizedExtensionsBuilder: {e}")
             return

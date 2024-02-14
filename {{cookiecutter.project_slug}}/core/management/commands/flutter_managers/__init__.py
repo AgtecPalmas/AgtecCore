@@ -1,5 +1,7 @@
 from .build_add_packages import AddPackagesBuilder
+from .build_analysis_options import AnalisysOptionsBuilder
 from .build_auth_app import AuthAppBuilder
+from .build_colors_schemes import ColorsSchemeBuilder
 from .build_controller import ControllerBuilder
 from .build_custom_colors import CustomColorsBuilder
 from .build_custom_dio import CustomDIOBuilder
@@ -48,4 +50,6 @@ __all__ = [
     "UtilsBuilder",
     "WidgetBuilder",
     "MixinsClassBuilder",
+    "ColorsSchemeBuilder",
+    "AnalisysOptionsBuilder",
 ]
