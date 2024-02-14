@@ -108,14 +108,15 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   @override
-  Future<$ModelClass$Model> post($ModelClass$Model $ModelClassCamelCase$) async {
+  Future<$ModelClass$Model?> post($ModelClass$Model $ModelClassCamelCase$) async {
     try {
       final CustomDio dio = CustomDio(_uri);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
       final dataResponse = await dio.postHttp(dataMap);
-      if (dataResponse != null) {
-        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+      if (dataResponse == null) {
+        return null;
       }
+      _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
       AgteCoreLogger().erro('ArgumentError no service post', error);
     } catch (error, stackTrace)  {
@@ -125,15 +126,16 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   @override
-  Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$) async {
+  Future<$ModelClass$Model?> put($ModelClass$Model $ModelClassCamelCase$) async {
     final url = '$_uri${$ModelClassCamelCase$.id}';
     try {
       final CustomDio dio = CustomDio(url);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
       final dataResponse = await dio.putHttp(dataMap, $ModelClassCamelCase$.id.toString(), uri: url);
-      if (dataResponse != null) {
-        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+      if (dataResponse == null) {
+        return null;
       }
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
       AgteCoreLogger().erro('ArgumentError no service put', error);
     } catch (error, stackTrace)  {
@@ -143,15 +145,16 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   @override
-  Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$) async {
+  Future<$ModelClass$Model?> patch($ModelClass$Model $ModelClassCamelCase$) async {
     try {
       final url = '$_uri${$ModelClassCamelCase$.id}';
       final CustomDio dio = CustomDio(url);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
       final dataResponse = await dio.patchHttp(dataMap, uri: url);
-      if (dataResponse != null) {
-        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+      if (dataResponse == null) {
+        return null;
       }
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
       AgteCoreLogger().erro('ArgumentError no service patch', error);
     } catch (error, stackTrace)  {

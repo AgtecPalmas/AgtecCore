@@ -49,9 +49,6 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -67,25 +64,32 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       children: <Widget>[
         const HeadWidget(),
         _buildPage(),
+        const CustomAppBar(title: '$ModelClass$s'),
       ],
     );
   }
 
   Widget _buildPage() {
-    return Container(
-      alignment: FractionalOffset.topLeft,
-      child: RefreshIndicator(
-        onRefresh: _refresh,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _listBuilder(),
-            ],
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverFillRemaining(
+            child: Container(
+          margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.1),
+          alignment: FractionalOffset.topLeft,
+          child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _listBuilder(),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        ))
+      ],
     );
   }
 
@@ -114,8 +118,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
         switch (state) {
           case $ModelClass$ProcessState():
             return showHideModal(show: true);
-          case $ModelClass$ErrorState(:final error):
-            showError(error);
+          case $ModelClass$ErrorState():
             return const SizedBox.shrink();
           case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
             return _buildResultList($ModelClassCamelCase$List);

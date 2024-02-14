@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './cubit.dart';
-import '../../core/localization.dart';
-import '../../core/user_interface/widget.dart';
 
 class SettingsIndexPage extends StatefulWidget {
   const SettingsIndexPage({super.key});
@@ -22,9 +20,7 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)?.translate('page_label_configuration') ?? '',
-        ),
+        title: const Text('Configuração'),
         centerTitle: true,
       ),
       body: _buildBody(),
@@ -43,30 +39,38 @@ class _SettingsIndexPageState extends State<SettingsIndexPage> {
               return SizedBox(
                 height: 60,
                 width: MediaQuery.sizeOf(context).width * .9,
-                child: customButtonOutline(
-                    borderColor: Colors.red,
-                    textColor: Colors.red,
-                    rounded: true,
-                    label: 'Dark',
-                    onPress: () {
-                      context.read<SettingsCubit>().setDarkTheme();
-                    },
-                    context: context),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+                    side: const BorderSide(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<SettingsCubit>().setDarkTheme();
+                  },
+                  child: const Text('Dark'),
+                ),
               );
             },
           ),
           SizedBox(
             height: 60,
             width: MediaQuery.sizeOf(context).width * .9,
-            child: customButtonOutline(
-                borderColor: Colors.white,
-                textColor: Colors.white,
-                rounded: true,
-                label: 'Light',
-                onPress: () {
-                  context.read<SettingsCubit>().setLightTheme();
-                },
-                context: context),
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+                side: const BorderSide(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () {
+                context.read<SettingsCubit>().setLightTheme();
+              },
+              child: const Text('Light'),
+            ),
           ),
         ],
       )),

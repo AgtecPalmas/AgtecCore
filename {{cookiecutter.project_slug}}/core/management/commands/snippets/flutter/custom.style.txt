@@ -23,7 +23,7 @@ class CustomTextFormFieldStyle {
       counter: hiddenCounter ? const Offstage() : null,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       hintStyle: const TextStyle(
-        color: Colors.black38,
+        color: Colors.grey,
         fontSize: 14,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,

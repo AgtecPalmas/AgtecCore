@@ -15,7 +15,6 @@ import '../../../../core/user_interface/connection_mixin.dart';
 import '../../../../core/user_interface/message_mixin.dart';
 import '../../../../core/user_interface/modal_loading_mixin.dart';
 import '../../../../core/agtec.logger.dart';
-import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
 import '../../../../core/util.dart';
@@ -50,9 +49,6 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent
-      ),
       body: _buildBody(),
     );
   }
@@ -62,17 +58,16 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       children: <Widget> [
         const HeadWidget(),
         _buildPage(),
+        const CustomAppBar(title: 'Criar $ModelClass$'),
       ]
     );
   }
 
   Widget _buildPage(){
-    return SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.sizeOf(context).height
-        ),
-        child: Container(
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverFillRemaining(
+          child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
          margin: EdgeInsets.only(
                top: Util.getProportionScreenHeight(context, Config.marginHead),
@@ -81,42 +76,40 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
-                  child: customTitlePage(context,
-                    'Cadastrar $ModelClass$',
-                  ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 12.0, top: 12.0),
                 ),
 
-                BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
+                BlocListener<$ModelClass$Controller, $ModelClass$State>(
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
-                    showError(InsertStringConstants.error);
-                    AgteCoreLogger().erro('Ocorreu o erro no BlocConsumer CreatePage', state.error.toString());
+                    showError(state.error);
+                    AgteCoreLogger().erro(
+                      'Ocorreu o erro ao executar o Update Page BlocListner', 
+                      state.error.toString(),
+                    );
                   }
                   if(state is $ModelClass$SuccessState){
-                    showSuccess(InsertStringConstants.success);
+                    showSuccess(state.successMessage);
                     _clearForm();
                   }
                 },
-                builder: (context, state) {
-                    _$Model$Model = context.read<$ModelClass$Controller>().$Model$Model;
-                    return Stack(
-                    children : <Widget>[
-                      Column(
-                        children: <Widget>[
-                          _createForm(context),
-                          _createButton(context),
-                        ]
-                      ),
-                    ]
-                  );
-                },
+                child: Stack(
+                  children : <Widget>[
+                    Column(
+                      children: <Widget>[
+                        _createForm(context),
+                        _createButton(context),
+                      ]
+                    ),
+                  ]
+                )
               )
             ],
           ),
         ),
-      ),
+        ),
+      ],
     );
   }
 
@@ -134,25 +127,19 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
   }
 
   Widget _createButton(context){
-    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return  Padding(
-          padding: const EdgeInsets.only(top: 24.0),
-          child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: customRaisedButton(
-                label: 'Salvar',
-                context: context,
-                onPress: () {
-                  if (_form$ModelClass$.currentState?.validate() ?? false) {
-                    _post();
-                  }
-                },
-              ),
-            ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: CustomRaisedButton(
+            label: 'Salvar',
+            onPress: () {
+              if (_form$ModelClass$.currentState?.validate() ?? false) {
+                _post();
+              }
+            },
+          ),
+        ),
     );
   }
 

@@ -24,8 +24,7 @@ const bool releaseVersion = false;
 
 // URI para desenvolvimento
 // URI definida do settings do Projeto Django -> $DjangoAPIPath$
-// TODO - Altere o valor dessa constante para o DNS ou IP da camada de API
-const String uriDeveloper = 'http://192.168.1.82:8101/';
+const String uriDeveloper = '$UriAPIDeveloper$';
 
 // URI para produção
 const String uriRelease = '';
@@ -47,8 +46,8 @@ class Config {
   static const drfToken = 'Token ';
 
   // Dados de acesso à camada FastAPI
-  static const fastAPIUserDevelopment = 'admin';
-  static const fastAPIPasswordDevelopment = 'asdf@1234';
+  static const fastAPIUserDevelopment = '$FastAPIUserDevelopment$';
+  static const fastAPIPasswordDevelopment = '$FastAPIPasswordDevelopment$';
 
   static const String uriMedia = 'media/';
   static const String appTitle = 'App Flutter';

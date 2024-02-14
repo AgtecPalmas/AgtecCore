@@ -19,7 +19,7 @@ PS C:\Users\Suporte> flutter doctor -v
 
 ## Dica de linter para o projeto
 
-Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as regras de linter no projeto. Para isso, basta alterar o arquivo **analysis_options.yaml** que fica na raiz do projeto e adicionar as regras abaixo:
+Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as regras de linter no projeto, caso o build não tenha alterado o arquivo copie o código abaixo e cole no arquivo **analysis_options.yaml** que fica na raiz do projeto e adicionar as regras abaixo:
 
 ```yaml
 ...
@@ -60,7 +60,6 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
 6. Configurar o projeto no Android e iOS para trabalhar com a autenticação, conforme documentação do Flutter (Etapa opcional)
 7. Configurar no arquivo lib/core/config.dart a costante uriDeveloper apontando para a URL da API do projeto DRF ou FastAPI
 8. Configurar no arquivo lib/core/config.dart a costante drfToken para o token de ambiente de desenvolvimento.
-9. No arquivo main.dart descomente as linhas abaixo no método main() para configurar o Firebase (Etapa opcional)
 
 ```dart
 void main() async {

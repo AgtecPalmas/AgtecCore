@@ -61,7 +61,6 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
         return Scaffold(
           key: _scaffoldKey,
           extendBodyBehindAppBar: true,
-          appBar: AppBar(backgroundColor: Colors.transparent),
           body: _buildBody(),
           floatingActionButton: FloatingActionButton(
             child: const Icon(
@@ -81,26 +80,28 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       children: <Widget>[
         const HeadWidget(),
         _buildPage(),
+        const CustomAppBar(title: 'Detalhando $ModelClass$'),
       ],
     );
   }
 
   Widget _buildPage() {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: MediaQuery.sizeOf(context).height,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-          margin: EdgeInsets.only(
-               top: Util.getProportionScreenHeight(context, Config.marginHead)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(_$ModelClassCamelCase$Model.toString()),
-            ],
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverFillRemaining(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+            margin: EdgeInsets.only(
+                top: Util.getProportionScreenHeight(context, Config.marginHead)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(_$ModelClassCamelCase$Model.toString()),
+              ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

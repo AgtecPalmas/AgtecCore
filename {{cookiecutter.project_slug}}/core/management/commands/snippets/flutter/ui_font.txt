@@ -24,3 +24,19 @@ customTitlePage(BuildContext context, String text) {
 customTitleSection(BuildContext context, String text) {
   return Text(text, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 22.0),);
 }
+
+class CustomTitlePage extends StatelessWidget {
+  final String text;
+
+  const CustomTitlePage({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600).copyWith(
+            fontSize: 32.0,
+          ),
+    );
+  }
+}
