@@ -108,7 +108,7 @@ class Usuario(CoreBase):
 e certifique de ter implementado, também,  o seguinte código no [item 5](#configurando-arquivo-envpy).
 
 ### Executando migrações (Comandos):
-1. **Criando migrações:** {#teste}
+1. **Criando migrações:**
    Gerando arquivo de migração automaticamente baseado nos models identificados no [item 3](#configurando-arquivo-envpy).
    ```bash
    alembic revision --autogenerate -m "nome_da_migracao"
