@@ -29,7 +29,7 @@ Dentro do diretório "alembic" no arquivo env.py. Nesse caso, essas configuraç�
     ```
 
 2. **Importar os models da API:** \
-    Para que o alembic consiga 
+    Ao importar dinamicamente os modelos, estamos configurando metadados essenciais para que o Alembic mapeie esses modelos. Garantindo a consistência entre o código da aplicação e o esquema do banco de dados, possibilitando ao Alembic realizar migrações com base em alterações nos modelos da aplicação.
     ```python
     import importlib
 
