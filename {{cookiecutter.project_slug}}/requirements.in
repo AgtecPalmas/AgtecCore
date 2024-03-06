@@ -10,7 +10,7 @@ django-tempus-dominus==5.1.*
 djangorestframework==3.14.*
 djangorestframework-simplejwt==5.3.*
 drf-jsonmask==0.4.*
-drf-yasg==1.21.*
+drf-spectacular==0.27.*
 elastic-apm==6.20.*
 gunicorn==21.2.*
 holidays==0.*
