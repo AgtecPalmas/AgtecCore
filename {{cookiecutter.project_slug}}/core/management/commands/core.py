@@ -2,16 +2,16 @@ import contextlib
 import os
 import re
 import shutil
+import subprocess
 import zipfile
 from string import Template
 
 import requests
+from core.management.commands.utils import Utils
 from decouple import config
 from django.apps import apps
 from django.core.management.base import BaseCommand
 from packaging.version import parse
-
-from core.management.commands.utils import Utils
 
 MESSAGES = {
     "erro_exception": Template(
@@ -261,6 +261,7 @@ class Command(BaseCommand):
 
         self.__upgrade_core()
         self.__upgrade_base()
+        self.__upgrade_requirements()
 
         shutil.rmtree("temp")
 
@@ -280,14 +281,11 @@ class Command(BaseCommand):
 
         root_folder = os.listdir("temp")[0]
 
-        shutil.move(
-            f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}/core",
-            "temp/",
-        )
-        shutil.move(
-            f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}/base",
-            "temp/",
-        )
+        for file in os.listdir(f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}"):
+            shutil.move(
+                f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}/{file}",
+                "temp/",
+            )
 
     def __download_update(self, zip_url: str) -> None:
         """Download the update"""
@@ -312,8 +310,11 @@ class Command(BaseCommand):
 
         Utils.show_message("Atualizando Core")
         try:
-            shutil.rmtree("core")
             shutil.move(
+                "core",
+                "core_backup",
+            )
+            shutil.copytree(
                 "temp/core",
                 "core",
             )
@@ -353,6 +354,43 @@ class Command(BaseCommand):
 
         with open("base/settings.py", "w") as file:
             file.write(current_settings)
+
+    def __upgrade_requirements(self) -> None:
+        """Upgrade the requirements file"""
+        Utils.show_message("Atualizando requirements")
+
+        files = [
+            "requirements.txt",
+            "requirements-dev.txt",
+            "requirements.in",
+            "requirements-dev.in",
+        ]
+
+        for file in files:
+            shutil.copy(f"temp/{file}", file)
+
+        if not os.path.exists("requirements-extras.in"):
+            shutil.copy("temp/requirements-extras.in", "requirements-extras.in")
+
+        try:
+            for file in [
+                "requirements.in",
+                "requirements-dev.in",
+                "requirements-extras.in",
+            ]:
+                subprocess.run(
+                    f"pip-compile {file}",
+                    shell=True,
+                    check=True,
+                    stdin=subprocess.DEVNULL,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+        except Exception:
+            Utils.show_error(
+                "Erro ao tentar compilar os arquivos de requirements, faça 'pip-compile <arquivo>' manualmente",
+                emoji="rotating_light",
+            )
 
     def __update_command_object(self) -> None:
         """Update the Command Object to the current state"""

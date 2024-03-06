@@ -1,5 +1,5 @@
 # requirements-dev.in
--c requirements.txt
+-r requirements.txt
 
 autoflake==2.2.*
 autopep8==2.0.*

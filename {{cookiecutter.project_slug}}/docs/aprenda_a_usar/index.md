@@ -59,8 +59,6 @@ Com o comando de criação do superusuário temos um usuário do tipo SuperUser 
 
 Você pode executar dois comandos internos do Core
 
-(Lembre de configurar `GITLAB_TOKEN` e `GITLAB_API_CORE_URL` no arquivo .env)
-
 ### --version
 
 Esse comando exibe a versão do Core que está sendo utilizada no projeto.
@@ -69,17 +67,24 @@ Esse comando exibe a versão do Core que está sendo utilizada no projeto.
 python manage.py core --version
 ```
 ```console
-✅  Versão do Core: 3.0
+✅  Versão do Core: 4.2.1
 ```
 
-### --checkupdate
+### --upgrade
 
-Esse comando verifica se existe uma nova versão do Core disponível.
+Esse comando verifica se existe uma nova versão do Core disponível e pergunta se deseja atualizar.
+Toda a pasta Core será substituida pela nova versão, lembre-se de verificar se você fez alguma alteração no Core antes de atualizar.
+Se novas variáveis forem adicionadas ao Core, elas serão inseridas no base/settings.py automaticamente, mas sem valor.
 
 ```console
-python manage.py core --checkupdate
+python manage.py core --upgrade
 ```
+
 ```console
-🆙  Atualização v3.0 disponível
-Versão 2.9 está sendo usada
+🆙  Atualização 4.3 disponível
+Versão 4.2.1 está sendo usada
+
+Baixar atualização
+https://github.com/AgtecPalmas/AgtecCore/releases/tag/4.3
+Deseja atualizar o Core? [S/N]
 ```
