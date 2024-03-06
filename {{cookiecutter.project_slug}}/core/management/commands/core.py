@@ -1,5 +1,8 @@
 import contextlib
+import os
 import re
+import shutil
+import zipfile
 from string import Template
 
 import requests
@@ -39,6 +42,7 @@ MESSAGES = {
     ),
     "success_version": Template("Você está na versão mais recente do Core: $version"),
     "version": Template("Versão do Core: [green b]$version - $codename[/]"),
+    "cannot_upgrade": "Não podemos atualizar o Core\nFaça a atualização manualmente",
 }
 
 
@@ -70,7 +74,7 @@ class Command(BaseCommand):
             self.url_github = config("GITHUB_API_CORE_URL")
 
         self.releases: list[dict] = []
-        self.versions: dict[str, dict[str, str]] = {}
+        self.versions: dict[str, dict[str, str, int]] = {}
 
         self.core_project_version: str = getattr(
             apps.get_app_config("core"), "version", "0"
@@ -103,17 +107,17 @@ class Command(BaseCommand):
             help="Exibe a versão do Core",
         )
         parser.add_argument(
-            "--checkupdate",
-            action="store_true",
-            dest="checkupdate",
-            help="Verifica se existe uma nova versão do Core",
-        )
-        parser.add_argument(
             "-h",
             "--help",
             action="store_true",
             dest="help",
             help="Exibe a ajuda do comando",
+        )
+        parser.add_argument(
+            "--upgrade",
+            action="store_true",
+            dest="upgrade",
+            help="Atualiza o Core para a última versão",
         )
 
     def __validate_env_variables(self) -> bool:
@@ -144,7 +148,18 @@ class Command(BaseCommand):
             Utils.show_error(MESSAGES["erro_exception"].substitute(exception=error))
 
     def __populate_versions(self) -> None:
-        """Populate the versions"""
+        """Populate the versions, one index per Django version"""
+        """Example
+        {
+            "4": {
+                "tag_name": "4.0.0",
+                "html_url": "url"
+                "id": release_id
+                "zip": "zip_url"
+                }
+        }
+        """
+
         for release in self.releases:
             tag_name: str = release.get("tag_name")
             tag_django_version = get_tag_django_version(tag_name)
@@ -159,6 +174,8 @@ class Command(BaseCommand):
                 self.versions[tag_django_version] = {
                     "tag_name": tag_name,
                     "html_url": release.get("html_url"),
+                    "id": release.get("id"),
+                    "zip": release.get("zipball_url"),
                 }
 
     def __check_django_upgrade(self) -> None:
@@ -172,21 +189,24 @@ class Command(BaseCommand):
                 ),
             )
 
-    def __check_core_version(self) -> bool:
-        """Check if there is a version of the Core for the Django version"""
-        if not self.versions.get(self.django_project_version):
-            Utils.show_message(
-                title=True,
-                emoji="rocket",
-                self=MESSAGES["not_found_core_version"].substitute(
-                    version=self.django_project_version
-                ),
-            )
-            return False
-        return True
+    def __check_core_update(self) -> int:
+        """Check if the Core version is the last
 
-    def __check_core_update(self) -> None:
-        """Check if the Core version is the last"""
+        Returns:
+            1 if something is wrong
+
+            -1 if there is a new version
+
+            0 if the version is the same
+        """
+
+        if self.versions.get(self.django_project_version) is None:
+            Utils.show_error(
+                MESSAGES["not_found_core_version"].substitute(
+                    version=self.django_project_version
+                )
+            )
+
         last_core_version_current_django: str = self.versions[
             self.django_project_version
         ]
@@ -220,6 +240,126 @@ class Command(BaseCommand):
                 )
             )
 
+        return state
+
+    def __upgrade(self) -> None:
+        """Upgrade the Core"""
+        state: int = self.__check_core_update()
+
+        if state != -1:
+            return
+
+        if input("Deseja atualizar o Core? [S/N]: ").lower() != "s":
+            Utils.show_message("Operação cancelada")
+            return
+
+        release = self.versions[self.django_project_version]
+        self.__download_update(release["zip"])
+        self.__prepare_temp_folder()
+
+        os.remove("core.zip")
+
+        self.__upgrade_core()
+        self.__upgrade_base()
+
+        shutil.rmtree("temp")
+
+        Utils.show_message("Core atualizado com sucesso")
+        Utils.show_message(
+            "Se você fez alguma alteração no core, verifique se não perdeu nada"
+        )
+
+    def __prepare_temp_folder(self) -> None:
+        """Prepare the temp folder"""
+        if os.path.exists("temp"):
+            shutil.rmtree("temp")
+
+        Utils.show_message("Extraindo arquivos")
+        with zipfile.ZipFile("core.zip", "r") as zip_ref:
+            zip_ref.extractall("temp")
+
+        root_folder = os.listdir("temp")[0]
+
+        shutil.move(
+            f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}/core",
+            "temp/",
+        )
+        shutil.move(
+            f"temp/{root_folder}/{{{{cookiecutter.project_slug}}}}/base",
+            "temp/",
+        )
+
+    def __download_update(self, zip_url: str) -> None:
+        """Download the update"""
+        Utils.show_message("Baixando atualização")
+        download = requests.get(
+            zip_url,
+            timeout=10,
+        )
+
+        if download.status_code != 200:
+            Utils.show_error(
+                MESSAGES["erro_status_code"].substitute(
+                    status_code=download.status_code
+                )
+            )
+
+        with open("core.zip", "wb") as file:
+            file.write(download.content)
+
+    def __upgrade_core(self) -> None:
+        """Delete and replace the Core folder"""
+
+        Utils.show_message("Atualizando Core")
+        try:
+            shutil.rmtree("core")
+            shutil.move(
+                "temp/core",
+                "core",
+            )
+        except Exception as error:
+            Utils.show_error(
+                f"Erro ao tentar excluir e mover o Core\n{error}",
+                emoji="rotating_light",
+            )
+
+    def __upgrade_base(self) -> None:
+        """Check if there are newer variables inside the base/settings file and upgrade it"""
+        Utils.show_message("Atualizando base/settings.py")
+
+        with open(
+            "temp/base/settings.py",
+            "r",
+        ) as file:
+            new_settings = file.read()
+
+        with open("base/settings.py", "r") as file:
+            current_settings = file.read()
+
+        # Get variables UPPERCASE from the files
+        new_settings_vars = re.findall(r"([A-Z_]+)\s*=", new_settings)
+        current_settings_vars = re.findall(r"([A-Z_]+)\s*=", current_settings)
+
+        if len(new_settings_vars) == len(current_settings_vars):
+            Utils.show_message("Nenhuma variável nova encontrada")
+            return
+
+        for var in new_settings_vars:
+            if var not in current_settings_vars:
+                current_settings += f"\n{var} = None"
+                Utils.show_message(
+                    f"Nova variável encontrada: {var}, lembre de alterá-la"
+                )
+
+        with open("base/settings.py", "w") as file:
+            file.write(current_settings)
+
+    def __update_command_object(self) -> None:
+        """Update the Command Object to the current state"""
+        self.__get_tags_from_github()
+        self.__populate_versions()
+        self.__check_django_upgrade()
+
     def __help(self) -> None:
         """Show help message"""
         Utils.show_message(
@@ -240,13 +380,9 @@ class Command(BaseCommand):
                 ),
             )
 
-        elif options["checkupdate"]:
-            self.__get_tags_from_github()
-            self.__populate_versions()
-            self.__check_django_upgrade()
-
-            if self.__check_core_version():
-                self.__check_core_update()
+        elif options["upgrade"]:
+            self.__update_command_object()
+            self.__upgrade()
 
         else:
             self.__help()
