@@ -1,9 +1,11 @@
+import secrets
+
 from django import forms
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.forms.fields import BooleanField, DateField, DateTimeField, JSONField
 from django.utils.translation import gettext_lazy as _
 
-from django.contrib.auth.forms import PasswordChangeForm
 from .models import Audit, Base
 
 
@@ -14,6 +16,12 @@ class BaseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         super(BaseForm, self).__init__(*args, **kwargs)
+
+        if "Modal" in self.__class__.__name__:
+            for field in iter(self.fields):
+                self.fields[field].widget.attrs.update(
+                    {"id": f"{secrets.token_urlsafe(5)}_{field}"}
+                )
 
         for field in iter(self.fields):
             # Coleta as classes passadas no Form
@@ -34,11 +42,13 @@ class BaseForm(forms.ModelForm):
             if isinstance(self.fields[field], DateTimeField):
                 class_attrs += " datetimefield"
                 self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa hh:mm"})
+                self.fields[field].widget.input_type = "datetime-local"
 
             # Verificando se o campo é do tipo Date
             if isinstance(self.fields[field], DateField):
                 class_attrs += " datefield"
                 self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa"})
+                self.fields[field].widget.input_type = "date"
 
             # # Verificando se o campo é do tipo FileField
             # if isinstance(self.fields[field], FileField):
@@ -52,6 +62,9 @@ class BaseForm(forms.ModelForm):
             if isinstance(self.fields[field], BooleanField):
                 class_attrs += " form-check-input"
 
+            if self.errors:
+                class_attrs += " is-invalid" if field in self.errors else " is-valid"
+                
             # Atualizando os atributos do campo para adicionar as classes
             # conforme as regras anteriores
             self.fields[field].widget.attrs.update({"class": class_attrs.lstrip()})

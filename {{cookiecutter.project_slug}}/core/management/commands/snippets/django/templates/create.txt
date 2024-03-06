@@ -107,7 +107,6 @@ FileLocked
                                 <div class="col-md-6 mb-3">
                                   <div class="br-switch icon top mr-5">
                                     {{ field_formset }}{{ field_formset.label_tag }}
-                                    <div class="invalid-feedback">Campo Requerido.</div>
                                     {% if field_formset.errors %}{{ field_formset.errors }}{% endif %}
                                   </div>
                                 </div>

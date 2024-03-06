@@ -56,6 +56,10 @@ class BaseUpdateView(
 
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
+        
+        for modal in getattr(self, "form_modals", []):
+            context[f"form_{modal.Meta.model.__name__.lower()}"] = modal
+
         context["list_inlines"] = self.get_formset_inlines()
         context = get_default_context_data(context, self)
         url_str = reverse(context["url_list"]) + f' Atualizar {context["object"].pk}'

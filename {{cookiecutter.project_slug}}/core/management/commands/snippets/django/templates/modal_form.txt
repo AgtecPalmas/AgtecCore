@@ -1,7 +1,7 @@
 {% if form.$field_name$.field.queryset.model|has_add_permission:request %}
-    {# MODAL $ModelName$ #}
+    {# MODAL $field_name$ #}
     <div class="modal fade"
-         id="form$ModelName$Modal"
+         id="form_$field_name$_modal"
          tabindex="-1"
          role="dialog"
          aria-labelledby="myLargeModalLabel"
@@ -10,7 +10,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myLargeModalLabel">Adicionar $ModelName$</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button"
+                            class="close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
                         <span aria-hidden="true" class="fas fa-times"></span>
                     </button>
                 </div>
@@ -26,11 +29,13 @@
                                 {% if field.field.widget.input_type == 'checkbox' %}
                                     <div class="br-switch icon top mr-5">{{ field }} {{ field.label_tag }}</div>
                                 {% else %}
-                                    {{ field.label_tag }} {{ field }}
+                                    {{ field.label_tag }}
+                                    {% if not field.field.required %}<span class="text-muted">(Opcional)</span>{% endif %}
+                                    {{ field }}
                                 {% endif %}
                                 {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
-                                {% if field.field.required %}<div class="invalid-feedback">Campo Obrigatorio.</div>{% endif %}
                                 {% if field.errors %}{{ field.errors }}{% endif %}
+                                <div class="invalid-feedback"></div>
                             </div>
                         {% endfor %}
                     </form>
@@ -40,14 +45,16 @@
                         <button type="button" class="br-button block" data-bs-dismiss="modal">Fechar</button>
                     </div>
                     <div>
-                        <button type="button" class="br-button primary block" id="btn-gravar-$model_name$">Salvar</button>
+                        <button type="button"
+                                class="br-button primary block"
+                                id="btn-gravar-$field_name$">Salvar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script>
-    $("#btn-gravar-$model_name$").on("click", function (event) {
+    $("#btn-gravar-$field_name$").on("click", function (event) {
         event.preventDefault();
         var url = window.location.href;
         $.ajax({
@@ -59,14 +66,24 @@
                 // Adicionando o item retornado no select.
                 $("#id_$field_name$").load( url + " #id_$field_name$ option" );
                 // Ocultando o form.
-                $("#form$ModelName$Modal").hide();
+                $("#form_$field_name$_modal").hide();
                 $(".modal-backdrop").hide();
                 $("body").removeClass("modal-open");
                 //Limpar o form do modal
                 $('#form-$model_name$').trigger("reset");
             },
-            error: function(error){
-                console.log(error);
+            error: function(error) {
+                let inputs = $("#form-$model_name$").find("input, select, textarea");
+                inputs.removeClass("is-invalid");
+                inputs.siblings(".invalid-feedback").text("");
+                
+                let errors = error.responseJSON;
+                for (let key in errors) {
+                    let field = $("#form-$model_name$").find(`[name=${key}]`);
+                    field.addClass("is-invalid");
+                    field.siblings(".invalid-feedback").text(errors[key]);
+                }
+                $("#form_$field_name$_modal").animate({scrollTop: 0}, "slow");
             }
         })
     });
