@@ -164,10 +164,9 @@ class BRHeader {
    * @param {event} event - referencia ao evento
    */
   handleEvent(event) {
-    const hasNotficiationElemeent = this.component
-      .querySelector('.br-notification')
-      .contains(event.target)
-    if (!hasNotficiationElemeent) {
+    const notificationElement = this.component.querySelector('.br-notification')
+
+    if (notificationElement && !notificationElement.contains(event.target)) {
       if (this.activateTr !== event.target.parentNode) {
         this._cleanDropDownHeaderRef(this.component)
       }

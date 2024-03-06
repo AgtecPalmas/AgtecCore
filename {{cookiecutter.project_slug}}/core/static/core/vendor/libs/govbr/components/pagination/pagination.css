@@ -21,6 +21,12 @@
 .br-pagination li {
   padding: 0;
 }
+.br-pagination.dark-mode .page {
+  color: var(--color-dark);
+}
+.br-pagination.dark-mode .br-select .br-item label {
+  color: var(--color-dark);
+}
 .br-pagination .page {
   align-items: center;
   border: 1px solid transparent;
@@ -135,14 +141,14 @@
 .br-pagination.inverted, .br-pagination.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-pagination.inverted.inverted .br-input,
 .br-pagination.inverted.inverted .br-input label, .br-pagination.inverted.dark-mode .br-input,

@@ -40,6 +40,7 @@
 .br-tooltip[popover] {
   max-width: 320px;
   min-width: 240px;
+  overflow-x: hidden;
   width: auto;
 }
 .br-tooltip[success] {

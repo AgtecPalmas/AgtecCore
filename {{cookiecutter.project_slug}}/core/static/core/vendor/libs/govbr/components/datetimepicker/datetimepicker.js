@@ -15,6 +15,11 @@ class BRDateTimePicker {
     this.component = component
     this.language = language
 
+    this.component.querySelectorAll('.br-button').forEach((elem) => {
+      elem.setAttribute('aria-hidden', 'true')
+      elem.setAttribute('tab-index', '-1')
+    })
+
     this.component.addEventListener('blur', () => {
       if (!isNaN(new Date(this.component.value))) {
         fp.setDate(this.component.value)
@@ -66,7 +71,7 @@ class BRDateTimePicker {
       const len = elm.value.length
 
       if (len !== 1 || len !== 3) {
-        if (e.keyCode == 47) {
+        if (e.keyCode === 47) {
           e.preventDefault()
         }
       }
@@ -94,7 +99,7 @@ class BRDateTimePicker {
       const len = elm.value.length
 
       if (len !== 1 || len !== 3) {
-        if (e.keyCode == 47) {
+        if (e.keyCode === 47) {
           e.preventDefault()
         }
       }
@@ -246,27 +251,56 @@ class BRDateTimePicker {
     this.config_native = {
       allowInput: true,
       dateFormat: format,
-      disableMobile: 'true',
       enableTime: time,
       minuteIncrement: 1,
+      wrap: true,
+    }
+    /**
+     * Sobreescreve com os atributos visuais necessarios
+     */
 
+    this.config_min_flat = {
+      clickOpens: false,
+      disableMobile: 'true',
       mode: this.component.getAttribute('data-mode'),
       nextArrow:
         '<button class="br-button circle small" type="button"><i class="fas fa-chevron-right"></i></button>',
       noCalendar: noCalendar,
       prevArrow:
         '<button class="br-button circle small" type="button"><i class="fas fas fa-chevron-left"></i></button>',
-      time_24hr: true,
+
       wrap: true,
     }
-    this.config_flatpick = Object.assign(this.config, this.config_native)
+
+    this.config_flatpick = Object.assign(this.config_native, this.config)
+    this.config_flatpick = Object.assign(
+      this.config_flatpick,
+      this.config_min_flat
+    )
 
     this.calendar = flatpickr(
       this.component,
-      Object.assign(this.config, this.config_native)
+      Object.assign(this.config_native, this.config)
     )
 
     this.calendar.config.onOpen.push(() => {
+      if (this.config_flatpick.allowInput) {
+        this.component.querySelectorAll('.br-button').forEach((elem) => {
+          elem.setAttribute('aria-hidden', 'true')
+          elem.setAttribute('tab-index', '-1')
+        })
+      } else {
+        this.component
+          .querySelectorAll('.flatpickr-calendar')
+          .forEach((elem) => {
+            console.log(elem)
+
+            elem.setAttribute('tab-index', '-1')
+          })
+      }
+      document.querySelectorAll('.flatpickr-day').forEach((element) => {
+        element.setAttribute('tabindex', '1')
+      })
       document.querySelectorAll('.arrowUp').forEach((element) => {
         element.classList.add('fas', 'fa-chevron-up')
       })

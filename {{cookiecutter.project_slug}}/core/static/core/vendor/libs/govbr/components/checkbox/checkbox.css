@@ -42,7 +42,7 @@
   white-space: nowrap;
   width: 0;
 }
-.br-checkbox input:checked + label::after {
+.br-checkbox input:checked + label::after, .br-checkbox input:indeterminate + label::after {
   border: solid var(--selected);
   border-width: 0 3px 3px 0;
   content: "";
@@ -53,15 +53,15 @@
   transform: rotate(45deg);
   width: 8px;
 }
-.br-checkbox input[indeterminate] + label::before {
+.br-checkbox input[indeterminate] + label::before, .br-checkbox input:indeterminate + label::before {
   --interactive-rgb: var(--color-rgb);
   background: var(--selected);
   border-color: var(--selected);
 }
-.br-checkbox input[indeterminate]:hover:not(:disabled) + label::before {
+.br-checkbox input[indeterminate]:hover:not(:disabled) + label::before, .br-checkbox input:indeterminate:hover:not(:disabled) + label::before {
   --interactive-rgb: var(--color-dark-rgb);
 }
-.br-checkbox input[indeterminate]:checked + label::after {
+.br-checkbox input[indeterminate]:checked + label::after, .br-checkbox input[indeterminate] + label::after, .br-checkbox input:indeterminate:checked + label::after, .br-checkbox input:indeterminate + label::after {
   border-color: var(--background-light);
   border-width: 0 0 3px;
   top: 2px;
@@ -109,14 +109,16 @@
   border-width: 0 2px 2px 0;
   height: var(--icon-size-sm);
   left: 7px;
-  top: 6px;
+  top: 4px;
   width: 6px;
 }
-.br-checkbox.is-small input:checked[indeterminate] + label::after, .br-checkbox.small input:checked[indeterminate] + label::after, .br-checkbox[small] input:checked[indeterminate] + label::after {
+.br-checkbox.is-small input[indeterminate] + label::after, .br-checkbox.is-small input:indeterminate + label::after, .br-checkbox.small input[indeterminate] + label::after, .br-checkbox.small input:indeterminate + label::after, .br-checkbox[small] input[indeterminate] + label::after, .br-checkbox[small] input:indeterminate + label::after {
   border-color: var(--background-light);
   border-width: 0 0 3px;
-  top: 2px;
+  left: 7px;
+  top: 1px;
   transform: none;
+  width: 6px;
 }
 .br-checkbox input:invalid + label::before {
   --border-color: var(--danger);

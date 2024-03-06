@@ -107,14 +107,14 @@
 .feedback.is-warning, .feedback.warning, .feedback[warning] {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .feedback.is-success, .feedback.success, .feedback[success] {
   --message-background: var(--success-alternative);

@@ -17,7 +17,7 @@
   <body>
     <div class="container-fluid">
       <p class="h4 mt-5">Com porcentagem</p>
-      <div class="br-loading" data-progress="75">
+      <div class="br-loading" role="progressbar" data-progress="75" aria-label="carregando exemplo com porcetagem" aria-valuemin="0" aria-valuenow="75" aria-valuemax="100">
         <div class="br-loading-mask full">
           <div class="br-loading-fill"></div>
         </div>
@@ -26,9 +26,9 @@
         </div>
       </div>
       <p class="h4 mt-5">Indeterminado médio</p>
-      <div class="loading medium"></div>
+      <div class="br-loading medium" role="progressbar" aria-label="carregando exemplo medium exemplo"></div>
       <p class="h4 mt-5">Indeterminado pequeno</p>
-      <div class="loading"></div>
+      <div class="br-loading" role="progressbar" aria-label="carregando exemplo indeterminado pequeno"></div>
     </div>
     <script src="../../core-init.js"></script>
   </body>

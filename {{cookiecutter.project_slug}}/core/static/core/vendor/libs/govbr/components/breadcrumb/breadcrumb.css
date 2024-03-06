@@ -2,6 +2,7 @@
   display: inline-grid;
   font-size: var(--font-size-scale-down-01);
   font-weight: var(--font-weight-medium);
+  min-height: var(--spacing-scale-7x);
   position: relative;
 }
 .br-breadcrumb .crumb-list {
@@ -12,13 +13,12 @@
   margin: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0;
+  padding: 0 0 0 var(--spacing-scale-base);
 }
 .br-breadcrumb .crumb {
   align-items: center;
   display: flex;
   height: var(--spacing-scale-5x);
-  margin: auto 0 auto -5px;
 }
 .br-breadcrumb .crumb .icon {
   color: var(--border-color);
@@ -28,21 +28,31 @@
 .br-breadcrumb .crumb a {
   max-width: 180px;
   overflow: hidden;
-  padding: 0 6px;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .br-breadcrumb .crumb:last-child span {
   font-weight: var(--font-weight-medium);
-  padding: 0 0 0 var(--spacing-scale-base);
+  margin: 0 var(--spacing-scale-2x) 0 var(--spacing-scale-base);
   white-space: nowrap;
+}
+.br-breadcrumb .crumb[data-active=active] span:focus:focus, .br-breadcrumb .crumb[data-active=active] span:focus-visible:focus, .br-breadcrumb .crumb[data-active=active] span.focus-visible:focus {
+  outline: none;
+}
+.br-breadcrumb .crumb[data-active=active] span:focus.focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus:focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus-visible.focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus-visible:focus-visible, .br-breadcrumb .crumb[data-active=active] span.focus-visible.focus-visible, .br-breadcrumb .crumb[data-active=active] span.focus-visible:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
+.br-breadcrumb .crumb a:not(.br-button) {
+  margin: 0 var(--spacing-scale-base);
 }
 .br-breadcrumb .home,
 .br-breadcrumb .menu-mobil {
   --focus-offset: calc(var(--spacing-scale-half) * -1);
-  margin-left: 0;
-  margin-right: -3px;
+  margin: 0 var(--spacing-scale-base) 0 0;
 }
 @media (max-width: 991px) {
   .br-breadcrumb .crumb a:not(.br-button) {

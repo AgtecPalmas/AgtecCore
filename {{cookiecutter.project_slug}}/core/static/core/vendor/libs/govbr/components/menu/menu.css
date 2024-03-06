@@ -211,8 +211,14 @@
   }
 }
 @media (min-width: 576px) {
-  .br-menu.push .menu-header {
+  .br-menu.push .menu-header, .br-menu.push .menu-footer {
     display: none;
+  }
+  .br-menu.push .menu-header[data-visible=true] {
+    display: flex;
+  }
+  .br-menu.push .menu-footer[data-visible=true] {
+    display: block;
   }
   .br-menu.push .menu-panel {
     height: auto;

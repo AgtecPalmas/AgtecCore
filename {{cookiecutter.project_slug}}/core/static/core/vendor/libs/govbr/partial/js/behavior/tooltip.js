@@ -12,7 +12,7 @@ class Tooltip {
    * @property {string} type - Tipo de tooltip (info, warning) padrão info
    * @property {boolean} onActivator - Adiciona o tooltip dentro do elemento ativador padrão false
    */
-  
+
   constructor({
     component,
     activator,
@@ -21,11 +21,14 @@ class Tooltip {
     active,
     textTooltip,
     type = 'info',
-    onActivator = false
+    onActivator = false,
   }) {
-    
     const text_tooltip = textTooltip ? textTooltip : component
-    this.onActivator = onActivator 
+
+    if (typeof text_tooltip === 'undefined') {
+      return
+    }
+    this.onActivator = onActivator
     this.activator = activator
     this.component = component
       ? component
@@ -44,11 +47,8 @@ class Tooltip {
     this.active = this.component.hasAttribute('active')
       ? this.component.hasAttribute('active')
       : active
-    this.placement = positions.includes(place)
-      ? place
-      : this.notification
+    this.placement = positions.includes(place) ? place : this.notification
 
-      
     this.popperInstance = null
     this.showEvents = ['mouseenter', 'click', 'focus']
     this.hideEvents = ['mouseleave', 'blur']
@@ -69,7 +69,7 @@ class Tooltip {
       })
     }
     // Adiciona ação de fechar ao botao do popover
-    
+
     if (this.popover) {
       const closeBtn = this.component.querySelector('.close')
       closeBtn.addEventListener('click', (event) => {
@@ -102,7 +102,7 @@ class Tooltip {
     text_tooltip.classList.add('sample')
     if (this.activator && this.onActivator) {
       this.activator.appendChild(text_tooltip)
-    }else{
+    } else {
       document.body.appendChild(text_tooltip)
     }
 
@@ -132,19 +132,15 @@ class Tooltip {
             options: {
               altAxis: false, // false by default
               mainAxis: true, // true by default
-              
             },
           },
-          {name: 'flip',options: {fallbackPlacements: ['top', 'right'],},},
+          { name: 'flip', options: { fallbackPlacements: ['top', 'right'] } },
         ],
         // placement: this.placement,
         placement: 'bottom',
         strategy: 'fixed',
       })
     } else {
-      
-    
-      
       this.popperInstance = createPopper(this.activator, this.component, {
         modifiers: [
           {
@@ -156,13 +152,14 @@ class Tooltip {
           {
             name: 'preventOverflow',
             options: {
-              altAxis: true, 
-              mainAxis: true, 
-              
-              
+              altAxis: true,
+              mainAxis: true,
             },
           },
-          {name: 'flip',options: {fallbackPlacements: ['top', 'right',"bottom","left"],},},
+          {
+            name: 'flip',
+            options: { fallbackPlacements: ['top', 'right', 'bottom', 'left'] },
+          },
         ],
         placement: this.placement,
       })
@@ -173,7 +170,6 @@ class Tooltip {
    * @param {object} event  evento javascript
    */
   _show(event) {
-    
     this.component.style.display = 'unset'
     this.component.setAttribute('data-show', '')
     this.component.style.zIndex = 9999
@@ -181,7 +177,6 @@ class Tooltip {
     // Importante pois "display: none" conflitua com a instancia do componente e precisa ser setado aqui já que pelo css ativa o efeito fade no primeiro carregamento
     this.component.style.visibility = 'visible'
     if (this.timer) {
-      console.log("timer",this.timer)
       clearTimeout(this.closeTimer)
       this.closeTimer = setTimeout(
         this._hide,
@@ -191,8 +186,6 @@ class Tooltip {
       )
     }
   }
-
-  
 
   /**
    * Esconde o componente
@@ -240,9 +233,6 @@ class Tooltip {
     }
     this.activator.toggleAttribute('active')
   }
-  
-  
 }
 
 export default Tooltip
-

@@ -57,10 +57,12 @@ class BRStep {
      */
     this.setActiveStep = function (num) {
       this.removeAttributes(this.DOMstrings.stepsBtns, 'active')
+      this.removeAttributes(this.DOMstrings.stepsBtns, 'aria-current')
       this.DOMstrings.stepsBtns.forEach((elem, index) => {
         if (index === num) {
           elem.removeAttribute('disabled')
           elem.setAttribute('active', '')
+          elem.setAttribute('aria-current', 'step')
         }
       })
       this.activeStepNum = num

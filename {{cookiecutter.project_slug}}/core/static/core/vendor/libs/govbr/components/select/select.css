@@ -5,6 +5,16 @@
   min-width: 100px;
   position: relative;
 }
+.br-select .br-input input {
+  padding-right: 29px;
+  text-overflow: ellipsis;
+}
+.br-select .br-input input::after {
+  bottom: 0;
+  padding: 0 5px;
+  position: absolute;
+  right: 0;
+}
 .br-select .br-list {
   background: var(--bg-color);
   box-shadow: var(--select-shadow);
@@ -43,14 +53,14 @@
 .br-select .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   --item-padding-y: var(--spacing-scale-2x);
 }
 .br-select .br-item .content {
@@ -100,14 +110,14 @@
 .br-select .br-item.selected, .br-select .br-item[selected] {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-select .br-item.selected:focus, .br-select .br-item[selected]:focus {
   outline: none;

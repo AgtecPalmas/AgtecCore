@@ -10,14 +10,14 @@
   --input-highlight: 56px;
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   color: var(--color);
   position: relative;
 }
@@ -73,14 +73,14 @@
   --button-size: var(--button-small);
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   border-radius: 50%;
   float: right;
   margin-right: var(--input-button-margin);

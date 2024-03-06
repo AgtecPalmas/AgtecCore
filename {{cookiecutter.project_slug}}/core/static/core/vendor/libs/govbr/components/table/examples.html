@@ -21,27 +21,27 @@
           <div class="top-bar">
             <div class="table-title">Título da Tabela</div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-9483" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-2684" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target01-9483" hidden="hidden">
-                <button class="br-item" type="button" data-density="small">Densidade alta
+              <div class="br-list" id="target01-2684" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="medium">Densidade média
+                <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="large">Densidade baixa
+                <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                 </button>
               </div>
             </div>
             <div class="search-trigger">
-              <button class="br-button circle" type="button" data-toggle="search" aria-label="Abrir busca"><i class="fas fa-search" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-input-search" data-toggle="search" aria-label="Abrir busca" aria-controls="table-searchbox-2684"><i class="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
           </div>
           <div class="search-bar">
             <div class="br-input">
-              <label for="table-searchbox-9483">Buscar</label>
-              <input id="table-searchbox-9483" type="text" placeholder="Buscar na tabela"/>
-              <button class="br-button circle" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+              <label for="table-searchbox-2684">Buscar na tabela</label>
+              <input id="table-searchbox-2684" type="search" placeholder="Buscar na tabela" aria-labelledby="button-input-search" aria-label="Buscar na tabela"/>
+              <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
             <button class="br-button circle" type="button" data-dismiss="search" aria-label="Fechar busca"><i class="fas fa-times" aria-hidden="true"></i>
@@ -50,12 +50,12 @@
           <div class="selected-bar">
             <div class="info"><span class="count">0</span><span class="text">item selecionado</span></div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle inverted" type="button" data-toggle="dropdown" data-target="target02-9483" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle inverted" type="button" id="button-dropdown-selection" data-toggle="dropdown" data-target="target02-2684" aria-controls="target02-2684" aria-label="Ver mais opções de ação" aria-haspopup="true"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target02-9483" hidden="hidden">
-                <button class="br-item" type="button" data-toggle="">Ação 1
+              <div class="br-list" id="target02-2684" role="menu" aria-labelledby="button-dropdown-selection" hidden="hidden">
+                <button class="br-item" type="button" data-toggle="" role="menuitem">Ação 1
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button">Ação 2
+                <button class="br-item" type="button" role="menuitem">Ação 2
                 </button>
               </div>
             </div>
@@ -65,11 +65,11 @@
           <caption>Título da Tabela</caption>
           <thead>
             <tr>
-              <th class="column-collapse" scope="col"></th>
+              <td class="column-collapse" scope="col" aria-hidden="true"></td>
               <th class="column-checkbox" scope="col">
                 <div class="br-checkbox hidden-label">
-                  <input id="check-all-9483" name="check-all-9483" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-9483"/>
-                  <label for="check-all-9483">Selecionar todas as linhas</label>
+                  <input id="check-all-2684" name="check-all-2684" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-2684"/>
+                  <label for="check-all-2684">Selecionar todas as linhas</label>
                 </div>
               </th>
               <th scope="col">Título coluna 1</th>
@@ -80,13 +80,13 @@
           <tbody>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-9483"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-1-2684" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-2684" aria-describedby="collapse-1-4-2684"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-1-9483" name="check-line-1-9483" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-9483"/>
-                  <label for="check-line-1-9483">Selecionar linha 1</label>
+                  <input id="check-line-1-2684" name="check-line-1-2684" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-2684"/>
+                  <label for="check-line-1-2684">Selecionar linha 1</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 1 coluna 1</td>
@@ -94,17 +94,17 @@
               <td data-th="Título coluna 3">Linha 1 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-1-4-9483" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-1-4-2684" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-9483"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-2-2684" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-2684" aria-describedby="collapse-2-4-2684"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-2-9483" name="check-line-2-9483" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-9483"/>
-                  <label for="check-line-2-9483">Selecionar linha 2</label>
+                  <input id="check-line-2-2684" name="check-line-2-2684" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-2684"/>
+                  <label for="check-line-2-2684">Selecionar linha 2</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 2 coluna 1</td>
@@ -112,17 +112,17 @@
               <td data-th="Título coluna 3">Linha 2 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-2-4-9483" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-2-4-2684" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-9483"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-3-2684" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-2684" aria-describedby="collapse-3-4-2684"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-3-9483" name="check-line-3-9483" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-9483"/>
-                  <label for="check-line-3-9483">Selecionar linha 3</label>
+                  <input id="check-line-3-2684" name="check-line-3-2684" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-2684"/>
+                  <label for="check-line-3-2684">Selecionar linha 3</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 3 coluna 1</td>
@@ -130,37 +130,37 @@
               <td data-th="Título coluna 3">Linha 3 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-3-4-9483" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-3-4-2684" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
           </tbody>
         </table>
         <div class="table-footer">
-          <nav class="br-pagination" aria-label="Paginação de resultados" data-total="50" data-current="1" data-per-page="20">
+          <nav class="br-pagination" aria-label="paginação" data-total="50" data-current="1" data-per-page="20">
             <div class="pagination-per-page">
               <div class="br-select">
                 <div class="br-input">
-                  <label for="per-page-selection-random-60931">Exibir</label>
-                  <input id="per-page-selection-random-60931" type="text" placeholder=" "/>
+                  <label for="per-page-selection-random-19046">Exibir</label>
+                  <input id="per-page-selection-random-19046" type="text" placeholder=" "/>
                   <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="br-list" tabindex="0">
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-10-random-60931" type="radio" name="per-page-random-60931" value="per-page-10-random-60931" checked="checked"/>
-                      <label for="per-page-10-random-60931">10</label>
+                      <input id="per-page-10-random-19046" type="radio" name="per-page-random-19046" value="per-page-10-random-19046" checked="checked"/>
+                      <label for="per-page-10-random-19046">10</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-20-random-60931" type="radio" name="per-page-random-60931" value="per-page-20-random-60931"/>
-                      <label for="per-page-20-random-60931">20</label>
+                      <input id="per-page-20-random-19046" type="radio" name="per-page-random-19046" value="per-page-20-random-19046"/>
+                      <label for="per-page-20-random-19046">20</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-30-random-60931" type="radio" name="per-page-random-60931" value="per-page-30-random-60931"/>
-                      <label for="per-page-30-random-60931">30</label>
+                      <input id="per-page-30-random-19046" type="radio" name="per-page-random-19046" value="per-page-30-random-19046"/>
+                      <label for="per-page-30-random-19046">30</label>
                     </div>
                   </div>
                 </div>
@@ -170,28 +170,28 @@
             <div class="pagination-go-to-page d-none d-sm-flex ml-auto">
               <div class="br-select">
                 <div class="br-input">
-                  <label for="go-to-selection-random-31634">Página</label>
-                  <input id="go-to-selection-random-31634" type="text" placeholder=" "/>
+                  <label for="go-to-selection-random-16791">Página</label>
+                  <input id="go-to-selection-random-16791" type="text" placeholder=" "/>
                   <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="br-list" tabindex="0">
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-1-random-31634" type="radio" name="go-to-random-31634" value="go-to-1-random-31634" checked="checked"/>
-                      <label for="go-to-1-random-31634">1</label>
+                      <input id="go-to-1-random-16791" type="radio" name="go-to-random-16791" value="go-to-1-random-16791" checked="checked"/>
+                      <label for="go-to-1-random-16791">1</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-2-random-31634" type="radio" name="go-to-random-31634" value="go-to-2-random-31634"/>
-                      <label for="go-to-2-random-31634">2</label>
+                      <input id="go-to-2-random-16791" type="radio" name="go-to-random-16791" value="go-to-2-random-16791"/>
+                      <label for="go-to-2-random-16791">2</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-3-random-31634" type="radio" name="go-to-random-31634" value="go-to-3-random-31634"/>
-                      <label for="go-to-3-random-31634">3</label>
+                      <input id="go-to-3-random-16791" type="radio" name="go-to-random-16791" value="go-to-3-random-16791"/>
+                      <label for="go-to-3-random-16791">3</label>
                     </div>
                   </div>
                 </div>
@@ -200,7 +200,7 @@
             <div class="pagination-arrows ml-auto ml-sm-0">
               <button class="br-button circle" type="button" aria-label="Voltar página"><i class="fas fa-angle-left" aria-hidden="true"></i>
               </button>
-              <button class="br-button circle" type="button" aria-label="Avançar página"><i class="fas fa-angle-right" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" aria-label="Página seguinte"><i class="fas fa-angle-right" aria-hidden="true"></i>
               </button>
             </div>
           </nav>
@@ -212,20 +212,20 @@
           <div class="top-bar">
             <div class="table-title">Tabela irregular 1</div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-12615" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-90663" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target01-12615" hidden="hidden">
-                <button class="br-item" type="button" data-density="small">Densidade alta
+              <div class="br-list" id="target01-90663" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="medium">Densidade média
+                <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="large">Densidade baixa
+                <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <table>
+        <table><colgroup span="3"></colgroup>
           <thead>
             <tr>
               <th class="border-bottom" scope="col">Poster name</th>
@@ -277,20 +277,22 @@
           <div class="top-bar">
             <div class="table-title">Tabela irregular 2</div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-52739" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-21095" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target01-52739" hidden="hidden">
-                <button class="br-item" type="button" data-density="small">Densidade alta
+              <div class="br-list" id="target01-21095" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="medium">Densidade média
+                <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="large">Densidade baixa
+                <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <table>
+        <table><col>
+<colgroup span="2"></colgroup>
+<colgroup span="3"></colgroup>
           <thead>
             <tr>
               <th class="border-right" rowspan="2" scope="rowgroup">Name</th>
@@ -340,27 +342,27 @@
           <div class="top-bar">
             <div class="table-title">Título da Tabela</div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-63059" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-80083" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target01-63059" hidden="hidden">
-                <button class="br-item" type="button" data-density="small">Densidade alta
+              <div class="br-list" id="target01-80083" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="medium">Densidade média
+                <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button" data-density="large">Densidade baixa
+                <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                 </button>
               </div>
             </div>
             <div class="search-trigger">
-              <button class="br-button circle" type="button" data-toggle="search" aria-label="Abrir busca"><i class="fas fa-search" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" id="button-input-search" data-toggle="search" aria-label="Abrir busca" aria-controls="table-searchbox-80083"><i class="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
           </div>
           <div class="search-bar">
             <div class="br-input">
-              <label for="table-searchbox-63059">Buscar</label>
-              <input id="table-searchbox-63059" type="text" placeholder="Buscar na tabela"/>
-              <button class="br-button circle" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+              <label for="table-searchbox-80083">Buscar na tabela</label>
+              <input id="table-searchbox-80083" type="search" placeholder="Buscar na tabela" aria-labelledby="button-input-search" aria-label="Buscar na tabela"/>
+              <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
             <button class="br-button circle" type="button" data-dismiss="search" aria-label="Fechar busca"><i class="fas fa-times" aria-hidden="true"></i>
@@ -369,12 +371,12 @@
           <div class="selected-bar">
             <div class="info"><span class="count">0</span><span class="text">item selecionado</span></div>
             <div class="actions-trigger text-nowrap">
-              <button class="br-button circle inverted" type="button" data-toggle="dropdown" data-target="target02-63059" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+              <button class="br-button circle inverted" type="button" id="button-dropdown-selection" data-toggle="dropdown" data-target="target02-80083" aria-controls="target02-80083" aria-label="Ver mais opções de ação" aria-haspopup="true"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
               </button>
-              <div class="br-list" id="target02-63059" hidden="hidden">
-                <button class="br-item" type="button" data-toggle="">Ação 1
+              <div class="br-list" id="target02-80083" role="menu" aria-labelledby="button-dropdown-selection" hidden="hidden">
+                <button class="br-item" type="button" data-toggle="" role="menuitem">Ação 1
                 </button><span class="br-divider"></span>
-                <button class="br-item" type="button">Ação 2
+                <button class="br-item" type="button" role="menuitem">Ação 2
                 </button>
               </div>
             </div>
@@ -384,11 +386,11 @@
           <caption>Título da Tabela</caption>
           <thead>
             <tr>
-              <th class="column-collapse" scope="col"></th>
+              <td class="column-collapse" scope="col" aria-hidden="true"></td>
               <th class="column-checkbox" scope="col">
                 <div class="br-checkbox hidden-label">
-                  <input id="check-all-63059" name="check-all-63059" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-63059"/>
-                  <label for="check-all-63059">Selecionar todas as linhas</label>
+                  <input id="check-all-80083" name="check-all-80083" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-80083"/>
+                  <label for="check-all-80083">Selecionar todas as linhas</label>
                 </div>
               </th>
               <th scope="col">Título coluna 1</th>
@@ -399,13 +401,13 @@
           <tbody>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-63059"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-1-80083" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-80083" aria-describedby="collapse-1-4-80083"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-1-63059" name="check-line-1-63059" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-63059"/>
-                  <label for="check-line-1-63059">Selecionar linha 1</label>
+                  <input id="check-line-1-80083" name="check-line-1-80083" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-80083"/>
+                  <label for="check-line-1-80083">Selecionar linha 1</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 1 coluna 1</td>
@@ -413,17 +415,17 @@
               <td data-th="Título coluna 3">Linha 1 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-1-4-63059" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-1-4-80083" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-63059"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-2-80083" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-80083" aria-describedby="collapse-2-4-80083"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-2-63059" name="check-line-2-63059" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-63059"/>
-                  <label for="check-line-2-63059">Selecionar linha 2</label>
+                  <input id="check-line-2-80083" name="check-line-2-80083" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-80083"/>
+                  <label for="check-line-2-80083">Selecionar linha 2</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 2 coluna 1</td>
@@ -431,17 +433,17 @@
               <td data-th="Título coluna 3">Linha 2 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-2-4-63059" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-2-4-80083" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
             <tr>
               <td>
-                <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-63059"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                <button class="br-button circle small" type="button" id="button-line-3-80083" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-80083" aria-describedby="collapse-3-4-80083"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </button>
               </td>
               <td>
                 <div class="br-checkbox hidden-label">
-                  <input id="check-line-3-63059" name="check-line-3-63059" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-63059"/>
-                  <label for="check-line-3-63059">Selecionar linha 3</label>
+                  <input id="check-line-3-80083" name="check-line-3-80083" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-80083"/>
+                  <label for="check-line-3-80083">Selecionar linha 3</label>
                 </div>
               </td>
               <td data-th="Título coluna 1">Linha 3 coluna 1</td>
@@ -449,37 +451,37 @@
               <td data-th="Título coluna 3">Linha 3 coluna 3</td>
             </tr>
             <tr class="collapse">
-              <td id="collapse-3-4-63059" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+              <td id="collapse-3-4-80083" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
             </tr>
           </tbody>
         </table>
         <div class="table-footer">
-          <nav class="br-pagination" aria-label="Paginação de resultados" data-total="50" data-current="1" data-per-page="20">
+          <nav class="br-pagination" aria-label="paginação" data-total="50" data-current="1" data-per-page="20">
             <div class="pagination-per-page">
               <div class="br-select">
                 <div class="br-input">
-                  <label for="per-page-selection-random-94382">Exibir</label>
-                  <input id="per-page-selection-random-94382" type="text" placeholder=" "/>
+                  <label for="per-page-selection-random-79257">Exibir</label>
+                  <input id="per-page-selection-random-79257" type="text" placeholder=" "/>
                   <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="br-list" tabindex="0">
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-10-random-94382" type="radio" name="per-page-random-94382" value="per-page-10-random-94382" checked="checked"/>
-                      <label for="per-page-10-random-94382">10</label>
+                      <input id="per-page-10-random-79257" type="radio" name="per-page-random-79257" value="per-page-10-random-79257" checked="checked"/>
+                      <label for="per-page-10-random-79257">10</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-20-random-94382" type="radio" name="per-page-random-94382" value="per-page-20-random-94382"/>
-                      <label for="per-page-20-random-94382">20</label>
+                      <input id="per-page-20-random-79257" type="radio" name="per-page-random-79257" value="per-page-20-random-79257"/>
+                      <label for="per-page-20-random-79257">20</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="per-page-30-random-94382" type="radio" name="per-page-random-94382" value="per-page-30-random-94382"/>
-                      <label for="per-page-30-random-94382">30</label>
+                      <input id="per-page-30-random-79257" type="radio" name="per-page-random-79257" value="per-page-30-random-79257"/>
+                      <label for="per-page-30-random-79257">30</label>
                     </div>
                   </div>
                 </div>
@@ -489,28 +491,28 @@
             <div class="pagination-go-to-page d-none d-sm-flex ml-auto">
               <div class="br-select">
                 <div class="br-input">
-                  <label for="go-to-selection-random-54871">Página</label>
-                  <input id="go-to-selection-random-54871" type="text" placeholder=" "/>
+                  <label for="go-to-selection-random-48406">Página</label>
+                  <input id="go-to-selection-random-48406" type="text" placeholder=" "/>
                   <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                   </button>
                 </div>
                 <div class="br-list" tabindex="0">
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-1-random-54871" type="radio" name="go-to-random-54871" value="go-to-1-random-54871" checked="checked"/>
-                      <label for="go-to-1-random-54871">1</label>
+                      <input id="go-to-1-random-48406" type="radio" name="go-to-random-48406" value="go-to-1-random-48406" checked="checked"/>
+                      <label for="go-to-1-random-48406">1</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-2-random-54871" type="radio" name="go-to-random-54871" value="go-to-2-random-54871"/>
-                      <label for="go-to-2-random-54871">2</label>
+                      <input id="go-to-2-random-48406" type="radio" name="go-to-random-48406" value="go-to-2-random-48406"/>
+                      <label for="go-to-2-random-48406">2</label>
                     </div>
                   </div>
                   <div class="br-item" tabindex="-1">
                     <div class="br-radio">
-                      <input id="go-to-3-random-54871" type="radio" name="go-to-random-54871" value="go-to-3-random-54871"/>
-                      <label for="go-to-3-random-54871">3</label>
+                      <input id="go-to-3-random-48406" type="radio" name="go-to-random-48406" value="go-to-3-random-48406"/>
+                      <label for="go-to-3-random-48406">3</label>
                     </div>
                   </div>
                 </div>
@@ -519,7 +521,7 @@
             <div class="pagination-arrows ml-auto ml-sm-0">
               <button class="br-button circle" type="button" aria-label="Voltar página"><i class="fas fa-angle-left" aria-hidden="true"></i>
               </button>
-              <button class="br-button circle" type="button" aria-label="Avançar página"><i class="fas fa-angle-right" aria-hidden="true"></i>
+              <button class="br-button circle" type="button" aria-label="Página seguinte"><i class="fas fa-angle-right" aria-hidden="true"></i>
               </button>
             </div>
           </nav>
@@ -531,27 +533,27 @@
             <div class="top-bar">
               <div class="table-title">Título da Tabela</div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-98693" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-15243" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target01-98693" hidden="hidden">
-                  <button class="br-item" type="button" data-density="small">Densidade alta
+                <div class="br-list" id="target01-15243" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                  <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="medium">Densidade média
+                  <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="large">Densidade baixa
+                  <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                   </button>
                 </div>
               </div>
               <div class="search-trigger">
-                <button class="br-button circle" type="button" data-toggle="search" aria-label="Abrir busca"><i class="fas fa-search" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-input-search" data-toggle="search" aria-label="Abrir busca" aria-controls="table-searchbox-15243"><i class="fas fa-search" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
             <div class="search-bar">
               <div class="br-input">
-                <label for="table-searchbox-98693">Buscar</label>
-                <input id="table-searchbox-98693" type="text" placeholder="Buscar na tabela"/>
-                <button class="br-button circle" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+                <label for="table-searchbox-15243">Buscar na tabela</label>
+                <input id="table-searchbox-15243" type="search" placeholder="Buscar na tabela" aria-labelledby="button-input-search" aria-label="Buscar na tabela"/>
+                <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
                 </button>
               </div>
               <button class="br-button circle" type="button" data-dismiss="search" aria-label="Fechar busca"><i class="fas fa-times" aria-hidden="true"></i>
@@ -560,12 +562,12 @@
             <div class="selected-bar">
               <div class="info"><span class="count">0</span><span class="text">item selecionado</span></div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle inverted" type="button" data-toggle="dropdown" data-target="target02-98693" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle inverted" type="button" id="button-dropdown-selection" data-toggle="dropdown" data-target="target02-15243" aria-controls="target02-15243" aria-label="Ver mais opções de ação" aria-haspopup="true"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target02-98693" hidden="hidden">
-                  <button class="br-item" type="button" data-toggle="">Ação 1
+                <div class="br-list" id="target02-15243" role="menu" aria-labelledby="button-dropdown-selection" hidden="hidden">
+                  <button class="br-item" type="button" data-toggle="" role="menuitem">Ação 1
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button">Ação 2
+                  <button class="br-item" type="button" role="menuitem">Ação 2
                   </button>
                 </div>
               </div>
@@ -575,11 +577,11 @@
             <caption>Título da Tabela</caption>
             <thead>
               <tr>
-                <th class="column-collapse" scope="col"></th>
+                <td class="column-collapse" scope="col" aria-hidden="true"></td>
                 <th class="column-checkbox" scope="col">
                   <div class="br-checkbox hidden-label">
-                    <input id="check-all-98693" name="check-all-98693" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-98693"/>
-                    <label for="check-all-98693">Selecionar todas as linhas</label>
+                    <input id="check-all-15243" name="check-all-15243" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-15243"/>
+                    <label for="check-all-15243">Selecionar todas as linhas</label>
                   </div>
                 </th>
                 <th scope="col">Título coluna 1</th>
@@ -590,13 +592,13 @@
             <tbody>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-98693"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-1-15243" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-15243" aria-describedby="collapse-1-4-15243"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-1-98693" name="check-line-1-98693" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-98693"/>
-                    <label for="check-line-1-98693">Selecionar linha 1</label>
+                    <input id="check-line-1-15243" name="check-line-1-15243" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-15243"/>
+                    <label for="check-line-1-15243">Selecionar linha 1</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 1 coluna 1</td>
@@ -604,17 +606,17 @@
                 <td data-th="Título coluna 3">Linha 1 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-1-4-98693" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-1-4-15243" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-98693"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-2-15243" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-15243" aria-describedby="collapse-2-4-15243"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-2-98693" name="check-line-2-98693" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-98693"/>
-                    <label for="check-line-2-98693">Selecionar linha 2</label>
+                    <input id="check-line-2-15243" name="check-line-2-15243" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-15243"/>
+                    <label for="check-line-2-15243">Selecionar linha 2</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 2 coluna 1</td>
@@ -622,17 +624,17 @@
                 <td data-th="Título coluna 3">Linha 2 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-2-4-98693" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-2-4-15243" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-98693"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-3-15243" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-15243" aria-describedby="collapse-3-4-15243"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-3-98693" name="check-line-3-98693" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-98693"/>
-                    <label for="check-line-3-98693">Selecionar linha 3</label>
+                    <input id="check-line-3-15243" name="check-line-3-15243" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-15243"/>
+                    <label for="check-line-3-15243">Selecionar linha 3</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 3 coluna 1</td>
@@ -640,37 +642,37 @@
                 <td data-th="Título coluna 3">Linha 3 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-3-4-98693" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-3-4-15243" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
             </tbody>
           </table>
           <div class="table-footer">
-            <nav class="br-pagination" aria-label="Paginação de resultados" data-total="50" data-current="1" data-per-page="20">
+            <nav class="br-pagination" aria-label="paginação" data-total="50" data-current="1" data-per-page="20">
               <div class="pagination-per-page">
                 <div class="br-select">
                   <div class="br-input">
-                    <label for="per-page-selection-random-22626">Exibir</label>
-                    <input id="per-page-selection-random-22626" type="text" placeholder=" "/>
+                    <label for="per-page-selection-random-65628">Exibir</label>
+                    <input id="per-page-selection-random-65628" type="text" placeholder=" "/>
                     <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="br-list" tabindex="0">
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-10-random-22626" type="radio" name="per-page-random-22626" value="per-page-10-random-22626" checked="checked"/>
-                        <label for="per-page-10-random-22626">10</label>
+                        <input id="per-page-10-random-65628" type="radio" name="per-page-random-65628" value="per-page-10-random-65628" checked="checked"/>
+                        <label for="per-page-10-random-65628">10</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-20-random-22626" type="radio" name="per-page-random-22626" value="per-page-20-random-22626"/>
-                        <label for="per-page-20-random-22626">20</label>
+                        <input id="per-page-20-random-65628" type="radio" name="per-page-random-65628" value="per-page-20-random-65628"/>
+                        <label for="per-page-20-random-65628">20</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-30-random-22626" type="radio" name="per-page-random-22626" value="per-page-30-random-22626"/>
-                        <label for="per-page-30-random-22626">30</label>
+                        <input id="per-page-30-random-65628" type="radio" name="per-page-random-65628" value="per-page-30-random-65628"/>
+                        <label for="per-page-30-random-65628">30</label>
                       </div>
                     </div>
                   </div>
@@ -680,28 +682,28 @@
               <div class="pagination-go-to-page d-none d-sm-flex ml-auto">
                 <div class="br-select">
                   <div class="br-input">
-                    <label for="go-to-selection-random-83710">Página</label>
-                    <input id="go-to-selection-random-83710" type="text" placeholder=" "/>
+                    <label for="go-to-selection-random-12795">Página</label>
+                    <input id="go-to-selection-random-12795" type="text" placeholder=" "/>
                     <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="br-list" tabindex="0">
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-1-random-83710" type="radio" name="go-to-random-83710" value="go-to-1-random-83710" checked="checked"/>
-                        <label for="go-to-1-random-83710">1</label>
+                        <input id="go-to-1-random-12795" type="radio" name="go-to-random-12795" value="go-to-1-random-12795" checked="checked"/>
+                        <label for="go-to-1-random-12795">1</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-2-random-83710" type="radio" name="go-to-random-83710" value="go-to-2-random-83710"/>
-                        <label for="go-to-2-random-83710">2</label>
+                        <input id="go-to-2-random-12795" type="radio" name="go-to-random-12795" value="go-to-2-random-12795"/>
+                        <label for="go-to-2-random-12795">2</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-3-random-83710" type="radio" name="go-to-random-83710" value="go-to-3-random-83710"/>
-                        <label for="go-to-3-random-83710">3</label>
+                        <input id="go-to-3-random-12795" type="radio" name="go-to-random-12795" value="go-to-3-random-12795"/>
+                        <label for="go-to-3-random-12795">3</label>
                       </div>
                     </div>
                   </div>
@@ -710,7 +712,7 @@
               <div class="pagination-arrows ml-auto ml-sm-0">
                 <button class="br-button circle" type="button" aria-label="Voltar página"><i class="fas fa-angle-left" aria-hidden="true"></i>
                 </button>
-                <button class="br-button circle" type="button" aria-label="Avançar página"><i class="fas fa-angle-right" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" aria-label="Página seguinte"><i class="fas fa-angle-right" aria-hidden="true"></i>
                 </button>
               </div>
             </nav>
@@ -724,27 +726,27 @@
             <div class="top-bar">
               <div class="table-title">Título da Tabela</div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-29653" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-82705" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target01-29653" hidden="hidden">
-                  <button class="br-item" type="button" data-density="small">Densidade alta
+                <div class="br-list" id="target01-82705" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                  <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="medium">Densidade média
+                  <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="large">Densidade baixa
+                  <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                   </button>
                 </div>
               </div>
               <div class="search-trigger">
-                <button class="br-button circle" type="button" data-toggle="search" aria-label="Abrir busca"><i class="fas fa-search" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-input-search" data-toggle="search" aria-label="Abrir busca" aria-controls="table-searchbox-82705"><i class="fas fa-search" aria-hidden="true"></i>
                 </button>
               </div>
             </div>
             <div class="search-bar">
               <div class="br-input">
-                <label for="table-searchbox-29653">Buscar</label>
-                <input id="table-searchbox-29653" type="text" placeholder="Buscar na tabela"/>
-                <button class="br-button circle" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
+                <label for="table-searchbox-82705">Buscar na tabela</label>
+                <input id="table-searchbox-82705" type="search" placeholder="Buscar na tabela" aria-labelledby="button-input-search" aria-label="Buscar na tabela"/>
+                <button class="br-button" type="button" aria-label="Buscar"><i class="fas fa-search" aria-hidden="true"></i>
                 </button>
               </div>
               <button class="br-button circle" type="button" data-dismiss="search" aria-label="Fechar busca"><i class="fas fa-times" aria-hidden="true"></i>
@@ -753,12 +755,12 @@
             <div class="selected-bar">
               <div class="info"><span class="count">0</span><span class="text">item selecionado</span></div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle inverted" type="button" data-toggle="dropdown" data-target="target02-29653" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle inverted" type="button" id="button-dropdown-selection" data-toggle="dropdown" data-target="target02-82705" aria-controls="target02-82705" aria-label="Ver mais opções de ação" aria-haspopup="true"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target02-29653" hidden="hidden">
-                  <button class="br-item" type="button" data-toggle="">Ação 1
+                <div class="br-list" id="target02-82705" role="menu" aria-labelledby="button-dropdown-selection" hidden="hidden">
+                  <button class="br-item" type="button" data-toggle="" role="menuitem">Ação 1
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button">Ação 2
+                  <button class="br-item" type="button" role="menuitem">Ação 2
                   </button>
                 </div>
               </div>
@@ -768,11 +770,11 @@
             <caption>Título da Tabela</caption>
             <thead>
               <tr>
-                <th class="column-collapse" scope="col"></th>
+                <td class="column-collapse" scope="col" aria-hidden="true"></td>
                 <th class="column-checkbox" scope="col">
                   <div class="br-checkbox hidden-label">
-                    <input id="check-all-29653" name="check-all-29653" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-29653"/>
-                    <label for="check-all-29653">Selecionar todas as linhas</label>
+                    <input id="check-all-82705" name="check-all-82705" type="checkbox" aria-label="Selecionar tudo" data-parent="check-01-82705"/>
+                    <label for="check-all-82705">Selecionar todas as linhas</label>
                   </div>
                 </th>
                 <th scope="col">Título coluna 1</th>
@@ -783,13 +785,13 @@
             <tbody>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-29653"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-1-82705" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-1-4-82705" aria-describedby="collapse-1-4-82705"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-1-29653" name="check-line-1-29653" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-29653"/>
-                    <label for="check-line-1-29653">Selecionar linha 1</label>
+                    <input id="check-line-1-82705" name="check-line-1-82705" type="checkbox" aria-label="Selecionar linha 1" data-child="check-01-82705"/>
+                    <label for="check-line-1-82705">Selecionar linha 1</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 1 coluna 1</td>
@@ -797,17 +799,17 @@
                 <td data-th="Título coluna 3">Linha 1 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-1-4-29653" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-1-4-82705" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-29653"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-2-82705" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-2-4-82705" aria-describedby="collapse-2-4-82705"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-2-29653" name="check-line-2-29653" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-29653"/>
-                    <label for="check-line-2-29653">Selecionar linha 2</label>
+                    <input id="check-line-2-82705" name="check-line-2-82705" type="checkbox" aria-label="Selecionar linha 2" data-child="check-01-82705"/>
+                    <label for="check-line-2-82705">Selecionar linha 2</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 2 coluna 1</td>
@@ -815,17 +817,17 @@
                 <td data-th="Título coluna 3">Linha 2 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-2-4-29653" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-2-4-82705" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
               <tr>
                 <td>
-                  <button class="br-button circle small" type="button" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-29653"><i class="fas fa-chevron-down" aria-hidden="true"></i>
+                  <button class="br-button circle small" type="button" id="button-line-3-82705" aria-label="Expandir/Retrair Rótulo 01" data-toggle="collapse" data-target="collapse-3-4-82705" aria-describedby="collapse-3-4-82705"><i class="fas fa-chevron-down" aria-hidden="true"></i>
                   </button>
                 </td>
                 <td>
                   <div class="br-checkbox hidden-label">
-                    <input id="check-line-3-29653" name="check-line-3-29653" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-29653"/>
-                    <label for="check-line-3-29653">Selecionar linha 3</label>
+                    <input id="check-line-3-82705" name="check-line-3-82705" type="checkbox" aria-label="Selecionar linha 3" data-child="check-01-82705"/>
+                    <label for="check-line-3-82705">Selecionar linha 3</label>
                   </div>
                 </td>
                 <td data-th="Título coluna 1">Linha 3 coluna 1</td>
@@ -833,37 +835,37 @@
                 <td data-th="Título coluna 3">Linha 3 coluna 3</td>
               </tr>
               <tr class="collapse">
-                <td id="collapse-3-4-29653" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
+                <td id="collapse-3-4-82705" aria-hidden="true" hidden="hidden" colspan="6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies aliquet lacinia. Vestibulum in interdum eros. Donec vel tempus diam. Aenean pulvinar mattis nisi in laoreet. Integer felis mi, vehicula sed pretium sit amet, pellentesque vel nisl. Curabitur metus ante, pellentesque in lectus a, sagittis imperdiet mi.</td>
               </tr>
             </tbody>
           </table>
           <div class="table-footer">
-            <nav class="br-pagination" aria-label="Paginação de resultados" data-total="50" data-current="1" data-per-page="20">
+            <nav class="br-pagination" aria-label="paginação" data-total="50" data-current="1" data-per-page="20">
               <div class="pagination-per-page">
                 <div class="br-select">
                   <div class="br-input">
-                    <label for="per-page-selection-random-71883">Exibir</label>
-                    <input id="per-page-selection-random-71883" type="text" placeholder=" "/>
+                    <label for="per-page-selection-random-67296">Exibir</label>
+                    <input id="per-page-selection-random-67296" type="text" placeholder=" "/>
                     <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="br-list" tabindex="0">
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-10-random-71883" type="radio" name="per-page-random-71883" value="per-page-10-random-71883" checked="checked"/>
-                        <label for="per-page-10-random-71883">10</label>
+                        <input id="per-page-10-random-67296" type="radio" name="per-page-random-67296" value="per-page-10-random-67296" checked="checked"/>
+                        <label for="per-page-10-random-67296">10</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-20-random-71883" type="radio" name="per-page-random-71883" value="per-page-20-random-71883"/>
-                        <label for="per-page-20-random-71883">20</label>
+                        <input id="per-page-20-random-67296" type="radio" name="per-page-random-67296" value="per-page-20-random-67296"/>
+                        <label for="per-page-20-random-67296">20</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="per-page-30-random-71883" type="radio" name="per-page-random-71883" value="per-page-30-random-71883"/>
-                        <label for="per-page-30-random-71883">30</label>
+                        <input id="per-page-30-random-67296" type="radio" name="per-page-random-67296" value="per-page-30-random-67296"/>
+                        <label for="per-page-30-random-67296">30</label>
                       </div>
                     </div>
                   </div>
@@ -873,28 +875,28 @@
               <div class="pagination-go-to-page d-none d-sm-flex ml-auto">
                 <div class="br-select">
                   <div class="br-input">
-                    <label for="go-to-selection-random-22576">Página</label>
-                    <input id="go-to-selection-random-22576" type="text" placeholder=" "/>
+                    <label for="go-to-selection-random-80196">Página</label>
+                    <input id="go-to-selection-random-80196" type="text" placeholder=" "/>
                     <button class="br-button" type="button" aria-label="Exibir lista" tabindex="-1" data-trigger="data-trigger"><i class="fas fa-angle-down" aria-hidden="true"></i>
                     </button>
                   </div>
                   <div class="br-list" tabindex="0">
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-1-random-22576" type="radio" name="go-to-random-22576" value="go-to-1-random-22576" checked="checked"/>
-                        <label for="go-to-1-random-22576">1</label>
+                        <input id="go-to-1-random-80196" type="radio" name="go-to-random-80196" value="go-to-1-random-80196" checked="checked"/>
+                        <label for="go-to-1-random-80196">1</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-2-random-22576" type="radio" name="go-to-random-22576" value="go-to-2-random-22576"/>
-                        <label for="go-to-2-random-22576">2</label>
+                        <input id="go-to-2-random-80196" type="radio" name="go-to-random-80196" value="go-to-2-random-80196"/>
+                        <label for="go-to-2-random-80196">2</label>
                       </div>
                     </div>
                     <div class="br-item" tabindex="-1">
                       <div class="br-radio">
-                        <input id="go-to-3-random-22576" type="radio" name="go-to-random-22576" value="go-to-3-random-22576"/>
-                        <label for="go-to-3-random-22576">3</label>
+                        <input id="go-to-3-random-80196" type="radio" name="go-to-random-80196" value="go-to-3-random-80196"/>
+                        <label for="go-to-3-random-80196">3</label>
                       </div>
                     </div>
                   </div>
@@ -903,7 +905,7 @@
               <div class="pagination-arrows ml-auto ml-sm-0">
                 <button class="br-button circle" type="button" aria-label="Voltar página"><i class="fas fa-angle-left" aria-hidden="true"></i>
                 </button>
-                <button class="br-button circle" type="button" aria-label="Avançar página"><i class="fas fa-angle-right" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" aria-label="Página seguinte"><i class="fas fa-angle-right" aria-hidden="true"></i>
                 </button>
               </div>
             </nav>
@@ -916,20 +918,20 @@
             <div class="top-bar">
               <div class="table-title">Tabela irregular 1</div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-25725" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-86937" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target01-25725" hidden="hidden">
-                  <button class="br-item" type="button" data-density="small">Densidade alta
+                <div class="br-list" id="target01-86937" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                  <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="medium">Densidade média
+                  <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="large">Densidade baixa
+                  <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <table>
+          <table><colgroup span="3"></colgroup>
             <thead>
               <tr>
                 <th class="border-bottom" scope="col">Poster name</th>
@@ -982,20 +984,22 @@
             <div class="top-bar">
               <div class="table-title">Tabela irregular 2</div>
               <div class="actions-trigger text-nowrap">
-                <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-71886" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+                <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-75984" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
                 </button>
-                <div class="br-list" id="target01-71886" hidden="hidden">
-                  <button class="br-item" type="button" data-density="small">Densidade alta
+                <div class="br-list" id="target01-75984" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+                  <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="medium">Densidade média
+                  <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
                   </button><span class="br-divider"></span>
-                  <button class="br-item" type="button" data-density="large">Densidade baixa
+                  <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <table>
+          <table><col>
+<colgroup span="2"></colgroup>
+<colgroup span="3"></colgroup>
             <thead>
               <tr>
                 <th class="border-right" rowspan="2" scope="rowgroup">Name</th>

@@ -239,6 +239,11 @@
 .br-wizard .wizard-panel-content:hover::-webkit-scrollbar-thumb {
   background: var(--gray-40);
 }
+.br-wizard .wizard-panel-content:focus, .br-wizard .wizard-panel-content:focus-visible, .br-wizard .wizard-panel-content.focus-visible {
+  border-color: var(--focus) !important;
+  box-shadow: 0 0 0 var(--surface-width-md) var(--focus);
+  outline: none;
+}
 .br-wizard .wizard-panel-content > :last-child {
   margin-bottom: 0;
 }
@@ -430,27 +435,26 @@
 .br-wizard.inverted, .br-wizard.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-wizard.inverted .br-button.primary, .br-wizard.inverted .br-button[primary], .br-wizard.inverted .br-button.is-primary, .br-wizard.dark-mode .br-button.primary, .br-wizard.dark-mode .br-button[primary], .br-wizard.dark-mode .br-button.is-primary {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
-  --interactive-rgb: var(--interactive-light-rgb);
+  --interactive-rgb: var(--background-dark-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
-  --interactive-rgb: var(--background-dark-rgb);
+  --focus: var(--focus-color-light);
   background-color: var(--interactive-dark);
   color: var(--background-dark);
 }

@@ -129,18 +129,12 @@
   width: var(--carousel-full-size);
 }
 .br-carousel[data-stage=out] .carousel-button, .br-carousel .carousel-button {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
 }
 .br-carousel[data-stage=out] .carousel-stage, .br-carousel .carousel-stage {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   left: 50px;
-  width: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-width)
-      );
+  width: calc(var(--carousel-full-size) - var(--carousel-button-fix-width));
 }
 .br-carousel[data-stage=hibh] .carousel-button {
   height: var(--carousel-full-size);
@@ -148,14 +142,10 @@
 .br-carousel[data-stage=hibh] .carousel-stage {
   height: var(--carousel-full-size);
   left: 50px;
-  width: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-width)
-      );
+  width: calc(var(--carousel-full-size) - var(--carousel-button-fix-width));
 }
 .br-carousel[data-stage=hibw] .carousel-button {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
 }
 .br-carousel[data-stage=hibw] .carousel-button .carousel-btn-next,
 .br-carousel[data-stage=hibw] .carousel-button .carousel-btn-prev {
@@ -165,9 +155,7 @@
   padding: 0 var(--spacing-scale-default);
 }
 .br-carousel[data-stage=hibw] .carousel-stage {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   left: 0;
   width: var(--carousel-full-size);
 }
@@ -177,9 +165,7 @@
     width: var(--carousel-full-size);
   }
   .br-carousel .carousel-button {
-    height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+    height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   }
   .br-carousel .carousel-button .carousel-btn-next,
   .br-carousel .carousel-button .carousel-btn-prev {
@@ -194,9 +180,7 @@
     display: flex;
   }
   .br-carousel .carousel-stage {
-    height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+    height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
     left: 0;
     width: var(--carousel-full-size);
   }
@@ -208,26 +192,26 @@
 .br-carousel.inverted, .br-carousel.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-carousel.inverted .br-step, .br-carousel.dark-mode .br-step {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-carousel.inverted .br-step .step-progress-btn[data-alert=success], .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=success] {
   color: var(--success-alternative);
@@ -276,6 +260,14 @@
 .br-carousel.inverted .br-step[data-type=text] .step-progress-btn::before, .br-carousel.dark-mode .br-step[data-type=text] .step-progress-btn::before {
   background-color: transparent;
   color: var(--color);
+}
+.br-carousel .carousel-page[active]:focus,
+.br-carousel .carousel-page[active]:focus-visible,
+.br-carousel .carousel-page[active]:focus-within {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
 }
 
 /*# sourceMappingURL=carousel.css.map*/

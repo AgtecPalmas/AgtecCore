@@ -164,15 +164,15 @@
   --cyan-20-rgb: 153, 222, 234;
   --cyan-10-rgb: 204, 236, 242;
   --cyan-5-rgb: 231, 246, 248;
-  --cyan-vivid-80: #093b44;
-  --cyan-vivid-70: #0e4f5c;
-  --cyan-vivid-60: #00687d;
-  --cyan-vivid-50: #0081a1;
-  --cyan-vivid-40: #009ec1;
-  --cyan-vivid-30: #00bde3;
-  --cyan-vivid-20: #52daf2;
-  --cyan-vivid-10: #a8f2ff;
-  --cyan-vivid-5: #e5faff;
+  --cyan-vivid-80-rgb: 9, 59, 68;
+  --cyan-vivid-70-rgb: 14, 79, 92;
+  --cyan-vivid-60-rgb: 0, 104, 125;
+  --cyan-vivid-50-rgb: 0, 129, 161;
+  --cyan-vivid-40-rgb: 0, 158, 193;
+  --cyan-vivid-30-rgb: 0, 189, 227;
+  --cyan-vivid-20-rgb: 82, 218, 242;
+  --cyan-vivid-10-rgb: 168, 242, 255;
+  --cyan-vivid-5-rgb: 229, 250, 255;
   --gold-90: #191714;
   --gold-80: #322d26;
   --gold-70: #4d4438;
@@ -16584,14 +16584,14 @@ td:not([align]) {
 tr.selected, tr.is-selected {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 tr.selected th,
 tr.selected td, tr.is-selected th,
@@ -23057,14 +23057,14 @@ mark,
 .bg-primary-lighten-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-lighten-01) !important;
 }
 
@@ -23079,14 +23079,14 @@ mark,
 .bg-primary-lighten-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-lighten-02) !important;
 }
 
@@ -23101,14 +23101,14 @@ mark,
 .bg-primary-default {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-default) !important;
 }
 
@@ -23123,14 +23123,14 @@ mark,
 .bg-primary-darken-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-darken-01) !important;
 }
 
@@ -23145,14 +23145,14 @@ mark,
 .bg-primary-darken-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-darken-02) !important;
 }
 
@@ -23227,14 +23227,14 @@ mark,
 .bg-secondary-06 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-06) !important;
 }
 
@@ -23249,14 +23249,14 @@ mark,
 .bg-secondary-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-07) !important;
 }
 
@@ -23271,14 +23271,14 @@ mark,
 .bg-secondary-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-08) !important;
 }
 
@@ -23293,14 +23293,14 @@ mark,
 .bg-secondary-09 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-09) !important;
 }
 
@@ -23315,14 +23315,14 @@ mark,
 .bg-highlight {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-highlight) !important;
 }
 
@@ -23337,14 +23337,14 @@ mark,
 .bg-support-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-01) !important;
 }
 
@@ -23371,14 +23371,14 @@ mark,
 .bg-support-03 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-03) !important;
 }
 
@@ -23393,14 +23393,14 @@ mark,
 .bg-support-04 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-04) !important;
 }
 
@@ -23439,14 +23439,14 @@ mark,
 .bg-support-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-07) !important;
 }
 
@@ -23461,14 +23461,14 @@ mark,
 .bg-support-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-08) !important;
 }
 
@@ -24462,16 +24462,15 @@ mark,
 .dropdown .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
-  --interactive-rgb: var(--interactive-light-rgb);
+  --interactive-rgb: var(--color-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   --item-padding-y: var(--spacing-scale-2x);
-  --interactive-rgb: var(--color-rgb);
   background-color: var(--background-light);
   color: var(--color);
 }
@@ -24481,14 +24480,14 @@ mark,
 .dropdown .br-item.selected {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 
 *[data-toggle=collapse]:not(:disabled):hover {
@@ -24575,14 +24574,14 @@ mark,
 .br-accordion[negative] {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   --bg-color: var(--background-dark);
 }
 
@@ -24723,6 +24722,7 @@ mark,
   display: inline-grid;
   font-size: var(--font-size-scale-down-01);
   font-weight: var(--font-weight-medium);
+  min-height: var(--spacing-scale-7x);
   position: relative;
 }
 .br-breadcrumb .crumb-list {
@@ -24733,13 +24733,12 @@ mark,
   margin: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0;
+  padding: 0 0 0 var(--spacing-scale-base);
 }
 .br-breadcrumb .crumb {
   align-items: center;
   display: flex;
   height: var(--spacing-scale-5x);
-  margin: auto 0 auto -5px;
 }
 .br-breadcrumb .crumb .icon {
   color: var(--border-color);
@@ -24749,21 +24748,31 @@ mark,
 .br-breadcrumb .crumb a {
   max-width: 180px;
   overflow: hidden;
-  padding: 0 6px;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .br-breadcrumb .crumb:last-child span {
   font-weight: var(--font-weight-medium);
-  padding: 0 0 0 var(--spacing-scale-base);
+  margin: 0 var(--spacing-scale-2x) 0 var(--spacing-scale-base);
   white-space: nowrap;
+}
+.br-breadcrumb .crumb[data-active=active] span:focus:focus, .br-breadcrumb .crumb[data-active=active] span:focus-visible:focus, .br-breadcrumb .crumb[data-active=active] span.focus-visible:focus {
+  outline: none;
+}
+.br-breadcrumb .crumb[data-active=active] span:focus.focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus:focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus-visible.focus-visible, .br-breadcrumb .crumb[data-active=active] span:focus-visible:focus-visible, .br-breadcrumb .crumb[data-active=active] span.focus-visible.focus-visible, .br-breadcrumb .crumb[data-active=active] span.focus-visible:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
+.br-breadcrumb .crumb a:not(.br-button) {
+  margin: 0 var(--spacing-scale-base);
 }
 .br-breadcrumb .home,
 .br-breadcrumb .menu-mobil {
   --focus-offset: calc(var(--spacing-scale-half) * -1);
-  margin-left: 0;
-  margin-right: -3px;
+  margin: 0 var(--spacing-scale-base) 0 0;
 }
 @media (max-width: 991px) {
   .br-breadcrumb .crumb a:not(.br-button) {
@@ -24943,24 +24952,31 @@ mark,
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-button.loading::after, .br-button[loading]::after, .br-button.is-loading::after {
+.br-button.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-button.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-button.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-button.loading.primary::after, .br-button.loading.danger::after, .br-button.loading.success::after, .br-button.loading.info::after, .br-button[loading].primary::after, .br-button[loading].danger::after, .br-button[loading].success::after, .br-button[loading].info::after, .br-button.is-loading.primary::after, .br-button.is-loading.danger::after, .br-button.is-loading.success::after, .br-button.is-loading.info::after {
+.br-button.loading.primary::before, .br-button.loading.danger::before, .br-button.loading.success::before, .br-button.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-button.inverted, .br-button.is-inverted, .br-button[inverted], .br-button.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   color: var(--interactive-dark);
 }
 .br-button.inverted.primary, .br-button.inverted[primary], .br-button.inverted.is-primary, .br-button.is-inverted.primary, .br-button.is-inverted[primary], .br-button.is-inverted.is-primary, .br-button[inverted].primary, .br-button[inverted][primary], .br-button[inverted].is-primary, .br-button.dark-mode.primary, .br-button.dark-mode[primary], .br-button.dark-mode.is-primary {
@@ -25033,14 +25049,14 @@ a.br-button {
 .br-card.inverted, .br-card.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 
 .br-carousel {
@@ -25173,18 +25189,12 @@ a.br-button {
   width: var(--carousel-full-size);
 }
 .br-carousel[data-stage=out] .carousel-button, .br-carousel .carousel-button {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
 }
 .br-carousel[data-stage=out] .carousel-stage, .br-carousel .carousel-stage {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   left: 50px;
-  width: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-width)
-      );
+  width: calc(var(--carousel-full-size) - var(--carousel-button-fix-width));
 }
 .br-carousel[data-stage=hibh] .carousel-button {
   height: var(--carousel-full-size);
@@ -25192,14 +25202,10 @@ a.br-button {
 .br-carousel[data-stage=hibh] .carousel-stage {
   height: var(--carousel-full-size);
   left: 50px;
-  width: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-width)
-      );
+  width: calc(var(--carousel-full-size) - var(--carousel-button-fix-width));
 }
 .br-carousel[data-stage=hibw] .carousel-button {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
 }
 .br-carousel[data-stage=hibw] .carousel-button .carousel-btn-next,
 .br-carousel[data-stage=hibw] .carousel-button .carousel-btn-prev {
@@ -25209,9 +25215,7 @@ a.br-button {
   padding: 0 var(--spacing-scale-default);
 }
 .br-carousel[data-stage=hibw] .carousel-stage {
-  height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+  height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   left: 0;
   width: var(--carousel-full-size);
 }
@@ -25221,9 +25225,7 @@ a.br-button {
     width: var(--carousel-full-size);
   }
   .br-carousel .carousel-button {
-    height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+    height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
   }
   .br-carousel .carousel-button .carousel-btn-next,
   .br-carousel .carousel-button .carousel-btn-prev {
@@ -25238,9 +25240,7 @@ a.br-button {
     display: flex;
   }
   .br-carousel .carousel-stage {
-    height: calc(
-        var(--carousel-full-size) - var(--carousel-button-fix-height)
-      );
+    height: calc(var(--carousel-full-size) - var(--carousel-button-fix-height));
     left: 0;
     width: var(--carousel-full-size);
   }
@@ -25252,26 +25252,26 @@ a.br-button {
 .br-carousel.inverted, .br-carousel.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-carousel.inverted .br-step, .br-carousel.dark-mode .br-step {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-carousel.inverted .br-step .step-progress-btn[data-alert=success], .br-carousel.dark-mode .br-step .step-progress-btn[data-alert=success] {
   color: var(--success-alternative);
@@ -25321,6 +25321,14 @@ a.br-button {
   background-color: transparent;
   color: var(--color);
 }
+.br-carousel .carousel-page[active]:focus,
+.br-carousel .carousel-page[active]:focus-visible,
+.br-carousel .carousel-page[active]:focus-within {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
+}
 
 .br-checkbox {
   --checkbox-padding: var(--spacing-scale-base);
@@ -25366,7 +25374,7 @@ a.br-button {
   white-space: nowrap;
   width: 0;
 }
-.br-checkbox input:checked + label::after {
+.br-checkbox input:checked + label::after, .br-checkbox input:indeterminate + label::after {
   border: solid var(--selected);
   border-width: 0 3px 3px 0;
   content: "";
@@ -25377,15 +25385,15 @@ a.br-button {
   transform: rotate(45deg);
   width: 8px;
 }
-.br-checkbox input[indeterminate] + label::before {
+.br-checkbox input[indeterminate] + label::before, .br-checkbox input:indeterminate + label::before {
   --interactive-rgb: var(--color-rgb);
   background: var(--selected);
   border-color: var(--selected);
 }
-.br-checkbox input[indeterminate]:hover:not(:disabled) + label::before {
+.br-checkbox input[indeterminate]:hover:not(:disabled) + label::before, .br-checkbox input:indeterminate:hover:not(:disabled) + label::before {
   --interactive-rgb: var(--color-dark-rgb);
 }
-.br-checkbox input[indeterminate]:checked + label::after {
+.br-checkbox input[indeterminate]:checked + label::after, .br-checkbox input[indeterminate] + label::after, .br-checkbox input:indeterminate:checked + label::after, .br-checkbox input:indeterminate + label::after {
   border-color: var(--background-light);
   border-width: 0 0 3px;
   top: 2px;
@@ -25433,14 +25441,16 @@ a.br-button {
   border-width: 0 2px 2px 0;
   height: var(--icon-size-sm);
   left: 7px;
-  top: 6px;
+  top: 4px;
   width: 6px;
 }
-.br-checkbox.is-small input:checked[indeterminate] + label::after, .br-checkbox.small input:checked[indeterminate] + label::after, .br-checkbox[small] input:checked[indeterminate] + label::after {
+.br-checkbox.is-small input[indeterminate] + label::after, .br-checkbox.is-small input:indeterminate + label::after, .br-checkbox.small input[indeterminate] + label::after, .br-checkbox.small input:indeterminate + label::after, .br-checkbox[small] input[indeterminate] + label::after, .br-checkbox[small] input:indeterminate + label::after {
   border-color: var(--background-light);
   border-width: 0 0 3px;
-  top: 2px;
+  left: 7px;
+  top: 1px;
   transform: none;
+  width: 6px;
 }
 .br-checkbox input:invalid + label::before {
   --border-color: var(--danger);
@@ -25663,7 +25673,7 @@ a.br-button {
 }
 .br-cookiebar .info-text {
   display: none;
-  line-height: var(--font-lineheight-medium);
+  line-height: var(--font-line-height-medium);
 }
 .br-cookiebar .br-modal-header .br-modal-title {
   font-size: var(--font-size-scale-up-06);
@@ -25697,6 +25707,7 @@ a.br-button {
 .br-cookiebar .br-modal-body {
   flex: 1;
   margin: 0;
+  overflow: unset;
 }
 .br-cookiebar .br-modal-body:focus {
   outline: none;
@@ -25737,14 +25748,14 @@ a.br-button {
 .br-cookiebar .group-info.selected {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   background-color: var(--background);
 }
 .br-cookiebar .group-info .br-button {
@@ -25786,6 +25797,9 @@ a.br-button {
 }
 .br-cookiebar [class^=container] {
   --grid-margin: 0;
+}
+.br-cookiebar .br-checkbox:not(.hidden-label) {
+  --item-padding-y: 1px;
 }
 .br-cookiebar .br-modal {
   --modal-size: var(--modal-auto);
@@ -26115,67 +26129,78 @@ hr {
   margin: var(--divider-padding) 0;
 }
 
+/* ----------------------------------------------------------------------- */
+/* Código criado para ajustar os espaçamentos entre as áreas do footer     */
+/* Deve ser removido na V4                                                 */
+/* ----------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------- */
 .br-footer {
   --footer-logo-height: 48px;
   --footer-logo-width: 180px;
-  --footer-logo-padding: var(--spacing-scale-6x) 0 var(--spacing-scale-4x);
+  --footer-padding: var(--spacing-scale-6x) 0 0;
+  --footer-padding-bottom: 0 0 var(--spacing-scale-6x);
   --footer-assigns-height: 46px;
   --footer-assigns-width: 180px;
   background: var(--background);
   border-top: 1px solid var(--border-color);
   color: var(--color);
   display: block;
+  padding: var(--footer-padding);
   --background: var(--background-dark);
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
+}
+.br-footer.no-divider {
+  border-top: none;
+  padding-top: 0;
 }
 .br-footer .br-item {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-footer[inverted], .br-footer.inverted {
   --background: var(--background-light);
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .br-footer[inverted] .br-item, .br-footer.inverted .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .br-footer .logo {
-  padding: var(--footer-logo-padding);
+  padding: var(--footer-padding-bottom);
 }
 .br-footer .logo img {
   max-height: var(--footer-logo-height);
@@ -26184,6 +26209,7 @@ hr {
 .br-footer .br-list.horizontal {
   display: flex;
   flex-wrap: wrap;
+  padding: var(--footer-padding-bottom);
 }
 .br-footer .br-list.horizontal .header {
   width: 100%;
@@ -26206,8 +26232,11 @@ hr {
 .br-footer .social-network .social-network-title {
   font-size: var(--font-size-scale-up-01);
   font-weight: var(--font-weight-extra-bold);
-  margin-bottom: var(--spacing-scale-2x);
+  margin-bottom: var(--spacing-scale-3x);
   text-transform: uppercase;
+}
+.br-footer .social-network a:not(:last-of-type) {
+  margin-right: var(--spacing-scale-2x);
 }
 .br-footer .social-network a:hover {
   background-image: none;
@@ -26220,10 +26249,14 @@ hr {
   max-height: var(--footer-assigns-height);
   max-width: var(--footer-assigns-width);
 }
-@media (min-width: 992px) {
-  .br-footer .info {
-    text-align: center;
-  }
+.br-footer .info {
+  text-align: center;
+}
+.br-footer .br-divider {
+  margin-top: 0 !important;
+}
+.br-footer .d-none.d-sm-block > .row.align-items-end.justify-content-between.py-5 {
+  padding: var(--footer-padding-bottom) !important;
 }
 .br-footer .br-list {
   --background: var(--background-dark);
@@ -26715,14 +26748,14 @@ hr {
   --input-highlight: 56px;
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   color: var(--color);
   position: relative;
 }
@@ -26778,14 +26811,14 @@ hr {
   --button-size: var(--button-small);
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   border-radius: 50%;
   float: right;
   margin-right: var(--input-button-margin);
@@ -26939,48 +26972,43 @@ hr {
 .br-item[data-toggle=selection]:not(:disabled):hover {
   background-image: linear-gradient(rgba(var(--color-rgb), var(--hover)), rgba(var(--color-rgb), var(--hover)));
 }
-.br-item .br-checkbox:not(.hidden-label),
-.br-item .br-radio:not(.hidden-label) {
+.br-item > .br-checkbox:not(.hidden-label), .br-item > .br-radio:not(.hidden-label) {
   margin-bottom: calc(var(--item-padding-y) * -1);
   margin-left: calc(var(--item-padding-x) * -1);
   margin-right: calc(var(--item-padding-x) * -1);
   margin-top: calc(var(--item-padding-y) * -1);
 }
-.br-item .br-checkbox:not(.hidden-label) input + label,
-.br-item .br-radio:not(.hidden-label) input + label {
+.br-item > .br-checkbox:not(.hidden-label) input + label, .br-item > .br-radio:not(.hidden-label) input + label {
   padding-bottom: var(--item-padding-y);
   padding-top: var(--item-padding-y);
   top: 1px;
   width: 100%;
 }
-.br-item .br-checkbox:not(.hidden-label) input + label::before,
-.br-item .br-radio:not(.hidden-label) input + label::before {
+.br-item > .br-checkbox:not(.hidden-label) input + label::before, .br-item > .br-radio:not(.hidden-label) input + label::before {
   left: var(--item-padding-x);
   top: calc(var(--item-padding-y) - 1px);
 }
-.br-item .br-checkbox:not(.hidden-label) input + label:empty,
-.br-item .br-radio:not(.hidden-label) input + label:empty {
+.br-item > .br-checkbox:not(.hidden-label) input + label:empty, .br-item > .br-radio:not(.hidden-label) input + label:empty {
   left: 0;
   top: 1px;
 }
-.br-item .br-checkbox:not(.hidden-label) input:hover:not(:disabled) + label::before,
-.br-item .br-radio:not(.hidden-label) input:hover:not(:disabled) + label::before {
+.br-item > .br-checkbox:not(.hidden-label) input:hover:not(:disabled) + label::before, .br-item > .br-radio:not(.hidden-label) input:hover:not(:disabled) + label::before {
   background-image: none;
 }
-.br-item .br-checkbox input + label {
+.br-item > .br-checkbox input:not(:indeterminate) + label {
   min-height: calc(var(--checkbox-size) + var(--item-padding-y) * 2);
 }
-.br-item .br-checkbox input + label:not(:empty) {
+.br-item > .br-checkbox input:not(:indeterminate) + label:not(:empty) {
   padding-left: calc(var(--checkbox-padding) + var(--checkbox-size) + var(--item-padding-x));
 }
-.br-item .br-checkbox input + label::after {
+.br-item > .br-checkbox input:not(:indeterminate) + label::after {
   left: calc(var(--item-padding-x) + 8px);
   top: calc(var(--item-padding-y) + 4px);
 }
-.br-item .br-checkbox input + label:empty {
+.br-item > .br-checkbox input:not(:indeterminate) + label:empty {
   min-height: var(--checkbox-size);
 }
-.br-item .br-checkbox input + label:empty::after {
+.br-item > .br-checkbox input:not(:indeterminate) + label:empty::after {
   left: 8px;
   top: 4px;
 }
@@ -27002,234 +27030,233 @@ hr {
 .br-item.primary-lighten-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.primary-lighten-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.primary-default {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.primary-darken-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.primary-darken-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.secondary-06 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.secondary-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.secondary-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.secondary-09 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.highlight {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.support-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.support-03 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.support-04 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.support-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.support-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.selected {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background-color: var(--selected);
 }
 .br-item.active {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background-color: var(--active);
   color: var(--color);
 }
 .br-item.inverted, .br-item.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-item.inverted.active, .br-item.dark-mode.active {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
-  --interactive-rgb: var(--interactive-light-rgb);
+  --interactive-rgb: var(--active-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
-  --interactive-rgb: var(--active-rgb);
+  --focus: var(--focus-color-light);
   background-color: var(--background-light);
   color: var(--active);
 }
@@ -27608,8 +27635,14 @@ button.br-item:not(:disabled):active {
   }
 }
 @media (min-width: 576px) {
-  .br-menu.push .menu-header {
+  .br-menu.push .menu-header, .br-menu.push .menu-footer {
     display: none;
+  }
+  .br-menu.push .menu-header[data-visible=true] {
+    display: flex;
+  }
+  .br-menu.push .menu-footer[data-visible=true] {
+    display: block;
   }
   .br-menu.push .menu-panel {
     height: auto;
@@ -27708,586 +27741,799 @@ button.br-item:not(:disabled):active {
   background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
 }
 
+.loading,
 .br-loading {
+  --loading-size: var(--loading-indetermined-diameter-sm);
+  --loading-diameter: 84px;
+  --loading-stroke: 5px;
   --loading-indetermined-color: var(--interactive);
   --loading-indetermined-diameter-md: 44px;
   --loading-indetermined-diameter-sm: 24px;
-  --loading-diameter: 84px;
-  background-color: var(--color-secondary-04);
-  border-radius: 50%;
-  height: var(--loading-diameter);
-  width: var(--loading-diameter);
+  position: relative;
   z-index: var(--z-index-layer-4);
 }
-.br-loading-mask, .br-loading-fill {
-  backface-visibility: hidden;
+.loading[data-progress]:not(:empty),
+.br-loading[data-progress]:not(:empty) {
+  background-color: var(--border-color);
   border-radius: 50%;
-  clip: rect(0, 84px, 84px, 42px);
-  height: 84px;
-  overflow: hidden;
-  position: absolute;
-  width: 84px;
 }
-.br-loading-fill {
-  background: var(--interactive);
-  clip: rect(0, 42px, 84px, 0);
+.loading[data-progress]:not(:empty)::before,
+.br-loading[data-progress]:not(:empty)::before {
+  content: none;
 }
-.br-loading::after {
-  background: var(--color-secondary-01);
+.loading[data-progress]::after,
+.br-loading[data-progress]::after {
+  --loading-size: calc(var(--loading-diameter) - var(--loading-stroke) * 2);
+  background: var(--background);
   border-radius: 50%;
   color: var(--interactive);
   content: attr(data-progress) "%";
   font-size: var(--font-size-scale-up-02);
   font-weight: var(--font-weight-semi-bold);
-  height: 74px;
-  line-height: 74px;
-  margin: 5px;
+  height: var(--loading-size);
+  line-height: var(--loading-size);
+  margin: var(--loading-stroke);
   position: absolute;
   text-align: center;
-  width: 74px;
-}
-@keyframes fill {
-  0% {
-    transform: rotate(0deg);
-  }
-}
-.br-loading[data-progress="1"] .br-loading-mask.full,
-.br-loading[data-progress="1"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(1.8deg);
-}
-.br-loading[data-progress="2"] .br-loading-mask.full,
-.br-loading[data-progress="2"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(3.6deg);
-}
-.br-loading[data-progress="3"] .br-loading-mask.full,
-.br-loading[data-progress="3"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(5.4deg);
-}
-.br-loading[data-progress="4"] .br-loading-mask.full,
-.br-loading[data-progress="4"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(7.2deg);
-}
-.br-loading[data-progress="5"] .br-loading-mask.full,
-.br-loading[data-progress="5"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(9deg);
-}
-.br-loading[data-progress="6"] .br-loading-mask.full,
-.br-loading[data-progress="6"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(10.8deg);
-}
-.br-loading[data-progress="7"] .br-loading-mask.full,
-.br-loading[data-progress="7"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(12.6deg);
-}
-.br-loading[data-progress="8"] .br-loading-mask.full,
-.br-loading[data-progress="8"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(14.4deg);
-}
-.br-loading[data-progress="9"] .br-loading-mask.full,
-.br-loading[data-progress="9"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(16.2deg);
-}
-.br-loading[data-progress="10"] .br-loading-mask.full,
-.br-loading[data-progress="10"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(18deg);
-}
-.br-loading[data-progress="11"] .br-loading-mask.full,
-.br-loading[data-progress="11"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(19.8deg);
-}
-.br-loading[data-progress="12"] .br-loading-mask.full,
-.br-loading[data-progress="12"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(21.6deg);
-}
-.br-loading[data-progress="13"] .br-loading-mask.full,
-.br-loading[data-progress="13"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(23.4deg);
-}
-.br-loading[data-progress="14"] .br-loading-mask.full,
-.br-loading[data-progress="14"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(25.2deg);
-}
-.br-loading[data-progress="15"] .br-loading-mask.full,
-.br-loading[data-progress="15"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(27deg);
-}
-.br-loading[data-progress="16"] .br-loading-mask.full,
-.br-loading[data-progress="16"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(28.8deg);
-}
-.br-loading[data-progress="17"] .br-loading-mask.full,
-.br-loading[data-progress="17"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(30.6deg);
-}
-.br-loading[data-progress="18"] .br-loading-mask.full,
-.br-loading[data-progress="18"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(32.4deg);
-}
-.br-loading[data-progress="19"] .br-loading-mask.full,
-.br-loading[data-progress="19"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(34.2deg);
-}
-.br-loading[data-progress="20"] .br-loading-mask.full,
-.br-loading[data-progress="20"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(36deg);
-}
-.br-loading[data-progress="21"] .br-loading-mask.full,
-.br-loading[data-progress="21"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(37.8deg);
-}
-.br-loading[data-progress="22"] .br-loading-mask.full,
-.br-loading[data-progress="22"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(39.6deg);
-}
-.br-loading[data-progress="23"] .br-loading-mask.full,
-.br-loading[data-progress="23"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(41.4deg);
-}
-.br-loading[data-progress="24"] .br-loading-mask.full,
-.br-loading[data-progress="24"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(43.2deg);
-}
-.br-loading[data-progress="25"] .br-loading-mask.full,
-.br-loading[data-progress="25"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(45deg);
-}
-.br-loading[data-progress="26"] .br-loading-mask.full,
-.br-loading[data-progress="26"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(46.8deg);
-}
-.br-loading[data-progress="27"] .br-loading-mask.full,
-.br-loading[data-progress="27"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(48.6deg);
-}
-.br-loading[data-progress="28"] .br-loading-mask.full,
-.br-loading[data-progress="28"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(50.4deg);
-}
-.br-loading[data-progress="29"] .br-loading-mask.full,
-.br-loading[data-progress="29"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(52.2deg);
-}
-.br-loading[data-progress="30"] .br-loading-mask.full,
-.br-loading[data-progress="30"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(54deg);
-}
-.br-loading[data-progress="31"] .br-loading-mask.full,
-.br-loading[data-progress="31"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(55.8deg);
-}
-.br-loading[data-progress="32"] .br-loading-mask.full,
-.br-loading[data-progress="32"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(57.6deg);
-}
-.br-loading[data-progress="33"] .br-loading-mask.full,
-.br-loading[data-progress="33"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(59.4deg);
-}
-.br-loading[data-progress="34"] .br-loading-mask.full,
-.br-loading[data-progress="34"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(61.2deg);
-}
-.br-loading[data-progress="35"] .br-loading-mask.full,
-.br-loading[data-progress="35"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(63deg);
-}
-.br-loading[data-progress="36"] .br-loading-mask.full,
-.br-loading[data-progress="36"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(64.8deg);
-}
-.br-loading[data-progress="37"] .br-loading-mask.full,
-.br-loading[data-progress="37"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(66.6deg);
-}
-.br-loading[data-progress="38"] .br-loading-mask.full,
-.br-loading[data-progress="38"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(68.4deg);
-}
-.br-loading[data-progress="39"] .br-loading-mask.full,
-.br-loading[data-progress="39"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(70.2deg);
-}
-.br-loading[data-progress="40"] .br-loading-mask.full,
-.br-loading[data-progress="40"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(72deg);
-}
-.br-loading[data-progress="41"] .br-loading-mask.full,
-.br-loading[data-progress="41"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(73.8deg);
-}
-.br-loading[data-progress="42"] .br-loading-mask.full,
-.br-loading[data-progress="42"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(75.6deg);
-}
-.br-loading[data-progress="43"] .br-loading-mask.full,
-.br-loading[data-progress="43"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(77.4deg);
-}
-.br-loading[data-progress="44"] .br-loading-mask.full,
-.br-loading[data-progress="44"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(79.2deg);
-}
-.br-loading[data-progress="45"] .br-loading-mask.full,
-.br-loading[data-progress="45"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(81deg);
-}
-.br-loading[data-progress="46"] .br-loading-mask.full,
-.br-loading[data-progress="46"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(82.8deg);
-}
-.br-loading[data-progress="47"] .br-loading-mask.full,
-.br-loading[data-progress="47"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(84.6deg);
-}
-.br-loading[data-progress="48"] .br-loading-mask.full,
-.br-loading[data-progress="48"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(86.4deg);
-}
-.br-loading[data-progress="49"] .br-loading-mask.full,
-.br-loading[data-progress="49"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(88.2deg);
-}
-.br-loading[data-progress="50"] .br-loading-mask.full,
-.br-loading[data-progress="50"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(90deg);
-}
-.br-loading[data-progress="51"] .br-loading-mask.full,
-.br-loading[data-progress="51"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(91.8deg);
-}
-.br-loading[data-progress="52"] .br-loading-mask.full,
-.br-loading[data-progress="52"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(93.6deg);
-}
-.br-loading[data-progress="53"] .br-loading-mask.full,
-.br-loading[data-progress="53"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(95.4deg);
-}
-.br-loading[data-progress="54"] .br-loading-mask.full,
-.br-loading[data-progress="54"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(97.2deg);
-}
-.br-loading[data-progress="55"] .br-loading-mask.full,
-.br-loading[data-progress="55"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(99deg);
-}
-.br-loading[data-progress="56"] .br-loading-mask.full,
-.br-loading[data-progress="56"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(100.8deg);
-}
-.br-loading[data-progress="57"] .br-loading-mask.full,
-.br-loading[data-progress="57"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(102.6deg);
-}
-.br-loading[data-progress="58"] .br-loading-mask.full,
-.br-loading[data-progress="58"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(104.4deg);
-}
-.br-loading[data-progress="59"] .br-loading-mask.full,
-.br-loading[data-progress="59"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(106.2deg);
-}
-.br-loading[data-progress="60"] .br-loading-mask.full,
-.br-loading[data-progress="60"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(108deg);
-}
-.br-loading[data-progress="61"] .br-loading-mask.full,
-.br-loading[data-progress="61"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(109.8deg);
-}
-.br-loading[data-progress="62"] .br-loading-mask.full,
-.br-loading[data-progress="62"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(111.6deg);
-}
-.br-loading[data-progress="63"] .br-loading-mask.full,
-.br-loading[data-progress="63"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(113.4deg);
-}
-.br-loading[data-progress="64"] .br-loading-mask.full,
-.br-loading[data-progress="64"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(115.2deg);
-}
-.br-loading[data-progress="65"] .br-loading-mask.full,
-.br-loading[data-progress="65"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(117deg);
-}
-.br-loading[data-progress="66"] .br-loading-mask.full,
-.br-loading[data-progress="66"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(118.8deg);
-}
-.br-loading[data-progress="67"] .br-loading-mask.full,
-.br-loading[data-progress="67"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(120.6deg);
-}
-.br-loading[data-progress="68"] .br-loading-mask.full,
-.br-loading[data-progress="68"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(122.4deg);
-}
-.br-loading[data-progress="69"] .br-loading-mask.full,
-.br-loading[data-progress="69"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(124.2deg);
-}
-.br-loading[data-progress="70"] .br-loading-mask.full,
-.br-loading[data-progress="70"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(126deg);
-}
-.br-loading[data-progress="71"] .br-loading-mask.full,
-.br-loading[data-progress="71"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(127.8deg);
-}
-.br-loading[data-progress="72"] .br-loading-mask.full,
-.br-loading[data-progress="72"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(129.6deg);
-}
-.br-loading[data-progress="73"] .br-loading-mask.full,
-.br-loading[data-progress="73"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(131.4deg);
-}
-.br-loading[data-progress="74"] .br-loading-mask.full,
-.br-loading[data-progress="74"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(133.2deg);
-}
-.br-loading[data-progress="75"] .br-loading-mask.full,
-.br-loading[data-progress="75"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(135deg);
-}
-.br-loading[data-progress="76"] .br-loading-mask.full,
-.br-loading[data-progress="76"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(136.8deg);
-}
-.br-loading[data-progress="77"] .br-loading-mask.full,
-.br-loading[data-progress="77"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(138.6deg);
-}
-.br-loading[data-progress="78"] .br-loading-mask.full,
-.br-loading[data-progress="78"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(140.4deg);
-}
-.br-loading[data-progress="79"] .br-loading-mask.full,
-.br-loading[data-progress="79"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(142.2deg);
-}
-.br-loading[data-progress="80"] .br-loading-mask.full,
-.br-loading[data-progress="80"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(144deg);
-}
-.br-loading[data-progress="81"] .br-loading-mask.full,
-.br-loading[data-progress="81"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(145.8deg);
-}
-.br-loading[data-progress="82"] .br-loading-mask.full,
-.br-loading[data-progress="82"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(147.6deg);
-}
-.br-loading[data-progress="83"] .br-loading-mask.full,
-.br-loading[data-progress="83"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(149.4deg);
-}
-.br-loading[data-progress="84"] .br-loading-mask.full,
-.br-loading[data-progress="84"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(151.2deg);
-}
-.br-loading[data-progress="85"] .br-loading-mask.full,
-.br-loading[data-progress="85"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(153deg);
-}
-.br-loading[data-progress="86"] .br-loading-mask.full,
-.br-loading[data-progress="86"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(154.8deg);
-}
-.br-loading[data-progress="87"] .br-loading-mask.full,
-.br-loading[data-progress="87"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(156.6deg);
-}
-.br-loading[data-progress="88"] .br-loading-mask.full,
-.br-loading[data-progress="88"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(158.4deg);
-}
-.br-loading[data-progress="89"] .br-loading-mask.full,
-.br-loading[data-progress="89"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(160.2deg);
-}
-.br-loading[data-progress="90"] .br-loading-mask.full,
-.br-loading[data-progress="90"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(162deg);
-}
-.br-loading[data-progress="91"] .br-loading-mask.full,
-.br-loading[data-progress="91"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(163.8deg);
-}
-.br-loading[data-progress="92"] .br-loading-mask.full,
-.br-loading[data-progress="92"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(165.6deg);
-}
-.br-loading[data-progress="93"] .br-loading-mask.full,
-.br-loading[data-progress="93"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(167.4deg);
-}
-.br-loading[data-progress="94"] .br-loading-mask.full,
-.br-loading[data-progress="94"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(169.2deg);
-}
-.br-loading[data-progress="95"] .br-loading-mask.full,
-.br-loading[data-progress="95"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(171deg);
-}
-.br-loading[data-progress="96"] .br-loading-mask.full,
-.br-loading[data-progress="96"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(172.8deg);
-}
-.br-loading[data-progress="97"] .br-loading-mask.full,
-.br-loading[data-progress="97"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(174.6deg);
-}
-.br-loading[data-progress="98"] .br-loading-mask.full,
-.br-loading[data-progress="98"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(176.4deg);
-}
-.br-loading[data-progress="99"] .br-loading-mask.full,
-.br-loading[data-progress="99"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(178.2deg);
-}
-.br-loading[data-progress="100"] .br-loading-mask.full,
-.br-loading[data-progress="100"] .br-loading-fill {
-  animation: fill ease-in-out 2s;
-  transform: rotate(180deg);
-}
-
-*.is-loading, *.loading, *[loading] {
-  --loading-indetermined-color: var(--interactive);
-  --loading-indetermined-diameter-md: 44px;
-  --loading-indetermined-diameter-sm: 24px;
-  color: transparent !important;
-  min-height: 32px;
-  pointer-events: none;
-  position: relative;
-  z-index: var(--z-index-layer-4);
-}
-*.is-loading::after, *.loading::after, *[loading]::after {
+  width: var(--loading-size);
+}
+.loading[data-progress].loading-mask, .loading[data-progress].loading-fill,
+.loading[data-progress] .br-loading-mask,
+.loading[data-progress] .br-loading-fill,
+.br-loading[data-progress].loading-mask,
+.br-loading[data-progress].loading-fill,
+.br-loading[data-progress] .br-loading-mask,
+.br-loading[data-progress] .br-loading-fill {
+  backface-visibility: hidden;
+  border-radius: 50%;
+  clip: rect(0, var(--loading-diameter), var(--loading-diameter), calc(var(--loading-diameter) * 0.5));
+  height: var(--loading-diameter);
+  overflow: hidden;
+  position: absolute;
+  width: var(--loading-diameter);
+}
+.loading[data-progress].loading-fill,
+.loading[data-progress] .br-loading-fill,
+.br-loading[data-progress].loading-fill,
+.br-loading[data-progress] .br-loading-fill {
+  background: var(--interactive);
+  clip: rect(0, calc(var(--loading-diameter) * 0.5), var(--loading-diameter), 0);
+}
+.loading::before,
+.br-loading::before {
   animation: spinAround 1.3s infinite linear;
   border: 2px solid var(--loading-indetermined-color);
   border-radius: 50%;
   border-right-color: transparent;
   content: "";
   display: block;
-  height: var(--loading-indetermined-diameter-sm);
-  left: calc(50% - 12px);
+  height: var(--loading-size);
+  left: calc(50% - var(--loading-size) * 0.5);
   position: absolute;
-  top: calc(50% - 12px);
-  width: var(--loading-indetermined-diameter-sm);
+  top: calc(50% - var(--loading-size) * 0.5);
+  width: var(--loading-size);
 }
-*.is-loading.primary::after, *.loading.primary::after, *[loading].primary::after {
-  border-bottom-color: var(--color-secondary-01);
-  border-left-color: var(--color-secondary-01);
-  border-top-color: var(--color-secondary-01);
+.loading:not(.br-button),
+.br-loading:not(.br-button) {
+  height: var(--loading-size);
+  width: var(--loading-size);
 }
-*.is-loading.medium::after, *.is-loading[md]::after, *.loading.medium::after, *.loading[md]::after, *[loading].medium::after, *[loading][md]::after {
+.loading:not(.br-button).medium,
+.br-loading:not(.br-button).medium {
+  --loading-size: var(--loading-indetermined-diameter-md);
+}
+.loading:not(.br-button).medium::before,
+.br-loading:not(.br-button).medium::before {
   border-width: 4px;
-  height: var(--loading-indetermined-diameter-md);
-  left: calc(50% - 22px);
-  top: calc(50% - 22px);
-  width: var(--loading-indetermined-diameter-md);
 }
-
+.loading:not(.br-button)[data-progress],
+.br-loading:not(.br-button)[data-progress] {
+  --loading-size: var(--loading-diameter);
+}
+.loading:not(.br-button)[data-progress]::before,
+.br-loading:not(.br-button)[data-progress]::before {
+  border-width: var(--loading-stroke);
+}
+.loading[data-progress="1"] .br-loading-mask.full,
+.loading[data-progress="1"] .br-loading-fill,
+.br-loading[data-progress="1"] .br-loading-mask.full,
+.br-loading[data-progress="1"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(1.8deg);
+}
+.loading[data-progress="2"] .br-loading-mask.full,
+.loading[data-progress="2"] .br-loading-fill,
+.br-loading[data-progress="2"] .br-loading-mask.full,
+.br-loading[data-progress="2"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(3.6deg);
+}
+.loading[data-progress="3"] .br-loading-mask.full,
+.loading[data-progress="3"] .br-loading-fill,
+.br-loading[data-progress="3"] .br-loading-mask.full,
+.br-loading[data-progress="3"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(5.4deg);
+}
+.loading[data-progress="4"] .br-loading-mask.full,
+.loading[data-progress="4"] .br-loading-fill,
+.br-loading[data-progress="4"] .br-loading-mask.full,
+.br-loading[data-progress="4"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(7.2deg);
+}
+.loading[data-progress="5"] .br-loading-mask.full,
+.loading[data-progress="5"] .br-loading-fill,
+.br-loading[data-progress="5"] .br-loading-mask.full,
+.br-loading[data-progress="5"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(9deg);
+}
+.loading[data-progress="6"] .br-loading-mask.full,
+.loading[data-progress="6"] .br-loading-fill,
+.br-loading[data-progress="6"] .br-loading-mask.full,
+.br-loading[data-progress="6"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(10.8deg);
+}
+.loading[data-progress="7"] .br-loading-mask.full,
+.loading[data-progress="7"] .br-loading-fill,
+.br-loading[data-progress="7"] .br-loading-mask.full,
+.br-loading[data-progress="7"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(12.6deg);
+}
+.loading[data-progress="8"] .br-loading-mask.full,
+.loading[data-progress="8"] .br-loading-fill,
+.br-loading[data-progress="8"] .br-loading-mask.full,
+.br-loading[data-progress="8"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(14.4deg);
+}
+.loading[data-progress="9"] .br-loading-mask.full,
+.loading[data-progress="9"] .br-loading-fill,
+.br-loading[data-progress="9"] .br-loading-mask.full,
+.br-loading[data-progress="9"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(16.2deg);
+}
+.loading[data-progress="10"] .br-loading-mask.full,
+.loading[data-progress="10"] .br-loading-fill,
+.br-loading[data-progress="10"] .br-loading-mask.full,
+.br-loading[data-progress="10"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(18deg);
+}
+.loading[data-progress="11"] .br-loading-mask.full,
+.loading[data-progress="11"] .br-loading-fill,
+.br-loading[data-progress="11"] .br-loading-mask.full,
+.br-loading[data-progress="11"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(19.8deg);
+}
+.loading[data-progress="12"] .br-loading-mask.full,
+.loading[data-progress="12"] .br-loading-fill,
+.br-loading[data-progress="12"] .br-loading-mask.full,
+.br-loading[data-progress="12"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(21.6deg);
+}
+.loading[data-progress="13"] .br-loading-mask.full,
+.loading[data-progress="13"] .br-loading-fill,
+.br-loading[data-progress="13"] .br-loading-mask.full,
+.br-loading[data-progress="13"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(23.4deg);
+}
+.loading[data-progress="14"] .br-loading-mask.full,
+.loading[data-progress="14"] .br-loading-fill,
+.br-loading[data-progress="14"] .br-loading-mask.full,
+.br-loading[data-progress="14"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(25.2deg);
+}
+.loading[data-progress="15"] .br-loading-mask.full,
+.loading[data-progress="15"] .br-loading-fill,
+.br-loading[data-progress="15"] .br-loading-mask.full,
+.br-loading[data-progress="15"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(27deg);
+}
+.loading[data-progress="16"] .br-loading-mask.full,
+.loading[data-progress="16"] .br-loading-fill,
+.br-loading[data-progress="16"] .br-loading-mask.full,
+.br-loading[data-progress="16"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(28.8deg);
+}
+.loading[data-progress="17"] .br-loading-mask.full,
+.loading[data-progress="17"] .br-loading-fill,
+.br-loading[data-progress="17"] .br-loading-mask.full,
+.br-loading[data-progress="17"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(30.6deg);
+}
+.loading[data-progress="18"] .br-loading-mask.full,
+.loading[data-progress="18"] .br-loading-fill,
+.br-loading[data-progress="18"] .br-loading-mask.full,
+.br-loading[data-progress="18"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(32.4deg);
+}
+.loading[data-progress="19"] .br-loading-mask.full,
+.loading[data-progress="19"] .br-loading-fill,
+.br-loading[data-progress="19"] .br-loading-mask.full,
+.br-loading[data-progress="19"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(34.2deg);
+}
+.loading[data-progress="20"] .br-loading-mask.full,
+.loading[data-progress="20"] .br-loading-fill,
+.br-loading[data-progress="20"] .br-loading-mask.full,
+.br-loading[data-progress="20"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(36deg);
+}
+.loading[data-progress="21"] .br-loading-mask.full,
+.loading[data-progress="21"] .br-loading-fill,
+.br-loading[data-progress="21"] .br-loading-mask.full,
+.br-loading[data-progress="21"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(37.8deg);
+}
+.loading[data-progress="22"] .br-loading-mask.full,
+.loading[data-progress="22"] .br-loading-fill,
+.br-loading[data-progress="22"] .br-loading-mask.full,
+.br-loading[data-progress="22"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(39.6deg);
+}
+.loading[data-progress="23"] .br-loading-mask.full,
+.loading[data-progress="23"] .br-loading-fill,
+.br-loading[data-progress="23"] .br-loading-mask.full,
+.br-loading[data-progress="23"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(41.4deg);
+}
+.loading[data-progress="24"] .br-loading-mask.full,
+.loading[data-progress="24"] .br-loading-fill,
+.br-loading[data-progress="24"] .br-loading-mask.full,
+.br-loading[data-progress="24"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(43.2deg);
+}
+.loading[data-progress="25"] .br-loading-mask.full,
+.loading[data-progress="25"] .br-loading-fill,
+.br-loading[data-progress="25"] .br-loading-mask.full,
+.br-loading[data-progress="25"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(45deg);
+}
+.loading[data-progress="26"] .br-loading-mask.full,
+.loading[data-progress="26"] .br-loading-fill,
+.br-loading[data-progress="26"] .br-loading-mask.full,
+.br-loading[data-progress="26"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(46.8deg);
+}
+.loading[data-progress="27"] .br-loading-mask.full,
+.loading[data-progress="27"] .br-loading-fill,
+.br-loading[data-progress="27"] .br-loading-mask.full,
+.br-loading[data-progress="27"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(48.6deg);
+}
+.loading[data-progress="28"] .br-loading-mask.full,
+.loading[data-progress="28"] .br-loading-fill,
+.br-loading[data-progress="28"] .br-loading-mask.full,
+.br-loading[data-progress="28"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(50.4deg);
+}
+.loading[data-progress="29"] .br-loading-mask.full,
+.loading[data-progress="29"] .br-loading-fill,
+.br-loading[data-progress="29"] .br-loading-mask.full,
+.br-loading[data-progress="29"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(52.2deg);
+}
+.loading[data-progress="30"] .br-loading-mask.full,
+.loading[data-progress="30"] .br-loading-fill,
+.br-loading[data-progress="30"] .br-loading-mask.full,
+.br-loading[data-progress="30"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(54deg);
+}
+.loading[data-progress="31"] .br-loading-mask.full,
+.loading[data-progress="31"] .br-loading-fill,
+.br-loading[data-progress="31"] .br-loading-mask.full,
+.br-loading[data-progress="31"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(55.8deg);
+}
+.loading[data-progress="32"] .br-loading-mask.full,
+.loading[data-progress="32"] .br-loading-fill,
+.br-loading[data-progress="32"] .br-loading-mask.full,
+.br-loading[data-progress="32"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(57.6deg);
+}
+.loading[data-progress="33"] .br-loading-mask.full,
+.loading[data-progress="33"] .br-loading-fill,
+.br-loading[data-progress="33"] .br-loading-mask.full,
+.br-loading[data-progress="33"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(59.4deg);
+}
+.loading[data-progress="34"] .br-loading-mask.full,
+.loading[data-progress="34"] .br-loading-fill,
+.br-loading[data-progress="34"] .br-loading-mask.full,
+.br-loading[data-progress="34"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(61.2deg);
+}
+.loading[data-progress="35"] .br-loading-mask.full,
+.loading[data-progress="35"] .br-loading-fill,
+.br-loading[data-progress="35"] .br-loading-mask.full,
+.br-loading[data-progress="35"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(63deg);
+}
+.loading[data-progress="36"] .br-loading-mask.full,
+.loading[data-progress="36"] .br-loading-fill,
+.br-loading[data-progress="36"] .br-loading-mask.full,
+.br-loading[data-progress="36"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(64.8deg);
+}
+.loading[data-progress="37"] .br-loading-mask.full,
+.loading[data-progress="37"] .br-loading-fill,
+.br-loading[data-progress="37"] .br-loading-mask.full,
+.br-loading[data-progress="37"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(66.6deg);
+}
+.loading[data-progress="38"] .br-loading-mask.full,
+.loading[data-progress="38"] .br-loading-fill,
+.br-loading[data-progress="38"] .br-loading-mask.full,
+.br-loading[data-progress="38"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(68.4deg);
+}
+.loading[data-progress="39"] .br-loading-mask.full,
+.loading[data-progress="39"] .br-loading-fill,
+.br-loading[data-progress="39"] .br-loading-mask.full,
+.br-loading[data-progress="39"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(70.2deg);
+}
+.loading[data-progress="40"] .br-loading-mask.full,
+.loading[data-progress="40"] .br-loading-fill,
+.br-loading[data-progress="40"] .br-loading-mask.full,
+.br-loading[data-progress="40"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(72deg);
+}
+.loading[data-progress="41"] .br-loading-mask.full,
+.loading[data-progress="41"] .br-loading-fill,
+.br-loading[data-progress="41"] .br-loading-mask.full,
+.br-loading[data-progress="41"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(73.8deg);
+}
+.loading[data-progress="42"] .br-loading-mask.full,
+.loading[data-progress="42"] .br-loading-fill,
+.br-loading[data-progress="42"] .br-loading-mask.full,
+.br-loading[data-progress="42"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(75.6deg);
+}
+.loading[data-progress="43"] .br-loading-mask.full,
+.loading[data-progress="43"] .br-loading-fill,
+.br-loading[data-progress="43"] .br-loading-mask.full,
+.br-loading[data-progress="43"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(77.4deg);
+}
+.loading[data-progress="44"] .br-loading-mask.full,
+.loading[data-progress="44"] .br-loading-fill,
+.br-loading[data-progress="44"] .br-loading-mask.full,
+.br-loading[data-progress="44"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(79.2deg);
+}
+.loading[data-progress="45"] .br-loading-mask.full,
+.loading[data-progress="45"] .br-loading-fill,
+.br-loading[data-progress="45"] .br-loading-mask.full,
+.br-loading[data-progress="45"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(81deg);
+}
+.loading[data-progress="46"] .br-loading-mask.full,
+.loading[data-progress="46"] .br-loading-fill,
+.br-loading[data-progress="46"] .br-loading-mask.full,
+.br-loading[data-progress="46"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(82.8deg);
+}
+.loading[data-progress="47"] .br-loading-mask.full,
+.loading[data-progress="47"] .br-loading-fill,
+.br-loading[data-progress="47"] .br-loading-mask.full,
+.br-loading[data-progress="47"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(84.6deg);
+}
+.loading[data-progress="48"] .br-loading-mask.full,
+.loading[data-progress="48"] .br-loading-fill,
+.br-loading[data-progress="48"] .br-loading-mask.full,
+.br-loading[data-progress="48"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(86.4deg);
+}
+.loading[data-progress="49"] .br-loading-mask.full,
+.loading[data-progress="49"] .br-loading-fill,
+.br-loading[data-progress="49"] .br-loading-mask.full,
+.br-loading[data-progress="49"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(88.2deg);
+}
+.loading[data-progress="50"] .br-loading-mask.full,
+.loading[data-progress="50"] .br-loading-fill,
+.br-loading[data-progress="50"] .br-loading-mask.full,
+.br-loading[data-progress="50"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(90deg);
+}
+.loading[data-progress="51"] .br-loading-mask.full,
+.loading[data-progress="51"] .br-loading-fill,
+.br-loading[data-progress="51"] .br-loading-mask.full,
+.br-loading[data-progress="51"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(91.8deg);
+}
+.loading[data-progress="52"] .br-loading-mask.full,
+.loading[data-progress="52"] .br-loading-fill,
+.br-loading[data-progress="52"] .br-loading-mask.full,
+.br-loading[data-progress="52"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(93.6deg);
+}
+.loading[data-progress="53"] .br-loading-mask.full,
+.loading[data-progress="53"] .br-loading-fill,
+.br-loading[data-progress="53"] .br-loading-mask.full,
+.br-loading[data-progress="53"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(95.4deg);
+}
+.loading[data-progress="54"] .br-loading-mask.full,
+.loading[data-progress="54"] .br-loading-fill,
+.br-loading[data-progress="54"] .br-loading-mask.full,
+.br-loading[data-progress="54"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(97.2deg);
+}
+.loading[data-progress="55"] .br-loading-mask.full,
+.loading[data-progress="55"] .br-loading-fill,
+.br-loading[data-progress="55"] .br-loading-mask.full,
+.br-loading[data-progress="55"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(99deg);
+}
+.loading[data-progress="56"] .br-loading-mask.full,
+.loading[data-progress="56"] .br-loading-fill,
+.br-loading[data-progress="56"] .br-loading-mask.full,
+.br-loading[data-progress="56"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(100.8deg);
+}
+.loading[data-progress="57"] .br-loading-mask.full,
+.loading[data-progress="57"] .br-loading-fill,
+.br-loading[data-progress="57"] .br-loading-mask.full,
+.br-loading[data-progress="57"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(102.6deg);
+}
+.loading[data-progress="58"] .br-loading-mask.full,
+.loading[data-progress="58"] .br-loading-fill,
+.br-loading[data-progress="58"] .br-loading-mask.full,
+.br-loading[data-progress="58"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(104.4deg);
+}
+.loading[data-progress="59"] .br-loading-mask.full,
+.loading[data-progress="59"] .br-loading-fill,
+.br-loading[data-progress="59"] .br-loading-mask.full,
+.br-loading[data-progress="59"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(106.2deg);
+}
+.loading[data-progress="60"] .br-loading-mask.full,
+.loading[data-progress="60"] .br-loading-fill,
+.br-loading[data-progress="60"] .br-loading-mask.full,
+.br-loading[data-progress="60"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(108deg);
+}
+.loading[data-progress="61"] .br-loading-mask.full,
+.loading[data-progress="61"] .br-loading-fill,
+.br-loading[data-progress="61"] .br-loading-mask.full,
+.br-loading[data-progress="61"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(109.8deg);
+}
+.loading[data-progress="62"] .br-loading-mask.full,
+.loading[data-progress="62"] .br-loading-fill,
+.br-loading[data-progress="62"] .br-loading-mask.full,
+.br-loading[data-progress="62"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(111.6deg);
+}
+.loading[data-progress="63"] .br-loading-mask.full,
+.loading[data-progress="63"] .br-loading-fill,
+.br-loading[data-progress="63"] .br-loading-mask.full,
+.br-loading[data-progress="63"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(113.4deg);
+}
+.loading[data-progress="64"] .br-loading-mask.full,
+.loading[data-progress="64"] .br-loading-fill,
+.br-loading[data-progress="64"] .br-loading-mask.full,
+.br-loading[data-progress="64"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(115.2deg);
+}
+.loading[data-progress="65"] .br-loading-mask.full,
+.loading[data-progress="65"] .br-loading-fill,
+.br-loading[data-progress="65"] .br-loading-mask.full,
+.br-loading[data-progress="65"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(117deg);
+}
+.loading[data-progress="66"] .br-loading-mask.full,
+.loading[data-progress="66"] .br-loading-fill,
+.br-loading[data-progress="66"] .br-loading-mask.full,
+.br-loading[data-progress="66"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(118.8deg);
+}
+.loading[data-progress="67"] .br-loading-mask.full,
+.loading[data-progress="67"] .br-loading-fill,
+.br-loading[data-progress="67"] .br-loading-mask.full,
+.br-loading[data-progress="67"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(120.6deg);
+}
+.loading[data-progress="68"] .br-loading-mask.full,
+.loading[data-progress="68"] .br-loading-fill,
+.br-loading[data-progress="68"] .br-loading-mask.full,
+.br-loading[data-progress="68"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(122.4deg);
+}
+.loading[data-progress="69"] .br-loading-mask.full,
+.loading[data-progress="69"] .br-loading-fill,
+.br-loading[data-progress="69"] .br-loading-mask.full,
+.br-loading[data-progress="69"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(124.2deg);
+}
+.loading[data-progress="70"] .br-loading-mask.full,
+.loading[data-progress="70"] .br-loading-fill,
+.br-loading[data-progress="70"] .br-loading-mask.full,
+.br-loading[data-progress="70"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(126deg);
+}
+.loading[data-progress="71"] .br-loading-mask.full,
+.loading[data-progress="71"] .br-loading-fill,
+.br-loading[data-progress="71"] .br-loading-mask.full,
+.br-loading[data-progress="71"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(127.8deg);
+}
+.loading[data-progress="72"] .br-loading-mask.full,
+.loading[data-progress="72"] .br-loading-fill,
+.br-loading[data-progress="72"] .br-loading-mask.full,
+.br-loading[data-progress="72"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(129.6deg);
+}
+.loading[data-progress="73"] .br-loading-mask.full,
+.loading[data-progress="73"] .br-loading-fill,
+.br-loading[data-progress="73"] .br-loading-mask.full,
+.br-loading[data-progress="73"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(131.4deg);
+}
+.loading[data-progress="74"] .br-loading-mask.full,
+.loading[data-progress="74"] .br-loading-fill,
+.br-loading[data-progress="74"] .br-loading-mask.full,
+.br-loading[data-progress="74"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(133.2deg);
+}
+.loading[data-progress="75"] .br-loading-mask.full,
+.loading[data-progress="75"] .br-loading-fill,
+.br-loading[data-progress="75"] .br-loading-mask.full,
+.br-loading[data-progress="75"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(135deg);
+}
+.loading[data-progress="76"] .br-loading-mask.full,
+.loading[data-progress="76"] .br-loading-fill,
+.br-loading[data-progress="76"] .br-loading-mask.full,
+.br-loading[data-progress="76"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(136.8deg);
+}
+.loading[data-progress="77"] .br-loading-mask.full,
+.loading[data-progress="77"] .br-loading-fill,
+.br-loading[data-progress="77"] .br-loading-mask.full,
+.br-loading[data-progress="77"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(138.6deg);
+}
+.loading[data-progress="78"] .br-loading-mask.full,
+.loading[data-progress="78"] .br-loading-fill,
+.br-loading[data-progress="78"] .br-loading-mask.full,
+.br-loading[data-progress="78"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(140.4deg);
+}
+.loading[data-progress="79"] .br-loading-mask.full,
+.loading[data-progress="79"] .br-loading-fill,
+.br-loading[data-progress="79"] .br-loading-mask.full,
+.br-loading[data-progress="79"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(142.2deg);
+}
+.loading[data-progress="80"] .br-loading-mask.full,
+.loading[data-progress="80"] .br-loading-fill,
+.br-loading[data-progress="80"] .br-loading-mask.full,
+.br-loading[data-progress="80"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(144deg);
+}
+.loading[data-progress="81"] .br-loading-mask.full,
+.loading[data-progress="81"] .br-loading-fill,
+.br-loading[data-progress="81"] .br-loading-mask.full,
+.br-loading[data-progress="81"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(145.8deg);
+}
+.loading[data-progress="82"] .br-loading-mask.full,
+.loading[data-progress="82"] .br-loading-fill,
+.br-loading[data-progress="82"] .br-loading-mask.full,
+.br-loading[data-progress="82"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(147.6deg);
+}
+.loading[data-progress="83"] .br-loading-mask.full,
+.loading[data-progress="83"] .br-loading-fill,
+.br-loading[data-progress="83"] .br-loading-mask.full,
+.br-loading[data-progress="83"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(149.4deg);
+}
+.loading[data-progress="84"] .br-loading-mask.full,
+.loading[data-progress="84"] .br-loading-fill,
+.br-loading[data-progress="84"] .br-loading-mask.full,
+.br-loading[data-progress="84"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(151.2deg);
+}
+.loading[data-progress="85"] .br-loading-mask.full,
+.loading[data-progress="85"] .br-loading-fill,
+.br-loading[data-progress="85"] .br-loading-mask.full,
+.br-loading[data-progress="85"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(153deg);
+}
+.loading[data-progress="86"] .br-loading-mask.full,
+.loading[data-progress="86"] .br-loading-fill,
+.br-loading[data-progress="86"] .br-loading-mask.full,
+.br-loading[data-progress="86"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(154.8deg);
+}
+.loading[data-progress="87"] .br-loading-mask.full,
+.loading[data-progress="87"] .br-loading-fill,
+.br-loading[data-progress="87"] .br-loading-mask.full,
+.br-loading[data-progress="87"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(156.6deg);
+}
+.loading[data-progress="88"] .br-loading-mask.full,
+.loading[data-progress="88"] .br-loading-fill,
+.br-loading[data-progress="88"] .br-loading-mask.full,
+.br-loading[data-progress="88"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(158.4deg);
+}
+.loading[data-progress="89"] .br-loading-mask.full,
+.loading[data-progress="89"] .br-loading-fill,
+.br-loading[data-progress="89"] .br-loading-mask.full,
+.br-loading[data-progress="89"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(160.2deg);
+}
+.loading[data-progress="90"] .br-loading-mask.full,
+.loading[data-progress="90"] .br-loading-fill,
+.br-loading[data-progress="90"] .br-loading-mask.full,
+.br-loading[data-progress="90"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(162deg);
+}
+.loading[data-progress="91"] .br-loading-mask.full,
+.loading[data-progress="91"] .br-loading-fill,
+.br-loading[data-progress="91"] .br-loading-mask.full,
+.br-loading[data-progress="91"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(163.8deg);
+}
+.loading[data-progress="92"] .br-loading-mask.full,
+.loading[data-progress="92"] .br-loading-fill,
+.br-loading[data-progress="92"] .br-loading-mask.full,
+.br-loading[data-progress="92"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(165.6deg);
+}
+.loading[data-progress="93"] .br-loading-mask.full,
+.loading[data-progress="93"] .br-loading-fill,
+.br-loading[data-progress="93"] .br-loading-mask.full,
+.br-loading[data-progress="93"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(167.4deg);
+}
+.loading[data-progress="94"] .br-loading-mask.full,
+.loading[data-progress="94"] .br-loading-fill,
+.br-loading[data-progress="94"] .br-loading-mask.full,
+.br-loading[data-progress="94"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(169.2deg);
+}
+.loading[data-progress="95"] .br-loading-mask.full,
+.loading[data-progress="95"] .br-loading-fill,
+.br-loading[data-progress="95"] .br-loading-mask.full,
+.br-loading[data-progress="95"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(171deg);
+}
+.loading[data-progress="96"] .br-loading-mask.full,
+.loading[data-progress="96"] .br-loading-fill,
+.br-loading[data-progress="96"] .br-loading-mask.full,
+.br-loading[data-progress="96"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(172.8deg);
+}
+.loading[data-progress="97"] .br-loading-mask.full,
+.loading[data-progress="97"] .br-loading-fill,
+.br-loading[data-progress="97"] .br-loading-mask.full,
+.br-loading[data-progress="97"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(174.6deg);
+}
+.loading[data-progress="98"] .br-loading-mask.full,
+.loading[data-progress="98"] .br-loading-fill,
+.br-loading[data-progress="98"] .br-loading-mask.full,
+.br-loading[data-progress="98"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(176.4deg);
+}
+.loading[data-progress="99"] .br-loading-mask.full,
+.loading[data-progress="99"] .br-loading-fill,
+.br-loading[data-progress="99"] .br-loading-mask.full,
+.br-loading[data-progress="99"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(178.2deg);
+}
+.loading[data-progress="100"] .br-loading-mask.full,
+.loading[data-progress="100"] .br-loading-fill,
+.br-loading[data-progress="100"] .br-loading-mask.full,
+.br-loading[data-progress="100"] .br-loading-fill {
+  animation: fill ease-in-out 2s;
+  transform: rotate(180deg);
+}
 @keyframes spinAround {
   from {
     transform: rotate(0deg);
@@ -28296,6 +28542,12 @@ button.br-item:not(:disabled):active {
     transform: rotate(359deg);
   }
 }
+@keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+}
+
 .br-magic-button {
   --magic-size: var(--magic-medium);
   --magic-small: var(--spacing-scale-4xh);
@@ -28461,14 +28713,14 @@ button.br-item:not(:disabled):active {
 .feedback.is-warning, .feedback.warning, .feedback[warning] {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .feedback.is-success, .feedback.success, .feedback[success] {
   --message-background: var(--success-alternative);
@@ -28544,6 +28796,7 @@ button.br-item:not(:disabled):active {
   margin: var(--spacing-scale-3x) 0 var(--spacing-scale-2x);
   overflow: auto;
   padding: 0 var(--spacing-scale-2x);
+  width: auto;
 }
 .br-modal-body::-webkit-scrollbar {
   height: var(--spacing-scale-base);
@@ -28725,6 +28978,12 @@ button.br-item:not(:disabled):active {
 .br-pagination li {
   padding: 0;
 }
+.br-pagination.dark-mode .page {
+  color: var(--color-dark);
+}
+.br-pagination.dark-mode .br-select .br-item label {
+  color: var(--color-dark);
+}
 .br-pagination .page {
   align-items: center;
   border: 1px solid transparent;
@@ -28839,14 +29098,14 @@ button.br-item:not(:disabled):active {
 .br-pagination.inverted, .br-pagination.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-pagination.inverted.inverted .br-input,
 .br-pagination.inverted.inverted .br-input label, .br-pagination.inverted.dark-mode .br-input,
@@ -28970,6 +29229,16 @@ button.br-item:not(:disabled):active {
   min-width: 100px;
   position: relative;
 }
+.br-select .br-input input {
+  padding-right: 29px;
+  text-overflow: ellipsis;
+}
+.br-select .br-input input::after {
+  bottom: 0;
+  padding: 0 5px;
+  position: absolute;
+  right: 0;
+}
 .br-select .br-list {
   background: var(--bg-color);
   box-shadow: var(--select-shadow);
@@ -29008,14 +29277,14 @@ button.br-item:not(:disabled):active {
 .br-select .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   --item-padding-y: var(--spacing-scale-2x);
 }
 .br-select .br-item .content {
@@ -29065,14 +29334,14 @@ button.br-item:not(:disabled):active {
 .br-select .br-item.selected, .br-select .br-item[selected] {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-select .br-item.selected:focus, .br-select .br-item[selected]:focus {
   outline: none;
@@ -29310,26 +29579,25 @@ button.br-item:not(:disabled):active {
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-sign-in.loading::after, .br-sign-in[loading]::after, .br-sign-in.is-loading::after,
-.br-button.sign-in.loading::after,
-.br-button.sign-in[loading]::after,
-.br-button.sign-in.is-loading::after {
+.br-sign-in.loading,
+.br-button.sign-in.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-sign-in.loading:not(:disabled):hover,
+.br-button.sign-in.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-sign-in.loading::before,
+.br-button.sign-in.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-sign-in.loading.primary::after, .br-sign-in.loading.danger::after, .br-sign-in.loading.success::after, .br-sign-in.loading.info::after, .br-sign-in[loading].primary::after, .br-sign-in[loading].danger::after, .br-sign-in[loading].success::after, .br-sign-in[loading].info::after, .br-sign-in.is-loading.primary::after, .br-sign-in.is-loading.danger::after, .br-sign-in.is-loading.success::after, .br-sign-in.is-loading.info::after,
-.br-button.sign-in.loading.primary::after,
-.br-button.sign-in.loading.danger::after,
-.br-button.sign-in.loading.success::after,
-.br-button.sign-in.loading.info::after,
-.br-button.sign-in[loading].primary::after,
-.br-button.sign-in[loading].danger::after,
-.br-button.sign-in[loading].success::after,
-.br-button.sign-in[loading].info::after,
-.br-button.sign-in.is-loading.primary::after,
-.br-button.sign-in.is-loading.danger::after,
-.br-button.sign-in.is-loading.success::after,
-.br-button.sign-in.is-loading.info::after {
+.br-sign-in.loading.primary::before, .br-sign-in.loading.danger::before, .br-sign-in.loading.success::before, .br-sign-in.loading.info::before,
+.br-button.sign-in.loading.primary::before,
+.br-button.sign-in.loading.danger::before,
+.br-button.sign-in.loading.success::before,
+.br-button.sign-in.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-sign-in.inverted, .br-sign-in.is-inverted, .br-sign-in[inverted], .br-sign-in.dark-mode,
@@ -29339,14 +29607,14 @@ button.br-item:not(:disabled):active {
 .br-button.sign-in.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   color: var(--interactive-dark);
 }
 .br-sign-in.inverted.primary, .br-sign-in.inverted[primary], .br-sign-in.inverted.is-primary, .br-sign-in.is-inverted.primary, .br-sign-in.is-inverted[primary], .br-sign-in.is-inverted.is-primary, .br-sign-in[inverted].primary, .br-sign-in[inverted][primary], .br-sign-in[inverted].is-primary, .br-sign-in.dark-mode.primary, .br-sign-in.dark-mode[primary], .br-sign-in.dark-mode.is-primary,
@@ -29432,6 +29700,9 @@ button.br-item:not(:disabled):active {
 .br-skiplink a:focus, .br-skiplink a:focus-visible {
   top: 0;
 }
+.br-skiplink .br-tag {
+  background: var(--interactive);
+}
 .br-skiplink.full {
   box-shadow: var(--skiplink-shadow);
   flex-direction: row;
@@ -29464,6 +29735,7 @@ button.br-item:not(:disabled):active {
   --step-alert-info-icon: "";
   --step-alert-danger-icon: "";
   display: flex;
+  padding: var(--spacing-scale-base);
 }
 .br-step .step-progress {
   display: flex;
@@ -29925,14 +30197,14 @@ button.br-item:not(:disabled):active {
 .br-step.inverted, .br-step.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-step.inverted .step-progress-btn[data-alert=success], .br-step.dark-mode .step-progress-btn[data-alert=success] {
   color: var(--success-alternative);
@@ -30006,12 +30278,8 @@ button.br-item:not(:disabled):active {
   /* stylelint-enable no-descending-specificity */
 }
 .br-switch input {
-  appearance: none;
-  height: 0;
   opacity: 0;
-  overflow: hidden;
   position: absolute;
-  width: 0;
 }
 .br-switch input + label {
   align-items: center;
@@ -30175,7 +30443,12 @@ button.br-item:not(:disabled):active {
 .br-table .responsive {
   overflow: auto;
 }
+.br-table tr:hover td.column-collapse {
+  background-color: var(--background-alternative);
+  background-image: none;
+}
 .br-table .column-collapse {
+  background-color: var(--background-alternative);
   width: 40px;
 }
 .br-table .column-checkbox {
@@ -30185,7 +30458,8 @@ button.br-item:not(:disabled):active {
   position: relative;
 }
 .br-table .table-header.show .top-bar {
-  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 .br-table .top-bar {
   align-items: center;
@@ -30252,14 +30526,14 @@ button.br-item:not(:disabled):active {
 .br-table .selection-bar {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   --table-padding: var(--spacing-scale-base) var(--spacing-scale-2x);
   align-items: center;
   background-color: var(--interactive-light);
@@ -30333,26 +30607,26 @@ button.br-item:not(:disabled):active {
 .br-table.inverted, .br-table.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-table.inverted.inverted, .br-table.inverted.dark-mode, .br-table.dark-mode.inverted, .br-table.dark-mode.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-table.inverted.inverted.inverted .br-input,
 .br-table.inverted.inverted.inverted .br-input label, .br-table.inverted.inverted.dark-mode .br-input,
@@ -30371,10 +30645,10 @@ button.br-item:not(:disabled):active {
   background-color: var(--background-light);
   color: var(--active);
 }
-.br-table.inverted th, .br-table.dark-mode th {
+.br-table.inverted th, .br-table.inverted td.column-collapse, .br-table.inverted tr:hover td.column-collapse, .br-table.dark-mode th, .br-table.dark-mode td.column-collapse, .br-table.dark-mode tr:hover td.column-collapse {
   background-color: var(--background-dark);
 }
-.br-table.no-hover:hover td {
+.br-table.no-hover td:not(.column-collapse):hover td {
   background: none;
 }
 
@@ -30512,14 +30786,14 @@ button.br-item:not(:disabled):active {
 .br-tab.inverted, .br-tab.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-tab.inverted .tab-item.active button, .br-tab.dark-mode .tab-item.active button {
   border-bottom-color: var(--background-light);
@@ -30630,6 +30904,7 @@ button.br-item:not(:disabled):active {
   margin-right: var(--spacing-scale-baseh);
 }
 .br-tag.interaction-select input {
+  height: 0;
   opacity: 0;
   position: relative;
   width: 0;
@@ -30772,6 +31047,7 @@ button.br-item:not(:disabled):active {
   margin-right: var(--spacing-scale-baseh);
 }
 .br-tag.interaction-select input {
+  height: 0;
   opacity: 0;
   position: relative;
   width: 0;
@@ -30868,6 +31144,7 @@ button.br-item:not(:disabled):active {
   margin-right: var(--spacing-scale-baseh);
 }
 .br-tag.interaction-select input {
+  height: 0;
   opacity: 0;
   position: relative;
   width: 0;
@@ -31113,7 +31390,7 @@ button.br-item:not(:disabled):active {
 }
 .br-textarea textarea {
   background: var(--background-light);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-alternative);
   border-radius: 6px;
   color: var(--color);
   display: block;
@@ -31161,6 +31438,9 @@ button.br-item:not(:disabled):active {
   --color: var(--color-dark);
   --focus-color: var(--focus-color-dark);
 }
+.br-textarea.inverted textarea, .br-textarea.dark-mode textarea {
+  color: var(--color-light);
+}
 
 .br-tooltip {
   align-items: flex-start;
@@ -31204,6 +31484,7 @@ button.br-item:not(:disabled):active {
 .br-tooltip[popover] {
   max-width: 320px;
   min-width: 240px;
+  overflow-x: hidden;
   width: auto;
 }
 .br-tooltip[success] {
@@ -31461,11 +31742,18 @@ button.br-item:not(:disabled):active {
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-upload .upload-button.loading::after, .br-upload .upload-button[loading]::after, .br-upload .upload-button.is-loading::after {
+.br-upload .upload-button.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-upload .upload-button.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-upload .upload-button.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-upload .upload-button.loading.primary::after, .br-upload .upload-button.loading.danger::after, .br-upload .upload-button.loading.success::after, .br-upload .upload-button.loading.info::after, .br-upload .upload-button[loading].primary::after, .br-upload .upload-button[loading].danger::after, .br-upload .upload-button[loading].success::after, .br-upload .upload-button[loading].info::after, .br-upload .upload-button.is-loading.primary::after, .br-upload .upload-button.is-loading.danger::after, .br-upload .upload-button.is-loading.success::after, .br-upload .upload-button.is-loading.info::after {
+.br-upload .upload-button.loading.primary::before, .br-upload .upload-button.loading.danger::before, .br-upload .upload-button.loading.success::before, .br-upload .upload-button.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-upload.success .upload-button, .br-upload[data-success] .upload-button {
@@ -31725,6 +32013,11 @@ button.br-item:not(:disabled):active {
 .br-wizard .wizard-panel-content:hover::-webkit-scrollbar-thumb {
   background: var(--gray-40);
 }
+.br-wizard .wizard-panel-content:focus, .br-wizard .wizard-panel-content:focus-visible, .br-wizard .wizard-panel-content.focus-visible {
+  border-color: var(--focus) !important;
+  box-shadow: 0 0 0 var(--surface-width-md) var(--focus);
+  outline: none;
+}
 .br-wizard .wizard-panel-content > :last-child {
   margin-bottom: 0;
 }
@@ -31916,27 +32209,26 @@ button.br-item:not(:disabled):active {
 .br-wizard.inverted, .br-wizard.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-wizard.inverted .br-button.primary, .br-wizard.inverted .br-button[primary], .br-wizard.inverted .br-button.is-primary, .br-wizard.dark-mode .br-button.primary, .br-wizard.dark-mode .br-button[primary], .br-wizard.dark-mode .br-button.is-primary {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
-  --interactive-rgb: var(--interactive-light-rgb);
+  --interactive-rgb: var(--background-dark-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
-  --interactive-rgb: var(--background-dark-rgb);
+  --focus: var(--focus-color-light);
   background-color: var(--interactive-dark);
   color: var(--background-dark);
 }
@@ -31956,6 +32248,19 @@ button.br-item:not(:disabled):active {
 }
 .br-wizard.inverted .wizard-panel .wizard-panel-btn, .br-wizard.dark-mode .wizard-panel .wizard-panel-btn {
   background-color: transparent;
+}
+
+*[data-toggle=accordion]:not(:disabled):hover {
+  background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
+}
+*[data-toggle=accordion]:focus {
+  outline: none;
+}
+*[data-toggle=accordion].focus-visible, *[data-toggle=accordion]:focus-visible {
+  outline-color: var(--focus);
+  outline-offset: var(--focus-offset);
+  outline-style: var(--focus-style);
+  outline-width: var(--focus-width);
 }
 
 .accordion-example .br-list .header {
@@ -32159,14 +32464,14 @@ button.br-item:not(:disabled):active {
 .checkgroup-example input + label:empty {
   padding-left: var(--spacing-scale-3x);
 }
-.checkgroup-example input[indeterminate] {
+.checkgroup-example input[indeterminate], .checkgroup-example input:indeterminate {
   color: var(--color-danger, #e52207);
 }
-.checkgroup-example input[indeterminate] + label::before {
+.checkgroup-example input[indeterminate] + label::before, .checkgroup-example input:indeterminate + label::before {
   background: var(--color-primary-lighten-01);
   border-color: var(--color-primary-lighten-01);
 }
-.checkgroup-example input:checked + label::after {
+.checkgroup-example input:checked + label::after, .checkgroup-example input:indeterminate + label::after {
   border: solid var(--color-primary-lighten-01);
   border-width: 0 3px 3px 0;
   content: "";
@@ -32177,7 +32482,7 @@ button.br-item:not(:disabled):active {
   transform: rotate(45deg);
   width: 8px;
 }
-.checkgroup-example input:checked[indeterminate] + label::after {
+.checkgroup-example input:checked[indeterminate] + label::after, .checkgroup-example input:indeterminate + label::after {
   border-color: var(--color-secondary-01);
   border-width: 0 0 3px;
   top: 2px;
@@ -32202,14 +32507,16 @@ button.br-item:not(:disabled):active {
   border-width: 0 2px 2px 0;
   height: var(--icon-size-sm);
   left: 7px;
-  top: 6px;
+  top: 4px;
   width: 6px;
 }
-.checkgroup-example.is-small input[type=checkbox]:checked[indeterminate] + label::after, .checkgroup-example.small input[type=checkbox]:checked[indeterminate] + label::after, .checkgroup-example[small] input[type=checkbox]:checked[indeterminate] + label::after {
+.checkgroup-example.is-small input[type=checkbox]:checked[indeterminate] + label::after, .checkgroup-example.is-small input[type=checkbox]:indeterminate + label::after, .checkgroup-example.small input[type=checkbox]:checked[indeterminate] + label::after, .checkgroup-example.small input[type=checkbox]:indeterminate + label::after, .checkgroup-example[small] input[type=checkbox]:checked[indeterminate] + label::after, .checkgroup-example[small] input[type=checkbox]:indeterminate + label::after {
   border-color: var(--color-secondary-01);
   border-width: 0 0 3px;
-  top: 2px;
+  left: 7px;
+  top: 1px;
   transform: none;
+  width: 6px;
 }
 .checkgroup-example.is-invalid:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox] + label::before, .checkgroup-example.invalid:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox] + label::before, .checkgroup-example[invalid]:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox] + label::before {
   border-color: var(--color-danger, #e52207);
@@ -32237,6 +32544,7 @@ button.br-item:not(:disabled):active {
 .checkgroup-example.is-valid:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox]:checked + label::before, .checkgroup-example.valid:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox]:checked + label::before, .checkgroup-example[valid]:not(.is-inverted):not(.inverted):not([inverted]) input[type=checkbox]:checked + label::before {
   border-color: var(--color-success, #168821);
 }
+
 *[data-toggle=collapse]:not(:disabled):hover {
   background-image: linear-gradient(rgba(var(--interactive-rgb), var(--hover)), rgba(var(--interactive-rgb), var(--hover)));
 }

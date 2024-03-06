@@ -188,26 +188,25 @@
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-sign-in.loading::after, .br-sign-in[loading]::after, .br-sign-in.is-loading::after,
-.br-button.sign-in.loading::after,
-.br-button.sign-in[loading]::after,
-.br-button.sign-in.is-loading::after {
+.br-sign-in.loading,
+.br-button.sign-in.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-sign-in.loading:not(:disabled):hover,
+.br-button.sign-in.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-sign-in.loading::before,
+.br-button.sign-in.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-sign-in.loading.primary::after, .br-sign-in.loading.danger::after, .br-sign-in.loading.success::after, .br-sign-in.loading.info::after, .br-sign-in[loading].primary::after, .br-sign-in[loading].danger::after, .br-sign-in[loading].success::after, .br-sign-in[loading].info::after, .br-sign-in.is-loading.primary::after, .br-sign-in.is-loading.danger::after, .br-sign-in.is-loading.success::after, .br-sign-in.is-loading.info::after,
-.br-button.sign-in.loading.primary::after,
-.br-button.sign-in.loading.danger::after,
-.br-button.sign-in.loading.success::after,
-.br-button.sign-in.loading.info::after,
-.br-button.sign-in[loading].primary::after,
-.br-button.sign-in[loading].danger::after,
-.br-button.sign-in[loading].success::after,
-.br-button.sign-in[loading].info::after,
-.br-button.sign-in.is-loading.primary::after,
-.br-button.sign-in.is-loading.danger::after,
-.br-button.sign-in.is-loading.success::after,
-.br-button.sign-in.is-loading.info::after {
+.br-sign-in.loading.primary::before, .br-sign-in.loading.danger::before, .br-sign-in.loading.success::before, .br-sign-in.loading.info::before,
+.br-button.sign-in.loading.primary::before,
+.br-button.sign-in.loading.danger::before,
+.br-button.sign-in.loading.success::before,
+.br-button.sign-in.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-sign-in.inverted, .br-sign-in.is-inverted, .br-sign-in[inverted], .br-sign-in.dark-mode,
@@ -217,14 +216,14 @@
 .br-button.sign-in.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   color: var(--interactive-dark);
 }
 .br-sign-in.inverted.primary, .br-sign-in.inverted[primary], .br-sign-in.inverted.is-primary, .br-sign-in.is-inverted.primary, .br-sign-in.is-inverted[primary], .br-sign-in.is-inverted.is-primary, .br-sign-in[inverted].primary, .br-sign-in[inverted][primary], .br-sign-in[inverted].is-primary, .br-sign-in.dark-mode.primary, .br-sign-in.dark-mode[primary], .br-sign-in.dark-mode.is-primary,

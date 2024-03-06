@@ -16,27 +16,41 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row">
+      <div class="row mt-5">
         <div class="col-sm-12 col-lg-4">
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="single" data-type="text">
             <div class="br-input has-icon">
-              <label for="simples-input">Label</label>
-              <input id="simples-input" type="text" placeholder="dd/mm/aaaa" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="simples-input-btn"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              <label for="simples-input">Datepicker</label>
+              <input id="simples-input" type="text" placeholder="exemplo: 02/02/2024" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="simples-input-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-5">
+        <div class="col-sm-12 col-lg-4">
+          <!-- [html-validate-disable input-attributes]-->
+          <div class="br-datetimepicker" data-mode="single" data-type="text">
+            <div class="br-input has-icon">
+              <label for="simples-input-aux">Datepicker com texto auxiliar</label>
+              <input id="simples-input-aux" type="text" placeholder="exemplo: 02/02/2024" aria-describedby="auxidatetime" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="simples-input-aux-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <P id="auxidatetime">Informe o dia com dois dígitos, mês com dois dígitos e ano com quatro dígitos</P>
+        </div>
+      </div>
+      <div class="row mt-5">
         <div class="col-sm-12 col-lg-4">
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="single" data-type="text" datetimepicker-config="minDate: '15/04/2022'">
             <div class="br-input has-icon">
-              <label for="simples-input-custom">Label</label>
-              <input id="simples-input-custom" type="text" placeholder="dd/mm/aaaa" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="simples-input-custom-btn"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              <label for="simples-input-custom">Datepicker customizada</label>
+              <input id="simples-input-custom" type="text" placeholder="exemplo: 02/02/2024" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="simples-input-custom-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -47,9 +61,9 @@
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="range" data-type="text">
             <div class="br-input has-icon">
-              <label for="range-input">Label</label>
-              <input id="range-input" type="text" placeholder="dd/mm/aaaa até dd/mm/aaaa" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="range-input-btn"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              <label for="range-input">Datepicker com range com a data inicial de 15/04/2022</label>
+              <input id="range-input" type="text" placeholder="exemplo: 02/02/2024 até 03/02/2025" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="range-input-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -60,9 +74,9 @@
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="single" data-type="time">
             <div class="br-input has-icon">
-              <label for="timepicker-input">Label</label>
-              <input id="timepicker-input" type="time" placeholder="hh:mm" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="timepicker-input-btn"><i class="fas fa-clock" aria-hidden="true"></i>
+              <label for="timepicker-input">Datepicker com hora</label>
+              <input id="timepicker-input" type="time" placeholder="exemplo: 02:40" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="timepicker-input-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-clock" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -73,9 +87,9 @@
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="single" data-type="datetime-local">
             <div class="br-input has-icon">
-              <label for="dateandtime-input">Label</label>
-              <input id="dateandtime-input" type="datetime-local" placeholder="dd/mm/aaaa hh:mm" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="dateandtime-input-btn"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              <label for="dateandtime-input">Datepicker com data e hora</label>
+              <input id="dateandtime-input" type="datetime-local" placeholder="exemplo: 02/02/2024 02:02" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="dateandtime-input-btn" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -87,9 +101,9 @@
           <!-- [html-validate-disable input-attributes]-->
           <div class="br-datetimepicker" data-mode="single" data-type="datetime-local">
             <div class="br-input has-icon disabled">
-              <label for="datetimepicker-disabled">Label</label>
-              <input id="datetimepicker-disabled" type="datetime-local" placeholder="dd/mm/aaaa hh:mm" disabled="disabled" data-input="data-input"/>
-              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="datetimepicker-disabled-btn" disabled="disabled"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
+              <label for="datetimepicker-disabled">Datepicker com data e hora</label>
+              <input id="datetimepicker-disabled" type="datetime-local" placeholder="exemplo: 02/02/2024 02:02" disabled="disabled" data-input="data-input"/>
+              <button class="br-button circle small" type="button" aria-label="Abrir Timepicker" data-toggle="data-toggle" id="datetimepicker-disabled-btn" disabled="disabled" tabindex="-1" aria-hidden="true"><i class="fas fa-calendar-alt" aria-hidden="true"></i>
               </button>
             </div>
           </div>

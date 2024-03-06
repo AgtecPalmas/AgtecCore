@@ -60,6 +60,11 @@ class BRInput {
         )) {
           input.setAttribute('type', 'text')
         }
+        for (const button of this.component.querySelectorAll(
+          'button[aria-label="Exibir senha"]'
+        )) {
+          button.setAttribute('aria-checked', 'true')
+        }        
       } else if (icon.classList.contains('fa-eye-slash')) {
         icon.classList.remove('fa-eye-slash')
         icon.classList.add('fa-eye')
@@ -68,6 +73,11 @@ class BRInput {
         )) {
           input.setAttribute('type', 'password')
         }
+        for (const button of this.component.querySelectorAll(
+          'button[aria-label="Exibir senha"]'
+        )) {
+          button.setAttribute('aria-checked', 'false')
+        }        
       }
     }
   }

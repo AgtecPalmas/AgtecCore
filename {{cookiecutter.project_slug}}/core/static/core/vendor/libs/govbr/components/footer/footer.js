@@ -73,6 +73,17 @@ class BRFooter {
         })
         this.britems.push(trigger)
       })
+
+      this.list.querySelectorAll('.br-item').forEach((trigger) => {
+        trigger.addEventListener('keydown', (e) => {
+          if (e.keyCode === 13) {
+            if (window.matchMedia('(max-width: 992px)').matches) {
+              this._showList(e)
+            }
+          }
+        })
+        this.britems.push(trigger)
+      })
     }
   }
 
@@ -102,6 +113,8 @@ class BRFooter {
       trigger.style.display === 'block'
         ? this._iconAngleUP(iconComponent)
         : this._iconAngleDOWN(iconComponent)
+
+      this._setAriaAttributes(trigger, e)
     })
   }
 
@@ -141,6 +154,33 @@ class BRFooter {
   _iconAngleDOWN(iconComponent) {
     iconComponent.classList.remove('fa-angle-up')
     iconComponent.classList.add('fa-angle-down')
+  }
+
+  /**
+   * Define atributos ARIA para um elemento de lista com base na visibilidade de um trigger.
+   * @param {object} trigger - Elemento DOM que controla a visibilidade do elemento de lista
+   * @private
+   */
+  _setAriaAttributes(optionTriggerExternal, event) {
+    const itemList = this.list.querySelectorAll('.br-item')
+
+    itemList.forEach(() => {
+      const listId = `list-${Math.floor(Math.random() * 10000)}`
+      const isBlock = optionTriggerExternal.style.display === 'block'
+
+      const { parentElement } = event.target
+
+      parentElement.setAttribute('id', listId)
+      parentElement.setAttribute('data-visible', isBlock)
+      parentElement.setAttribute('aria-expanded', isBlock)
+      parentElement.setAttribute(
+        'aria-label',
+        isBlock ? 'expandido' : 'recolhido'
+      )
+      parentElement.setAttribute('aria-controls', listId)
+      parentElement.setAttribute('data-group', 'group1')
+      parentElement.setAttribute('data-target', listId)
+    })
   }
 }
 

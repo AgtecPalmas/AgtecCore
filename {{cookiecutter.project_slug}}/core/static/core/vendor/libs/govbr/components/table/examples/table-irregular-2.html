@@ -4,20 +4,22 @@
     <div class="top-bar">
       <div class="table-title">Tabela irregular 2</div>
       <div class="actions-trigger text-nowrap">
-        <button class="br-button circle" type="button" title="Ver mais opções" data-toggle="dropdown" data-target="target01-93212" aria-label="Ver mais opções"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
+        <button class="br-button circle" type="button" id="button-dropdown-density" title="Ver mais opções" data-toggle="dropdown" data-target="target01-68846" aria-label="Definir densidade da tabela" aria-haspopup="true" aria-live="polite"><i class="fas fa-ellipsis-v" aria-hidden="true"></i>
         </button>
-        <div class="br-list" id="target01-93212" hidden="hidden">
-          <button class="br-item" type="button" data-density="small">Densidade alta
+        <div class="br-list" id="target01-68846" role="menu" aria-labelledby="button-dropdown-density" hidden="hidden">
+          <button class="br-item" type="button" data-density="small" role="menuitem">Densidade alta
           </button><span class="br-divider"></span>
-          <button class="br-item" type="button" data-density="medium">Densidade média
+          <button class="br-item" type="button" data-density="medium" role="menuitem">Densidade média
           </button><span class="br-divider"></span>
-          <button class="br-item" type="button" data-density="large">Densidade baixa
+          <button class="br-item" type="button" data-density="large" role="menuitem">Densidade baixa
           </button>
         </div>
       </div>
     </div>
   </div>
-  <table>
+  <table><col>
+<colgroup span="2"></colgroup>
+<colgroup span="3"></colgroup>
     <thead>
       <tr>
         <th class="border-right" rowspan="2" scope="rowgroup">Name</th>

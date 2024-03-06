@@ -131,24 +131,31 @@
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-button.loading::after, .br-button[loading]::after, .br-button.is-loading::after {
+.br-button.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-button.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-button.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-button.loading.primary::after, .br-button.loading.danger::after, .br-button.loading.success::after, .br-button.loading.info::after, .br-button[loading].primary::after, .br-button[loading].danger::after, .br-button[loading].success::after, .br-button[loading].info::after, .br-button.is-loading.primary::after, .br-button.is-loading.danger::after, .br-button.is-loading.success::after, .br-button.is-loading.info::after {
+.br-button.loading.primary::before, .br-button.loading.danger::before, .br-button.loading.success::before, .br-button.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-button.inverted, .br-button.is-inverted, .br-button[inverted], .br-button.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   color: var(--interactive-dark);
 }
 .br-button.inverted.primary, .br-button.inverted[primary], .br-button.inverted.is-primary, .br-button.is-inverted.primary, .br-button.is-inverted[primary], .br-button.is-inverted.is-primary, .br-button[inverted].primary, .br-button[inverted][primary], .br-button[inverted].is-primary, .br-button.dark-mode.primary, .br-button.dark-mode[primary], .br-button.dark-mode.is-primary {

@@ -16,76 +16,78 @@
   </head>
   <body>
     <div class="container-fluid">
-      <p class="h4 mt-5">Tag de Interação Dispensável</p><span class="br-tag interaction"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button close inverted circle" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
-        </button></span><span class="br-tag interaction" id="interaction01"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button" type="button" aria-label="Fechar" data-dismiss="interaction01"><i class="fas fa-times" aria-hidden="true"></i>
-        </button></span><span class="br-tag interaction" id="interaction02"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button" type="button" aria-label="Fechar" data-dismiss="interaction02"><i class="fas fa-times" aria-hidden="true"></i>
+      <p class="h4 mt-5">Tag de Interação Dispensável</p><span class="br-tag interaction" id="interaction01"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag1">Carro 1</span>
+        <button class="br-button inverted circle" type="button" aria-label="Fechar" aria-describedby="interactivetag1" data-dismiss="interaction01"><i class="fas fa-times" aria-hidden="true"></i>
+        </button></span><span class="br-tag interaction" id="interaction02"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag2">Carro 2</span>
+        <button class="br-button" type="button" aria-label="Fechar" data-dismiss="interaction02" aria-describedby="interactivetag2"><i class="fas fa-times" aria-hidden="true"></i>
+        </button></span><span class="br-tag interaction" id="interaction03"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag3">Carro 3</span>
+        <button class="br-button" type="button" aria-label="Fechar" data-dismiss="interaction03" aria-describedby="interactivetag3"><i class="fas fa-times" aria-hidden="true"></i>
         </button></span>
       <p class="h4 mt-5">Tag com Seleção Múltipla</p><span class="br-tag interaction-select">
-        <input id="tag01" type="checkbox"/>
-        <label for="tag01"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <input id="tag01" type="checkbox" name="multipla" value="bicicleta"/>
+        <label for="tag01"><i class="fas fa-bicycle" aria-hidden="true"></i><span id="tag01-label">Bicicleta</span>
         </label></span><span class="br-tag interaction-select selected">
-        <input id="tag02" type="checkbox" checked="checked"/>
-        <label for="tag02"><i class="fas fa-ship" aria-hidden="true"></i><span>Label</span>
+        <input id="tag02" type="checkbox" checked="checked" name="multipla" value="barco"/>
+        <label for="tag02"><i class="fas fa-ship" aria-hidden="true"></i><span id="tag02-label">Barco</span>
         </label></span><span class="br-tag interaction-select selected disabled">
-        <input id="tag02" type="checkbox" checked="checked"/>
-        <label for="tag02"><i class="fas fa-ship" aria-hidden="true"></i><span>Tag Desativado</span>
+        <input id="tag03" type="checkbox" disabled="disabled" checked="checked" name="multipla" value="carro"/>
+        <label for="tag03"><i class="fas fa-car" aria-hidden="true"></i><span id="tag03-label">Carro</span>
         </label></span>
       <p class="h4 mt-5">Tag com Seleção Única</p><span class="br-tag interaction-select">
-        <input id="tag03" type="radio" name="vehicle"/>
-        <label for="tag03"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <input id="tag04" type="radio" name="vehicle" value="carro"/>
+        <label for="tag04"><i class="fas fa-car" aria-hidden="true"></i><span id="tag04-label">Carro</span>
         </label></span><span class="br-tag interaction-select selected">
-        <input id="tag04" type="radio" checked="checked" name="vehicle"/>
-        <label for="tag04"><i class="fas fa-ship" aria-hidden="true"></i><span>Label</span>
+        <input id="tag05" type="radio" checked="checked" name="vehicle" value="barco"/>
+        <label for="tag05"><i class="fas fa-ship" aria-hidden="true"></i><span id="tag05-label">Barco</span>
         </label></span>
-      <p class="h4 mt-5">Tag de Texto</p><span class="br-tag bg-mint-cool-vivid-40"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span></span><span class="br-tag bg-violet-warm-vivid-70"><span>Label</span></span>
+      <p class="h4 mt-5">Tag de Texto</p><span class="br-tag bg-mint-cool-vivid-70" aria-describedby="tag-text01"><i class="fas fa-car" aria-hidden="true"></i><span id="tag-text01">Texto e Ícone</span></span><span class="br-tag bg-violet-warm-vivid-70" aria-describedby="tag-text02"><span id="tag-text02">Texto</span></span>
       <p class="h4 mt-5">Tag de Status</p>
-      <div class="d-flex align-items-center"><span class="br-tag status bg-danger large"></span><span class="br-tag status bg-warning medium"></span><span class="br-tag status bg-success small"></span>
+      <div class="d-flex align-items-center"><span class="br-tag status bg-danger large" title="Status do usuário Offline"></span><span class="br-tag status bg-warning medium" title="Status do usuário Ausente"></span><span class="br-tag status bg-success small" title="Status do usuário Online"></span>
       </div>
-      <div class="d-flex align-items-center mt-1">
-        <div class="d-inline-flex align-items-center mr-3"><span class="br-tag status bg-danger large"></span><span class="ml-1">Offline</span>
-        </div>
-        <div class="d-inline-flex align-items-center mr-3"><span class="br-tag status bg-warning"></span><span class="ml-1">Ausente</span>
-        </div>
-        <div class="d-inline-flex align-items-center mr-3"><span class="br-tag status bg-success small"></span><span class="ml-1">Online</span>
+      <div class="d-flex align-items-center mt-1"><span class="br-tag status bg-danger large" aria-describedby="tag-status-01"></span><span class="ml-1" id="tag-status-01">Offline</span><span class="br-tag status bg-warning" aria-describedby="tag-status-01"></span><span class="ml-1" id="tag-status-02">Ausente</span><span class="br-tag status bg-success small" aria-describedby="tag-status-01"></span><span class="ml-1" id="tag-status-03">Online</span>
+      </div>
+      <p class="h4 mt-5">Tag de Contagem</p>
+      <div class="d-flex align-items-center"><span class="br-tag count bg-danger" title="1 Notificação não lidas"><span aria-hidden="true">1</span></span><span class="br-tag count bg-danger" title="10 Notificações não lidas"><span aria-hidden="true">10</span></span><span class="br-tag count bg-danger" title="130 Notificações não lidas"><span aria-hidden="true">130</span></span><span class="br-tag count bg-danger" title="999+ Notificações não lidas"><span aria-hidden="true">999+</span></span>
+        <div class="br-tooltip" role="tooltip" info="info" place="right"><span class="text" role="tooltip">99957</span>
         </div>
       </div>
-      <p class="h4 mt-5">Tag de Contagem</p><span class="br-tag count bg-danger"><span>1</span></span><span class="br-tag count bg-danger"><span>10</span></span><span class="br-tag count bg-danger"><span>130</span></span><span class="br-tag count bg-danger"><span>999+</span></span>
-      <div class="br-tooltip" role="tooltip" info="info" place="right"><span class="text" role="tooltip">99957</span>
+      <p class="h4 mt-5">Tag de Ícone</p>
+      <div class="d-flex align-items-center"><span class="br-tag icon bg-magenta-vivid-50" title="Ícone de Carro"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-orange-50" title="Ícone de Lupa"><i class="fas fa-search" aria-hidden="true"></i></span><span class="br-tag icon bg-violet-warm-vivid-70" title="Ícone de Usuário"><i class="fas fa-user" aria-hidden="true"></i></span>
       </div>
-      <p class="h4 mt-5">Tag de Ícone</p><span class="br-tag icon bg-magenta-vivid-50"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-orange-50"><i class="fas fa-search" aria-hidden="true"></i></span><span class="br-tag icon bg-violet-warm-vivid-70"><i class="fas fa-user" aria-hidden="true"></i></span>
-      <p class="h4 mt-5">Densidades</p><span class="br-tag bg-orange-vivid-40 small"><span>Alta</span></span><span class="br-tag bg-green-warm-vivid-40 medium"><span>Padrão</span></span><span class="br-tag bg-indigo-warm-vivid-50 large"><span>Baixa</span></span>
-      <div class="mt-1"></div><span class="br-tag interaction small"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
-        </button></span><span class="br-tag interaction medium"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
-        </button></span><span class="br-tag interaction large"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        <button class="br-button" type="button" aria-label="Fechar"><i class="fas fa-times" aria-hidden="true"></i>
+      <p class="h4 mt-5">Densidades</p>
+      <div class="d-flex align-items-center mt-1"><span class="br-tag bg-orange-vivid-50 small" aria-describedby="densidade01"><span id="densidade01">Alta</span></span><span class="br-tag bg-green-warm-vivid-50 medium" aria-describedby="densidade02"><span id="densidade02">Padrão</span></span><span class="br-tag bg-indigo-warm-vivid-50 large" aria-describedby="densidade03"><span id="densidade03">Baixa</span></span>
+      </div>
+      <div class="mt-1"></div><span class="br-tag interaction small"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag4">Alta</span>
+        <button class="br-button close" type="button" aria-label="Fechar" aria-describedby="interactivetag4"><i class="fas fa-times" aria-hidden="true"></i>
+        </button></span><span class="br-tag interaction medium"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag5">Padrão</span>
+        <button class="br-button close" type="button" aria-label="Fechar" aria-describedby="interactivetag5"><i class="fas fa-times" aria-hidden="true"></i>
+        </button></span><span class="br-tag interaction large"><i class="fas fa-car" aria-hidden="true"></i><span id="interactivetag6">Baixa</span>
+        <button class="br-button close" type="button" aria-label="Fechar" aria-describedby="interactivetag6"><i class="fas fa-times" aria-hidden="true"></i>
         </button></span>
       <div class="mt-1"></div><span class="br-tag interaction-select small">
-        <input id="tag05" type="checkbox"/>
-        <label for="tag05"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        </label></span><span class="br-tag interaction-select medium">
         <input id="tag06" type="checkbox"/>
-        <label for="tag06"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
-        </label></span><span class="br-tag interaction-select large">
+        <label for="tag06"><i class="fas fa-car" aria-hidden="true"></i><span>Alta</span>
+        </label></span><span class="br-tag interaction-select medium">
         <input id="tag07" type="checkbox"/>
-        <label for="tag07"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <label for="tag07"><i class="fas fa-car" aria-hidden="true"></i><span>Padrão</span>
+        </label></span><span class="br-tag interaction-select large">
+        <input id="tag08" type="checkbox"/>
+        <label for="tag08"><i class="fas fa-car" aria-hidden="true"></i><span>Baixa</span>
         </label></span>
       <div class="mt-1"></div><span class="br-tag interaction-select small">
-        <input id="tag08" type="radio" name="radio-sizes"/>
-        <label for="tag08"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <input id="tag09" type="radio" name="radio-sizes" value="alta"/>
+        <label for="tag09"><i class="fas fa-car" aria-hidden="true"></i><span>Alta</span>
         </label></span><span class="br-tag interaction-select medium">
-        <input id="tag09" type="radio" name="radio-sizes"/>
-        <label for="tag09"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <input id="tag10" type="radio" name="radio-sizes" value="padrao"/>
+        <label for="tag10"><i class="fas fa-car" aria-hidden="true"></i><span>Padrão</span>
         </label></span><span class="br-tag interaction-select large">
-        <input id="tag10" type="radio" name="radio-sizes"/>
-        <label for="tag10"><i class="fas fa-car" aria-hidden="true"></i><span>Label</span>
+        <input id="tag11" type="radio" name="radio-sizes" value="baixa"/>
+        <label for="tag11"><i class="fas fa-car" aria-hidden="true"></i><span>Baixa</span>
         </label></span>
-      <div class="mt-1"></div><span class="br-tag count bg-danger small"><span>1</span></span><span class="br-tag count bg-danger medium"><span>1</span></span><span class="br-tag count bg-danger large"><span>1</span></span>
-      <div class="mt-1"></div><span class="br-tag icon bg-magenta-vivid-50 small"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-magenta-vivid-50 medium"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-magenta-vivid-50 large"><i class="fas fa-car" aria-hidden="true"></i></span>
+      <div class="d-flex align-items-center mt-1"><span class="br-tag count bg-danger small" title="1 Notificação não lida"><span aria-hidden="true">1</span></span><span class="br-tag count bg-danger medium" title="2 Notificações não lidas"><span aria-hidden="true">2</span></span><span class="br-tag count bg-danger large" title="3 Notificações não lidas"><span aria-hidden="true">3</span></span>
+      </div>
+      <div class="d-flex align-items-center mt-1"><span class="br-tag icon bg-magenta-vivid-50 small" title="Ícone de Carro"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-magenta-vivid-50 medium" title="Ícone de Carro"><i class="fas fa-car" aria-hidden="true"></i></span><span class="br-tag icon bg-magenta-vivid-50 large" title="Ícone de Carro"><i class="fas fa-car" aria-hidden="true"></i></span>
+      </div>
     </div>
     <script src="../../core-init.js"></script>
   </body>

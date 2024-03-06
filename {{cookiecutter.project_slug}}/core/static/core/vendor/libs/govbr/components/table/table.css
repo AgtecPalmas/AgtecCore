@@ -13,7 +13,12 @@
 .br-table .responsive {
   overflow: auto;
 }
+.br-table tr:hover td.column-collapse {
+  background-color: var(--background-alternative);
+  background-image: none;
+}
 .br-table .column-collapse {
+  background-color: var(--background-alternative);
   width: 40px;
 }
 .br-table .column-checkbox {
@@ -23,7 +28,8 @@
   position: relative;
 }
 .br-table .table-header.show .top-bar {
-  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 .br-table .top-bar {
   align-items: center;
@@ -90,14 +96,14 @@
 .br-table .selection-bar {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   --table-padding: var(--spacing-scale-base) var(--spacing-scale-2x);
   align-items: center;
   background-color: var(--interactive-light);
@@ -171,26 +177,26 @@
 .br-table.inverted, .br-table.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-table.inverted.inverted, .br-table.inverted.dark-mode, .br-table.dark-mode.inverted, .br-table.dark-mode.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-table.inverted.inverted.inverted .br-input,
 .br-table.inverted.inverted.inverted .br-input label, .br-table.inverted.inverted.dark-mode .br-input,
@@ -209,10 +215,10 @@
   background-color: var(--background-light);
   color: var(--active);
 }
-.br-table.inverted th, .br-table.dark-mode th {
+.br-table.inverted th, .br-table.inverted td.column-collapse, .br-table.inverted tr:hover td.column-collapse, .br-table.dark-mode th, .br-table.dark-mode td.column-collapse, .br-table.dark-mode tr:hover td.column-collapse {
   background-color: var(--background-dark);
 }
-.br-table.no-hover:hover td {
+.br-table.no-hover td:not(.column-collapse):hover td {
   background: none;
 }
 

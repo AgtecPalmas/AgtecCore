@@ -27,6 +27,9 @@
 .br-skiplink a:focus, .br-skiplink a:focus-visible {
   top: 0;
 }
+.br-skiplink .br-tag {
+  background: var(--interactive);
+}
 .br-skiplink.full {
   box-shadow: var(--skiplink-shadow);
   flex-direction: row;

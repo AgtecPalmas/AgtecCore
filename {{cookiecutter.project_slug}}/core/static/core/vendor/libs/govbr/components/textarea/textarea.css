@@ -11,7 +11,7 @@
 }
 .br-textarea textarea {
   background: var(--background-light);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-color-alternative);
   border-radius: 6px;
   color: var(--color);
   display: block;
@@ -58,6 +58,9 @@
 .br-textarea.dark-mode label {
   --color: var(--color-dark);
   --focus-color: var(--focus-color-dark);
+}
+.br-textarea.inverted textarea, .br-textarea.dark-mode textarea {
+  color: var(--color-light);
 }
 
 /*# sourceMappingURL=textarea.css.map*/

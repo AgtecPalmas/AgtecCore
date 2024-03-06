@@ -28,7 +28,7 @@ class BRUpload {
       const button = document.createElement('button')
       button.className = 'upload-button'
       button.setAttribute('type', 'button')
-
+      button.setAttribute('aria-hidden', 'true')
       if (this._inputElement.getAttribute('multiple'))
         button.innerHTML =
           '<i class="fas fa-upload" aria-hidden="true"></i><span>Selecione o(s) arquivo(s)</span>'
@@ -49,6 +49,7 @@ class BRUpload {
         false
       )
       if (this.component.getAttribute('disabled')) {
+        button.setAttribute('disabled', 'disabled')
         const message = document.createElement('span')
         message.classList.add('feedback', 'warning', 'mt-1')
         message.setAttribute('role', 'alert')
@@ -173,9 +174,11 @@ class BRUpload {
   _feedback(status, text) {
     const icone = `<i class="fas fa-times-circle" aria-hidden="true"></i>${text}`
     const dataStatus = `data-${status}`
-    const message = document.createElement('span')
+    const message = document.createElement('div')
     message.classList.add('feedback', status, 'mt-1')
     message.setAttribute('role', 'alert')
+    message.setAttribute('aria-live', 'assertive')
+    message.setAttribute('aria-label', text)
     switch (status) {
       case 'danger':
         message.innerHTML = icone
@@ -313,6 +316,7 @@ class BRUpload {
     const info = document.createElement('div')
     info.className = 'content'
     info.innerHTML = this._fileArray[position].name
+    this._alertAddItemA11y(info, this._fileArray[position].name)
     const tooltip = document.createElement('div')
     tooltip.classList.add('br-tooltip')
     tooltip.setAttribute('role', 'tooltip')
@@ -322,21 +326,29 @@ class BRUpload {
     textTooltip.classList.add('text')
     textTooltip.setAttribute('role', 'tooltip')
     textTooltip.innerHTML = this._fileArray[position].name
+
     tooltip.appendChild(textTooltip)
     li.appendChild(info)
     li.appendChild(name)
     li.appendChild(tooltip)
     info.classList.add('text-primary-default', 'mr-auto')
+
     const del = document.createElement('div')
     del.className = 'support mr-n2'
     const btndel = document.createElement('button')
     const spanSize = document.createElement('span')
     spanSize.className = 'mr-1'
     spanSize.innerHTML = this._calcSize(this._fileArray[position].size)
+
     del.appendChild(spanSize)
     btndel.className = 'br-button'
     btndel.type = 'button'
     btndel.setAttribute('circle', '')
+
+    btndel.setAttribute(
+      'aria-label',
+      'apagar arquivo' + this._fileArray[position].name
+    )
     btndel.addEventListener(
       'click',
       (event) => {
@@ -351,12 +363,17 @@ class BRUpload {
     li.appendChild(del)
     this._fileArray[position].nowait = true
     const tooltipList = []
-    for (const brTooltip of window.document.querySelectorAll('.br-tooltip')) {
+    for (const brTooltip of this.component.querySelectorAll('.br-tooltip')) {
       tooltipList.push(new BRTooltip('br-tooltip', brTooltip))
     }
   }
 
-  /**
+  _alertAddItemA11y(elem, fileName) {
+    // elem.setAttribute('aria-label', 'adicionado na lista o arquivo' + fileName)
+    // elem.setAttribute('role', 'alert')
+  }
+
+  /**this.component.querySelector(".br-tooltip")
    * Formata tamanho do arquivo
    * @private
    * @param {Number} nBytes - quantidade de bytes do arquivo

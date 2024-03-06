@@ -15,6 +15,7 @@
   --step-alert-info-icon: "";
   --step-alert-danger-icon: "";
   display: flex;
+  padding: var(--spacing-scale-base);
 }
 .br-step .step-progress {
   display: flex;
@@ -476,14 +477,14 @@
 .br-step.inverted, .br-step.dark-mode {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-step.inverted .step-progress-btn[data-alert=success], .br-step.dark-mode .step-progress-btn[data-alert=success] {
   color: var(--success-alternative);

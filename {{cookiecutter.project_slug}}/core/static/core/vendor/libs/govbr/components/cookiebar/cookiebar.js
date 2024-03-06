@@ -31,6 +31,7 @@ export default class BRCookiebar {
    */
   _setUp() {
     this._buildCookiebar()
+    this._setAccessibility()
     this._setBehavior()
     this._showCookiebar()
   }
@@ -41,6 +42,20 @@ export default class BRCookiebar {
    */
   _buildCookiebar() {
     this.component.innerHTML = this.templates.setGlobalContentArea()
+  }
+
+  /**
+   * Configura o componente para a acessibiilidade com o leitor de tela
+   * @private
+   */
+  _setAccessibility() {
+    this.component.setAttribute('role', 'dialog')
+    this.component.setAttribute('aria-modal', true)
+    this.component.setAttribute('aria-describedby', 'info-t')
+    this.component.setAttribute(
+      'aria-label',
+      'Componente para definição de Cookies'
+    )
   }
 
   /**
@@ -184,6 +199,7 @@ export default class BRCookiebar {
   /**
    * Handler que trata do evento de click no grupo
    * @param {object} event - Objeto Event
+   * @param {number} groupIndex - Índice do grupo
    * @private
    */
   _handleToggleGroupClick(event) {
@@ -191,6 +207,7 @@ export default class BRCookiebar {
       event.currentTarget,
       'br-item'
     )
+
     if (element.classList.contains('open')) {
       element.classList.remove('open')
       element.nextElementSibling
@@ -198,7 +215,14 @@ export default class BRCookiebar {
         .forEach((check) => {
           check.setAttribute('tabindex', -1)
         })
-      this._setGroupAttributes(element, 'Expandir')
+
+      this._setGroupAttributes(
+        element,
+        `Expandir o grupo de Cookies ${
+          element.querySelector('.group-name').innerText
+        }`
+      )
+
       this._toggleIcon(element, 'fa-angle-up', 'fa-angle-down')
     } else {
       element.classList.add('open')
@@ -207,7 +231,14 @@ export default class BRCookiebar {
         .forEach((check) => {
           check.setAttribute('tabindex', 0)
         })
-      this._setGroupAttributes(element, 'Retrair')
+
+      this._setGroupAttributes(
+        element,
+        `Retrair o grupo de Cookies ${
+          element.querySelector('.group-name').innerText
+        }`
+      )
+
       this._toggleIcon(element, 'fa-angle-down', 'fa-angle-up')
       this._scrollUp(element)
     }
@@ -283,7 +314,7 @@ export default class BRCookiebar {
   _setCheckgroupBehavior(checkbox, groupIndex) {
     this.data.cookieGroups[groupIndex].groupSelected = checkbox.checked
     this.data.cookieGroups[groupIndex].groupIndeterminated =
-      checkbox.hasAttribute('indeterminate') ? true : false
+    checkbox.hasAttribute('indeterminate') ? true : false
     this.data.cookieGroups[groupIndex].cookieList.forEach(
       (cookieData, cookieIndex) => {
         if (!cookieData.cookieOptOut) {
@@ -405,9 +436,9 @@ export default class BRCookiebar {
   }
 
   /**
-   * Trata a label do atributo title e aria-label
+   * Trata a label do atributo aria-label
    * @param {object} element - Elemento DOM referente ao grupo
-   * @param {string} label - Label para o title e aria-label
+   * @param {string} label - Label para o aria-label
    * @private
    */
   _setGroupAttributes(element, label) {
@@ -416,7 +447,6 @@ export default class BRCookiebar {
         `${`${selectors.GROUP_BUTTON}, ${selectors.GROUP_NAME}, ${selectors.COOKIES_CHECKED}, ${selectors.GROUP_SIZE}`}`
       )
       .forEach((item) => {
-        item.setAttribute('title', label)
         item.setAttribute('aria-label', label)
       })
   }

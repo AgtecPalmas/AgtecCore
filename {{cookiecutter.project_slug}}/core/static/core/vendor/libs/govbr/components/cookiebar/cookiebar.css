@@ -95,7 +95,7 @@
 }
 .br-cookiebar .info-text {
   display: none;
-  line-height: var(--font-lineheight-medium);
+  line-height: var(--font-line-height-medium);
 }
 .br-cookiebar .br-modal-header .br-modal-title {
   font-size: var(--font-size-scale-up-06);
@@ -129,6 +129,7 @@
 .br-cookiebar .br-modal-body {
   flex: 1;
   margin: 0;
+  overflow: unset;
 }
 .br-cookiebar .br-modal-body:focus {
   outline: none;
@@ -169,14 +170,14 @@
 .br-cookiebar .group-info.selected {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   background-color: var(--background);
 }
 .br-cookiebar .group-info .br-button {
@@ -218,6 +219,9 @@
 }
 .br-cookiebar [class^=container] {
   --grid-margin: 0;
+}
+.br-cookiebar .br-checkbox:not(.hidden-label) {
+  --item-padding-y: 1px;
 }
 .br-cookiebar .br-modal {
   --modal-size: var(--modal-auto);

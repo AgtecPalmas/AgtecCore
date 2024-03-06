@@ -72,6 +72,7 @@ class BRCarousel {
   setActiveStage(num) {
     // remove active atts from all the stages
     this.removeAttributes(this.DOMstrings.carouselPages, 'active')
+
     // show active stage
     this.DOMstrings.carouselPages.forEach((stage, index) => {
       // motion efect
@@ -89,6 +90,7 @@ class BRCarousel {
     this.disabledBtns()
   }
 
+
   /**
    * Desabilita os botões se o carousel não for circular
    */
@@ -96,12 +98,21 @@ class BRCarousel {
     // Disables Carousel Buttons
     if (!this.DOMstrings.circular) {
       if (this.activeStageNum === 0) {
-        this.DOMstrings.carouselPrevBtn.setAttribute('disabled', '')
+        if(this.DOMstrings.carouselNextBtn){
+          if(document.activeElement==this.DOMstrings.carouselPrevBtn)this.DOMstrings.carouselNextBtn.focus()
+          this.DOMstrings.carouselPrevBtn.setAttribute('disabled', '')
+        }
+
+
       } else {
         this.DOMstrings.carouselPrevBtn.removeAttribute('disabled')
       }
       if (this.activeStageNum === this.DOMstrings.carouselPages.length - 1) {
-        this.DOMstrings.carouselNextBtn.setAttribute('disabled', '')
+        if(this.DOMstrings.carouselNextBtn){
+          if(document.activeElement==this.DOMstrings.carouselNextBtn)this.DOMstrings.carouselPrevBtn.focus()
+          this.DOMstrings.carouselNextBtn.setAttribute('disabled', '')
+        }
+
       } else {
         this.DOMstrings.carouselNextBtn.removeAttribute('disabled')
       }

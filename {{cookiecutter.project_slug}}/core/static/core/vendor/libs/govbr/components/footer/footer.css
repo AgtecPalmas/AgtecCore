@@ -1,64 +1,76 @@
+@charset "UTF-8";
+/* ----------------------------------------------------------------------- */
+/* Código criado para ajustar os espaçamentos entre as áreas do footer     */
+/* Deve ser removido na V4                                                 */
+/* ----------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------- */
 .br-footer {
   --footer-logo-height: 48px;
   --footer-logo-width: 180px;
-  --footer-logo-padding: var(--spacing-scale-6x) 0 var(--spacing-scale-4x);
+  --footer-padding: var(--spacing-scale-6x) 0 0;
+  --footer-padding-bottom: 0 0 var(--spacing-scale-6x);
   --footer-assigns-height: 46px;
   --footer-assigns-width: 180px;
   background: var(--background);
   border-top: 1px solid var(--border-color);
   color: var(--color);
   display: block;
+  padding: var(--footer-padding);
   --background: var(--background-dark);
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
+}
+.br-footer.no-divider {
+  border-top: none;
+  padding-top: 0;
 }
 .br-footer .br-item {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 .br-footer[inverted], .br-footer.inverted {
   --background: var(--background-light);
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .br-footer[inverted] .br-item, .br-footer.inverted .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
   --interactive-rgb: var(--interactive-light-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
 }
 .br-footer .logo {
-  padding: var(--footer-logo-padding);
+  padding: var(--footer-padding-bottom);
 }
 .br-footer .logo img {
   max-height: var(--footer-logo-height);
@@ -67,6 +79,7 @@
 .br-footer .br-list.horizontal {
   display: flex;
   flex-wrap: wrap;
+  padding: var(--footer-padding-bottom);
 }
 .br-footer .br-list.horizontal .header {
   width: 100%;
@@ -89,8 +102,11 @@
 .br-footer .social-network .social-network-title {
   font-size: var(--font-size-scale-up-01);
   font-weight: var(--font-weight-extra-bold);
-  margin-bottom: var(--spacing-scale-2x);
+  margin-bottom: var(--spacing-scale-3x);
   text-transform: uppercase;
+}
+.br-footer .social-network a:not(:last-of-type) {
+  margin-right: var(--spacing-scale-2x);
 }
 .br-footer .social-network a:hover {
   background-image: none;
@@ -103,10 +119,14 @@
   max-height: var(--footer-assigns-height);
   max-width: var(--footer-assigns-width);
 }
-@media (min-width: 992px) {
-  .br-footer .info {
-    text-align: center;
-  }
+.br-footer .info {
+  text-align: center;
+}
+.br-footer .br-divider {
+  margin-top: 0 !important;
+}
+.br-footer .d-none.d-sm-block > .row.align-items-end.justify-content-between.py-5 {
+  padding: var(--footer-padding-bottom) !important;
 }
 .br-footer .br-list {
   --background: var(--background-dark);

@@ -83,6 +83,10 @@ class BRBreadcrumb {
     const crumbList = this.component.querySelector('.crumb-list')
     const crumbs = crumbList.querySelectorAll('.crumb')
     crumbList.insertBefore(crumb, crumbs[1])
+
+    for (const itemTabindex of this.component.querySelectorAll('[aria-current="page"]')) {      
+      itemTabindex.setAttribute("tabindex", "-1")    
+    }
   }
 
   /**
@@ -93,6 +97,11 @@ class BRBreadcrumb {
     this.component.querySelectorAll('.crumb-list .crumb').forEach((crumb) => {
       if (crumb.classList.contains('menu-mobil')) {
         crumb.remove()
+
+        for (const itemTabindex of this.component.querySelectorAll('[aria-current="page"]')) {      
+          itemTabindex.setAttribute("tabindex", "0")    
+        }
+
       } else {
         crumb.classList.remove('d-none')
       }
@@ -110,6 +119,7 @@ class BRBreadcrumb {
 
     const button = document.createElement('button')
     button.classList.add('br-button', 'circle')
+    button.setAttribute("aria-label", "Abrir menu Breadcrumb")
 
     const span = document.createElement('span')
     span.classList.add('sr-only')
@@ -131,10 +141,12 @@ class BRBreadcrumb {
       if (card) {
         folderIcon.classList.remove('fas', 'fa-folder-minus')
         folderIcon.classList.add('fas', 'fa-folder-plus')
+        button.setAttribute("aria-label", "Breadcrumb menu fechado")
         this.component.querySelector('.br-card').remove()
       } else {
         folderIcon.classList.remove('fas', 'fa-folder-plus')
         folderIcon.classList.add('fas', 'fa-folder-minus')
+        button.setAttribute("aria-label", "Breadcrumb menu aberto")
         card = this._createList()
         this.component.appendChild(card)
       }
@@ -148,7 +160,7 @@ class BRBreadcrumb {
    * @private
    */
   _createList() {
-    const card = document.createElement('div')
+    const card = document.createElement('nav')
     card.classList.add('br-card')
 
     this.component.querySelectorAll('.crumb-list .crumb').forEach((crumb) => {

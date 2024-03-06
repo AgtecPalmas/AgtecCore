@@ -65,6 +65,7 @@ class BRTab {
       ancor.addEventListener(
         'click',
         (event) => {
+          event.currentTarget.setAttribute('aria-selected', 'false')
           this._switchTab(event.currentTarget.parentElement)
           this._switchContent(event.currentTarget.parentElement)
         },
@@ -298,11 +299,22 @@ class BRTab {
     )) {
       if (tabItem === currentTab) {
         tabItem.classList.add('active')
+        this._selectTab(tabItem, true)
       } else {
         tabItem.classList.remove('is-active')
         tabItem.classList.remove('active')
+        this._selectTab(tabItem, false)
       }
     }
+  }
+
+  /**
+   * Muda para o conteudo da aba referenciada
+   * @property {object} currentTab - referencia ao objeto DOM
+   * @property {boolean} value - valor a ser aplicado no aria selected
+   */
+  _selectTab(tabItem, value) {
+    tabItem.querySelector('button').setAttribute('aria-selected', value)
   }
 
   /**

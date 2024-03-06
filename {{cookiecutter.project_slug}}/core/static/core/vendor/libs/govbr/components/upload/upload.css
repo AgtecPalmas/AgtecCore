@@ -93,11 +93,18 @@
   background-color: var(--active);
   color: var(--color-dark);
 }
-.br-upload .upload-button.loading::after, .br-upload .upload-button[loading]::after, .br-upload .upload-button.is-loading::after {
+.br-upload .upload-button.loading {
+  color: transparent !important;
+  cursor: progress;
+}
+.br-upload .upload-button.loading:not(:disabled):hover {
+  background-image: none;
+}
+.br-upload .upload-button.loading::before {
   border-color: var(--interactive) var(--interactive) transparent;
   border-style: solid;
 }
-.br-upload .upload-button.loading.primary::after, .br-upload .upload-button.loading.danger::after, .br-upload .upload-button.loading.success::after, .br-upload .upload-button.loading.info::after, .br-upload .upload-button[loading].primary::after, .br-upload .upload-button[loading].danger::after, .br-upload .upload-button[loading].success::after, .br-upload .upload-button[loading].info::after, .br-upload .upload-button.is-loading.primary::after, .br-upload .upload-button.is-loading.danger::after, .br-upload .upload-button.is-loading.success::after, .br-upload .upload-button.is-loading.info::after {
+.br-upload .upload-button.loading.primary::before, .br-upload .upload-button.loading.danger::before, .br-upload .upload-button.loading.success::before, .br-upload .upload-button.loading.info::before {
   border-color: var(--background) var(--background) transparent;
 }
 .br-upload.success .upload-button, .br-upload[data-success] .upload-button {

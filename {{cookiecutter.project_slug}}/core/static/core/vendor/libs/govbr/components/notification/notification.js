@@ -1,4 +1,5 @@
 import Tooltip from '../../partial/js/behavior/tooltip'
+// import Tooltip from '../../partial/js/behavior/tooltip'
 /** Classe para instanciar um objeto BRNotification*/
 class BRNotification {
   /**
@@ -62,8 +63,30 @@ class BRNotification {
     window.document
       .querySelectorAll(':not(.br-header) .notification-tooltip')
       .forEach((TooltipNotification) => {
-        const texttooltip =
-          TooltipNotification.getAttribute('data-tooltip-text')
+        const elementTooltip = TooltipNotification.querySelector(
+          '[data-tooltip-text]'
+        )
+
+        let texttooltip = ''
+        // Verifica se existe atributo data-tooltip-text
+        if (elementTooltip) {
+          texttooltip = elementTooltip.getAttribute('data-tooltip-text')
+
+          if (texttooltip === null) {
+            return
+          }
+
+          if (typeof texttooltip === 'undefined') {
+            return
+          }
+
+          if (texttooltip.trim() === '') {
+            return
+          }
+        } else {
+          return
+        }
+
         const config = {
           activator: TooltipNotification,
           placement: 'top',
@@ -76,11 +99,11 @@ class BRNotification {
         ) {
           if (parent.classList)
             if (parent.classList.contains('header-avatar')) {
-              return ''
+              return
             }
         }
         TooltipExampleList.push(new Tooltip(config))
-        return ''
+        return
       })
   }
 

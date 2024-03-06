@@ -21,12 +21,8 @@
   /* stylelint-enable no-descending-specificity */
 }
 .br-switch input {
-  appearance: none;
-  height: 0;
   opacity: 0;
-  overflow: hidden;
   position: absolute;
-  width: 0;
 }
 .br-switch input + label {
   align-items: center;

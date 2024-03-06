@@ -32,18 +32,10 @@ class BRTag {
    * @private
    */
   _setSelection() {
-    const label = this.component.querySelector('label')
     const input = this.component.querySelector('input')
-    // const tagRadio = input.getAttribute('type') === 'radio' ? true : false
-
-    label.addEventListener('click', (event) => {
-      this._toggleSelection(input, event)
-    })
-    input.addEventListener('keydown', (event) => {
-      if (event.code === 'Space' || event.code === 'Enter') {
+    input.addEventListener('change', (event) => {
         this._toggleSelection(input, event)
-      }
-    })
+      })
   }
 
   /**

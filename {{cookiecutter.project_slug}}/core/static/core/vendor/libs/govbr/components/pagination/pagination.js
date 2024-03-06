@@ -10,6 +10,7 @@ class BRPagination {
     this.component = component
     this.currentPage = 1
     this._setBehaviors()
+    this._adaptSelectAccessibility()
   }
 
   /**
@@ -17,8 +18,55 @@ class BRPagination {
    * @private
    */
   _setBehaviors() {
+    this._setKeybordBehavior()
     this._setActive()
     this._dropdownBehavior()
+  }
+
+  /**
+   * Define o comportamento de algumas teclas
+   * @private
+   */
+  _setKeybordBehavior() {
+    this._setDefaultPaginationKeybordBehavior()
+    this._setContextualPaginationKeyboardBehavior()
+  }
+
+  _setDefaultPaginationKeybordBehavior() {
+    this.component.querySelectorAll('li *:first-child').forEach((element) => {
+      element.addEventListener('keydown', (event) => {
+        if (
+          event.key === 'ArrowLeft' &&
+          !element.hasAttribute('data-previous-page')
+        ) {
+          element.parentElement.previousElementSibling.children[0].focus()
+        }
+        if (
+          event.key === 'ArrowRight' &&
+          !element.hasAttribute('data-next-page')
+        ) {
+          element.parentElement.nextElementSibling.children[0].focus()
+        }
+        if (
+          event.key === 'ArrowDown' &&
+          element.nextElementSibling?.classList.contains('br-list')
+        ) {
+          element.nextElementSibling.children[0].focus()
+        }
+      })
+    })
+  }
+
+  _setContextualPaginationKeyboardBehavior() {
+    this.component
+      .querySelectorAll('.pagination-per-page .br-list')
+      .forEach((element) => {
+        element.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            event.currentTarget.parentElement.focus()
+          }
+        })
+      })
   }
 
   /**
@@ -31,7 +79,7 @@ class BRPagination {
     const pages = this.component.querySelectorAll('.page')
     pages.forEach((page) => {
       if (page.classList.contains('active')) {
-        this.currentPage = parseInt(page.querySelector('a'))
+        this.currentPage = parseInt(page.innerText)
       }
       page.classList.remove('d-none')
     })
@@ -127,10 +175,54 @@ class BRPagination {
    */
   _setActive() {
     for (const page of this.component.querySelectorAll('.page')) {
+      if (this.currentPage === Number(page.innerText)) {
+        page.setAttribute('aria-current', 'page')
+      } else {
+        page.removeAttribute('aria-current')
+      }
+
       page.addEventListener('click', (event) => {
         this._selectPage(event.currentTarget)
       })
     }
+    // debugger
+    for (const page of this.component.querySelectorAll(
+      '.pagination-ellipsis .br-item'
+    )) {
+      page.addEventListener('click', (event) => {
+        this._selectPage(event.currentTarget)
+      })
+    }
+  }
+
+  _initializeDropdownItems() {
+    this.component.querySelectorAll('.br-list').forEach((list) => {
+      const dropdownItems = Array.from(list.querySelectorAll('.br-item'))
+
+      dropdownItems.forEach((item) => {
+        item.addEventListener('keydown', (event) => {
+          const { key } = event
+          const currentIndex = dropdownItems.indexOf(item)
+          const lastIndex = dropdownItems.length - 1
+
+          switch (key) {
+            case 'ArrowUp':
+              event.preventDefault()
+              const prevIndex =
+                (currentIndex - 1 + dropdownItems.length) % dropdownItems.length
+              dropdownItems[prevIndex].focus()
+              break
+            case 'ArrowDown':
+              event.preventDefault()
+              const nextIndex = (currentIndex + 1) % dropdownItems.length
+              dropdownItems[nextIndex].focus()
+              break
+            default:
+              break
+          }
+        })
+      })
+    })
   }
 
   /**
@@ -159,9 +251,31 @@ class BRPagination {
       }
       this._dropdownClose(element)
     })
+
     window.document.addEventListener('click', (event) => {
       if (!this.component.contains(event.target)) {
         this._dropdownClose(element)
+      }
+    })
+
+    /**
+     * Adiciona um ouvinte de eventos ao documento para capturar a tecla "Esc" pressionada.
+     *
+     * @param {HTMLElement} element - O elemento associado ao dropdown que deve ser fechado.
+     */
+    element.nextElementSibling.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        this._dropdownClose(element)
+        const buttonInsideLi = element.parentElement.querySelector('button')
+        if (buttonInsideLi) {
+          buttonInsideLi.focus()
+        }
+      }
+      if (event.key === 'Tab') {
+        const items = event.currentTarget.querySelectorAll('.br-item')
+        if (items[items.length - 1].hasAttribute('data-focus-visible-added')) {
+          this._dropdownClose(element)
+        }
       }
     })
   }
@@ -176,6 +290,7 @@ class BRPagination {
     element.nextElementSibling.setAttribute('role', 'menu')
     element.setAttribute('aria-haspopup', 'true')
     this._dropdownClose(element)
+    this._initializeDropdownItems()
   }
 
   /**
@@ -206,9 +321,30 @@ class BRPagination {
   _selectPage(currentPage) {
     this.component.querySelectorAll('.page').forEach((page) => {
       page.classList.remove('active')
+      page.removeAttribute('aria-current')
     })
+    this.component.querySelectorAll('.br-item').forEach((page) => {
+      page.classList.remove('active')
+      page.removeAttribute('aria-current')
+    })
+
     currentPage.classList.add('active')
+    currentPage.setAttribute('aria-current', 'page')
+
     this._setLayout()
+  }
+
+  _adaptSelectAccessibility() {
+    window.addEventListener('load', () => {
+      this.component
+        .querySelectorAll('.pagination-per-page .br-select .br-list')
+        .forEach((element) => {
+          element.setAttribute('role', 'menu')
+          element.querySelectorAll('.br-item').forEach((item) => {
+            item.setAttribute('role', 'menuitem')
+          })
+        })
+    })
   }
 }
 
