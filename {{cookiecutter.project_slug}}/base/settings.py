@@ -261,7 +261,7 @@ EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
-# Documentação
+# Swagger e Redoc
 SPECTACULAR_SETTINGS = {
     "TITLE": "{{ cookiecutter.project_name }} API",
     "DESCRIPTION": "Swagger do Projeto {{ cookiecutter.project_name.title() }} API",
@@ -276,4 +276,8 @@ SPECTACULAR_SETTINGS = {
         "email": "{{ cookiecutter.email }}",
     },
     "TOS": "https://www.{{ cookiecutter.domain_name }}/",
+    "SERVE_PERMISSIONS": [
+        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAdminUser",
+    ],
 }
