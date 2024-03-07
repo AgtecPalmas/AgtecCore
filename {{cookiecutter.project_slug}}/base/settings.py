@@ -1,9 +1,9 @@
 import os
-import sentry_sdk
 import sys
 from datetime import timedelta
+
+import sentry_sdk
 from decouple import Csv, config
-from django.conf import settings
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     # "atendimento",
     "tempus_dominus",
     # Django Rest Framework
-    "drf_yasg",
+    "drf_spectacular",
     "dj_rest_auth",
     "rest_framework",
     "rest_framework.authtoken",
@@ -132,13 +132,13 @@ DOC_APPS = ["usuario", "configuracao_core"]
 
 # Desativando as migrações quando estiver executando os testes.
 if "test" in sys.argv and DEBUG is True:
+
     class DisableMigrations(object):
         def __contains__(self, item):
             return True
 
         def __getitem__(self, item):
             return None
-
 
     DATABASES = {
         "default": {
@@ -171,6 +171,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 200,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # DRF JWT
@@ -261,7 +262,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 COPYRIGHT = "{{ cookiecutter.client_name }}"
 
 # Emails
-DEFAULT_FROM_EMAIL=config("DEFAULT_FROM_EMAIL")
-EMAIL_HOST=config("EMAIL_HOST")
-EMAIL_HOST_USER=config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD=config("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
+# Swagger e Redoc
+SPECTACULAR_SETTINGS = {
+    "TITLE": "{{ cookiecutter.project_name }} API",
+    "DESCRIPTION": "Swagger do Projeto {{ cookiecutter.project_name.title() }} API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "LICENSE": {
+        "name": "BSD License",
+        "url": "https://www.palmas.to.gov.br/",
+    },
+    "CONTACT": {
+        "name": "{{ cookiecutter.author_name }}",
+        "email": "{{ cookiecutter.email }}",
+    },
+    "TOS": "https://www.{{ cookiecutter.domain_name }}/",
+    "SERVE_PERMISSIONS": [
+        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.IsAdminUser",
+    ],
+}

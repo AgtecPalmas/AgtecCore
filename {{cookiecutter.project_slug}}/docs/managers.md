@@ -17,7 +17,7 @@ No projeto existem dois managers para auxiliar o desenvolvimento do projeto Djan
      
     3.2. Para os models que possuam campos relacionais do tipo ForeignKey e você deseja que seja criado 
          o modal com um formulário para inserção de dados, você deve configurar o atributo **fk_fields_modal** 
-         também no class **Meta** do seu models.
+         também no class **Meta** do seu models e em sua View utilizar "Modal" no nome da classe do modelo FK.
 
             
             Exemplo:

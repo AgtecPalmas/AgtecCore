@@ -97,9 +97,6 @@ class ParserHTMLBuild:
             <div class="br-switch icon top mr-5">
             {{ form.campo }}
             {{ form.campo.label_tag }}
-            <div class="invalid-feedback">
-                Campo Requerido.
-            </div>
             {% if form.campo.errors %}
                 {{ form.campo.errors }}
             {% endif %}
@@ -112,7 +109,6 @@ class ParserHTMLBuild:
                         <div class='br-switch icon top mr-5'>\n\
                             {{ form.$field_name }}\n\
                             {{ form.$field_name.label_tag }}\n\
-                            <div class='invalid-feedback'>Campo Requerido.</div>\n\
                             {% if form.$field_name.errors %}\n\
                                 {{ form.$field_name.errors }}\n\
                             {% endif %}\n\
@@ -180,6 +176,9 @@ class ParserHTMLBuild:
                 readonly = getattr(field, "readonly", "")
                 label = "{{{{ form.{}.label_tag }}}}".format(campo.name)
 
+                if not required:
+                    label += '<span class="text-muted">(Opcional)</span>'
+
                 if campo.is_tipo("ForeignKey") or campo.is_tipo("OneToOneField"):
                     tag_result += label
                     _foreign_key_field = "\n{{{{ form.{} }}}}".format(campo.name)
@@ -197,12 +196,13 @@ class ParserHTMLBuild:
                                 campo.name, "has_add_permission:request"
                             )
                         )
+
+                        _foreign_key_field += '<span class="input-group-text btn btn-light" type="button" data-bs-toggle="modal"'
                         _foreign_key_field += (
-                            '<button type="button" class="btn btn-outline-secondary"'
+                            f'title="Adicionar {field.related_model._meta.object_name}"'
                         )
-                        _foreign_key_field += ' data-bs-toggle="modal" data-bs-target='
-                        _foreign_key_field += '"#form{}Modal"><i class="fas fa-plus"></i></button>{{% endif %}}'.format(
-                            field.related_model._meta.object_name
+                        _foreign_key_field += 'data-bs-target="#form_{}_modal"><i class="fas fa-plus"></i></span>{{% endif %}}'.format(
+                            field.name
                         )
                         _foreign_key_field += "</div>"
                         self.html_modals += self.render_modal_foreign_key(
@@ -228,11 +228,6 @@ class ParserHTMLBuild:
                         "class='", "class='form-control-plaintext "
                     )
 
-                if required != "":
-                    tag_result += (
-                        '\n<div class="invalid-feedback">Campo Requerido.</div>'
-                    )
-
                 tag_result = self.__render_help_text(tag_result, campo.name)
 
                 error_template = Template(
@@ -247,7 +242,8 @@ class ParserHTMLBuild:
                 return f"{{% if form.{field.name} in form.visible_fields %}}{tag_result}{{% endif %}}\n\t"
             else:
                 Utils.show_message(
-                    f"⚠️ Campo {field} desconhecido, favor verificar o tipo do campo."
+                    f"Campo {field} desconhecido, favor verificar o tipo do campo.",
+                    emoji="warning",
                 )
 
         except Exception as error:
