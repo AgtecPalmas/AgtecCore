@@ -18,56 +18,54 @@ class BaseForm(forms.ModelForm):
         super(BaseForm, self).__init__(*args, **kwargs)
 
         if "Modal" in self.__class__.__name__:
-            for field in iter(self.fields):
-                self.fields[field].widget.attrs.update(
-                    {"id": f"{secrets.token_urlsafe(5)}_{field}"}
-                )
+            self.update_fields_modal()
 
         for field in iter(self.fields):
             # Coleta as classes passadas no Form
-            class_attrs = self.fields[field].widget.attrs.get("class", "")
+            class_attrs: list = (
+                self.fields[field].widget.attrs.get("class", "").split(" ")
+            )
 
             # Aplica o padrão
-            class_attrs += " form-control"
-
-            # Verificando se o campo está configurado como obrigatório
-            if self.fields[field].required:
-                class_attrs += " obrigatorio"
+            class_attrs.append("form-control")
 
             # Verificando se o campo é Booleano
             if isinstance(self.fields[field], BooleanField):
-                class_attrs += " checked-left"
+                class_attrs.append("form-check-input")
 
             # Verificando se o campo é do tipo DateTime
-            if isinstance(self.fields[field], DateTimeField):
-                class_attrs += " datetimefield"
-                self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa hh:mm"})
+            elif isinstance(self.fields[field], DateTimeField):
+                class_attrs.append("datetimefield")
+                self.fields[field].widget.attrs.update(
+                    {"placeholder": "dd/mm/aaaa hh:mm"}
+                )
                 self.fields[field].widget.input_type = "datetime-local"
 
             # Verificando se o campo é do tipo Date
-            if isinstance(self.fields[field], DateField):
-                class_attrs += " datefield"
+            elif isinstance(self.fields[field], DateField):
+                class_attrs.append("datefield")
                 self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa"})
                 self.fields[field].widget.input_type = "date"
 
-            # # Verificando se o campo é do tipo FileField
-            # if isinstance(self.fields[field], FileField):
-            #     class_attrs += " custom-file-input"
+            class_attrs.append(self.get_validation_class(field))
 
-            # # Verificando se o campo é do tipo ImageField
-            # if isinstance(self.fields[field], ImageField):
-            #     class_attrs += " custom-file-input"
-
-            # # Verificando se o campo é do tipo BooleanField
-            if isinstance(self.fields[field], BooleanField):
-                class_attrs += " form-check-input"
-
-            if self.errors:
-                class_attrs += " is-invalid" if field in self.errors else " is-valid"
-                
             # Atualizando os atributos do campo para adicionar as classes
             # conforme as regras anteriores
-            self.fields[field].widget.attrs.update({"class": class_attrs.lstrip()})
+            self.fields[field].widget.attrs.update({"class": " ".join(class_attrs)})
+
+    def update_fields_modal(self):
+        """Atualiza os campos do formulário para serem usados em modais"""
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update(
+                {"id": f"{secrets.token_urlsafe(5)}_{field}"}
+            )
+
+    def get_validation_class(self, field) -> str:
+        """Retorna a classe de validação do campo"""
+        if self.errors:
+            return "is-invalid" if field in self.errors else "is-valid"
+        else:
+            return ""
 
     class Meta:
         model = Base
@@ -95,8 +93,12 @@ class AuditForm(forms.ModelForm):
     previous_data_change = JSONField(help_text=_("before the time of the change"))
     current_data = JSONField(help_text=_("data at the time of the change"))
     user_change = JSONField(label=_("user"), help_text=_("user who changed the data"))
-    user_permissions_change = JSONField(label=_("user permissions"), help_text=_("permissions at the time of change"))
-    user_groups_change = JSONField(label=_("user groups"), help_text=_("groups at the time of change"))
+    user_permissions_change = JSONField(
+        label=_("user permissions"), help_text=_("permissions at the time of change")
+    )
+    user_groups_change = JSONField(
+        label=_("user groups"), help_text=_("groups at the time of change")
+    )
 
     class Meta:
         fields = "__all__"
@@ -116,7 +118,7 @@ class ValidateUserForm(forms.Form):
         email = data.get("email")
 
         try:
-            user = User.objects.get(username=username, email=email)
+            User.objects.get(username=username, email=email)
 
         except User.DoesNotExist as e:
             raise forms.ValidationError("Usuário não encontrado") from e
