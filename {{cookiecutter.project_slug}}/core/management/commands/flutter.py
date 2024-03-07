@@ -383,16 +383,24 @@ class Command(BaseCommand):
     def _init_flutter(self):
         try:
             if not Utils.check_dir(self.flutter_dir):
-                Utils.show_message("Criando o projeto flutter.")
-                _command = "flutter create --project-name"
-                _project_name = self.flutter_project.lower()
-                _organization = self.organization_flutter_name
-                _platforms = '--platforms="android,ios"'
-                _flutter_dir = self.flutter_dir
-                _cmd = f"{_command}={_project_name} --org br.com.{_organization} {_platforms} {_flutter_dir}"
+
+                Utils.show_message("Criando projeto Flutter")
+
+                _cmd = [
+                    "flutter",
+                    "create",
+                    "--project-name",
+                    f"{self.flutter_project.lower()}",
+                    "--org",
+                    f"br.com.{self.organization_flutter_name}",
+                    "--platforms",
+                    "android,ios",
+                    f"{self.flutter_dir}",
+                ]
+
                 subprocess.call(
                     _cmd,
-                    shell=True,
+                    text=True,
                     stdin=subprocess.DEVNULL,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -413,8 +421,8 @@ class Command(BaseCommand):
                 current_path = os.getcwd()
                 os.chdir(self.flutter_dir)
                 subprocess.run(
-                    "flutter pub get",
-                    shell=True,
+                    ["flutter", "pub", "get"],
+                    text=True,
                     stdin=subprocess.DEVNULL,
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
@@ -663,8 +671,8 @@ class Command(BaseCommand):
 
     def _check_flutter_installation(self) -> bool:
         if subprocess.call(
-            "flutter --version",
-            shell=True,
+            ["flutter", "--version"],
+            text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         ):
@@ -673,9 +681,6 @@ class Command(BaseCommand):
         return True
 
     def call_methods(self, options):
-        if self._check_flutter_installation() is False:
-            return
-
         if options["main"]:
             self._replace_main()
             return
@@ -732,6 +737,8 @@ class Command(BaseCommand):
         model = options["Model"] or None
 
         self.__verify_valid_flags(options)
+        if self._check_flutter_installation() is False:
+            return
 
         if app is None and model is None and not FLUTTER_APPS:
             Utils.show_error(

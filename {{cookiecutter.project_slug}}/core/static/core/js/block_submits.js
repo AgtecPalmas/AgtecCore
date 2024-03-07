@@ -3,9 +3,16 @@ const submitButtons = document.querySelectorAll(
 	'input[type="submit"], button[type="submit"]'
 );
 
-function disableSubmitButton(event) {
+function escapeHtml(text) {
+	const div = document.createElement('div');
+	div.textContent = text;
+	return div.innerHTML;
+}
 
-	if (!event.target.closest("form").checkValidity()) {
+function disableSubmitButton(event) {
+	const button = event.target;
+
+	if (!button.closest("form").checkValidity()) {
 		return;
 	}
 
@@ -13,9 +20,9 @@ function disableSubmitButton(event) {
 		button.closest("div").setAttribute("disabled", true);
 	});
 
-	const button = event.target;
-	
-	const text = button.value || button.innerText || button.textContent;
+	button.setAttribute("aria-busy", true);
+
+	const text = escapeHtml(button.value || button.innerText || button.textContent || "Enviando...");
 	button.innerHTML =
 		'<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> ' +
 		text;
