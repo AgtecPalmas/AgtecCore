@@ -30,21 +30,6 @@ class FormsBuild:
                 f"Error in RenderTemplatesBuid.get_model: {error}",
             )
 
-    def __get_project_apps(self) -> list:
-        """Método para retornar a lista de apps do projeto"""
-        try:
-            apps = self.apps.get_app_configs()
-            directories = [
-                app
-                for app in os.listdir(self.path_root)
-                if os.path.isdir(os.path.join(self.path_root, app))
-            ]
-
-            return [app for app in apps if app.label in directories]
-
-        except Exception as error:
-            Utils.show_error(f"Erro em FormsBuild.__get_project_apps: {error}")
-
     def __model_is_fk(self) -> bool:
         """Método para verificar se o model atual é FK em algum lugar"""
         try:
