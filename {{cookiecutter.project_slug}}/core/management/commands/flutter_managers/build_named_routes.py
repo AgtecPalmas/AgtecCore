@@ -48,12 +48,12 @@ class NamedRoutesBuilder:
 
     def build(self):
         """
-        Método responsável por executar o build do arquivo de NamedRoutes
+        build _summary_
 
         Raises
         ------
         error
-            Erro ao executar o build do arquivo de NamedRoutes
+            _description_
         """
         from core.management.commands.flutter import AppModel
 

@@ -17,12 +17,12 @@ class UserInterfaceBuilder:
 
     def build(self):
         """
-        Método responsável por executar o build do arquivo de User Interface
+        build _summary_
 
         Raises
         ------
         e
-            Erro ao executar o build do arquivo de User Interface
+            _description_
         """
         try:
             self._parser_widget()

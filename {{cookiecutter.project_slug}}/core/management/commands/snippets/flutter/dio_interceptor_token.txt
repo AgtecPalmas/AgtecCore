@@ -16,7 +16,7 @@ import '../custom_dio.dart';
 
 /// Interceptor específico para gerenciamento do
 /// fluxo de atualização do RefreshToken
-class RefreshTokenInterceptor extends Interceptor {
+final class RefreshTokenInterceptor extends Interceptor {
   // Instanciando as classes para atualizar os dados.
   final CustomDio _customDio;
   final Dio _dio;

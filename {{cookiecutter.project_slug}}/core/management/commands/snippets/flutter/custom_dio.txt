@@ -36,7 +36,9 @@ class CustomDio {
     _dio = Dio(options);
 
     _dio.interceptors.add(HeaderTokenInterceptor());
-    _dio.interceptors.add(RefreshTokenInterceptor(customDio: this, dio: _dio));
+    if (releaseVersion == true) {
+      _dio.interceptors.add(RefreshTokenInterceptor(customDio: this, dio: _dio));
+    }
   }
 
   Future<dynamic> getHttp({returnResult = false, String? uri}) async {

@@ -18,7 +18,6 @@ import 'apps/configuracao/cubit.dart';
 import 'core/agtec.logger.dart';
 import 'apps/auth/cubit.dart';
 import 'core/config.dart';
-import 'core/util.dart';
 import 'routers.dart';
 
 $ImportViews$
@@ -26,9 +25,7 @@ $ImportViews$
 class MyHomePage extends StatefulWidget {
   final String title;
   
-  const MyHomePage({Key? key, String? title})
-    : title = title ?? '',
-      super(key: key);
+  const MyHomePage({super.key, String? title}) : title = title ?? '';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -61,10 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
+    return PopScope(
+      canPop: false,
       child: enabledBottomNavigationBar ? _buildScaffoldWithBottomNavigationBar(context) : _buildScaffold(context),
     );
   }
@@ -79,37 +74,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildScaffold(BuildContext context) {
     return Scaffold(
       backgroundColor: appBarDefaultBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(Config.appTitle),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                InkWell(
-                  child: const Icon(Icons.settings),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsIndexPage(),),);
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
       body: _buildBody(context),
     );
   }
 
   /// Método para construir o corpo da página.
   Widget _buildBody(BuildContext context) {
-    return Container(
-      height: Util.getProportionScreenHeight(context, 1),
-      color: Colors.white,
-      child: _buildGridView(context),
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          child: Container(
+            color: Colors.white,
+            child: _buildGridView(context),
+          ),
+        ),
+      ],
     );
   }
 
@@ -153,9 +132,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildGridView(BuildContext context) {
     return Stack(children: <Widget>[
       const HeadWidget(),
+      Positioned(
+        top: MediaQuery.sizeOf(context).height * .08,
+        left: 12,
+        child: const Text(
+          Config.appTitle,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       Container(
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * .18,
+          top: MediaQuery.sizeOf(context).height * .12,
           bottom: 10,
         ),
         child: GridView.count(
@@ -174,11 +164,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: BlocConsumer<SettingsCubit, SettingsState>(
                   listener: (context, state){},
-                  builder:
-                      (context, state) {
-                    return customMainCardButton(
-                      _itensMenuGridView.list[index].icon,
-                      _itensMenuGridView.list[index].title,
+                  builder: (context, state) {
+                    return CustomMainCardButton(
+                      icon: _itensMenuGridView.list[index].icon,
+                      label: _itensMenuGridView.list[index].title,
                       iconColor: iconCardColorHomePage,
                       textColor: textCardColorHomePage,
                       cardBackgroundColorBegin: backgroundColorCardHomePageBegin,
@@ -217,7 +206,7 @@ class Itens {
     //     title: 'arquivo importacao',
     //     icon: null,
     //     imageIcon: Image.asset("assets/icons/icons8-calendar-500.png",
-    //         width: MediaQuery.of(context).size.width / 4, color: Colors.red),
+    //         width: MediaQuery.sizeOf(context).width / 4, color: Colors.red),
     //     uri: Container()));
 
     $ItenMenu$

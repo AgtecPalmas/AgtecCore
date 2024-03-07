@@ -10,28 +10,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   cupertino_icons: ^1.0.5
   dio: ^5.3.2 #Lib para acesso HTTP para consumir APIRest.
   path: ^1.8.3 #Lib para auxiliar na manipulação de arquivos.
-  intl: ^0.18.1 #Lib para formatação de dados como Date e DateTime.
+  intl: ^0.19.0 #Lib para formatação de dados como Date e DateTime.
   date_format: ^2.0.7 #Lib para formatação trabalhando apenas com Data.
   url_launcher: ^6.1.12 #Lib para invocar intents dos devices como por exemplo envio de email.
   transparent_image: ^2.0.1 #Lib que disponibiliza uma imagem transparente, usada para auxiliar o download de imagens da web funcionando como placeholder.
   cached_network_image: ^3.2.3 #Lib para realizar cache das imagens baixadas da WEB.
-  connectivity_plus: ^4.0.2 #Lib para auxiliar a checagem de conectividade do device.
+  connectivity_plus: ^5.0.2 #Lib para auxiliar a checagem de conectividade do device.
   google_sign_in: ^6.1.0 #Lib para autenticação com contas Google.
   image_picker: ^1.0.2 #Lib para realizar crop e rotação em imagens.
   shared_preferences: ^2.2.0 #Lib para acessar o SharedPreferences do device.
   location: ^5.0.3 #Lib para localização do usuário e utilização de mapa se necessário.
-  flutter_keyboard_visibility: ^5.4.1
+  flutter_keyboard_visibility: ^6.0.0
   path_provider: ^2.1.0
   webview_flutter: ^4.2.2
   flutter_launcher_icons: ^0.13.1 #Lib para gerar o ícone do aplicativo para quando for submetido para as lojas.
-  font_awesome_flutter: ^9.0.0 #Lib para utilização dos ícones do site Font Awesome.
-  flutter_signin_button: ^2.0.0
+  font_awesome_flutter: ^10.7.0 #Lib para utilização dos ícones do site Font Awesome.
   sembast: ^3.5.0 #Banco de dados NoSQL
   flutter_screenutil: ^5.8.4 #Lib para auxiliar no cálculo de densidade da tela
   top_snackbar_flutter: ^3.1.0
@@ -52,7 +49,7 @@ dependencies:
   sentry_flutter: ^7.9.0
 
   # Pacote para auxiliar a geração de logs no terminal
-  logger: ^1.1.0
+  logger: ^2.0.2
 
   # Pacote para auxiliar na validação de campos
   validatorless: ^1.2.3
@@ -66,7 +63,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true

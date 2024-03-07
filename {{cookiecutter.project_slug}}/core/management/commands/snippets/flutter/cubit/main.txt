@@ -10,11 +10,11 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'routers.dart';
 
 import 'apps/configuracao/cubit.dart';
 import 'home.page.dart';
+import 'core/color.schemes.dart';
 import 'core/config.dart';
 
 $ImportCubit$
@@ -62,19 +62,12 @@ class MaterialAppWidget extends StatelessWidget {
           designSize: const Size(widthScreenUtil, heightScreenUtil),
           builder: (_, __) => MaterialApp(
             title: Config.appTitle,
-            theme: context.watch<SettingsCubit>().lightTheme == true ? CustomTheme.lightTheme : CustomTheme.darkTheme,
+            themeMode: ThemeMode.dark,
+            theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
             home: const MyHomePage(title: Config.appTitle),
             onGenerateRoute: RouteGenerator.generateRoute,
             debugShowCheckedModeBanner: false,
-            localizationsDelegates: const[
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const[
-              Locale('pt', 'BR')
-            ],
-            locale: const Locale('pt', 'BR'),
           ),
         );
       },

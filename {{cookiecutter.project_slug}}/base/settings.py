@@ -210,6 +210,12 @@ FLUTTER_APPS = [
     "usuario",
 ]
 
+ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
+
+# Usados apenas para desenvolvimento do Flutter
+FLUTTER_API_USER_DEV = config("FLUTTER_API_USER_DEV")
+FLUTTER_API_PASSWORD_DEV = config("FLUTTER_API_PASSWORD_DEV")
+
 # TODO Configure o caminho da API no arquivo .env criado para utilizar o Python Decouple
 API_PATH = config("API_PATH")
 

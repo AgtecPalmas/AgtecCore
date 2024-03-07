@@ -10,7 +10,7 @@ import 'package:dio/dio.dart';
 import '../../../apps/auth/data.dart';
 import '../../../core/config.dart';
 
-class HeaderTokenInterceptor extends Interceptor {
+final class HeaderTokenInterceptor extends Interceptor {
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final String accessToken = await AuthData().getJWTToken();
