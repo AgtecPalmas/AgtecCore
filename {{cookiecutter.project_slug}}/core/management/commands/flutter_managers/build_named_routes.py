@@ -14,7 +14,13 @@ class NamedRoutesBuilder:
         self._current_page_name = None
         self._content = None
 
-        self._pages_name = ["IndexPage", "DetailPage", "ListPage", "UpdatePage", "AddPage"]
+        self._pages_name = [
+            "IndexPage",
+            "DetailPage",
+            "ListPage",
+            "UpdatePage",
+            "AddPage",
+        ]
         self._imports_name = ["index", "list", "detail", "update", "create"]
         self._routers_apps = ""
         self._imports_apps = ""
@@ -68,13 +74,16 @@ class NamedRoutesBuilder:
     def _save_file(self):
         try:
             if self._routers_apps != "":
-                _content = self._content.replace("$ROUTES_APPS$", self._routers_apps).replace(
-                    "$IMPORTS$", self._imports_apps
-                )
+                _content = self._content.replace(
+                    "$ROUTES_APPS$", self._routers_apps
+                ).replace("$IMPORTS$", self._imports_apps)
                 with open(self._routes_target_file, "w", encoding="utf-8") as _file:
                     _file.write(_content)
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _save_file de NamedRoutesBuilder: {error}", exit=True)
+            Utils.show_error(
+                f"Erro ao executar o _save_file de NamedRoutesBuilder: {error}",
+                exit=True,
+            )
             raise error
 
     def _build_import_names(self):
@@ -87,26 +96,35 @@ class NamedRoutesBuilder:
                 )
                 self._imports_apps += "\n"
             _import_string = "import 'apps/$APP$/$model$/model.dart';\n"
-            self._imports_apps += _import_string.replace("$APP$", self._app_name_lower).replace(
-                "$model$", self._current_model.lower()
-            )
+            self._imports_apps += _import_string.replace(
+                "$APP$", self._app_name_lower
+            ).replace("$model$", self._current_model.lower())
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _build_import_names de NamedRoutesBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o _build_import_names de NamedRoutesBuilder: {error}"
+            )
             raise error
 
     def _build_routers(self):
         try:
             if self._current_page_name in ["UpdatePage", "DetailPage"]:
                 self._routers_apps += (
-                    self._snippet_route_created_updated.replace("$ClassName$", self._current_model)
-                    .replace("$ModelClassCamelCase$", convert_to_camel_case(self._current_model))
+                    self._snippet_route_created_updated.replace(
+                        "$ClassName$", self._current_model
+                    )
+                    .replace(
+                        "$ModelClassCamelCase$",
+                        convert_to_camel_case(self._current_model),
+                    )
                     .replace("$PageName$", self._current_page_name)
                 )
             else:
-                self._routers_apps += self._snippet_route.replace("$ClassName$", self._current_model).replace(
-                    "$PageName$", self._current_page_name
-                )
+                self._routers_apps += self._snippet_route.replace(
+                    "$ClassName$", self._current_model
+                ).replace("$PageName$", self._current_page_name)
             self._routers_apps += "\n"
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _build_routers de NamedRoutesBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o _build_routers de NamedRoutesBuilder: {error}"
+            )
             raise error

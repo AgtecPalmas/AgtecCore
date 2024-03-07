@@ -14,7 +14,9 @@ class LoggerBuilder:
         build _summary_
         """
         try:
-            _content = Utils.get_snippet(str(Path(f"{self._snippet_dir}/agtec.logger.txt")))
+            _content = Utils.get_snippet(
+                str(Path(f"{self._snippet_dir}/agtec.logger.txt"))
+            )
             with open(self._log_path_file, "w", encoding="utf-8") as logger_file:
                 logger_file.write(_content)
         except Exception as error:

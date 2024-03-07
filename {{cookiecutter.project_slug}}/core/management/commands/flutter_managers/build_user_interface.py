@@ -28,7 +28,9 @@ class UserInterfaceBuilder:
             self._parser_widget()
             self._parser_font()
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o build de UserInterfaceBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o build de UserInterfaceBuilder: {error}"
+            )
             raise error
 
     def _parser_widget(self):
@@ -39,7 +41,9 @@ class UserInterfaceBuilder:
             with open(self._widget_target, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _parser_widget do UserInterfaceBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o _parser_widget do UserInterfaceBuilder: {error}"
+            )
             raise error
 
     def _parser_font(self):
@@ -50,5 +54,7 @@ class UserInterfaceBuilder:
             with open(self._font_target, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o _parser_font do UserInterfaceBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o _parser_font do UserInterfaceBuilder: {error}"
+            )
             raise error
