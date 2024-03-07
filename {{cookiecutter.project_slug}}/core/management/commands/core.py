@@ -87,6 +87,7 @@ class Command(BaseCommand):
             self.core_project_version
         )
         self.django_last_version: int = 0
+        self.download_zip_name: str = "core.zip"
 
     def __remove_parser_arguments(self, parser) -> None:
         """Remove the default arguments from the parser"""
@@ -257,7 +258,7 @@ class Command(BaseCommand):
         self.__download_update(release["zip"])
         self.__prepare_temp_folder()
 
-        os.remove("core.zip")
+        os.remove(self.download_zip_name)
 
         self.__upgrade_core()
         self.__upgrade_base()
@@ -276,7 +277,7 @@ class Command(BaseCommand):
             shutil.rmtree("temp")
 
         Utils.show_message("Extraindo arquivos")
-        with zipfile.ZipFile("core.zip", "r") as zip_ref:
+        with zipfile.ZipFile(self.download_zip_name, "r") as zip_ref:
             zip_ref.extractall("temp")
 
         root_folder = os.listdir("temp")[0]
@@ -302,7 +303,7 @@ class Command(BaseCommand):
                 )
             )
 
-        with open("core.zip", "wb") as file:
+        with open(self.download_zip_name, "wb") as file:
             file.write(download.content)
 
     def __upgrade_core(self) -> None:
@@ -359,25 +360,23 @@ class Command(BaseCommand):
         """Upgrade the requirements file"""
         Utils.show_message("Atualizando requirements")
 
-        files = [
-            "requirements.txt",
-            "requirements-dev.txt",
+        files_in = [
             "requirements.in",
             "requirements-dev.in",
+            "requirements-extras.in",
+        ]
+        files_txt = [
+            "requirements.txt",
+            "requirements-dev.txt",
+            "requirements-extras.txt",
         ]
 
-        for file in files:
-            shutil.copy(f"temp/{file}", file)
-
-        if not os.path.exists("requirements-extras.in"):
-            shutil.copy("temp/requirements-extras.in", "requirements-extras.in")
+        for file in files_in + files_txt:
+            with contextlib.suppress(FileNotFoundError):
+                shutil.copy(f"temp/{file}", file)
 
         try:
-            for file in [
-                "requirements.in",
-                "requirements-dev.in",
-                "requirements-extras.in",
-            ]:
+            for file in files_in:
                 subprocess.run(
                     f"pip-compile {file}",
                     shell=True,
