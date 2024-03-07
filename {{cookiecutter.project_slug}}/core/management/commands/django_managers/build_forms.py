@@ -48,21 +48,15 @@ class FormsBuild:
     def __model_is_fk(self) -> bool:
         """Método para verificar se o model atual é FK em algum lugar"""
         try:
-            for app in self.__get_project_apps():
-                for model in app.get_models():
-                    if model == self.model_class:
-                        continue
-
-                    for field in model._meta.get_fields():
-                        if (
-                            field.is_relation
-                            and (field.many_to_one or field.one_to_one)
-                            and model._meta.get_field(field.name).related_model
-                            == self.model_class
-                        ):
-                            return True
+            for model in self.apps.get_models():
+                for field in model._meta.fields:
+                    if (
+                        field.is_relation
+                        and field.related_model
+                        and field.related_model.__name__ == self.model
+                    ):
+                        return True
             return False
-
         except Exception as error:
             Utils.show_error(f"Erro em FormsBuild.__exists_fk: {error}")
 
