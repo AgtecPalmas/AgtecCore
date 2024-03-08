@@ -1,5 +1,7 @@
-from ..utils import Utils
 from pathlib import Path
+from typing import Tuple, List
+
+from ..utils import Utils
 
 
 class ViewsBuild:
@@ -8,12 +10,17 @@ class ViewsBuild:
         self.command = command
         self.apps = apps
         self.app = self.command.app
+
+        # Model
         self.model = self.command.model
+        self.model_class = self.command.model_class
         self.model_lower = self.command.model_lower
 
         # Paths
         self.path_core = self.command.path_core
-        self.snippets_dir = f"{self.path_core}/management/commands/snippets/django/views"
+        self.snippets_dir = (
+            f"{self.path_core}/management/commands/snippets/django/views"
+        )
         self.templates_dir = f"{self.command.path_template_dir}"
         self.path_root_views: Path = Path(f"{self.command.path_views}")
         self.path_indexview: Path = Path(f"{self.path_root_views}/index.py")
@@ -34,36 +41,6 @@ class ViewsBuild:
             or self.app.lower()
         )
 
-    def get_model(self):
-        """Método responsável por retornar a instância da class da App"""
-        try:
-            return self.apps.get_model(self.app, self.model)
-        except Exception as error:
-            Utils.show_error(
-                f"Error in RenderTemplatesBuid.get_model: {error}",
-            )
-
-    @staticmethod
-    def __get_models_from_content_urls(content: str) -> str:
-        content = content.split("from ")
-        models = []
-
-        for item in content:
-            if item.startswith(".models"):
-                item = item.split("import ")[1]
-                models.extend(model.strip() for model in item.split(","))
-        return models
-
-    @staticmethod
-    def __get_forms_from_content_urls(content: str) -> str:
-        content = content.split("from ")
-        forms = []
-
-        for item in content:
-            if item.startswith(".forms"):
-                item = item.split("import ")[1]
-                forms.extend(form.strip() for form in item.split(","))
-        return forms
 
     def __build_index_view(self):
         __snippet_index_template = Utils.get_snippet(self.snippet_index_view)
@@ -84,64 +61,56 @@ class ViewsBuild:
             content = __snippet_index_template
             Utils.write_file(self.path_indexview, content)
 
+    def __get_modal_forms(self) -> Tuple[str, List[str]]:
+        """Método para retornar os forms modais do model atual"""
+        _import_forms_modal = ""
+        _forms = ""
+
+        for fk_name in getattr(self.model_class._meta, "fk_fields_modal", []):
+            _field = self.model_class._meta.get_field(fk_name)
+            if not _field.related_model:
+                Utils.show_error(
+                    f"Modelo [cyan]{fk_name}[/] no fk_fields_modal não foi encontrado em [cyan]{self.model}[/]",
+                    exit=False,
+                )
+                continue
+
+            _app_name, _, _model_name = (
+                str(_field.related_model).split("'")[1].split(".")
+            )
+            _import_forms_modal += f"\nfrom {_app_name}.forms.{_model_name.lower()} import {_model_name}ModalForm"
+            _forms += f"{_model_name}ModalForm,"
+
+        return _import_forms_modal, _forms
+
     def build(self):
         try:
             content = Utils.get_snippet(self.snippet_crud_views)
             content_urls = Utils.get_snippet(self.snippet_cruds_urls)
+
             content = content.replace("$ModelClass$", self.model)
             content = content.replace("$app_name$", self.app.lower())
             content = content.replace("$model_name$", self.model.lower())
+
             content_urls = content_urls.replace("$ModelClass$", self.model)
             content_urls = content_urls.replace("$app_name$", self.app.lower())
             content_urls = content_urls.replace("$model_name$", self.model.lower())
+
             _import_forms_modal = ""
-            _model = self.get_model()
 
             if Utils.check_dir(self.path_root_views) is False:
                 Utils.create_directory(self.path_root_views, True)
 
             self.__build_index_view()
 
-            if hasattr(_model._meta, "fk_fields_modal") is True:
-                _forms = ""
-                for fk_name in _model._meta.fk_fields_modal:
-                    _field = _model._meta.get_field(fk_name)
-                    if not _field.related_model:
-                        Utils.show_error(
-                            f"Modelo [cyan]{fk_name}[/] no fk_fields_modal não foi encontrado em [cyan]{self.model}[/]",
-                            exit=False,
-                        )
-                        continue
-                    _field_name = str(_field.related_model).split("'")[1]
-                    _field_split = _field_name.split(".")
-                    _app_field = _field_split[0]
-                    _model_field = _field_split[2]
-                    _import_forms_modal += (
-                        f"\nfrom {_app_field}.forms import {_model_field}Form"
-                    )
-                    _forms += "{s}context['form_{l}'] = {u}Form\n".format(
-                        l=_model_field.lower(), u=_model_field, s=" " * 8
-                    )
-                modal_update = Utils.get_snippet(self.snippet_crud_modal_template)
-                modal_update = modal_update.replace(
-                    "$ModelClass$", f"{self.model}UpdateView"
+            _import_forms_modal, _modal_forms = self.__get_modal_forms()
+            if _modal_forms:
+                content = content.replace(
+                    "# form_modals = []", f"form_modals = [{_modal_forms}]"
                 )
-                modal_update = modal_update.replace("$FormsModal$", _forms.strip())
-                content = content.replace("$FormsModalUpdate$", modal_update)
 
-                modal_create = Utils.get_snippet(self.snippet_crud_modal_template)
-                modal_create = modal_create.replace(
-                    "$ModelClass$", f"{self.model}CreateView"
-                )
-                modal_create = modal_create.replace("$FormsModal$", _forms.strip())
-                content = content.replace("$FormsModalCreate$", modal_create)
-
-            else:
-                content = content.replace("$FormsModalCreate$", "")
-                content = content.replace("$FormsModalUpdate$", "")
-
-            if hasattr(_model._meta, "fields_display") is True:
-                sorted_fields = sorted(_model._meta.fields_display)
+            if hasattr(self.model_class._meta, "fields_display") is True:
+                sorted_fields = sorted(self.model_class._meta.fields_display)
                 content = content.replace(
                     "$ListFields$", f"list_display = {sorted_fields}"
                 ).replace("$SearchFields$", f"search_fields = {sorted_fields}")
@@ -162,38 +131,12 @@ class ViewsBuild:
                 Utils.show_message("[cyan]Views[/] já existem")
                 return
 
-            if Utils.check_content(self.path_model_views, "from core.views"):
-                content_models = self.__get_models_from_content_urls(content_urls)
-                content_forms = self.__get_forms_from_content_urls(content_urls)
-
-                with open(self.path_model_views, "r", encoding="utf-8") as arquivo:
-                    data = []
-
-                    for line in arquivo:
-                        if line.startswith("from .models import"):
-                            models = line.split("import")[-1].rstrip()
-                            import_model = ", ".join(content_models)
-                            models += f", {import_model}"
-                            line = f"from .models import{models}\n"
-
-                        elif line.startswith("from .forms import"):
-                            forms = line.split("import")[-1].rstrip()
-                            import_form = ", ".join(content_forms)
-                            forms += f", {import_form}"
-                            line = f"from .forms import{forms}\n"
-
-                        data.append(line)
-                    data.append(_import_forms_modal)
-                with open(self.path_model_views, "w", encoding="utf-8") as arquivo:
-                    arquivo.writelines(data)
-            else:
-                with open(self.path_model_views, "a", encoding="utf-8") as views:
-                    views.write(content_urls)
+            new_import = f"from {self.app}.models import {self.model}"
 
             with open(self.path_model_views, "a", encoding="utf-8") as views:
-                views.write(_import_forms_modal)
-                views.write("\n")
-                views.write(content)
+                views.write(
+                    f"{new_import}\n{content_urls}\n{_import_forms_modal}\n{content}\n"
+                )
 
         except Exception as error:
             Utils.show_error(

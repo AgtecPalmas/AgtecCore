@@ -21,9 +21,9 @@ abstract class $ModelClass$ServiceInterface {
   Future<List<$ModelClass$Model>> fetch({String? url});
   Future<List<$ModelClass$Model>> getMore(String uri);
   Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$);
-  Future<$ModelClass$Model> post($ModelClass$Model $ModelClassCamelCase$);
-  Future<$ModelClass$Model> put($ModelClass$Model $ModelClassCamelCase$);
-  Future<$ModelClass$Model> patch($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model?> post($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model?> put($ModelClass$Model $ModelClassCamelCase$);
+  Future<$ModelClass$Model?> patch($ModelClass$Model $ModelClassCamelCase$);
   Future<bool> delete($ModelClass$Model $ModelClassCamelCase$);
 }
 

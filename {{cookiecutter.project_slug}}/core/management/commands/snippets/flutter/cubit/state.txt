@@ -44,3 +44,12 @@ class $ModelClass$ErrorState extends $ModelClass$State {
   @override
   List<Object> get props => [error];
 }
+
+class $ModelClass$EmptyListState extends $ModelClass$State {
+  final String message;
+
+  const $ModelClass$EmptyListState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

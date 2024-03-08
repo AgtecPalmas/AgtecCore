@@ -8,74 +8,16 @@
 /// Arquivo contendo os Widgets componentizados da aplicação
 ///
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../core/agtec.logger.dart';
-import '../../core/localization.dart';
 import '../../core/util.dart';
-import 'custom.style.dart';
 
 // Constante contendo o valor da proporção da tela padrão
 // utilizado para calcular altura do Head da página e da
 // margem superior da barra de botões
 const double _proportionScreenDefault = 0.55;
 
-/// Widget para gerar os "botões" da tela inicial de acesso rápido
-Widget customMainCardButton(icon, label,
-    {iconColor,
-    textColor,
-    cardBackgroundColorBegin,
-    cardBackgroundColorEnd,
-    boxShadowColor,
-    cardBorderColor,
-    image,
-    double textSize = 14,
-    textWeight = FontWeight.w600}) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-    decoration: BoxDecoration(
-      border: Border.all(color: cardBorderColor),
-      boxShadow: [
-        BoxShadow(
-          color: boxShadowColor,
-          offset: const Offset(2.0, 2.0),
-          blurRadius: 3.0,
-        )
-      ],
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        stops: const [0.0, 0.9],
-        colors: [
-          cardBackgroundColorBegin,
-          cardBackgroundColorEnd,
-        ],
-      ),
-      borderRadius: BorderRadius.circular(8.0),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6),
-          child: Center(
-            child: icon != null ? Icon(icon, color: iconColor, size: 42) : image,
-          ),
-        ),
-        Center(
-          child: Text(
-            '$label',
-            style: TextStyle(color: textColor, fontWeight: textWeight, fontSize: textSize),
-            textAlign: TextAlign.center,
-          ),
-        )
-      ],
-    ),
-  );
-}
-
-/// Componente RaisedButton
+/// Componente CustomRaisedButton
 ///
 ///    Parameters:
 ///     label -> String com o texto a ser mostrado no botão
@@ -89,230 +31,129 @@ Widget customMainCardButton(icon, label,
 /// O método onPress deve seguir o exemplo abaixo:
 /// ```dart
 /// onPress: (() {
-///   // Coloque a função que deseja executar aqui
+///   Coloque a função que deseja executar aqui
 /// }),
 /// ```
-///
-Widget customRaisedButton(
-    {required String label,
-    required VoidCallback onPress,
-    required BuildContext context,
-    Color? color,
-    Color? textColor,
-    Icon? iconButton,
-    bool rounded = false,
-    double elevation = 2.0}) {
-  try {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        backgroundColor: color ?? Theme.of(context).colorScheme.secondary,
-        elevation: elevation,
-        shape: rounded
-            ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
-            : RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
-      ),
-      onPressed: onPress,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          iconButton ?? Container(),
-          const SizedBox(width: 4.0),
-          Text(
-            label,
-            style: TextStyle(color: textColor ?? Theme.of(context).primaryColor),
-          ),
-        ],
-      ),
-    );
-  } catch (error, stackTrace) {
-    AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
-    return const SizedBox.shrink();
-  }
-}
+class CustomRaisedButton extends StatelessWidget {
+  final String label;
+  final void Function() onPress;
+  final Color? color;
+  final Color? textColor;
+  final Icon? iconButton;
+  final bool? rounded;
+  final double? elevation;
+  const CustomRaisedButton({
+    super.key,
+    required this.label,
+    required this.onPress,
+    this.color,
+    this.textColor,
+    this.iconButton,
+    this.rounded,
+    this.elevation,
+  });
 
-/// Componente OutlineButton
-///
-///    Parameters:
-///     label -> String com o texto a ser mostrado no botão
-///     onPress -> Função a ser executada ao clicar no botão
-///     borderSize (default = 1.12) -> Double com a expessura da borda
-///     textColor (opcional) -> Color contendo a cor do texto
-///     borderColor (opcional) -> Color contendo a bor da borda do botão
-///     iconButton (opcional) -> Icon a ser mostrado à esquerda do botão
-///     rounded (default = false) -> Bool que determina se o botão é arredondado ou não
-///
-/// O método onPress deve seguir o exemplo abaixo:
-/// ```dart
-/// onPress: (() {
-///   // Coloque a função que deseja executar aqui
-/// }),
-/// ```
-///
-Widget customButtonOutline(
-    {required String label,
-    required VoidCallback onPress,
-    required BuildContext context,
-    double borderSize = 1.12,
-    Color? textColor,
-    Color? borderColor,
-    Icon? iconButton,
-    bool rounded = false,
-    bool processing = false,
-    double circularProgressIndicatorSize = 28,
-    double circularProgressIndicatorStrokeWidth = 4.0,
-    Color circularProgressIndicatorBgColor = Colors.blue}) {
-  try {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
+  @override
+  Widget build(BuildContext context) {
+    try {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
-          shape: rounded
+          backgroundColor: color ?? Theme.of(context).colorScheme.secondary,
+          elevation: elevation ?? 2.0,
+          shape: rounded ?? false
               ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))
               : RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
-          side: BorderSide(
-            width: borderSize,
-            color: borderColor ?? Theme.of(context).primaryColor,
-          ),
         ),
         onPressed: onPress,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            iconButton ?? Container(),
-            const SizedBox(
-              width: 4.0,
-            ),
-            processing
-                ? SizedBox(
-                    height: circularProgressIndicatorSize,
-                    width: circularProgressIndicatorSize,
-                    child: CircularProgressIndicator(
-                      strokeWidth: circularProgressIndicatorStrokeWidth,
-                      valueColor: AlwaysStoppedAnimation<Color>(circularProgressIndicatorBgColor),
-                    ))
-                : Text(
-                    label,
-                    style: TextStyle(color: textColor ?? Theme.of(context).primaryColor),
-                  ),
+            iconButton ?? const SizedBox.shrink(),
+            const SizedBox(width: 4.0),
+            Text(label, style: TextStyle(color: textColor ?? Theme.of(context).primaryColor)),
           ],
         ),
-      ),
-    );
-  } catch (error, stackTrace) {
-    AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
-    return const SizedBox.shrink();
+      );
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
+      return const SizedBox.shrink();
+    }
   }
 }
 
-/// Componente visual para mostrar um card enquando o usuário aguarda
-/// o processamento da operação.
-///
-///    Parameters:
-///
-///      context -> BuildContext contendo o contexto do App
-Widget customProcessingCardModal(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2), 
-    child: Align(
-      alignment: Alignment.center,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8.0),
-          child: Column(
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                AppLocalizations.of(context)?.translate('custom_processing_card_label') ?? '',
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+/// Classe para gerar o Card da tela Inicial
+class CustomMainCardButton extends StatelessWidget {
+  final IconData? icon;
+  final String label;
+  final Color iconColor;
+  final Color textColor;
+  final Color boxShadowColor;
+  final Color cardBorderColor;
+  final Color cardBackgroundColorBegin;
+  final Color cardBackgroundColorEnd;
+  final double textSize;
+  final FontWeight textWeight;
 
-/// Componente visual para mostrar um card centralizado enquando o usuário aguarda
-/// o processamento da operação.
-///
-///    Parameters:
-///
-///      context -> BuildContext contendo o contexto do App
-Widget customProcessingCardModalCenter(BuildContext context) {
-  return Container(
-    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 2),
-    child: Align(
-      alignment: Alignment.center,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
-          child: Column(
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                AppLocalizations.of(context)?.translate('custom_processing_card_label') ?? '',
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+  const CustomMainCardButton({
+    super.key,
+    required this.label,
+    required this.iconColor,
+    required this.textColor,
+    required this.boxShadowColor,
+    required this.cardBorderColor,
+    required this.cardBackgroundColorBegin,
+    required this.cardBackgroundColorEnd,
+    this.textSize = 14,
+    this.textWeight = FontWeight.w600,
+    this.icon,
+  });
 
-/// Componente para mostrar mensagens aos usuário de
-/// ações que retornaram com sucesso
-customSuccessSnackbar(String message, {int secondsDuration = 4}) {
-  return SnackBar(
-    content: Text(message),
-    backgroundColor: const Color(0xff799fcb),
-    duration: Duration(seconds: secondsDuration),
-  );
-}
-
-/// Componente visual para mostrar um elemento de loading customizado
-///     Parameters:
-///       context -> BuildContext contendo o contexto do App
-///       isCircularIndicator -> bool indicando se o widget é CircularProgressIndicator
-///       lineHeigth -> double contendo a espesura da linha
-///       lineColor -> Color contendo a cor de foreground
-///       backgroundColor -> Color contendo a cor de background
-Widget customProcessingWidget(
-  BuildContext context, {
-  bool isCircularIndicator = true,
-  double lineHeigth = 0.0,
-  Color backgroundColor = Colors.white,
-}) {
-  if (isCircularIndicator == true) {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
-      child: const CircularProgressIndicator(),
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      decoration: BoxDecoration(
+        border: Border.all(color: cardBorderColor),
+        boxShadow: [
+          BoxShadow(
+            color: boxShadowColor,
+            offset: const Offset(2.0, 2.0),
+            blurRadius: 3.0,
+          )
+        ],
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.0, 0.9],
+          colors: [
+            cardBackgroundColorBegin,
+            cardBackgroundColorEnd,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6),
+            child: Center(
+              child: icon != null ? Icon(icon, color: iconColor, size: 42) : const SizedBox.shrink(),
+            ),
+          ),
+          Center(
+            child: Text(
+              label,
+              style: TextStyle(color: textColor, fontWeight: textWeight, fontSize: textSize),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      ),
     );
   }
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 12.0),
-    child: LinearProgressIndicator(
-      backgroundColor: backgroundColor,
-    ),
-  );
-}
-
-/// Componente para mostrar mensagens aos usuário de
-/// ações que retornaram com sucesso
-customErrorSnackbar(String message, {int secondsDuration = 4}) {
-  return SnackBar(
-    content: Text(message),
-    backgroundColor: const Color(0xffff6961),
-    duration: Duration(seconds: secondsDuration),
-  );
 }
 
 ///
@@ -448,7 +289,7 @@ class _ContentWidgetState extends State<ContentWidget> {
 class CustomTextFormFieldLabel extends StatelessWidget {
   final String labelText;
 
-  const CustomTextFormFieldLabel({Key? key, required this.labelText}) : super(key: key);
+  const CustomTextFormFieldLabel({super.key, required this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -468,63 +309,34 @@ class CustomTextFormFieldLabel extends StatelessWidget {
   }
 }
 
-/// [Área para o CustomTextFormFieldWidget Class]
-class CustomTextFormField extends StatelessWidget {
-  final String labelText;
-  final String hintText;
-  final FormFieldValidator<String>? customValidator;
-  final ValueChanged<String>? customOnChanged;
-  final List<TextInputFormatter>? inputFormatters;
-  final FocusNode? focusNode;
-  final TextInputType keyBoardType;
-  final bool obscureValue;
-  final bool readOnly;
-  final int? maxLineField;
-  final int? maxLengthCharacter;
-  final TextEditingController controller;
-  final bool hiddenCounter;
-
-  const CustomTextFormField(
-      {Key? key,
-      required this.labelText,
-      required this.hintText,
-      required this.controller,
-      this.customValidator,
-      this.customOnChanged,
-      this.inputFormatters,
-      this.focusNode,
-      this.keyBoardType = TextInputType.text,
-      this.obscureValue = false,
-      this.readOnly = false,
-      this.maxLineField,
-      this.maxLengthCharacter,
-      this.hiddenCounter = false})
-      : super(key: key);
+/// Classe para criar um componente que será o título das telas
+/// que possuem o botão de voltar
+class CustomAppBar extends StatelessWidget {
+  final String title;
+  const CustomAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        CustomTextFormFieldLabel(labelText: labelText),
-        Container(
-          margin: const EdgeInsets.only(bottom: 18),
-          child: TextFormField(
-            controller: controller,
-            validator: customValidator,
-            onChanged: customOnChanged,
-            inputFormatters: inputFormatters,
-            keyboardType: keyBoardType,
-            obscureText: obscureValue,
-            readOnly: readOnly,
-            maxLines: maxLineField,
-            focusNode: focusNode,
-            maxLength: maxLengthCharacter,
-            decoration: CustomTextFormFieldStyle.textFieldStyle(hintText: hintText, hiddenCounter: hiddenCounter),
+    return Positioned(
+      top: MediaQuery.sizeOf(context).height * .0675,
+      left: MediaQuery.sizeOf(context).width * .005,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios, size: 24),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-        )
-      ],
+          Text(title,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              )),
+        ],
+      ),
     );
   }
 }

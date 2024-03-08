@@ -1,6 +1,5 @@
 import logging
 import os
-
 from core.management.commands.utils import Utils
 
 logger = logging.getLogger("django_debug")
@@ -34,13 +33,15 @@ class SourceFileBuilder:
     def build(self):
         try:
             if Utils.check_dir(self._model_dir) is False:
+                Utils.show_message(
+                    f"Criando o Source do Model: {self._app_name}.{self._model_name}"
+                )
                 os.makedirs(self._model_dir)
 
             self._build_views()
 
             self._build_model_file()
             self._build_data_file()
-            Utils.show_message("Source do Model criado com sucesso")
 
         except Exception as e:
             logger.error(
@@ -50,6 +51,9 @@ class SourceFileBuilder:
     def _build_views(self):
         try:
             if Utils.check_dir(self._views_dir) is False:
+                Utils.show_message(
+                    f"Criando o diretório das Views: {self._app_name}.{self._model_name}"
+                )
                 os.makedirs(self._views_dir)
                 if self._views is not None:
                     with open(self._views[0], "w", encoding="utf-8") as _file:

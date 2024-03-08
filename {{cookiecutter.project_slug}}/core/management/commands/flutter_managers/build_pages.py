@@ -55,7 +55,6 @@ class PagesBuilder:
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = {_field_is_empty} ? {_fields_contains_zero};\n"
             elif attribute == "DateTime?":
                 _controllers_data = f"{_space}_{_model_cc}Model.{name} = _{_model_cc}Form{_title}.text != ''?"
-
                 _controllers_data += (
                     f" Util.convertDate(_{_model_cc}Form{_title}.text) : null;\n"
                 )
@@ -156,7 +155,6 @@ class PagesBuilder:
                 _dispose_attributes += (
                     f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
                 )
-                _dispose_attributes += f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
                 text_field = _content_form
                 controller = f"_{_model_name_camel_case}Form{_name_title}"
                 text_field = text_field.replace("$controller$", controller)

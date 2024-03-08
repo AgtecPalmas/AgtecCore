@@ -44,6 +44,7 @@ class Command(BaseCommand):
         self.path_app: Path = None
 
         self.model: str = None
+        self.model_class: object = None
         self.model_lower: str = None
         self.path_model: Path = None
 
@@ -104,8 +105,8 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             "--format",
-            action="store_true",
             dest="format",
+            choices=["html", "python", "all"],
             help="Aplicar Black, isort e flake8 nos arquivos .py e djlint nos arquivos .html",
         )
         parser.add_argument(
@@ -127,7 +128,7 @@ class Command(BaseCommand):
         """
         try:
             FormsBuild(self, apps).build()
-            PythonFormatter(self.path_form).format()
+            PythonFormatter(f"{self.path_form}/{self.model_lower}.py").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_form : {error}")
@@ -137,7 +138,7 @@ class Command(BaseCommand):
         a responsabilidade de criar as views dos models da app"""
         try:
             ViewsBuild(self, apps).build()
-            PythonFormatter(self.path_views).format()
+            PythonFormatter(f"{self.path_views}/{self.model_lower}.py").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_views : {error}")
@@ -180,6 +181,7 @@ class Command(BaseCommand):
         """Método para renderizar o código HTML a ser inserido nos arquivos de template do models."""
         try:
             ParserHTMLBuild(self, apps).build()
+            HtmlFormatter(f"{self.path_template_dir}/{self.model_lower}").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_parser_html : {error}")
@@ -188,7 +190,7 @@ class Command(BaseCommand):
         """Método responsável por repassar a criação dos testes para a classe TestsBuild"""
         try:
             TestsBuild(self, apps).build()
-            PythonFormatter(self.path_tests).format()
+            PythonFormatter(f"{self.path_tests}/tests_{self.model_lower}").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_tests : {error}")
@@ -199,7 +201,9 @@ class Command(BaseCommand):
         """Método responsável por criar/configurar o arquivo de serializer para a APIRest (DRF)"""
         try:
             DRFBuild(self, apps).manage_serializers()
-            PythonFormatter(self.path_api_serializers).format()
+            PythonFormatter(
+                f"{self.path_api_serializers}/{self.model_lower}.py"
+            ).format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_serializer : {error}")
@@ -208,7 +212,7 @@ class Command(BaseCommand):
         """Método responsável por criar/configurar o arquivo de views para a APIRest (DRF)"""
         try:
             DRFBuild(self, apps).manage_views()
-            PythonFormatter(self.path_api_views).format()
+            PythonFormatter(f"{self.path_api_views}/{self.model_lower}.py").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_api_view: {error}")
@@ -246,20 +250,26 @@ class Command(BaseCommand):
     def __manage_format_code(self):
         """Método responsável por formatar o código fonte da app"""
         try:
-            Utils.show_message("Formatando o código [cyan b]Python[/]")
-            PythonFormatter(self.path_model).format()
-            PythonFormatter(self.path_form).format()
-            PythonFormatter(self.path_views).format()
-            PythonFormatter(self.path_urls).format()
-            PythonFormatter(self.path_base_urls).format()
-            PythonFormatter(self.path_api_serializers).format()
-            PythonFormatter(self.path_api_views).format()
-            PythonFormatter(self.path_api_routers).format()
-            PythonFormatter(self.path_base_api_urls).format()
-            PythonFormatter(self.path_tests).format()
+            format_option = self.options.get("format")
 
-            Utils.show_message("Formatando o código [cyan b]HTML[/]")
-            HtmlFormatter(Path(f"{self.path_template_dir}/{self.model_lower}")).format()
+            if format_option in ["html", "all"]:
+                Utils.show_message("Formatando o código [cyan b]HTML[/]")
+                HtmlFormatter(f"{self.path_template_dir}/{self.model_lower}").format()
+
+            if format_option in ["python", "all"]:
+                Utils.show_message("Formatando o código [cyan b]Python[/]")
+                PythonFormatter(self.path_model).format()
+                PythonFormatter(f"{self.path_form}/{self.model_lower}.py").format()
+                PythonFormatter(f"{self.path_views}/{self.model_lower}.py").format()
+                PythonFormatter(self.path_urls).format()
+                PythonFormatter(self.path_base_urls).format()
+                PythonFormatter(
+                    f"{self.path_api_serializers}/{self.model_lower}.py"
+                ).format()
+                PythonFormatter(f"{self.path_api_views}/{self.model_lower}.py").format()
+                PythonFormatter(self.path_api_routers).format()
+                PythonFormatter(self.path_base_api_urls).format()
+                PythonFormatter(f"{self.path_tests}/tests_{self.model_lower}").format()
 
         except Exception as error:
             Utils.show_error(f"Error in __manage_format_code : {error}")
@@ -305,7 +315,7 @@ class Command(BaseCommand):
         result = False
         try:
             for flag in __flags:
-                if options[flag] is True:
+                if options.get(flag):
                     result = True
         finally:
             if options.get("force"):
@@ -352,7 +362,6 @@ class Command(BaseCommand):
             self.__manage_parser_html()
             self.__manage_statics()
             self.__manage_tests()
-            self.__manage_format_code()
             return
 
         if options["templates"]:
@@ -439,6 +448,7 @@ class Command(BaseCommand):
                 Utils.show_core_box(f"Model {self.app}:{model.__name__}", tipo="model")
                 model = model.__name__
                 self.model = model.strip()
+                self.model_class = apps.get_model(self.app, self.model)
                 self.model_lower = model.lower()
                 self.call_methods(options)
 

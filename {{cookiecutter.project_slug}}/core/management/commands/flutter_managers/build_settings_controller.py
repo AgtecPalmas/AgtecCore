@@ -25,7 +25,7 @@ class SettingsControllerBuilder:
 
     def build(self):
         """
-        Método responsável por executar o build do arquivo de SettingsController
+        build _summary_
         """
         try:
             self._parser_page()

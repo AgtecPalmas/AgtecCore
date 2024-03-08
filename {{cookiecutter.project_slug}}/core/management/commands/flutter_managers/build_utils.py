@@ -1,6 +1,11 @@
 from pathlib import Path
 
-from base.settings import API_PATH, SYSTEM_NAME
+from base.settings import (
+    API_PATH,
+    FLUTTER_API_PASSWORD_DEV,
+    FLUTTER_API_USER_DEV,
+    SYSTEM_NAME,
+)
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
@@ -28,8 +33,20 @@ class UtilsBuilder:
             if Utils.check_file_is_locked(str(self._config_target_file)):
                 return
             _content = ParserContent(
-                ["$AppName$", "$DjangoAPIPath$"],
-                [SYSTEM_NAME, API_PATH],
+                [
+                    "$AppName$",
+                    "$DjangoAPIPath$",
+                    "$UriAPIDeveloper$",
+                    "$FastAPIPasswordDevelopment$",
+                    "$FastAPIUserDevelopment$",
+                ],
+                [
+                    SYSTEM_NAME,
+                    API_PATH,
+                    API_PATH,
+                    FLUTTER_API_PASSWORD_DEV,
+                    FLUTTER_API_USER_DEV,
+                ],
                 Utils.get_snippet(str(self._config_snippet_file)),
             ).replace()
             with open(self._config_target_file, "w", encoding="utf-8") as _file:

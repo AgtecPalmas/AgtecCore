@@ -15,7 +15,6 @@ import '../../../../core/user_interface/connection_mixin.dart';
 import '../../../../core/user_interface/message_mixin.dart';
 import '../../../../core/user_interface/modal_loading_mixin.dart';
 import '../../../../core/agtec.logger.dart';
-import '../../../../core/user_interface/font.dart';
 import '../../../../core/user_interface/widget.dart';
 import '../../../../core/config.dart';
 import '../../../../core/util.dart';
@@ -27,7 +26,7 @@ class $ModelClass$UpdatePage extends StatefulWidget {
 
   final $ModelClass$Model $ModelClassCamelCase$Model;
 
-  const $ModelClass$UpdatePage({Key? key, required this.$ModelClassCamelCase$Model}) : super(key: key);
+  const $ModelClass$UpdatePage({super.key, required this.$ModelClassCamelCase$Model});
 
   @override
   State<$ModelClass$UpdatePage> createState() => _$ModelClass$AddPageState();
@@ -60,72 +59,68 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     return Scaffold(
       key: _scaffoldKey,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent
-      ),
       body: _buildBody(),
     );
   }
 
   Widget _buildBody() {
-    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
-      listener: (context, state) {
-        if (state is $ModelClass$ErrorState){
-          showError(UpdateStringConstants.error);
-          AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page BlocConsumer', state.error.toString());
-        }
-        if(state is $ModelClass$SuccessState){
-          showSuccess(UpdateStringConstants.success);
-          _clearForm();
-        }
-      },
-      builder: (context, state) {
-        return Stack(
-          children: <Widget>[
-            const HeadWidget(),
-            _buildPage(),
-          ],
-        );
-      },
+    return Stack(
+      children: <Widget> [
+        const HeadWidget(),
+        _buildPage(),
+        const CustomAppBar(title: 'Atualizar $ModelClass$'),
+      ]
     );
   }
 
   Widget _buildPage() {
-    return SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height
-        ),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
-            margin: EdgeInsets.only(
-               top: Util.getProportionScreenHeight(
-                    context, Config.marginHead),
-             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
-                  child: customTitlePage(context,
-                    'Atualizar $ModelClass$',
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverFillRemaining(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+              margin: EdgeInsets.only(
+                top: Util.getProportionScreenHeight(
+                      context, Config.marginHead),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const Padding(
+                    padding:  EdgeInsets.only(bottom: 12.0, top: 12.0),
+                  ),
+
+                  BlocListener<$ModelClass$Controller, $ModelClass$State>(
+                  listener: (context, state) {
+                    if (state is $ModelClass$ErrorState){
+                      showError(InsertStringConstants.error);
+                      AgteCoreLogger().erro(
+                        'Ocorreu o erro ao executar o Update Page BlocListner', 
+                        state.error.toString(),
+                      );
+                    }
+                    if(state is $ModelClass$SuccessState){
+                      showSuccess(state.successMessage);
+                      _clearForm();
+                    }
+                  },
+                  child: Stack(
+                    children : <Widget>[
+                      Column(
+                        children: <Widget>[
+                          _createForm(context),
+                          _createButton(context),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                 Stack(
-                  children : <Widget>[
-                    Column(
-                      children: <Widget>[
-                        _createForm(context),
-                        _createButton(context),
-                      ]
-                    ),
-                  ]
-                )
-              ],
-            ),
-        ),
-      ),
+                ],
+              ),
+          ),
+          ),
+      ],
     );
   }
 
@@ -143,29 +138,23 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
   }
 
   Widget _createButton(context){
-    return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
-      listener: (context, state) {},
-      builder: (context, state) {
-      return  Padding(
-        padding: const EdgeInsets.only(top: 24.0),
-        child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: customRaisedButton(
-              label: 'Salvar',
-              context: context,
-              onPress: () {
-                if (_form$ModelClass$.currentState?.validate() ?? false) {
-                  setState(() {
-                    $AttributesData$
-                    _put();
-                  });
-                }
-              },
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: CustomRaisedButton(
+            label: 'Atualizar',
+            onPress: () {
+              if (_form$ModelClass$.currentState?.validate() ?? false) {
+                setState(() {
+                  $AttributesData$
+                  _put();
+                });
+              }
+            },
           ),
-        );
-      },
-    );
+        ),
+      );
   }
 
   void _clearForm(){

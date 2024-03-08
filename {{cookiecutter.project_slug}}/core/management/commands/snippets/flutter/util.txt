@@ -240,7 +240,7 @@ class Util {
   ///  Return:
   ///      Double
   static double getProportionScreenWidth(BuildContext context, double proportion) {
-    return MediaQuery.of(context).size.width * proportion;
+    return MediaQuery.sizeOf(context).width * proportion;
   }
 
   /// Método estático para retornar o tamanho da tela do device
@@ -253,7 +253,7 @@ class Util {
   ///      Double
   ///
   static double getProportionScreenHeight(BuildContext context, double proportion) {
-    return MediaQuery.of(context).size.height * proportion;
+    return MediaQuery.sizeOf(context).height * proportion;
   }
 
   /// Método estático para retornar o tamanho da barra do sistema Android / iOS

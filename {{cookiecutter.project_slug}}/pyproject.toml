@@ -9,9 +9,6 @@ profile = "black"
 line_length = 88
 
 [tool.black]
-max-line-length = 88
-line-length = 88
-ignore = "E203, W503"
 extend-exclude = '''
 (
   ^/core/*
@@ -22,19 +19,21 @@ extend-exclude = '''
 '''
 
 [tool.taskipy.tasks]
-build_all = "python manage.py build --all"
-build_force = "python manage.py build --all --force"
-core_checkupdate = "python manage.py core --checkupdate"
-core_version = "python manage.py core --version"
+build-all = "python manage.py build --all"
+build-fastapi = "python manage.py fastapi"
+build-flutter = "python manage.py flutter"
+build-force = "python manage.py build --all --force"
+core-upgrade = "python manage.py core --upgrade"
+core-version = "python manage.py core --version"
 coverage = "coverage html"
 docs = "mkdocs serve"
 lint = "black --diff --color . && isort --check-only --diff ."
 mgt = "python manage.py migrate"
 mkm = "python manage.py makemigrations"
-post_test = "coverage html"
-pre_test = "task lint"
+post-test = "coverage html"
+pre-test = "task lint"
 run = "python manage.py runserver"
 runserver = "python manage.py runserver"
 shell = "python manage.py shell"
 startapp = "python manage.py startapp"
-test = "pytest -s -x --cov=projeto_base -vv"
+test = "pytest -s -x --cov={{cookiecutter.project_slug.lower()}} -vv"

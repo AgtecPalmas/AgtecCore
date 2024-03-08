@@ -151,15 +151,15 @@
   --cyan-20-rgb: 153, 222, 234;
   --cyan-10-rgb: 204, 236, 242;
   --cyan-5-rgb: 231, 246, 248;
-  --cyan-vivid-80: #093b44;
-  --cyan-vivid-70: #0e4f5c;
-  --cyan-vivid-60: #00687d;
-  --cyan-vivid-50: #0081a1;
-  --cyan-vivid-40: #009ec1;
-  --cyan-vivid-30: #00bde3;
-  --cyan-vivid-20: #52daf2;
-  --cyan-vivid-10: #a8f2ff;
-  --cyan-vivid-5: #e5faff;
+  --cyan-vivid-80-rgb: 9, 59, 68;
+  --cyan-vivid-70-rgb: 14, 79, 92;
+  --cyan-vivid-60-rgb: 0, 104, 125;
+  --cyan-vivid-50-rgb: 0, 129, 161;
+  --cyan-vivid-40-rgb: 0, 158, 193;
+  --cyan-vivid-30-rgb: 0, 189, 227;
+  --cyan-vivid-20-rgb: 82, 218, 242;
+  --cyan-vivid-10-rgb: 168, 242, 255;
+  --cyan-vivid-5-rgb: 229, 250, 255;
   --gold-90: #191714;
   --gold-80: #322d26;
   --gold-70: #4d4438;
@@ -16571,14 +16571,14 @@ td:not([align]) {
 tr.selected, tr.is-selected {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 tr.selected th,
 tr.selected td, tr.is-selected th,
@@ -23044,14 +23044,14 @@ mark,
 .bg-primary-lighten-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-lighten-01) !important;
 }
 
@@ -23066,14 +23066,14 @@ mark,
 .bg-primary-lighten-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-lighten-02) !important;
 }
 
@@ -23088,14 +23088,14 @@ mark,
 .bg-primary-default {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-default) !important;
 }
 
@@ -23110,14 +23110,14 @@ mark,
 .bg-primary-darken-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-darken-01) !important;
 }
 
@@ -23132,14 +23132,14 @@ mark,
 .bg-primary-darken-02 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-primary-darken-02) !important;
 }
 
@@ -23214,14 +23214,14 @@ mark,
 .bg-secondary-06 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-06) !important;
 }
 
@@ -23236,14 +23236,14 @@ mark,
 .bg-secondary-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-07) !important;
 }
 
@@ -23258,14 +23258,14 @@ mark,
 .bg-secondary-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-08) !important;
 }
 
@@ -23280,14 +23280,14 @@ mark,
 .bg-secondary-09 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-secondary-09) !important;
 }
 
@@ -23302,14 +23302,14 @@ mark,
 .bg-highlight {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-highlight) !important;
 }
 
@@ -23324,14 +23324,14 @@ mark,
 .bg-support-01 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-01) !important;
 }
 
@@ -23358,14 +23358,14 @@ mark,
 .bg-support-03 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-03) !important;
 }
 
@@ -23380,14 +23380,14 @@ mark,
 .bg-support-04 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-04) !important;
 }
 
@@ -23426,14 +23426,14 @@ mark,
 .bg-support-07 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-07) !important;
 }
 
@@ -23448,14 +23448,14 @@ mark,
 .bg-support-08 {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
   background: var(--color-support-08) !important;
 }
 
@@ -24449,16 +24449,15 @@ mark,
 .dropdown .br-item {
   --color: var(--color-light);
   --color-rgb: var(--color-light-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-light);
   --interactive: var(--interactive-light);
-  --interactive-rgb: var(--interactive-light-rgb);
+  --interactive-rgb: var(--color-rgb);
   --visited: var(--visited-light);
   --hover: var(--hover-light);
   --pressed: var(--pressed-light);
   --focus-color: var(--focus-color-light);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-light);
   --item-padding-y: var(--spacing-scale-2x);
-  --interactive-rgb: var(--color-rgb);
   background-color: var(--background-light);
   color: var(--color);
 }
@@ -24468,14 +24467,14 @@ mark,
 .dropdown .br-item.selected {
   --color: var(--color-dark);
   --color-rgb: var(--color-dark-rgb);
-  --text-color: var(--color);
+  --text-color: var(--color-dark);
   --interactive: var(--interactive-dark);
   --interactive-rgb: var(--interactive-dark-rgb);
   --visited: var(--visited-dark);
   --hover: var(--hover-dark);
   --pressed: var(--pressed-dark);
   --focus-color: var(--focus-color-dark);
-  --focus: var(--focus-color);
+  --focus: var(--focus-color-dark);
 }
 
 *[data-toggle=collapse]:not(:disabled):hover {

@@ -19,7 +19,7 @@ PS C:\Users\Suporte> flutter doctor -v
 
 ## Dica de linter para o projeto
 
-Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as regras de linter no projeto. Para isso, basta alterar o arquivo **analysis_options.yaml** que fica na raiz do projeto e adicionar as regras abaixo:
+Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as regras de linter no projeto, caso o build não tenha alterado o arquivo copie o código abaixo e cole no arquivo **analysis_options.yaml** que fica na raiz do projeto e adicionar as regras abaixo:
 
 ```yaml
 ...
@@ -28,6 +28,7 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
     prefer_single_quotes: true
     prefer_final_locals: true
     prefer_relative_imports: true
+    dangling_library_doc_comments: false
 ```
 
 ## Etapas para rodar o projeto
@@ -44,6 +45,13 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
         }
     ```
 
+    2.2 Alterar o arquivo build.gradle no caminho **android/build.gradle** para a versão '1.9.10' do kotlin
+    ```code
+        buildscript {
+           ext.kotlin_version = '1.9.10'
+           ...
+    ```
+
 1. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
 2. Configurar o VsCode para executar o Flutter do FVM [https://fvm.app/docs/getting_started/configuration] (Etapa opcional)
 3. Criar o projeto no Firebase [https://firebase.google.com/] (Etapa opcional)
@@ -52,7 +60,6 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
 6. Configurar o projeto no Android e iOS para trabalhar com a autenticação, conforme documentação do Flutter (Etapa opcional)
 7. Configurar no arquivo lib/core/config.dart a costante uriDeveloper apontando para a URL da API do projeto DRF ou FastAPI
 8. Configurar no arquivo lib/core/config.dart a costante drfToken para o token de ambiente de desenvolvimento.
-9. No arquivo main.dart descomente as linhas abaixo no método main() para configurar o Firebase (Etapa opcional)
 
 ```dart
 void main() async {
@@ -70,9 +77,6 @@ void main() async {
 projeto flutter
 ├── android - diretório padrão do android
 ├── ios - diretório padrão do ios
-├── lang - diretório contendo arquivos de tradução (caso queira utilizar)
-│   ├── en.json
-│   ├── pt.json
 ├── lib
 │   ├── apps - Diretório contendo as apps do projeto (geradas baseadas no projeto Django)
 │   |    ├── auth - App gerada automaticamente para trabalhar com autenticação
