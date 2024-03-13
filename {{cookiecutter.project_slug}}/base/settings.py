@@ -243,6 +243,7 @@ if DEBUG is False:
 
     from .elastic import ELASTIC_APM
 
+    ELASTIC_APM
     INSTALLED_APPS.append("elasticapm.contrib.django")
     MIDDLEWARE.append("elasticapm.contrib.django.middleware.TracingMiddleware")
 
@@ -251,9 +252,6 @@ TEMPUS_DOMINUS_LOCALIZE = True
 TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 TEMPUS_DOMINUS_DATE_FORMAT = "DD/MM/YYYY"
 TEMPUS_DOMINUS_TIME_FORMAT = "HH:mm"
-
-# Renderizar campo booleano corretamente
-BOOLEAN_FIELD_IS_SWITCH = True
 
 # Campo primary auto create
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
