@@ -1,35 +1,20 @@
-import fileinput
 import subprocess
 from pathlib import Path
 from string import Template
 
-from bs4 import BeautifulSoup
-from django.conf import settings
+from django.db.models import Model
 from django.db.models.fields import Field
 from django.urls import NoReverseMatch, resolve, reverse
 
-from ..constants.django import INPUT_TYPES
-from ..formatters import HtmlFormatter
-from ..utils import Utils
+from core.management.commands.constants.django import INPUT_TYPES
+from core.management.commands.formatters import HtmlFormatter
+from core.management.commands.utils import Utils
 
 
-class DjangoField:
+class CustomDjangoField:
     def __init__(self, field: Field):
         self.app, self.model, self.name = str(field).split(".")
-        self.tipo = self.get_tipo(field)
-
-    @staticmethod
-    def get_tipo(field: Field) -> str:
-        try:
-            return (
-                str(str(type(field)).split(".")[-1:])
-                .replace('["', "")
-                .replace("'>\"]", "")
-            )
-        except Exception as error:
-            Utils.show_error(
-                f"Error in DjangoField.get_tipo: {error}",
-            )
+        self.tipo = field.get_internal_type()
 
     def is_tipo(self, tipo):
         return self.tipo == tipo
@@ -66,7 +51,7 @@ class ParserHTMLBuild:
             Utils.get_verbose_name(self.apps, app_name=self.app_lower) or self.app_lower
         )
 
-    def get_model(self):
+    def get_model(self) -> Model:
         """Método responsável por retornar a instância da class da App"""
         try:
             return self.apps.get_model(self.app, self.model)
@@ -146,112 +131,116 @@ class ParserHTMLBuild:
                 f"Error in RenderTemplatesBuid.__render_help_text: {error}",
             )
 
+    @staticmethod
+    def __render_invalid_feedback(html: str, field_name: str) -> str:
+        """Método responsável por renderizar o invalid_feedback"""
+        try:
+            if "invalid-feedback" in html:
+                return html
+
+            invalid_feedback = Template(
+                "<div class='invalid-feedback'>\
+                        {{ form.$field_name.errors }}\
+                </div>"
+            )
+            return f"{html}\n{invalid_feedback.substitute(field_name=field_name)}"
+
+        except Exception as error:
+            Utils.show_error(
+                f"Error in RenderTemplatesBuid.__render_invalid_feedback: {error}",
+            )
+
+    def __render_foreign_key_field(
+        self, html: str, custom_field: CustomDjangoField, field: Field, model: Model
+    ) -> str:
+        """Método responsável por renderizar o campo ForeignKey e OneToOneField"""
+
+        try:
+            foreign_key_template = Template(
+                "<div class='input-group'>\
+                    {{ form.${field_name} }}\
+                    {% if form.${field_name}.field.queryset.model|has_add_permission:request %}\
+                        <span class='input-group-text btn btn-light' type='button' data-bs-toggle='modal'\
+                            title='Adicionar ${model}'\
+                            data-bs-target='#form_${field_name}_modal'>\
+                            <i class='fas fa-plus'></i>\
+                        </span>\
+                    {% endif %}\
+                </div>"
+            )
+
+            if (
+                hasattr(model._meta, "fk_fields_modal") is True
+                and custom_field.name in model._meta.fk_fields_modal
+            ):
+                self.html_modals += self.render_modal_foreign_key(
+                    field.related_model._meta.object_name,
+                    field.related_model._meta.app_label,
+                    field.related_model._meta.model_name,
+                    custom_field.name,
+                )
+
+            return self.__render_invalid_feedback(
+                html
+                + foreign_key_template.substitute(
+                    field_name=custom_field.name, model=custom_field.model
+                ),
+                custom_field.name,
+            )
+        except Exception as error:
+            Utils.show_error(
+                f"Error in RenderTemplatesBuid.__render_foreign_key_field: {error}",
+            )
+
     def render_input(self, field: Field):
         """Método responsável por renderizar os inputs do form"""
         try:
             _model = self.get_model()
 
-            campo = DjangoField(field)
+            campo = CustomDjangoField(field)
 
-            if campo.tipo in INPUT_TYPES:
-                # Verificando se foi setado na constantes BOOLEAN_FIELD_IS_SWITCH
-                if settings.BOOLEAN_FIELD_IS_SWITCH is True and campo.is_tipo(
-                    "BooleanField"
-                ):
-                    return self.__render_boolean_field_switch("", campo.name)
-
-                if campo.is_tipo("BooleanField"):
-                    tag_result = "<div class='form-check col-md-6'>"
-
-                else:
-                    tag_result = "<div class='form-group col-md-6'>"
-
-                required = "required"
-
-                if (getattr(field, "blank", None) is True) or (
-                    getattr(field, "null", None) is True
-                ):
-                    required = ""
-
-                readonly = getattr(field, "readonly", "")
-                label = "{{{{ form.{}.label_tag }}}}".format(campo.name)
-
-                if not required:
-                    label += '<span class="text-muted">(Opcional)</span>'
-
-                if campo.is_tipo("ForeignKey") or campo.is_tipo("OneToOneField"):
-                    tag_result += label
-                    _foreign_key_field = "\n{{{{ form.{} }}}}".format(campo.name)
-
-                    if (
-                        hasattr(_model._meta, "fk_fields_modal") is True
-                        and campo.name in _model._meta.fk_fields_modal
-                    ):
-                        _foreign_key_field = (
-                            '\n<div class="input-group">'
-                            + "{{{{ form.{} }}}}\n".format(campo.name)
-                        )
-                        _foreign_key_field += (
-                            "{{% if form.{0}.field.queryset.model|{1} %}}".format(
-                                campo.name, "has_add_permission:request"
-                            )
-                        )
-
-                        _foreign_key_field += '<span class="input-group-text btn btn-light" type="button" data-bs-toggle="modal"'
-                        _foreign_key_field += (
-                            f'title="Adicionar {field.related_model._meta.object_name}"'
-                        )
-                        _foreign_key_field += 'data-bs-target="#form_{}_modal"><i class="fas fa-plus"></i></span>{{% endif %}}'.format(
-                            field.name
-                        )
-                        _foreign_key_field += "</div>"
-                        self.html_modals += self.render_modal_foreign_key(
-                            field.related_model._meta.object_name,
-                            campo.app,
-                            field.related_model._meta.model_name,
-                            campo.name,
-                        )
-
-                    tag_result += _foreign_key_field
-
-                elif campo.is_tipo("BooleanField"):
-                    tag_result += "{{{{ form.{} }}}}\n{}".format(campo.name, label)
-
-                elif campo.is_tipo("ManyToManyField"):
-                    tag_result += "{}\n{{{{ form.{} }}}}".format(label, campo.name)
-
-                else:
-                    tag_result += "{}\n{{{{ form.{} }}}}".format(label, campo.name)
-
-                if readonly != "":
-                    tag_result = tag_result.replace(
-                        "class='", "class='form-control-plaintext "
-                    )
-
-                tag_result = self.__render_help_text(tag_result, campo.name)
-
-                error_template = Template(
-                    """<div class="invalid-feedback">
-                            {{ form.$field_name.errors }}
-                        </div>"""
-                )
-
-                tag_result += error_template.substitute(field_name=campo.name)
-                tag_result += "</div>"
-
-                return f"{{% if form.{field.name} in form.visible_fields %}}{tag_result}{{% endif %}}\n\t"
-            else:
+            if campo.tipo not in INPUT_TYPES:
                 Utils.show_message(
                     f"Campo {field} desconhecido, favor verificar o tipo do campo.",
                     emoji="warning",
                 )
+                return
+
+            if campo.is_tipo("BooleanField"):
+                return self.__render_boolean_field_switch("", campo.name)
+
+            tag_result = "<div class='form-group col-md-6'>"
+            required = (
+                "required"
+                if getattr(field, "blank", None) is False
+                and getattr(field, "null", None) is False
+                else ""
+            )
+
+            label = "{{{{ form.{}.label_tag }}}}".format(campo.name)
+
+            if not required:
+                label += '<span class="text-muted">(Opcional)</span>'
+
+            if campo.is_tipo("ForeignKey") or campo.is_tipo("OneToOneField"):
+                tag_result = self.__render_foreign_key_field(
+                    tag_result + label, campo, field, _model
+                )
+
+            else:
+                tag_result += "{}\n{{{{ form.{} }}}}".format(label, campo.name)
+
+            tag_result = self.__render_help_text(tag_result, campo.name)
+            tag_result = self.__render_invalid_feedback(tag_result, campo.name)
+
+            return f"{{% if form.{field.name} in form.visible_fields %}}{tag_result}</div>{{% endif %}}\n"
 
         except Exception as error:
             Utils.show_error(
                 f"Error in RenderTemplatesBuid.render_input: {error}",
             )
 
-    def manage_create_update_templates(self, model):
+    def manage_create_and_update_templates(self, model):
         """Método para gerenciar os templates de criação e atualização"""
         try:
             self.html_modals = ""
@@ -270,60 +259,44 @@ class ParserHTMLBuild:
                 )
             )
 
-            if html_tag != "":
-                for template in ["create", "update"]:
-                    list_update_create = Path(
-                        f"{self.model_template_path}/{self.model_lower}_{template}.html"
+            if not html_tag:
+                Utils.show_error(
+                    "Nenhum campo foi encontrado para ser renderizado",
+                    emoji="warning",
+                )
+
+            for template_type in ["create", "update"]:
+                template = Path(
+                    f"{self.model_template_path}/{self.model_lower}_{template_type}.html"
+                )
+
+                if Utils.check_file_is_locked(str(template)) is True and not self.force:
+                    continue
+
+                with open(template, "r", encoding="utf-8") as file:
+                    content = file.read()
+
+                content = (
+                    content.replace(
+                        "<!--REPLACE_PARSER_HTML-->",
+                        html_tag,
                     )
-
-                    if (
-                        Utils.check_file_is_locked(str(list_update_create)) is True
-                        and not self.force
-                    ):
-                        continue
-
-                    with fileinput.FileInput(
-                        list_update_create, inplace=True
-                    ) as arquivo:
-                        for line in arquivo:
-                            print(
-                                line.replace(
-                                    "<!--REPLACE_PARSER_HTML-->",
-                                    BeautifulSoup(html_tag, "html5lib")
-                                    .prettify()
-                                    .replace("<html>", "")
-                                    .replace("<head>", "")
-                                    .replace("</head>", "")
-                                    .replace("<body>", "")
-                                    .replace("</body>", "")
-                                    .replace("</html>", "")
-                                    .strip(),
-                                ).replace(
-                                    "$url_back$",
-                                    f"{self.app_lower}:{self.model_lower}-list",
-                                ),
-                                end="",
-                            )
-
-                    with fileinput.FileInput(
-                        list_update_create, inplace=True
-                    ) as arquivo:
-                        for line in arquivo:
-                            print(
-                                line.replace(
-                                    "<!--REPLACE_MODAL_HTML-->", self.html_modals
-                                )
-                                .replace(
-                                    "$url_back$",
-                                    f"{self.app_lower}:{self.model_lower}-list",
-                                )
-                                .replace("FileLocked", "#FileLocked"),
-                                end="",
-                            )
-
-                    Utils.show_message(
-                        f"Template [cyan]{template}[/] parseado com sucesso"
+                    .replace(
+                        "<!--REPLACE_MODAL_HTML-->",
+                        self.html_modals,
                     )
+                    .replace(
+                        "$url_back$",
+                        f"{self.app_lower}:{self.model_lower}-list",
+                    )
+                )
+
+                with open(template, "w", encoding="utf-8") as file:
+                    file.write(content)
+
+                Utils.show_message(
+                    f"Template [cyan]{template_type}[/] parseado com sucesso"
+                )
 
         except Exception as error:
             Utils.show_error(
@@ -341,6 +314,28 @@ class ParserHTMLBuild:
         )
         return boolean.substitute(field_name=field_name)
 
+    def get_reverse_url(self, list_view):
+        """Método para coletar a URL reversa"""
+        # Tenta coletar a URL,
+        # caso não consiga, executa uma nova instância do manage.py com o parserhtml
+        try:
+            return reverse(list_view)
+
+        except NoReverseMatch:
+            if self.parser_only is False:
+                self.__thread_parserhtml()
+                return
+            else:
+                Utils.show_error(
+                    f"Error in RenderTemplatesBuid.build ao pegar o Reverse de {list_view}\
+                    \nVerifique se as URLs estão corretas e execute novamente",
+                )
+
+        except Exception as reverse_url_error:
+            Utils.show_error(
+                f"Error in RenderTemplatesBuid.build ao pegar o Reverse: {reverse_url_error}",
+            )
+
     def manage_list_template(self, model):
         try:
             if (
@@ -352,31 +347,13 @@ class ParserHTMLBuild:
                 return
 
             list_view = f"{self.app_lower}:{self.model_lower}-list"
-            list_view = f"{self.app_lower}:{self.model_lower}-list"
 
-            # Tenta coletar a URL,
-            # caso não consiga, executa uma nova instância do manage.py com o parser
-            try:
-                reverse_url = reverse(list_view)
-
-            except NoReverseMatch:
-                if self.parser_only is False:
-                    self.__thread_parserhtml()
-                    return
-                else:
-                    Utils.show_error(
-                        f"Error in RenderTemplatesBuid.build ao pegar o Reverse de {list_view}\
-                        \nVerifique se as URLs estão corretas e execute novamente",
-                    )
-
-            except Exception as reverse_url_error:
-                Utils.show_error(
-                    f"Error in RenderTemplatesBuid.build ao pegar o Reverse: {reverse_url_error}",
-                )
-
+            reverse_url = self.get_reverse_url(list_view)
+            if reverse_url is None:
+                return
+            
             fields_display = resolve(reverse_url).func.view_class.list_display
-            thead = ""
-            tline = ""
+            thead, tline = "", ""
             for item in fields_display:
                 app_field = next(
                     (
@@ -387,38 +364,37 @@ class ParserHTMLBuild:
                     None,
                 )
 
-                if app_field is not None:
-                    field_name = (
-                        app_field.verbose_name.title()
-                        if app_field.verbose_name
-                        else "Não Definido."
+                if app_field is None:
+                    continue
+
+                field_name = (
+                    app_field.verbose_name.title()
+                    if app_field.verbose_name
+                    else "Não Definido."
+                )
+                thead += f"<th>{field_name}</th>\n"
+
+                if app_field.get_internal_type() == "BooleanField":
+                    tline += self.__render_list_boolean(item)
+
+                else:
+                    tline += "<td>{{{{ item.{} }}}}</td>\n".format(
+                        item.replace("__", ".")
                     )
-                    thead += f"<th>{field_name}</th>\n"
-
-                    if app_field.get_internal_type() == "BooleanField":
-                        tline += self.__render_list_boolean(item)
-
-                    else:
-                        tline += "<td>{{{{ item.{} }}}}</td>\n".format(
-                            item.replace("__", ".")
-                        )
 
             list_template = Path(
                 f"{self.model_template_path}/{self.model_lower}_list.html"
             )
-            list_template_content = Utils.get_snippet(list_template)
-            list_template_content = list_template_content.replace(
-                "<!--REPLACE_THEAD-->", thead
+            list_template_content = (
+                Utils.get_snippet(list_template)
+                .replace("<!--REPLACE_THEAD-->", thead)
+                .replace("<!--REPLACE_TLINE-->", tline)
             )
-            list_template_content = list_template_content.replace(
-                "<!--REPLACE_TLINE-->", tline
-            )
-            list_template_content = list_template_content.replace(
-                "FileLocked", "#FileLocked"
-            )
+
             with open(list_template, "w", encoding="utf-8") as list_file:
                 list_file.write(list_template_content)
-                Utils.show_message("Template [cyan]List[/] parseado com sucesso")
+
+            Utils.show_message("Template [cyan]List[/] parseado com sucesso")
 
         except Exception as error:
             Utils.show_error(
@@ -444,7 +420,7 @@ class ParserHTMLBuild:
             if model is None:
                 Utils.show_error("Favor declarar a app no settings", emoji="warning")
 
-            self.manage_create_update_templates(model)
+            self.manage_create_and_update_templates(model)
             self.manage_list_template(model)
             self.__apply_formatters()
 
