@@ -29,10 +29,42 @@
         {% endif %}
       </div>
     </div>
-    <div class="col-12 mb-2 mt-2 m-0 pr-0">
-      {% block filter %}
-      {% endblock filter %}
-    </div>
+    {% if filter %}
+      <div class="col-12 mb-2 mt-2 m-0 pr-0">
+        {% comment %} Exibe apenas o Botão quando tela pequena {% endcomment %}
+        <div class="d-flex d-md-none mb-4">
+          <button class="br-button secondary block"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseFilter"
+                  aria-expanded="false"
+                  aria-controls="collapseFilter">
+            <i class="fas fa-filter mr-2"></i> Filtro
+          </button>
+        </div>
+        {% comment %} Exibe o filtro quando tela grande {% endcomment %}
+        <div class="collapse d-lg-block" id="collapseFilter">
+          <form method="get">
+            <div class="d-flex flex-column flex-md-row justify-content-start mb-4 gap-large">
+              {% for filtro in filter.form %}
+                <div class="form-floating">
+                  {{ filtro }}
+                  {{ filtro.label_tag }}
+                </div>
+              {% endfor %}
+              <div class="align-self-center">
+                {% for key, value in request.GET.items %}
+                  {% if key == 'q' %}<input type="hidden" name="{{ key }}" value="{{ value }}" />{% endif %}
+                {% endfor %}
+                <button class="br-button secondary block" type="submit">
+                  <i class="fas fa-filter mr-2"></i> Filtrar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% endif %}
     <div class="col-12 row mb-2 mt-2 m-0 pr-0">
       {% block barra_botoes_extra %}
       {% endblock barra_botoes_extra %}
