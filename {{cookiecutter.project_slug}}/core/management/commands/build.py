@@ -439,7 +439,7 @@ class Command(BaseCommand):
             models = list(self.app_instance.get_models())
 
         with Utils.ProgressBar() as bar:
-            task = bar.add_task("", total=len(models), start=False)
+            task = bar.add_task("", total=len(models))
             for i, model in enumerate(models):
                 bar.update(
                     task,

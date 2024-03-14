@@ -619,9 +619,7 @@ class Command(BaseCommand):
             Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
 
             with Utils.ProgressBar() as bar:
-                task = bar.add_task(
-                    "", total=len(self.current_app_model.models), start=False
-                )
+                task = bar.add_task("", total=len(self.current_app_model.models))
                 for i, model in enumerate(self.current_app_model.models):
                     bar.update(
                         task,
