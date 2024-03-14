@@ -89,9 +89,9 @@ class ParserHTMLBuild:
         """
         try:
             boolean_field_switch = Template(
-                "{% if form.$field_name in form.visible_fields %}\n\
-                    <div class='form-check col-md-6 mb-3'>\n\
-                        <div class='br-switch icon top mr-5'>\n\
+                """{% if form.$field_name in form.visible_fields %}\n\
+                    <div class="form-check col-md-6 mb-3">\n\
+                        <div class="br-switch icon top mr-5">\n\
                             {{ form.$field_name }}\n\
                             {{ form.$field_name.label_tag }}\n\
                             {% if form.$field_name.errors %}\n\
@@ -100,7 +100,7 @@ class ParserHTMLBuild:
                         </div>\n\
                         $help_text\n\
                     </div>\n\
-                {% endif %}"
+                {% endif %}"""
             )
 
             return html + boolean_field_switch.substitute(
@@ -118,11 +118,11 @@ class ParserHTMLBuild:
         """Método responsável por renderizar o help_text"""
         try:
             help_text = Template(
-                "{% if form.$field_name.help_text %}\
-                    <small class='form-text text-muted'>\
+                """{% if form.$field_name.help_text %}\
+                    <small class="form-text text-muted">\
                         {{ form.$field_name.help_text }}\
                     </small>\
-                {% endif %}"
+                {% endif %}"""
             )
             return f"{html}\n{help_text.substitute(field_name=field_name)}"
 
@@ -139,9 +139,9 @@ class ParserHTMLBuild:
                 return html
 
             invalid_feedback = Template(
-                "<div class='invalid-feedback'>\
+                """<div class="invalid-feedback">\
                         {{ form.$field_name.errors }}\
-                </div>"
+                </div>"""
             )
             return f"{html}\n{invalid_feedback.substitute(field_name=field_name)}"
 
@@ -157,36 +157,32 @@ class ParserHTMLBuild:
 
         try:
             foreign_key_template = Template(
-                "<div class='input-group'>\
+                """<div class="input-group">\
                     {{ form.${field_name} }}\
                     {% if form.${field_name}.field.queryset.model|has_add_permission:request %}\
-                        <span class='input-group-text btn btn-light' type='button' data-bs-toggle='modal'\
-                            title='Adicionar ${model}'\
-                            data-bs-target='#form_${field_name}_modal'>\
-                            <i class='fas fa-plus'></i>\
+                        <span class="input-group-text btn btn-light" type="button" data-bs-toggle="modal"\
+                            title="Adicionar ${model}"\
+                            data-bs-target="#form_${field_name}_modal">\
+                            <i class="fas fa-plus"></i>\
                         </span>\
                     {% endif %}\
-                </div>"
+                    <div class="invalid-feedback">\
+                        {{ form.$field_name.errors }}\
+                    </div>
+                </div>"""
             )
 
-            if (
-                hasattr(model._meta, "fk_fields_modal") is True
-                and custom_field.name in model._meta.fk_fields_modal
-            ):
-                self.html_modals += self.render_modal_foreign_key(
-                    field.related_model._meta.object_name,
-                    field.related_model._meta.app_label,
-                    field.related_model._meta.model_name,
-                    custom_field.name,
-                )
-
-            return self.__render_invalid_feedback(
-                html
-                + foreign_key_template.substitute(
-                    field_name=custom_field.name, model=custom_field.model
-                ),
+            self.html_modals += self.render_modal_foreign_key(
+                field.related_model._meta.object_name,
+                field.related_model._meta.app_label,
+                field.related_model._meta.model_name,
                 custom_field.name,
             )
+
+            return html + foreign_key_template.substitute(
+                field_name=custom_field.name, model=custom_field.model
+            )
+
         except Exception as error:
             Utils.show_error(
                 f"Error in RenderTemplatesBuid.__render_foreign_key_field: {error}",
@@ -209,7 +205,7 @@ class ParserHTMLBuild:
             if campo.is_tipo("BooleanField"):
                 return self.__render_boolean_field_switch("", campo.name)
 
-            tag_result = "<div class='form-group col-md-6'>"
+            tag_result = '<div class="form-group col-md-6">'
             required = (
                 "required"
                 if getattr(field, "blank", None) is False
@@ -220,9 +216,11 @@ class ParserHTMLBuild:
             label = "{{{{ form.{}.label_tag }}}}".format(campo.name)
 
             if not required:
-                label += '<span class="text-muted">(Opcional)</span>'
+                label += '<span class="text-muted ml-1">(Opcional)</span>'
 
-            if campo.is_tipo("ForeignKey") or campo.is_tipo("OneToOneField"):
+            if (campo.is_tipo("ForeignKey") or campo.is_tipo("OneToOneField")) and (
+                field.name in getattr(_model._meta, "fk_fields_modal", [])
+            ):
                 tag_result = self.__render_foreign_key_field(
                     tag_result + label, campo, field, _model
                 )
@@ -289,6 +287,10 @@ class ParserHTMLBuild:
                         "$url_back$",
                         f"{self.app_lower}:{self.model_lower}-list",
                     )
+                    .replace(
+                        "FileLocked",
+                        "#FileLocked",
+                    )
                 )
 
                 with open(template, "w", encoding="utf-8") as file:
@@ -351,7 +353,7 @@ class ParserHTMLBuild:
             reverse_url = self.get_reverse_url(list_view)
             if reverse_url is None:
                 return
-            
+
             fields_display = resolve(reverse_url).func.view_class.list_display
             thead, tline = "", ""
             for item in fields_display:
@@ -389,6 +391,7 @@ class ParserHTMLBuild:
                 Utils.get_snippet(list_template)
                 .replace("<!--REPLACE_THEAD-->", thead)
                 .replace("<!--REPLACE_TLINE-->", tline)
+                .replace("FileLocked", "#FileLocked")
             )
 
             with open(list_template, "w", encoding="utf-8") as list_file:
