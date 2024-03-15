@@ -18,11 +18,15 @@ from django.db.models.fields.related_descriptors import (
     ManyToManyDescriptor,
 )
 from django.db.models.query_utils import DeferredAttribute
-from django.urls import reverse
 from django.views.generic import ListView
 
 from core.models import Base
-from core.views.utils import get_breadcrumbs, get_default_context_data, has_fk_attr
+from core.views.utils import (
+    get_breadcrumbs,
+    get_default_context_data,
+    get_url_str,
+    has_fk_attr,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -535,9 +539,9 @@ class BaseListView(
                             )
                             for item_fk in lista_fk:
                                 if item_fk["id"] == obj.id:
-                                    field_dict[
-                                        field_display
-                                    ] = f"{item_fk[field_display]}"
+                                    field_dict[field_display] = (
+                                        f"{item_fk[field_display]}"
+                                    )
 
                         elif hasattr(obj, field_display) and field_display != "__str__":
                             # verifica se o campo não é None se sim entra no if
@@ -546,9 +550,9 @@ class BaseListView(
                                 str_metodo_choice = f"get_{field_display}_display"
 
                                 if hasattr(obj, str_metodo_choice):
-                                    field_dict[
-                                        field_display
-                                    ] = f"{getattr(obj, str_metodo_choice)().__str__()}"
+                                    field_dict[field_display] = (
+                                        f"{getattr(obj, str_metodo_choice)().__str__()}"
+                                    )
 
                                 elif type(getattr(obj, field_display)) == datetime:
                                     tz = pytz.timezone(settings.TIME_ZONE)
@@ -560,14 +564,14 @@ class BaseListView(
                                     else:
                                         date_tz = campo_date_time
 
-                                    field_dict[
-                                        field_display
-                                    ] = f'{date_tz.strftime(settings.DATETIME_INPUT_FORMATS[0] or "%d/%m/%Y %H:%M")}'
+                                    field_dict[field_display] = (
+                                        f'{date_tz.strftime(settings.DATETIME_INPUT_FORMATS[0] or "%d/%m/%Y %H:%M")}'
+                                    )
 
                                 elif type(getattr(obj, field_display)) == date:
-                                    field_dict[
-                                        field_display
-                                    ] = f'{getattr(obj, field_display).strftime(settings.DATE_INPUT_FORMATS[0] or "%d/%m/%Y")}'
+                                    field_dict[field_display] = (
+                                        f'{getattr(obj, field_display).strftime(settings.DATE_INPUT_FORMATS[0] or "%d/%m/%Y")}'
+                                    )
 
                                 elif hasattr(getattr(obj, field_display), "all"):
                                     list_many = [
@@ -577,18 +581,18 @@ class BaseListView(
                                     field_dict[field_display] = ", ".join(list_many)
 
                                 else:
-                                    field_dict[
-                                        field_display
-                                    ] = f"{getattr(obj, field_display).__str__()}"
+                                    field_dict[field_display] = (
+                                        f"{getattr(obj, field_display).__str__()}"
+                                    )
 
                             else:
                                 # no caso de campos None ele coloca para aparecer vasio
                                 field_dict[field_display] = ""
 
                         elif field_display == "__str__":
-                            field_dict[
-                                field_display
-                            ] = f"{getattr(obj, field_display)()}"
+                            field_dict[field_display] = (
+                                f"{getattr(obj, field_display)()}"
+                            )
 
                         elif (
                             hasattr(self, field_display)
@@ -706,7 +710,7 @@ class BaseListView(
 
             context["filters"] = object_filters
 
-            url_str = reverse(context["url_list"]) + " Listar"
+            url_str = get_url_str(context["url_list"], "Listar")
             context["breadcrumbs"] = get_breadcrumbs(url_str)
             return context
 

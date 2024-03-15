@@ -7,7 +7,7 @@ from django.views.generic.edit import UpdateView
 from core.decorators import audit_save
 from core.forms import BaseForm
 from core.models import Base
-from core.views.utils import get_breadcrumbs, get_default_context_data
+from core.views.utils import get_breadcrumbs, get_default_context_data, get_url_str
 
 
 class BaseRestoreView(
@@ -38,12 +38,7 @@ class BaseRestoreView(
 
     def get_success_url(self):
         try:
-            success_message = messages.success(
-                request=self.request,
-                message=f"'{self.object}', Restaurado com Sucesso!",
-                extra_tags="success",
-            )
-            success_message
+            self.success_message = f"'{self.object}' restaurado com sucesso"
 
             if self.success_url and self.success_url != "":
                 return reverse(self.success_url)
@@ -71,8 +66,7 @@ class BaseRestoreView(
         context["many_fields"] = many_fields
         context = get_default_context_data(context, self)
 
-        url_str = reverse(context["url_list"]) + f' Restaurar {context["object"].pk}'
-
+        url_str = get_url_str(context["url_list"], f"Restaurar {context['object'].pk}")
         context["breadcrumbs"] = get_breadcrumbs(url_str)
 
         return context

@@ -8,7 +8,7 @@ from django.views.generic.edit import UpdateView
 from core.decorators import audit_save
 from core.forms import BaseForm
 from core.models import Base
-from core.views.utils import get_breadcrumbs, get_default_context_data
+from core.views.utils import get_breadcrumbs, get_default_context_data, get_url_str
 
 
 class BaseUpdateView(
@@ -56,13 +56,14 @@ class BaseUpdateView(
 
     def get_context_data(self, **kwargs):
         context = super(BaseUpdateView, self).get_context_data(**kwargs)
-        
+
         for modal in getattr(self, "form_modals", []):
             context[f"form_{modal.Meta.model.__name__.lower()}"] = modal
 
         context["list_inlines"] = self.get_formset_inlines()
         context = get_default_context_data(context, self)
-        url_str = reverse(context["url_list"]) + f' Atualizar {context["object"].pk}'
+
+        url_str = get_url_str(context["url_list"], f"Atualizar {context['object'].pk}")
         context["breadcrumbs"] = get_breadcrumbs(url_str)
         return context
 
