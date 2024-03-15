@@ -35,8 +35,13 @@ class UrlsBuild:
         content = (
             f"from {self.app}.views.index import {self.app.title()}IndexTemplateView\n"
         )
-        content += f"app_name = '{self.app}'\n"
-        content += f"urlpatterns = [path('{self.app.lower()}/', {self.app.title()}IndexTemplateView.as_view(), name='{self.app.lower()}-index'),]\n"
+
+        if Utils.check_file(self.path_urls) is False:
+            content += f"app_name = '{self.app}'\nurlpatterns = "
+        else:
+            content += "urlpatterns += "
+
+        content += f"[path('{self.app.lower()}/', {self.app.title()}IndexTemplateView.as_view(), name='{self.app.lower()}-index'),]\n"
 
         Utils.append_file(self.path_urls, content)
         Utils.show_message("[cyan]IndexView[/] adicionada à urls.py")
