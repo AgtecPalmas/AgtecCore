@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.forms.fields import BooleanField, DateField, DateTimeField, JSONField
 from django.utils.translation import gettext_lazy as _
 
+from core.middleware.current_user import get_current_user
+from usuario.models import Usuario
+
 from .models import Audit, Base
 
 
@@ -162,3 +165,43 @@ class ChangePasswordUserForm(PasswordChangeForm):
         max_length=150,
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
+
+
+class UserUpdateForm(BaseForm):
+
+    @staticmethod
+    def __valid_djangouser(user, email) -> bool:
+        """Valida se o email já está cadastrado no sistema por um DjangoUser"""
+        user_email = User.objects.filter(username=email)
+
+        return user_email and user_email != user
+
+    @staticmethod
+    def __valid_usuario(user, email) -> bool:
+        """Valida se o email já está cadastrado no sistema por um Usuario"""
+        usuario = getattr(user, "usuario", None)
+        updated_usuario = Usuario.objects.filter(email=email).first()
+
+        if usuario and updated_usuario:
+            return usuario == updated_usuario
+        return not updated_usuario
+
+    def clean_email(self):
+
+        email = self.cleaned_data.get("email")
+        django_user = get_current_user()
+
+        if not email:
+            raise forms.ValidationError("O campo email é obrigatório")
+
+        if self.__valid_djangouser(django_user, email) is False:
+            raise forms.ValidationError("Já existe um usuário com esse email")
+
+        if self.__valid_usuario(django_user, email) is False:
+            raise forms.ValidationError("Já existe um usuário com esse email")
+
+        return email
+
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name"]
