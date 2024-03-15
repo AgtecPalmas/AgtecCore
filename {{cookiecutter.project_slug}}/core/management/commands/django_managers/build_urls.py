@@ -36,10 +36,10 @@ class UrlsBuild:
             f"from {self.app}.views.index import {self.app.title()}IndexTemplateView\n"
         )
 
-        if Utils.check_file(self.path_urls) is False:
-            content += f"app_name = '{self.app}'\nurlpatterns = "
-        else:
+        if Utils.read_file(self.path_urls):
             content += "urlpatterns += "
+        else:
+            content += f"app_name = '{self.app}'\nurlpatterns = "
 
         content += f"[path('{self.app.lower()}/', {self.app.title()}IndexTemplateView.as_view(), name='{self.app.lower()}-index'),]\n"
 
