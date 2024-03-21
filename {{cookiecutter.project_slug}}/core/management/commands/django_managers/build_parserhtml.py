@@ -151,7 +151,7 @@ class ParserHTMLBuild:
             )
 
     def __render_foreign_key_field(
-        self, html: str, custom_field: CustomDjangoField, field: Field, model: Model
+        self, html: str, custom_field: CustomDjangoField, field: Field
     ) -> str:
         """Método responsável por renderizar o campo ForeignKey e OneToOneField"""
 
