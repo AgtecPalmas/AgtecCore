@@ -58,9 +58,10 @@ class BaseForm(forms.ModelForm):
 
     def update_fields_modal(self):
         """Atualiza os campos do formulário para serem usados em modais"""
+        random_str = secrets.token_urlsafe(5)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update(
-                {"id": f"{secrets.token_urlsafe(5)}_{field}"}
+                {"id": f"{random_str}_{field}"}
             )
 
     def get_validation_class(self, field) -> str:
