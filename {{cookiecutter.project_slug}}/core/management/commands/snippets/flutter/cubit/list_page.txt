@@ -100,13 +100,11 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       listener: (context, state) {
         switch (state) {
           case $ModelClass$ErrorState(:final error):
-            AgteCoreLogger()
-                .erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
+            AgteCoreLogger().erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
             showError(ListStringConstants.error);
             break;
           case $ModelClass$SuccessState():
-            AgteCoreLogger()
-                .info('Dados carregados com sucesso no List Page BlocConsumer | listener');
+            AgteCoreLogger().info('Dados carregados com sucesso no List Page BlocConsumer | listener');
             showSuccess(ListStringConstants.success);
             break;
           default:
@@ -117,13 +115,15 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
         // Refatorando o pattern matching
         switch (state) {
           case $ModelClass$ProcessState():
-            return showHideModal(show: true);
+            return SliverFillRemaining(child: Center(child: showHideModal(show: true)));
+          case $ModelClass$EmptyListState():
+            return const SliverToBoxAdapter(child: EmptyDataList(message: 'Nenhum item encontrado'));
           case $ModelClass$ErrorState():
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
           case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
             return _buildResultList($ModelClassCamelCase$List);
           default:
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
       },
     );
