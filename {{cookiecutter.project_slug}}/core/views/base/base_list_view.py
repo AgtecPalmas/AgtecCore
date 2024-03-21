@@ -141,20 +141,16 @@ class BaseListView(
                 order_by,
             )
 
-        elif (
-            hasattr(self.model, "_meta")
-            and hasattr(self.model._meta, "ordering")
-            and self.model._meta.ordering
-        ) or (
-            (
-                hasattr(self.model, "Meta")
-                and hasattr(self.model.Meta, "ordering")
-                and self.model.Meta.ordering
-            )
-        ):
-            queryset = queryset.order_by(
-                *(self.model._meta.ordering or self.model.Meta.ordering)
-            )
+        else:
+            model_ordering = []
+
+            if hasattr(self.model, "_meta"):
+                model_ordering = getattr(self.model._meta, "ordering", [])
+
+                if model_ordering == [] and hasattr(self.model, "Meta"):
+                    model_ordering = getattr(self.model.Meta, "ordering", [])
+
+            queryset = queryset.order_by(*model_ordering)
 
         try:
             param_filter = request.get("q")
@@ -496,8 +492,17 @@ class BaseListView(
                 if field.name in self.list_display
             }
 
+            model_ordering = []
+            if hasattr(self.model, "_meta"):
+                model_ordering = getattr(self.model._meta, "ordering", [])
+
+                if model_ordering == [] and hasattr(self.model, "Meta"):
+                    model_ordering = getattr(self.model.Meta, "ordering", [])
+
+            context["default_ordering"] = model_ordering[0] if model_ordering else "id"
+
             if query_params := dict(self.request.GET):
-                # retira o parametro page e add ele em outra variável, apensas dele
+                # retira o parametro page e add ele em outra variável, apenas dele
                 if query_params.get("page"):
                     query_params.pop("page")
 
