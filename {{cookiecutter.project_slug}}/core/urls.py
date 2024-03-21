@@ -16,7 +16,6 @@ from core.views.auth import (
 from core.views.misc import (
     IndexAdminTemplateView,
     ProfileUpdateView,
-    ProfileView,
     SettingsView,
 )
 
@@ -25,8 +24,7 @@ urlpatterns = [
     path("", IndexAdminTemplateView.as_view(), name="index"),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path("profile/", ProfileView.as_view(), name="profile"),
-    path("profile/update/", ProfileUpdateView.as_view(), name="profile-update"),
+    path("profile/", ProfileUpdateView.as_view(), name="profile"),
     path("profile/update/password/", UpdatePassword.as_view(), name="password-update"),
     path(
         "profile/request_password/", RequestPassword.as_view(), name="password-request"

@@ -3,7 +3,9 @@ $(document).ready(function () {
     let url = new URL(window.location.href);
 
     let sort_by = url.searchParams.get("sort_by");
-    $('#sort_by').val(sort_by);
+    if (sort_by !== null) {
+        $('#sort_by').val(sort_by);
+    }
 
     let order_by = url.searchParams.get("order_by");
     if (order_by === 'asc') {

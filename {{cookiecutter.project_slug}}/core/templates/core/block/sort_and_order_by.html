@@ -10,7 +10,7 @@
         <spam class="fas fa-sort-amount-up"></spam>
     </button>
     <select name="sort_by" id="sort_by" class="form-control text-center">
-        <option value="">Ordenar por</option>
+        <option value="{{ default_ordering }}">Ordenar por</option>
         {% for campo, nome in model_fields.items %}<option value="{{ campo }}">{{ nome }}</option>{% endfor %}
     </select>
     <button type="submit"

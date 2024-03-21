@@ -1,104 +1,102 @@
-# Aplicando filtro e criando o arquivo filter.py
+# Aplicando filtros com django_filters
 
-1. Criar um arquivo filter.py na app requerida para configuração do modulo django_filters. De prefêrencia criar o
-   arquivo no mesmo nivel a qual ele vai ser importado.
+Caso você queira utilizar filtros em uma listagem de um model, você pode utilizar o django_filters.
 
-2. No arquivo filter.py importar os models que deseja aplicar o filtro.
 
-3. Criar a classe filter para o model desejado ( Ex: se o model é Exemplo, criar FilterExemplo)
+## Como funciona?
 
-4. Na classe filter, criar a classe meta para apontar pro model e definir os campos que serão utilizados para filtragem.
+O django_filters é um modulo que permite a criação de filtros para os models, com ele é possível criar filtros para os campos do model, e aplicar esses filtros na listagem do model ou em qualquer outra view que desejar.
 
-5. Caso deseja personalizar o filtro, como por exemplo, definir label, adicionar atributos e outros comportamentos,
-   deverá definir dentro do metodo __init__, lembrando de definir separado para cada campo/filtro.
+## Configurando o Filter
 
-exemplo:
+Crie um arquivo filters.py na app requerida para configuração do modulo django_filters.
 
-## filter.py
+```python
+from django import forms
+from django_filters import filterset
 
-    import django_filters
+from .models import Livro
 
-    from exemplo.models import Exemplo
 
-    class ExemploFilter(django_filters.FilterSet):
-        class Meta:
-            model = Exemplo
-            fields = ['nome','cpf', 'email']
+class LivroFilter(filterset.FilterSet):
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+    titulo = filterset.CharFilter(
+        label="Titulo",
+        lookup_expr="icontains",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
 
-            self.filters["nome"].lookup_expr = 'icontains'
-            self.filters["nome"].label = 'Nome'
+    autor = filterset.CharFilter(
+        label="Autor",
+        method="filter_autor",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
 
-            self.filters["cpf"].lookup_expr = 'icontains'
-            self.filters["cpf"].label = 'CPF'
+    created_on = filterset.DateFilter(
+        label="Criado depois de",
+        lookup_expr="gte",
+        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+    )
 
-            self.filters["email"].lookup_expr = 'icontains'
-            self.filters["email"].label = 'Email'
+    def filter_autor(self, queryset, name, value):
+        return queryset.filter(autor__nome__icontains=value)
 
-## Importando o filtro na views
-
-1. Na view, importar do filter.py o filtro especifico que vai utilizar na view.
-
-2. Importar também do django_filter.views o FilterView.
-
-3. A classe que vai utilizar o filtro, vai herdar o FilterView. (Coloque Filter no nome da classe para melhor
-   visualização ( ExempleFilterView ))
-
-4. Dentro da classe que herdou o FilterView, junto com o padrão Class Base View, declare filterset_class recebendo o
-   filtro que foi importando do arquivo filter.py.    
-   (filterset_class = ExempleFilter)
-
-Exemplo:
-
-    from django_filters.views import FilterView
-
-    class ExemploListView(FilterView):
-        """Classe para gerenciar a listagem do Exemplo"""
-
-        model = Exemplo
-        template_name = "usuario/exemplo_listfilter.html"
-        context_object_name = 'exemplo'
-        list_display = ['nome', 'email', 'cpf'']
-        filterset_class = ExemploFilter
-
-## No arquivo html
-
-1. No arquivo html o filtro vem pela tag filter.
-
-2. A tag filter tem que ser utilizada dentro da tag html de form para funcionar.
-
-3. Por padrão ela não vem com um botão para submit, só vem com os inputs e labels.
-
-4. Pode ser utilizado filter.form que vai herdar o css geral caso utilize template, ou filter.form.as_p
-   que vai renderizar o form basico mais oque for configurado no arquivo filter.py no metodo init.
-
-5. Também pode só chamar um input de filtragem especifico, chamando filter.form."campo" (exemplo: filter.form.nome), e
-   tambem chamar só o label. filter.form."campo".label
-
-Exemplo:
-
+    class Meta:
+        model = Livro
+        fields = ["titulo", "autor", "created_on"]
 ```
-<form method="get" >
-    <div class="row">
 
-        # chamado o formulario de filtro baseado na classe meta (o css vai vir herdada do template)
-        {{ filter.form }}
+Lembre-se sempre de utilizar o `lookup_expr` corretamente para definir o tipo de filtro que será aplicado, como no exemplo o `icontains` que é um filtro de texto que busca por parte do texto e o `gte` que busca por datas maiores ou iguais.
 
-        # chamado o formulario de filtro baseado no metodo __init__(o css sera basico e vai ter q fazer manualmente)
-        {{ filter.form.as_p }}
+Se necessário uma filtragem mais complexa, é possível criar filtros customizados, como no exemplo o `filter_autor`.
 
-        # somente o input de nome
-        {{ filter.form.nome }}
+Você é capaz de passar atributos comuns de um form, como label, widget, required, etc.
 
-        # somente o label de nome
-        {{ filter.form.nome.label }}
 
-        <div class="col-2">
-            <button class="btn btn-success form-control" type="submit">Buscar</button>
+## Configurando a View
+
+Sua view deverá herdar de `django_filters.views.FilterView` e definir o atributo `filterset_class` com o filtro que você criou.
+
+```python
+from django_filters.views import FilterView
+
+from teste_livro.filter import LivroFilter
+from teste_livro.models import Livro
+
+
+class LivroListView(FilterView, BaseListView):
+    ...
+    model = Livro
+    filterset_class = LivroFilter
+```
+
+## Configurando o Template
+
+Os templates list do Core já possuem uma verificação para renderizar o filtro corretamente.
+
+Mas se for necessário utilizar o filtro em outro template, é necessário renderizar o filtro manualmente.
+Use `filter.form` ou `filter.form.as_p` no template.
+
+Segue um exemplo de como utilizar o filtro no template:
+
+```html
+<form method="get">
+    <div class="d-flex flex-column flex-md-row justify-content-start mb-4 gap-large">
+        {% for filtro in filter.form %}
+            <div class="form-floating">
+                {{ filtro }}
+                {{ filtro.label_tag }}
+            </div>
+        {% endfor %}
+        <div class="align-self-center">
+            <button class="br-button secondary block" type="submit">
+                <i class="fas fa-filter mr-2"></i> Filtrar
+            </button>
         </div>
-        
     </div>
 </form>
 ```
+
+# Leia mais
+
+Acesse a [documentação oficial](https://django-filter.readthedocs.io/en/main/guide/usage.html#the-filter) para mais informações sobre o django_filters.

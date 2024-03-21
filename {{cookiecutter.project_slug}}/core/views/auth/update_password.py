@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 
 from core.forms import ChangePasswordUserForm
 from core.views.base import BaseTemplateView
+from core.views.utils import get_breadcrumbs
 
 
 class UpdatePassword(PasswordChangeView, BaseTemplateView):
@@ -16,3 +17,8 @@ class UpdatePassword(PasswordChangeView, BaseTemplateView):
     def form_valid(self, form):
         messages.success(self.request, "Senha alterada com sucesso!")
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["breadcrumbs"] = get_breadcrumbs("core/profile/Alterar senha")
+        return context

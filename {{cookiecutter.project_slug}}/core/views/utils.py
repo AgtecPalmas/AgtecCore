@@ -5,6 +5,7 @@ from uuid import UUID
 from django.contrib.contenttypes.models import ContentType
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Model
+from django.urls import reverse
 from django.utils.text import camel_case_to_spaces
 from django.views import View
 
@@ -31,6 +32,22 @@ def has_fk_attr(classe=None, attr=None):
         return False
 
     return True
+
+
+def get_url_str(url: str, message: str = "Core") -> str:
+    """
+    Método para recuperar a url de um objeto
+    Arguments:
+        url {String} -- [Nome da url]
+        message {String} -- [Mensagem a ser exibida]
+    Returns:
+        [String] -- [Retorna a url do objeto]
+    """
+
+    try:
+        return reverse(url) + f" {message}"
+    except Exception:
+        return f"Core/{message}"
 
 
 def get_breadcrumbs(url_str):
@@ -185,6 +202,7 @@ def get_default_urls(context: dict, app: str, model: str):
     context["url_detail"] = f"{app}:{model}-detail"
     context["url_list"] = f"{app}:{model}-list"
     context["url_delete"] = f"{app}:{model}-delete"
+    context["url_restore"] = f"{app}:{model}-restore"
     return context
 
 
