@@ -45,55 +45,14 @@
                         <button type="button" class="br-button block" data-bs-dismiss="modal">Fechar</button>
                     </div>
                     <div>
-                        <button type="button"
+                        <button type="submit"
                                 class="br-button primary block"
-                                id="btn-gravar-$field_name$">Salvar</button>
+                                onclick="insert_data_from_modal( this, '#form-$field_name$', '[name=$field_name$]', '#form_$field_name$_modal', '/$app_name$/api/v1/$model_name$/' )">
+                            Salvar
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-    $("#btn-gravar-$field_name$").on("click", function (event) {
-        event.preventDefault();
-        var formdata = new FormData($("#form-$field_name$")[0]);
-        var url = window.location.href;
-        $.ajax({
-            url: '/$app_name$/api/v1/$model_name$/',
-            type: 'POST',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            cache: false,
-            success: function (data){
-                // Adicionando o item retornado no select.
-                $("[name='$field_name$']").load( url + " [name='$field_name$'] option", function() {
-                    $("[name='$field_name$']").val(data.id);
-                    $("[name='$field_name$']").selectpicker('refresh');
-                });
-
-                // Fechando o modal.
-                $("#form_$field_name$_modal").modal('hide');
-                $("body").removeClass("modal-open");
-                $(".modal-backdrop").remove();
-
-                //Limpar o form do modal
-                $('#form-$field_name$').trigger("reset");
-            },
-            error: function(error) {
-                let inputs = $("#form-$field_name$").find("input, select, textarea");
-                inputs.removeClass("is-invalid");
-                inputs.siblings(".invalid-feedback").text("");
-                
-                let errors = error.responseJSON;
-                for (let key in errors) {
-                    let field = $("#form-$field_name$").find(`[name=${key}]`);
-                    field.addClass("is-invalid");
-                    field.siblings(".invalid-feedback").text(errors[key]);
-                }
-                $("#form_$field_name$_modal").animate({scrollTop: 0}, "slow");
-            }
-        })
-    });
-    </script>
 {% endif %}
