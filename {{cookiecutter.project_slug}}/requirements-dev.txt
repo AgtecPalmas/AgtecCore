@@ -55,7 +55,9 @@ colorama==0.4.6
     #   mkdocs-material
     #   taskipy
 coverage[toml]==7.4.3
-    # via pytest-cov
+    # via
+    #   coverage
+    #   pytest-cov
 cssbeautifier==1.15.1
     # via djlint
 cssselect2==0.7.0
@@ -130,7 +132,9 @@ exceptiongroup==1.2.0
 faker==24.0.0
     # via -r requirements-dev.in
 fonttools[woff]==4.49.0
-    # via weasyprint
+    # via
+    #   fonttools
+    #   weasyprint
 ghp-import==2.1.0
     # via mkdocs
 gunicorn==21.2.0
@@ -256,7 +260,9 @@ pluggy==1.4.0
 psutil==5.9.8
     # via taskipy
 psycopg[binary]==3.1.18
-    # via -r requirements.txt
+    # via
+    #   -r requirements.txt
+    #   psycopg
 psycopg-binary==3.1.18
     # via
     #   -r requirements.txt
@@ -431,7 +437,7 @@ validate-docbr==1.10.0
     # via -r requirements-dev.in
 watchdog==4.0.0
     # via mkdocs
-weasyprint==61.1
+weasyprint==61.2
     # via mkdocs-with-pdf
 webencodings==0.5.1
     # via
