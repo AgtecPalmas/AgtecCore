@@ -222,7 +222,7 @@ class ParserHTMLBuild:
                 field.name in getattr(_model._meta, "fk_fields_modal", [])
             ):
                 tag_result = self.__render_foreign_key_field(
-                    tag_result + label, campo, field, _model
+                    tag_result + label, campo, field
                 )
 
             else:
