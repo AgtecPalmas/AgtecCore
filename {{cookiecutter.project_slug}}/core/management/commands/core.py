@@ -25,11 +25,12 @@ MESSAGES = {
         "Algo está errado\nCore $version_core\nProjeto $version_project"
     ),
     "help": Template(
-        "[green b]AGTEC CORE[/] [cyan b]$version - $codename[/]\
+        "[green b]AGTEC CORE[/]\
+            \n[cyan b]$version - $codename[/]\
             \n\n[yellow b]Comandos[/]\
-            \n[green b]--checkupdate[/] - Verifica se existe uma nova versão do Core\
-            \n[green b]--help[/] ou [green b]-h[/] - Exibe esta mensagem\
-            \n[green b]--version[/] ou [green b]-v[/] - Exibe a versão do Core"
+            \n[green b]--upgrade[/]\tVerifica se existe uma nova versão do Core e atualiza\
+            \n[green b]--help[/], [green b]-h[/]\tExibe esta mensagem\
+            \n[green b]--version[/], [green b]-v[/]\tExibe a versão do Core"
     ),
     "new_core_version": Template(
         "Atualização $version disponível\nVersão $current_version está sendo usada\n\nBaixar atualização\n$download_url"
