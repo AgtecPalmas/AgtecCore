@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from $app_name$.models import $ModelClass$
-from $app_name$.views import (
-    $App_Class$IndexTemplateView,
+from $app_name$.views.index import $App_Class$IndexTemplateView
+from $app_name$.views.$model_name$ import (
     $ModelClass$ListView,
     $ModelClass$DetailView,
     $ModelClass$CreateView,
