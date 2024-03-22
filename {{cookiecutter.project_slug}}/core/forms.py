@@ -3,7 +3,13 @@ import secrets
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.forms.fields import BooleanField, DateField, DateTimeField, JSONField
+from django.forms.fields import (
+    BooleanField,
+    DateField,
+    DateTimeField,
+    JSONField,
+    TimeField,
+)
 from django.utils.translation import gettext_lazy as _
 
 from core.middleware.current_user import get_current_user
@@ -32,23 +38,22 @@ class BaseForm(forms.ModelForm):
             # Aplica o padrão
             class_attrs.append("form-control")
 
-            # Verificando se o campo é Booleano
             if isinstance(self.fields[field], BooleanField):
                 class_attrs.append("form-check-input")
 
-            # Verificando se o campo é do tipo DateTime
             elif isinstance(self.fields[field], DateTimeField):
-                class_attrs.append("datetimefield")
                 self.fields[field].widget.attrs.update(
                     {"placeholder": "dd/mm/aaaa hh:mm"}
                 )
                 self.fields[field].widget.input_type = "datetime-local"
 
-            # Verificando se o campo é do tipo Date
             elif isinstance(self.fields[field], DateField):
-                class_attrs.append("datefield")
                 self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa"})
                 self.fields[field].widget.input_type = "date"
+
+            elif isinstance(self.fields[field], TimeField):
+                self.fields[field].widget.attrs.update({"placeholder": "hh:mm"})
+                self.fields[field].widget.input_type = "time"
 
             class_attrs.append(self.get_validation_class(field))
 
@@ -60,9 +65,7 @@ class BaseForm(forms.ModelForm):
         """Atualiza os campos do formulário para serem usados em modais"""
         random_str = secrets.token_urlsafe(5)
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update(
-                {"id": f"{random_str}_{field}"}
-            )
+            self.fields[field].widget.attrs.update({"id": f"{random_str}_{field}"})
 
     def get_validation_class(self, field) -> str:
         """Retorna a classe de validação do campo"""
