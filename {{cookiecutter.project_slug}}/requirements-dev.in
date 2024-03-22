@@ -4,7 +4,7 @@
 autoflake==2.3.*
 autopep8==2.0.*
 beautifulsoup4==4.12.*
-black==24.2.*
+black==24.3.*
 django-debug-toolbar==4.3.*
 django-extensions==3.2.*
 djlint==1.34.*
