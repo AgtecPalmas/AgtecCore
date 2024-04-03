@@ -77,7 +77,7 @@ jsonschema-specifications==2023.12.1
     # via jsonschema
 packaging==23.2
     # via gunicorn
-pillow==10.2.0
+pillow==10.3.0
     # via
     #   -r requirements.in
     #   django-image-optimizer

@@ -240,7 +240,7 @@ pathspec==0.12.1
     #   black
     #   djlint
     #   mkdocs
-pillow==10.2.0
+pillow==10.3.0
     # via
     #   -r requirements.txt
     #   django-image-optimizer
