@@ -145,7 +145,7 @@ html5lib==1.1
     # via
     #   -r requirements-dev.in
     #   weasyprint
-idna==3.6
+idna==3.7
     # via
     #   -r requirements.txt
     #   requests

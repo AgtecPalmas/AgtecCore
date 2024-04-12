@@ -65,7 +65,7 @@ gunicorn==21.2.0
     # via -r requirements.in
 holidays==0.44
     # via -r requirements.in
-idna==3.6
+idna==3.7
     # via requests
 inflection==0.5.1
     # via drf-spectacular
