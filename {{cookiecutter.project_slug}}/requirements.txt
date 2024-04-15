@@ -121,7 +121,7 @@ sentry-sdk==1.40.6
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 tinify==1.6.0
     # via django-image-optimizer
