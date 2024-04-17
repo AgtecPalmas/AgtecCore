@@ -12,7 +12,7 @@ djangorestframework-simplejwt==5.3.*
 drf-jsonmask==0.4.*
 drf-spectacular==0.27.*
 elastic-apm==6.20.*
-gunicorn==21.2.*
+gunicorn==22.0.*
 holidays==0.*
 Pillow==10.2.*
 psycopg[binary]==3.1.*

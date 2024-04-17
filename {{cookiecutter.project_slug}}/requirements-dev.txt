@@ -133,7 +133,7 @@ fonttools[woff]==4.49.0
     # via weasyprint
 ghp-import==2.1.0
     # via mkdocs
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.txt
 holidays==0.44
     # via -r requirements.txt

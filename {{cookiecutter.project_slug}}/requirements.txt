@@ -61,7 +61,7 @@ ecs-logging==2.1.0
     # via elastic-apm
 elastic-apm==6.20.0
     # via -r requirements.in
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.in
 holidays==0.44
     # via -r requirements.in
