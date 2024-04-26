@@ -41,6 +41,10 @@ Delete (Deletar um novo registro via API)
 {% block title %}
   Atualização de $title$
 {% endblock title %}
+{% block extra_css %}
+  {{ form.media.css }}
+  <link rel="stylesheet" href="{% static 'core/vendor/libs/select2-bootstrap5/select2-bootstrap-5-theme.min.css' %}">
+{% endblock extra_css %}
 <span class="text-muted font-weight-light"></span>
 {% block title_modulo %}
   <h4 class="font-weight-bold py-3 mb-4">
@@ -195,4 +199,5 @@ Delete (Deletar um novo registro via API)
       });
     </script>
   {% endif %}
+  {{ form.media.js }}
 {% endblock extra_js %}

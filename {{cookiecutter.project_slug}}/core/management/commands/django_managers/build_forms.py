@@ -1,5 +1,3 @@
-import os
-
 from ..utils import Utils
 
 
@@ -30,6 +28,98 @@ class FormsBuild:
                 f"Error in RenderTemplatesBuid.get_model: {error}",
             )
 
+    def __get_related_fields(self) -> list:
+        """Método para retornar os campos relacionados do model"""
+        try:
+            model = self.get_model()
+            fields = model._meta.fields
+
+            related_fields = [
+                field
+                for field in fields
+                if field.get_internal_type()
+                in ["ForeignKey", "ManyToManyField", "OneToOneField"]
+            ]
+
+            return related_fields + list(model._meta.many_to_many)
+
+        except Exception as error:
+            Utils.show_error(f"Error in FormsBuild.__get_related_fields: {error}")
+
+    @staticmethod
+    def __add_widgets_meta(content: str, related_fields: list) -> str:
+        """Método para adicionar os widgets no Meta do form"""
+        try:
+            widgets_meta = "".join(
+                [
+                    f'\t\t"{field.name}": {field.related_model.__name__}Widget,\n'
+                    for field in related_fields
+                ]
+            )
+
+            # add "widget" to class Meta or update if already exists
+            if "class Meta:" in content:
+                if "widgets = {" in content:
+                    content = content.replace(
+                        "widgets = {",
+                        f"""
+        widgets = {{
+{widgets_meta}
+        }}""",
+                    )
+                else:
+                    content = content.replace(
+                        "class Meta:",
+                        f"""
+    class Meta:
+        widgets = {{
+{widgets_meta}
+        }}""",
+                    )
+
+            return content
+
+        except Exception as error:
+            Utils.show_error(f"Error in FormsBuild.__add_widgets_meta: {error}")
+
+    def __build_select2_widget(self, content: str, related_fields: list) -> str:
+        """Método para adicionar o widget de select2 no arquivo de form"""
+        try:
+            # Create Widgets
+            created_widgets = []
+            snippet = Utils.get_snippet(
+                f"{self.path_core}/management/commands/snippets/django/forms/select2_widget.txt"
+            )
+            for field in related_fields:
+                if (
+                    Utils.check_content(
+                        self.path_form,
+                        f"class {field.related_model.__name__}Widget",
+                    )
+                    is True
+                ):
+                    continue
+
+                if field.related_model.__name__ in created_widgets:
+                    continue
+
+                created_widgets.append(field.related_model.__name__)
+
+                model_import = f"from {field.related_model.__module__} import {field.related_model.__name__}"
+
+                widget_content = snippet
+                widget_content = widget_content.replace(
+                    "$ModelClass$", field.related_model.__name__
+                ).replace("$Multiple$", "Multiple" if field.many_to_many else "")
+
+                content = f"{model_import}\n{widget_content}\n{content}"
+
+            content = self.__add_widgets_meta(content, related_fields)
+            return content
+
+        except Exception as error:
+            Utils.show_error(f"Error in FormsBuild.__build_select2_widget: {error}")
+
     def __model_is_fk(self) -> bool:
         """Método para verificar se o model atual é FK em algum lugar"""
         try:
@@ -59,6 +149,11 @@ class FormsBuild:
 
             model_is_fk = self.__model_is_fk()
             fk_class = f"{self.__get_modal_form()}\n" if model_is_fk else ""
+
+            related_fields = self.__get_related_fields()
+
+            if related_fields:
+                content = self.__build_select2_widget(content, related_fields)
 
             if Utils.check_dir(self.path_root_form) is False:
                 Utils.create_directory(self.path_root_form, True)
