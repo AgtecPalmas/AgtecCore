@@ -19,29 +19,35 @@ charset-normalizer==3.3.2
     # via requests
 dateparser==1.2.0
     # via -r requirements.in
-dj-rest-auth==5.0.2
+dj-rest-auth==6.0.0
     # via -r requirements.in
 django==4.2.11
     # via
     #   -r requirements.in
     #   dj-rest-auth
+    #   django-appconf
     #   django-ckeditor
     #   django-filter
     #   django-image-optimizer
     #   django-js-asset
+    #   django-select2
     #   django-tempus-dominus
     #   djangorestframework
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
+django-appconf==1.0.6
+    # via django-select2
 django-ckeditor==6.7.1
     # via -r requirements.in
-django-filter==24.1
+django-filter==24.2
     # via -r requirements.in
 django-image-optimizer==1.0.3
     # via -r requirements.in
 django-js-asset==2.2.0
     # via django-ckeditor
+django-select2==8.1.2
+    # via -r requirements.in
 django-tempus-dominus==5.1.2.17
     # via -r requirements.in
 djangorestframework==3.15.1
@@ -55,17 +61,17 @@ djangorestframework-simplejwt==5.3.1
     # via -r requirements.in
 drf-jsonmask==0.4.0
     # via -r requirements.in
-drf-spectacular==0.27.1
+drf-spectacular==0.27.2
     # via -r requirements.in
 ecs-logging==2.1.0
     # via elastic-apm
-elastic-apm==6.21.4.post8347027212
+elastic-apm==6.22.0
     # via -r requirements.in
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.in
-holidays==0.45
+holidays==0.47
     # via -r requirements.in
-idna==3.6
+idna==3.7
     # via requests
 inflection==0.5.1
     # via drf-spectacular
@@ -77,7 +83,7 @@ jsonschema-specifications==2023.12.1
     # via jsonschema
 packaging==24.0
     # via gunicorn
-pillow==10.2.0
+pillow==10.3.0
     # via
     #   -r requirements.in
     #   django-image-optimizer
@@ -100,11 +106,11 @@ pytz==2024.1
     # via dateparser
 pyyaml==6.0.1
     # via drf-spectacular
-referencing==0.34.0
+referencing==0.35.0
     # via
     #   jsonschema
     #   jsonschema-specifications
-regex==2023.12.25
+regex==2024.4.16
     # via dateparser
 requests==2.31.0
     # via
@@ -115,15 +121,15 @@ rpds-py==0.18.0
     # via
     #   jsonschema
     #   referencing
-sentry-sdk==1.43.0
+sentry-sdk==2.0.1
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 tinify==1.6.0
     # via django-image-optimizer
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   asgiref
     #   psycopg

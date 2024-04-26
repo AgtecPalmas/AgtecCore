@@ -25,7 +25,7 @@ babel==2.14.0
     #   sphinx
 beautifulsoup4==4.12.3
     # via mkdocs-with-pdf
-black==24.3.0
+black==24.4.2
     # via -r requirements-dev.in
 brotli==1.1.0
     # via fonttools
@@ -52,39 +52,43 @@ colorama==0.4.6
     #   djlint
     #   mkdocs-material
     #   taskipy
-coverage[toml]==7.4.4
+coverage[toml]==7.5.0
     # via pytest-cov
-cssbeautifier==1.15.1
-    # via djlint
 cssselect2==0.7.0
     # via weasyprint
 dateparser==1.2.0
     # via -r requirements.txt
-dj-rest-auth==5.0.2
+dj-rest-auth==6.0.0
     # via -r requirements.txt
 django==4.2.11
     # via
     #   -r requirements.txt
     #   dj-rest-auth
+    #   django-appconf
     #   django-ckeditor
     #   django-debug-toolbar
     #   django-extensions
     #   django-filter
     #   django-image-optimizer
     #   django-js-asset
+    #   django-select2
     #   django-tempus-dominus
     #   djangorestframework
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
     #   model-bakery
+django-appconf==1.0.6
+    # via
+    #   -r requirements.txt
+    #   django-select2
 django-ckeditor==6.7.1
     # via -r requirements.txt
 django-debug-toolbar==4.3.0
     # via -r requirements-dev.in
 django-extensions==3.2.3
     # via -r requirements-dev.in
-django-filter==24.1
+django-filter==24.2
     # via -r requirements.txt
 django-image-optimizer==1.0.3
     # via -r requirements.txt
@@ -92,6 +96,8 @@ django-js-asset==2.2.0
     # via
     #   -r requirements.txt
     #   django-ckeditor
+django-select2==8.1.2
+    # via -r requirements.txt
 django-tempus-dominus==5.1.2.17
     # via -r requirements.txt
 djangorestframework==3.15.1
@@ -103,7 +109,7 @@ djangorestframework==3.15.1
     #   drf-spectacular
 djangorestframework-simplejwt==5.3.1
     # via -r requirements.txt
-djlint==1.34.1
+djlint==0.3.4
     # via -r requirements-dev.in
 docutils==0.20.1
     # via
@@ -111,39 +117,31 @@ docutils==0.20.1
     #   sphinx-rtd-theme
 drf-jsonmask==0.4.0
     # via -r requirements.txt
-drf-spectacular==0.27.1
+drf-spectacular==0.27.2
     # via -r requirements.txt
 ecs-logging==2.1.0
     # via
     #   -r requirements.txt
     #   elastic-apm
-editorconfig==0.12.4
-    # via
-    #   cssbeautifier
-    #   jsbeautifier
-elastic-apm==6.21.4.post8347027212
+elastic-apm==6.22.0
     # via -r requirements.txt
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via pytest
-faker==24.3.0
+faker==24.14.0
     # via -r requirements-dev.in
-fonttools[woff]==4.50.0
+fonttools[woff]==4.51.0
     # via weasyprint
 ghp-import==2.1.0
     # via mkdocs
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.txt
-holidays==0.45
+holidays==0.47
     # via -r requirements.txt
-html-tag-names==0.1.2
-    # via djlint
-html-void-elements==0.1.0
-    # via djlint
 html5lib==1.1
     # via
     #   -r requirements-dev.in
     #   weasyprint
-idna==3.6
+idna==3.7
     # via
     #   -r requirements.txt
     #   requests
@@ -163,12 +161,6 @@ jinja2==3.1.3
     #   mkdocs-material
     #   mkdocstrings
     #   sphinx
-jsbeautifier==1.15.1
-    # via
-    #   cssbeautifier
-    #   djlint
-json5==0.9.24
-    # via djlint
 jsonmask==0.1.1
     # via
     #   -r requirements.txt
@@ -201,8 +193,10 @@ markupsafe==2.1.5
 mdurl==0.1.2
     # via markdown-it-py
 mergedeep==1.3.4
-    # via mkdocs
-mkdocs==1.5.3
+    # via
+    #   mkdocs
+    #   mkdocs-get-deps
+mkdocs==1.6.0
     # via
     #   -r requirements-dev.in
     #   mkdocs-autorefs
@@ -211,15 +205,17 @@ mkdocs==1.5.3
     #   mkdocstrings
 mkdocs-autorefs==1.0.1
     # via mkdocstrings
-mkdocs-material==9.5.14
+mkdocs-get-deps==0.2.0
+    # via mkdocs
+mkdocs-material==9.5.19
     # via -r requirements-dev.in
 mkdocs-material-extensions==1.3.1
     # via mkdocs-material
 mkdocs-with-pdf==0.9.3
     # via -r requirements-dev.in
-mkdocstrings==0.24.1
+mkdocstrings==0.24.3
     # via -r requirements-dev.in
-model-bakery==1.17.0
+model-bakery==1.18.0
     # via -r requirements-dev.in
 mypy-extensions==1.0.0
     # via black
@@ -236,20 +232,19 @@ paginate==0.5.6
 pathspec==0.12.1
     # via
     #   black
-    #   djlint
     #   mkdocs
-pillow==10.2.0
+pillow==10.3.0
     # via
     #   -r requirements.txt
     #   django-image-optimizer
     #   python-resize-image
     #   weasyprint
-platformdirs==4.2.0
+platformdirs==4.2.1
     # via
     #   black
-    #   mkdocs
+    #   mkdocs-get-deps
     #   mkdocstrings
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
 psutil==5.9.8
     # via taskipy
@@ -261,7 +256,7 @@ psycopg-binary==3.1.18
     #   psycopg
 pycodestyle==2.11.1
     # via autopep8
-pycparser==2.21
+pycparser==2.22
     # via cffi
 pydyf==0.9.0
     # via weasyprint
@@ -276,18 +271,18 @@ pyjwt==2.8.0
     # via
     #   -r requirements.txt
     #   djangorestframework-simplejwt
-pymdown-extensions==10.7.1
+pymdown-extensions==10.8
     # via
     #   mkdocs-material
     #   mkdocstrings
-pyphen==0.14.0
+pyphen==0.15.0
     # via weasyprint
 pytest==8.1.1
     # via
     #   -r requirements-dev.in
     #   pytest-cov
     #   pytest-django
-pytest-cov==4.1.0
+pytest-cov==5.0.0
     # via -r requirements-dev.in
 pytest-django==4.8.0
     # via -r requirements-dev.in
@@ -314,16 +309,17 @@ pyyaml==6.0.1
     #   djlint
     #   drf-spectacular
     #   mkdocs
+    #   mkdocs-get-deps
     #   pymdown-extensions
     #   pyyaml-env-tag
 pyyaml-env-tag==0.1
     # via mkdocs
-referencing==0.34.0
+referencing==0.35.0
     # via
     #   -r requirements.txt
     #   jsonschema
     #   jsonschema-specifications
-regex==2023.12.25
+regex==2024.4.16
     # via
     #   -r requirements.txt
     #   dateparser
@@ -344,20 +340,18 @@ rpds-py==0.18.0
     #   -r requirements.txt
     #   jsonschema
     #   referencing
-sentry-sdk==1.43.0
+sentry-sdk==2.0.1
     # via -r requirements.txt
 six==1.16.0
     # via
     #   -r requirements.txt
-    #   cssbeautifier
     #   html5lib
-    #   jsbeautifier
     #   python-dateutil
 snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.5
     # via beautifulsoup4
-sphinx==7.2.6
+sphinx==7.3.7
     # via
     #   -r requirements-dev.in
     #   sphinx-rtd-theme
@@ -378,7 +372,7 @@ sphinxcontrib-qthelp==1.0.7
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.10
     # via sphinx
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements.txt
     #   django
@@ -389,7 +383,7 @@ tinify==1.6.0
     # via
     #   -r requirements.txt
     #   django-image-optimizer
-tinycss2==1.2.1
+tinycss2==1.3.0
     # via
     #   cssselect2
     #   weasyprint
@@ -399,12 +393,12 @@ tomli==2.0.1
     #   autopep8
     #   black
     #   coverage
-    #   djlint
     #   pytest
+    #   sphinx
     #   taskipy
 tqdm==4.66.2
     # via djlint
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   -r requirements.txt
     #   asgiref
