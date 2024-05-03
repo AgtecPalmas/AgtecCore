@@ -405,7 +405,7 @@ tomli==2.0.1
     #   djlint
     #   pytest
     #   taskipy
-tqdm==4.66.2
+tqdm==4.66.3
     # via djlint
 typing-extensions==4.10.0
     # via
