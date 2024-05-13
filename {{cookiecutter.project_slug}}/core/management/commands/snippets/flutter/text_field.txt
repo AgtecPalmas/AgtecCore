@@ -1,0 +1,15 @@
+const CustomTextFormFieldLabel(
+  labelText: '$Field$',
+),
+TextFormField(
+  controller: $controller$,
+  validator: Validatorless.multiple([
+    Validatorless.required('O campo é obrigatório'),
+  ]),
+  onTapOutside: (_) => FocusScope.of(context).unfocus(),
+  decoration: CustomTextFormFieldStyle.textFieldStyle(
+    hintText: '$Field$',
+    hiddenCounter: true,
+  ),
+),
+const SizedBox(height: 16),

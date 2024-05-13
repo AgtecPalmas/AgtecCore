@@ -1,0 +1,79 @@
+/// [Travar o arquivo]
+/// Caso deseje 'travar' o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+/// 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import './cubit.dart';
+
+class SettingsIndexPage extends StatefulWidget {
+  const SettingsIndexPage({super.key});
+
+  @override
+  State<SettingsIndexPage> createState() => _SettingsIndexPageState();
+}
+
+class _SettingsIndexPageState extends State<SettingsIndexPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Configuração'),
+        centerTitle: true,
+      ),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return SizedBox(
+      height: 300,
+      child: Center(
+          child: Column(
+        children: <Widget>[
+          BlocConsumer<SettingsCubit, SettingsState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return SizedBox(
+                height: 60,
+                width: MediaQuery.sizeOf(context).width * .9,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+                    side: const BorderSide(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<SettingsCubit>().setDarkTheme();
+                  },
+                  child: const Text('Dark'),
+                ),
+              );
+            },
+          ),
+          SizedBox(
+            height: 60,
+            width: MediaQuery.sizeOf(context).width * .9,
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.8)),
+                side: const BorderSide(
+                  color: Colors.redAccent,
+                ),
+              ),
+              onPressed: () {
+                context.read<SettingsCubit>().setLightTheme();
+              },
+              child: const Text('Light'),
+            ),
+          ),
+        ],
+      )),
+    );
+  }
+}

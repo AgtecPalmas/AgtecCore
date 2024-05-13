@@ -1,0 +1,216 @@
+/// Página inicial da APP.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'core/user_interface/custom.colors.dart';
+import 'core/user_interface/widget.dart';
+import 'apps/configuracao/cubit.dart';
+import 'core/agtec.logger.dart';
+import 'apps/auth/cubit.dart';
+import 'core/config.dart';
+import 'routers.dart';
+
+$ImportViews$
+
+class MyHomePage extends StatefulWidget {
+  final String title;
+  
+  const MyHomePage({super.key, String? title}) : title = title ?? '';
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool bottomNavigationEnable = true;
+  int _currentIndexPage = 0;
+
+  // Declarando uma instancia da Classe dos items do Menu
+  final Itens _itensMenuGridView = Itens();
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndexPage = 0;
+    _itensMenuGridView.make();
+    _defaultAuthenticationFastAPI();
+  }
+
+  Future<void> _defaultAuthenticationFastAPI() async {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      try {
+        AuthCubit().defaultAuthenticationFastAPI();
+      } catch (error, stackTrace) {
+        AgtecCoreLogger().erro(error.toString(), stackTrace);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      child: enabledBottomNavigationBar ? _buildScaffoldWithBottomNavigationBar(context) : _buildScaffold(context),
+    );
+  }
+
+  Widget _buildScaffoldWithBottomNavigationBar(context) {
+    return Scaffold(
+      body: _buildBodyWithBottomNavigationBar(context),
+      bottomNavigationBar: _buildCupertinoTabScaffold(context),
+    );
+  }
+
+  Widget _buildScaffold(BuildContext context) {
+    return Scaffold(
+      backgroundColor: appBarDefaultBackgroundColor,
+      body: _buildBody(context),
+    );
+  }
+
+  /// Método para construir o corpo da página.
+  Widget _buildBody(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          child: Container(
+            color: Colors.white,
+            child: _buildGridView(context),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Método para construir o corpo da página utilizando o BottomNavigationBar
+  Widget _buildBodyWithBottomNavigationBar(BuildContext context) {
+    return IndexedStack(index: _currentIndexPage);
+  }
+
+  /// Componente de navegação CupertinoTabScaffold
+  Widget _buildCupertinoTabScaffold(BuildContext context) {
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Principal'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurações'),
+        ],
+      ),
+      tabBuilder: (context, index) {
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              onGenerateRoute: RouteGenerator.generateRoute,
+              builder: (context) {
+                return CupertinoPageScaffold(child: _buildGridView(context));
+              },
+            );
+          case 1:
+            return CupertinoTabView(
+              onGenerateRoute: RouteGenerator.generateRoute,
+              builder: (context) {
+                return const CupertinoPageScaffold(child: SettingsIndexPage());
+              },
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  Widget _buildGridView(BuildContext context) {
+    return Stack(children: <Widget>[
+      const HeadWidget(),
+      Positioned(
+        top: MediaQuery.sizeOf(context).height * .08,
+        left: 12,
+        child: const Text(
+          Config.appTitle,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      Container(
+      margin: EdgeInsets.only(
+          top: MediaQuery.sizeOf(context).height * .12,
+          bottom: 10,
+        ),
+        child: GridView.count(
+          crossAxisCount: 3,
+          children: List.generate(_itensMenuGridView.list.length, (index) {
+            return Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          _itensMenuGridView.list[index].geturi(),
+                    ),
+                  );
+                },
+                child: BlocConsumer<SettingsCubit, SettingsState>(
+                  listener: (context, state){},
+                  builder: (context, state) {
+                    return CustomMainCardButton(
+                      icon: _itensMenuGridView.list[index].icon,
+                      label: _itensMenuGridView.list[index].title,
+                      iconColor: iconCardColorHomePage,
+                      textColor: textCardColorHomePage,
+                      cardBackgroundColorBegin: backgroundColorCardHomePageBegin,
+                      cardBackgroundColorEnd: backgroundColorCardHomePageEnd,
+                      boxShadowColor: boxShadownColorCardHomePage,
+                      cardBorderColor: borderCardColorHomePage,
+                    );
+                  },
+                ),
+              ),
+            );
+          }),
+        ),
+      )
+    ]);
+  }
+}
+
+class Itens {
+  final String title;
+  final IconData icon;
+  final Widget uri;
+  final Image? imageIcon;
+
+  Itens({String? title, IconData? icon, Widget? uri, Image? image})
+      : title = title ?? '',
+        icon = icon ?? FontAwesomeIcons.folderOpen,
+        uri = uri ?? Container(),
+        imageIcon = image;
+
+  List<Itens> list = [];
+
+  void make() {
+    // Exemplo de inserção de uma imagem do Assets como Card
+    // list.add(Itens(
+    //     title: 'arquivo importacao',
+    //     icon: null,
+    //     imageIcon: Image.asset("assets/icons/icons8-calendar-500.png",
+    //         width: MediaQuery.sizeOf(context).width / 4, color: Colors.red),
+    //     uri: Container()));
+
+    $ItenMenu$
+  }
+
+  Widget geturi() => uri;
+}

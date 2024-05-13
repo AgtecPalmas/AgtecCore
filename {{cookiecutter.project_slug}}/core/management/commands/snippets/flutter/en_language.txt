@@ -1,0 +1,6 @@
+
+{
+    "custom_processing_card_label": "Processing...",
+    "label_generic_error": "An error occurred, please try again.",
+    "page_label_configuration": "Configuration"
+}

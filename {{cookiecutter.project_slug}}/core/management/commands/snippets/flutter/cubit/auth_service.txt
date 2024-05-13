@@ -1,0 +1,329 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+
+import '../../../core/config.dart';
+import '../../../core/dio/custom_dio.dart';
+import '../../core/agtec.logger.dart';
+import '../../core/exceptions/exception.dart';
+import '../../core/util.dart';
+import '../auth/data.dart';
+import '../usuario/usuario/model.dart';
+import 'model.dart';
+
+class AuthService {
+  AuthModel auth = AuthModel();
+
+  Future<void> defaultAuthenticationFastAPI() async {
+    const uriAuth = uriDeveloper;
+    const String uriAutentication = '${uriAuth}api/v1/authentication/login';
+    try {
+      final authenticationLogin = {
+        'username': Config.fastAPIUserDevelopment,
+        'password': Config.fastAPIPasswordDevelopment,
+      };
+      final CustomDio dio = CustomDio(uriAutentication);
+      final authenticationForm = FormData.fromMap(authenticationLogin);
+      final dataResponse = await dio.postHttp(authenticationForm);
+      if (dataResponse != null) {
+        AgtecCoreLogger().debug(dataResponse);
+        final authData = AuthData();
+        final authModel = AuthModel();
+        final String token = dataResponse['access_token'] ?? '';
+        authModel.accessToken = token;
+        authData.save(authModel);
+      }
+      return dataResponse['access_token'];
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu o erro: ${error.response?.data?.toString()} no defaultAuthentication',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return;
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          'Ocorreu um erro desconhecido no método defaultAuthentication do Dio', errorGeneral.toString());
+      return;
+    }
+  }
+
+  Future<void> signUpUser(int typeUser) async {
+    String uri = '';
+    switch (typeUser) {
+      case 0:
+        uri = '${Config.uri}usuario/cliente/';
+        break;
+      default:
+        uri = '${Config.uri}usuario/profissional/';
+    }
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final FormData data0 = FormData.fromMap({
+        'cpf': auth.cpf,
+        'nome': auth.name,
+        'email': auth.email,
+        'telefone': auth.phoneNumber,
+        'password': auth.password,
+        'firebase': auth.firebaseId
+      });
+      await dio.postHttp(data0, uri: uri);
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
+    }
+  }
+
+  Future<void> signUpUserFirebase(String url) async {
+    try {
+      final CustomDio dio = CustomDio(url);
+      final dataPost = json.encode({'email': auth.email, 'password': auth.password, 'returnSecureToken': true});
+      final data = await dio.postHttp(dataPost, uri: url);
+      if (data != null) {
+        auth.firebaseId = data['localId'];
+        signUpUser(0);
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUserFirebase', error, stackTrace);
+    }
+  }
+
+  Future<AuthModel> signIn(String login, String password) async {
+    const String uri = '${Config.uriAuth}token/';
+    final AuthModel authModel = AuthModel();
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final FormData data = FormData.fromMap({'username': login, 'password': password});
+      final dataResponse = await dio.postHttp(data, uri: uri);
+      if (dataResponse != null) {
+        authModel.token = dataResponse['access'];
+        _success('Usuário logado com sucesso', statusCode: 200);
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signIn', error, stackTrace);
+    }
+    return authModel;
+  }
+
+  Future<int?> checkDjangoUserTypeClient(String login) async {
+    final String uri = '${Config.uri}usuario/cliente/?email=$login';
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final dataResponse = await dio.getHttp(uri: uri);
+      if (dataResponse != null) {
+        if (dataResponse['count'] != 0) {
+          return 0;
+        }
+        return 1;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService checkDjangoUserTypeClient', error, stackTrace);
+    }
+    return null;
+  }
+
+  Future<String?> signUp(AuthModel authModel) async {
+    String uri = '';
+    final bool result = await verifyingEmailAlreadyExists(authModel.email);
+    if (result == true) {
+      throw Exception('Já existe um usuário com o email informado');
+    }
+    uri = '${Config.uri}usuario/usuario/';
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final data0 = json.encode({
+        'cpf': authModel.cpf,
+        'nome': authModel.name,
+        'email': authModel.email,
+        'telefone': authModel.phoneNumber,
+        'password': authModel.password,
+        'firebase': authModel.firebaseId,
+        'device_id': authModel.idToken,
+        'jwt_token': authModel.accessToken
+      });
+      final data = await dio.postHttp(data0, uri: uri);
+      if (data != null) {
+        _success('Usuário criado com sucesso', statusCode: Process.statusCode);
+        return data['id'];
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUp', error, stackTrace);
+    }
+    return null;
+  }
+
+  Future<AuthModel?> login(AuthModel auth) async {
+    const String uri = Config.uriAuth;
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final data = json.encode({'username': auth.login, 'password': auth.password});
+      final userType = await checkDjangoUserTypeClient(auth.login);
+      final dataResponse = await dio.postHttp(data, uri: uri);
+      if (dataResponse != null && userType != null) {
+        final authData = AuthData();
+        auth.token = dataResponse['access'];
+        final djangoUser = await signInDjangoUser(auth.login, userType);
+        if (djangoUser != null) {
+          auth.id = djangoUser.id;
+          auth.uuid = djangoUser.id;
+          auth.name = djangoUser.nome;
+          auth.login = djangoUser.email;
+          auth.email = djangoUser.email;
+          auth.firebaseId = djangoUser.firebase;
+          auth.phoneNumber = djangoUser.telefone;
+          authData.save(auth);
+          return auth;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService login', error, stackTrace);
+    }
+    return null;
+  }
+
+  Future<bool> verifyingEmailAlreadyExists(String email) async {
+    bool result = false;
+    String uri = '';
+    try {
+      uri = '${Config.uri}usuario/usuario/?email=$email';
+      final CustomDio dio = CustomDio(uri);
+      final dataResult = await dio.getHttp(uri: uri);
+      if (dataResult != null) {
+        result = dataResult['count'] != 0;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService verifyingEmailAlreadyExists', error, stackTrace);
+    }
+    return result;
+  }
+
+  Future<UsuarioModel?> signInDjangoUser(String login, int userType) async {
+    final String uri = '${Config.uri}usuario/usuario/?email=$login';
+    int typeException = 0;
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final dataResponse = await dio.getHttp(uri: uri);
+      if (dataResponse != null) {
+        if (dataResponse['count'] == 0) {
+          return null;
+        }
+        if (dataResponse['results'][0]['aprovado'] == false) {
+          final cpf = dataResponse['results'][0]['cpf'];
+          typeException = 0;
+          if (cpf == null || cpf == '') {
+            typeException = 1;
+          }
+        } else {
+          _success('Usuário logado com sucesso', statusCode: 200);
+          return UsuarioModel.fromMap(dataResponse['results'][0]);
+        }
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signInDJangoUser', error, stackTrace);
+    }
+    if (typeException == 0) {
+      throw ('Seu cadastro ainda não foi aprovado.');
+    } else if (typeException == 1) {
+      throw ('Dados Incompletos');
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> logout() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService logout', error, stackTrace);
+    }
+    return false;
+  }
+
+  Future<bool> changePassword() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService changePassword', error, stackTrace);
+    }
+    return false;
+  }
+
+  Future<bool> recoverPassword() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthService recoverPassword', error, stackTrace);
+    }
+    return false;
+  }
+
+  Future<AuthModel?> createAccount() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return AuthModel.fromMap(data);
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthService createAccount', error, stackTrace);
+    }
+    return null;
+  }
+
+  Future<bool> disableAccount() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthService disableAccount', error, stackTrace);
+    }
+    return false;
+  }
+
+  Future<bool> excludeAccount() async {
+    const String url = '';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final data = await dio.getHttp();
+      if (data != null) {
+        return true;
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthService excludeAccount', error, stackTrace);
+    }
+    return false;
+  }
+
+  void _success(String message, {int statusCode = 200}) async {
+    try {
+      AgteCoreLogger().debug(message);
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
+    }
+  }
+}

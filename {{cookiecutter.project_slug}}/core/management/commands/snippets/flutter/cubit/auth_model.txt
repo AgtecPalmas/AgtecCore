@@ -1,0 +1,149 @@
+import '../../core/agtec.logger.dart';
+import 'data.dart';
+
+class AuthModel {
+  String id = '';
+  String uuid = '';
+  String name = '';
+  String email = '';
+  String login = '';
+  String socialProfileLogin = '';
+  String account = '';
+  String password = '';
+  String cpf = '';
+  String phoneNumber = '';
+  String photoUrl = '';
+  String token = '';
+  String firebaseId = '';
+  String firebaseToken = '';
+  String accessToken = '';
+  String refreshToken = '';
+  String idToken = '';
+
+  AuthModel({
+    this.id = '',
+    this.uuid = '',
+    this.name = '',
+    this.email = '',
+    this.login = '',
+    this.socialProfileLogin = '',
+    this.account = '',
+    this.password = '',
+    this.cpf = '',
+    this.phoneNumber = '',
+    this.token = '',
+    this.photoUrl = '',
+    this.firebaseId = '',
+    this.accessToken = '',
+    this.refreshToken = '',
+    this.idToken = '',
+    this.firebaseToken = '',
+  });
+
+  Future<bool> logout() async {
+    try {
+      final AuthData authData = AuthData();
+      return authData.deleteAll();
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel logout', error, stackTrace);
+      return false;
+    }
+  }
+
+  String get profileName {
+    try {
+      if (account.isEmpty) return '';
+      return account;
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel profileName', error, stackTrace);
+    }
+    return '';
+  }
+
+  bool validateLocalUserSignInWithGoogle() {
+    bool result = true;
+    try {
+      if (accessToken.isEmpty) {
+        result = false;
+      }
+      if (idToken.isEmpty) {
+        result = false;
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle', error, stackTrace);
+    }
+    return result;
+  }
+
+  bool validateLocalUserSignInWithEmail() {
+    bool result = true;
+    try {
+      if (email.isEmpty) {
+        result = false;
+      }
+      if (password.isEmpty) {
+        result = false;
+      }
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
+    }
+    return result;
+  }
+
+  @override
+  String toString() {
+    return 'AuthModel{id: $id, uuid: $uuid, name: $name, email: $email, login: $login, socialProfileLogin: $socialProfileLogin, account: $account, password: $password, cpf: $cpf, token: $token}';
+  }
+
+  factory AuthModel.fromMap(Map<String, dynamic> map) {
+    try {
+      return AuthModel(
+        id: map['id'] as String,
+        uuid: map['uuid'] as String,
+        name: map['name'] as String,
+        email: map['email'] as String,
+        login: map['login'] as String,
+        socialProfileLogin: map['socialProfileLogin'] as String,
+        account: map['account'] as String,
+        password: map['password'] as String,
+        cpf: map['cpf'] as String,
+        phoneNumber: map['phoneNumber'] as String,
+        photoUrl: map['photoUrl'] as String,
+        token: map['token'] as String,
+        firebaseId: map['firebaseId'] as String,
+        firebaseToken: map['firebaseToken'] as String,
+        accessToken: map['accessToken'] as String,
+        idToken: map['idToken'] as String,
+      );
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
+      return AuthModel();
+    }
+  }
+
+  Map<String, dynamic> toMap() {
+    try {
+      return {
+        'id': id,
+        'uuid': uuid,
+        'name': name,
+        'email': email,
+        'login': login,
+        'socialProfileLogin': socialProfileLogin,
+        'account': account,
+        'password': password,
+        'cpf': cpf,
+        'phoneNumber': phoneNumber,
+        'photoUrl': photoUrl,
+        'token': token,
+        'firebaseId': firebaseId,
+        'firebaseToken': firebaseToken,
+        'accessToken': accessToken,
+        'idToken': idToken,
+      };
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
+      return {};
+    }
+  }
+}

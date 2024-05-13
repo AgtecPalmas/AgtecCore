@@ -1,0 +1,76 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'routers.dart';
+
+import 'apps/configuracao/cubit.dart';
+import 'home.page.dart';
+import 'core/color.schemes.dart';
+import 'core/config.dart';
+
+$ImportCubit$
+
+String currentLanguage = '';
+
+void main() async {
+  /// Descomentar as linhas abaixo para inicializar o Firebase
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent
+    ));
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent
+    ));
+    
+    return MultiBlocProvider(
+      providers: [
+        $RegisterProviders$
+      ], child: const MaterialAppWidget()  
+    );
+  }
+}
+
+class MaterialAppWidget extends StatelessWidget {
+  const MaterialAppWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SettingsCubit, SettingsState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return ScreenUtilInit(
+          designSize: const Size(widthScreenUtil, heightScreenUtil),
+          builder: (_, __) => MaterialApp(
+            title: Config.appTitle,
+            themeMode: ThemeMode.dark,
+            theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+            home: const MyHomePage(title: Config.appTitle),
+            onGenerateRoute: RouteGenerator.generateRoute,
+            debugShowCheckedModeBanner: false,
+          ),
+        );
+      },
+    );
+  }
+}

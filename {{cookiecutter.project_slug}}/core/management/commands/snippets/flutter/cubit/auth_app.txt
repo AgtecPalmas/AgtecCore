@@ -1,0 +1,165 @@
+/// Cubit do model Auth
+
+/// As regras de negócio devem ser implementadas nesse arquivo evitando ao máximo
+/// de serem implementadas nos arquivos das views/pages.
+///
+/// Os métodos de acesso à API devem ser implementados no Service.
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../core/agtec.logger.dart';
+import 'model.dart';
+import 'service.dart';
+
+part 'state.dart';
+
+class AuthCubit extends Cubit<AuthState> {
+  late AuthService _service;
+  AuthModel user = AuthModel();
+
+  AuthCubit() : super(AuthInitial()) {
+    _service = AuthService();
+  }
+
+  Future<void> defaultAuthenticationFastAPI() async {
+    try {
+      emit(AuthProcessState());
+      _service.defaultAuthenticationFastAPI();
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit defaultAuthenticationFastAPI', error, stackTrace);
+    }
+  }
+
+  Future<void> signUpUser(int typeUser) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUser', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> signUpUserFirebase(String url) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUserFirebase', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> signUp(AuthModel user) async {
+    try {
+      emit(AuthProcessState());
+      final result = await _service.signUp(user);
+      if (result != null) {
+        user.id = result;
+        emit(AuthSuccessState(
+          successMessage: 'Usuário cadastrado com sucesso',
+          user: user,
+        ));
+      } else {
+        emit(const AuthErrorState('Ocorreu um erro ao tentar criar o usuário'));
+      }
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUp', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> signIn(String login, String password) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signIn', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> login(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit login', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> logout(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit logout', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> changePassword(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit changePassword', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> recoverPassword(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit recoverPassword', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> createAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit createAccount', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> disableAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit disableAccount', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+
+  Future<void> excludeAccount(AuthModel auth) async {
+    try {
+      emit(AuthProcessState());
+
+      emit(AuthSuccessState(user: user, successMessage: ''));
+    } catch (error, stackTrace) {
+      AgteCoreLogger().erro('Ocorreu o erro no AuthCubit excludeAccount', error, stackTrace);
+      emit(AuthErrorState(error.toString()));
+    }
+  }
+}

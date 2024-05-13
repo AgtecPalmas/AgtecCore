@@ -1,0 +1,185 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
+/// Service do model $ModelClass$
+/// 
+/// Os Métodos padrões gerados são:
+///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
+///     detail()   -> Recupera os detalhes de $ModelClass$ da API.
+///     post()     -> Salva os dados de uma instância do $ModelClass$ na API.
+///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
+///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
+///
+/// Os métodos de acesso à API devem ser implementados nessa classe.
+
+
+import 'dart:convert';
+
+import '../../../core/agtec.logger.dart';
+import '../../../core/dio/custom_dio.dart';
+import '../../../core/exceptions/exception.dart';
+import '../../../core/config.dart';
+import 'model.dart';
+import 'interface.dart';
+
+
+class $ModelClass$Service implements $ModelClass$ServiceInterface {
+  final String _uri = '${Config.uri}$App$/api/v1/$Model$/';
+  $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model();
+  final List<$ModelClass$Model> _$ModelClassCamelCase$List = [];
+
+  $ModelClass$Service({required $ModelClass$Model $ModelClassCamelCase$, List<$ModelClass$Model>? $ModelClassCamelCase$List}) {
+    _$ModelClassCamelCase$ = $ModelClassCamelCase$;
+  }
+
+  @override
+  Future<List<$ModelClass$Model>> fetch({String? url}) async {
+    try {
+      final url = _uri;
+      _$ModelClassCamelCase$List.clear();
+      final CustomDio dio = CustomDio(url);
+      final dataResponse = await dio.getHttp(uri: url);
+      if (dataResponse != null) {
+        final items = dataResponse['results'] ?? '';
+        for (var item in items) {
+          item.addAll(
+            {
+              'nextUrl': dataResponse['next'] ?? '',
+              'previousUrl': dataResponse['previous'] ?? '',
+            },
+          );
+          final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
+          _$ModelClassCamelCase$List.add($ModelClassCamelCase$);
+        }
+      }
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service fetch', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$List;
+  }
+
+  @override
+  Future<List<$ModelClass$Model>> getMore(String uri) async {
+    try {
+      final CustomDio dio = CustomDio(uri);
+      final dataResponse = await dio.getHttp(uri: uri);
+      if (dataResponse != null) {
+        final items = dataResponse['results'] ?? '';
+        for (var item in items) {
+          item.addAll(
+            {
+              'nextUrl': dataResponse['next'] ?? '',
+              'previousUrl': dataResponse['previous'] ?? '',
+            },
+          );
+          final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
+          _$ModelClassCamelCase$List.add($ModelClassCamelCase$);
+        }
+      }
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service getMore', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$List;
+  }
+
+  @override
+  Future<$ModelClass$Model> detail($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final url = '$_uri${$ModelClassCamelCase$.id}';
+      final CustomDio dio = CustomDio(url);
+      final dataResponse = await dio.getHttp(uri: url);
+      if (dataResponse != null) {
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+      }
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service detail', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  @override
+  Future<$ModelClass$Model?> post($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final CustomDio dio = CustomDio(_uri);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.postHttp(dataMap);
+      if (dataResponse == null) {
+        return null;
+      }
+      _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service post', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  @override
+  Future<$ModelClass$Model?> put($ModelClass$Model $ModelClassCamelCase$) async {
+    final url = '$_uri${$ModelClassCamelCase$.id}';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.putHttp(dataMap, $ModelClassCamelCase$.id.toString(), uri: url);
+      if (dataResponse == null) {
+        return null;
+      }
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service put', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  @override
+  Future<$ModelClass$Model?> patch($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final url = '$_uri${$ModelClassCamelCase$.id}';
+      final CustomDio dio = CustomDio(url);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.patchHttp(dataMap, uri: url);
+      if (dataResponse == null) {
+        return null;
+      }
+        _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service patch', [error]);
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+    }
+    return _$ModelClassCamelCase$;
+  }
+
+  @override
+  Future<bool> delete($ModelClass$Model $ModelClassCamelCase$) async {
+    final url = '$_uri${$ModelClassCamelCase$.id}';
+    try {
+      final CustomDio dio = CustomDio(url);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.deleteHttp(dataMap, $ModelClassCamelCase$.id.toString(), uri: url,);
+      if (dataResponse != null) {
+        return true;
+      }
+      return false;
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service delete', [error]);
+      return false;
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return false;
+    }
+  }
+}

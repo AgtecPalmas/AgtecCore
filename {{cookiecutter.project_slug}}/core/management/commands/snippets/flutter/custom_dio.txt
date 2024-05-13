@@ -1,0 +1,170 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
+import 'dart:async';
+
+import 'package:dio/dio.dart';
+
+import '../../core/config.dart';
+import '../../core/exceptions/exception.dart';
+import '../agtec.logger.dart';
+import 'interceptors/header_token_interceptor.dart';
+import 'interceptors/refresh_token_interceptor.dart';
+
+class CustomDio {
+  late Dio _dio;
+  String _url = '';
+
+  CustomDio(
+    String url, {
+    String? authenticationToken,
+    String? errorMessage,
+    String? token,
+    String contentType = 'application/json; charset=utf-8',
+  }) {
+    _url = url;
+
+    final BaseOptions options = BaseOptions(
+        baseUrl: url,
+        connectTimeout: const Duration(seconds: 5),
+        receiveTimeout: const Duration(seconds: 5),
+        headers: {'Authorization': token ?? Config.drfToken});
+    _dio = Dio(options);
+
+    _dio.interceptors.add(HeaderTokenInterceptor());
+    if (releaseVersion == true) {
+      _dio.interceptors.add(RefreshTokenInterceptor(customDio: this, dio: _dio));
+    }
+  }
+
+  Future<dynamic> getHttp({returnResult = false, String? uri}) async {
+    try {
+      final Response response = await _dio.get(uri ?? _url);
+      if (response.statusCode == 200) {
+        if (returnResult) return response.data['results'];
+        AgtecCoreLogger().info('Retorno do método getHTTP');
+        AgtecCoreLogger().verbose(response);
+        return response.data;
+      }
+      return null;
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu o erro: ${error.response?.data?.toString()} no GetHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general('Ocorreu um erro desconhecido no método GetHttp do Dio', errorGeneral.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> postHttp(data, {String? uri, bool multipart = false}) async {
+    try {
+      if (multipart == true) {
+        _dio.options.headers['Content-Type'] = 'multipart/form-data';
+      }
+      final Response response = await _dio.post(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('Retorno do método postHTTP');
+        AgtecCoreLogger().verbose(response);
+        return response.data;
+      }
+      return null;
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu o erro: ${error.response?.data?.toString()} no PostHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general('Ocorreu um erro desconhecido no método PostHttp do Dio', errorGeneral.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> putHttp(data, String id, {String? uri, bool multipart = false}) async {
+    try {
+      if (multipart == true) {
+        _dio.options.headers['Content-Type'] = 'multipart/form-data';
+      }
+      final Response response = await _dio.put(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('Retorno do método putHTTP');
+        AgtecCoreLogger().verbose(response);
+        return response.data;
+      }
+      return null;
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu o erro: ${error.response?.data?.toString()} no PutHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general('Ocorreu um erro desconhecido no método PutHttp do Dio', errorGeneral.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> patchHttp(data, {String? uri}) async {
+    try {
+      final Response response = await _dio.patch(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('Retorno do método patchHTTP');
+        AgtecCoreLogger().verbose(response);
+        return response.data;
+      }
+      return null;
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu o erro: ${error.response?.data?.toString()} no PatchHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general('Ocorreu um erro desconhecido no método PatchHttp do Dio', errorGeneral.toString());
+      return null;
+    }
+  }
+
+  Future<dynamic> deleteHttp(data, String id, {String? uri}) async {
+    try {
+      final Response response = await _dio.delete(uri ?? _url, data: data);
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        AgtecCoreLogger().info('Retorno do método deleteHTTP');
+        AgtecCoreLogger().verbose(response);
+        return response.data;
+      }
+      return null;
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        'Ocorreu um erro ao tentar executar o DeleteHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return null;
+    } catch (errorGeneral) {
+      ExceptionCustom.general('Ocorreu um erro desconhecido no método DeleteHttp do Dio', errorGeneral.toString());
+      return null;
+    }
+  }
+}

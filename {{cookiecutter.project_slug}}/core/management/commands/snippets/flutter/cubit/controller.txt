@@ -1,0 +1,182 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
+/// Os Métodos padrões gerados são:
+///   Métodos da API
+///     fecth() -> Recupera a lista de $ModelClass$.
+///     reload() -> Recarrega a lista de $ModelClass$.
+///     detail() -> Recupera os detalhes de um $ModelClass$.
+///     post() -> Salva um novo $ModelClass$.
+///     put() -> Atualiza os dados de um $ModelClass$.
+///     delete() -> Deleta um $ModelClass$.
+
+///   Métodos do Data
+///     fetchLocal() -> Recupera a lista de $ModelClass$
+///     reloadLocal() -> Recarrega a lista de $ModelClass$
+///     detailLocal() -> Recupera os detalhes de um $ModelClass$
+///     saveLocal() -> Salva um novo $ModelClass$
+///     updateLocal() -> Atualiza um novo $ModelClass$
+///     deleteLocal() -> Deleta um novo $ModelClass$
+///     deleteAllLocal() -> Deleta um novo $ModelClass$
+
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import '../../../core/exceptions/exception.dart';
+
+import 'model.dart';
+import 'service.dart';
+import 'interface.dart';
+
+part 'state.dart';
+
+class $ModelClass$Controller extends Cubit<$ModelClass$State> {
+  late $ModelClass$ServiceInterface _service;
+  $ModelClass$Model $ModelClassCamelCase$Model = $ModelClass$Model();
+  List<$ModelClass$Model> $ModelClassCamelCase$List = <$ModelClass$Model>[];
+
+  $ModelClass$Controller({$ModelClass$Model? $ModelClassCamelCase$Model}):
+    super($ModelClass$Initial()) {
+    _service = $ModelClass$Service($ModelClassCamelCase$: $ModelClassCamelCase$Model ?? this.$ModelClassCamelCase$Model);
+  }
+
+  Future<void> fetch() async {
+    try {
+      emit($ModelClass$ProcessState());
+      $ModelClassCamelCase$List.clear();
+      $ModelClassCamelCase$List = await _service.fetch();
+      if($ModelClassCamelCase$List.isEmpty){
+        emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+      }else{
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state(
+        'Ocorreu um erro ou executar o método fetch do $ModelClass$Controller', 
+        error.toString(), 
+        error, 
+        stackTrace,
+      );
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'));
+    }
+  }
+
+  Future<void> reload() async {
+    try {
+      emit($ModelClass$ProcessState());
+      $ModelClassCamelCase$List.clear();
+      $ModelClassCamelCase$List = await _service.fetch();
+      if($ModelClassCamelCase$List.isEmpty){
+        emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+      }else{
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método reload do $ModelClass$Controller', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar recarregar os dados.'));
+    }
+  }
+
+  Future<void> post($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.post($ModelClassCamelCase$);
+      if(resultData == null) {
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar salvar.'));
+      }else{
+        $ModelClassCamelCase$Model = resultData;
+        emit($ModelClass$SuccessState(
+            successMessage: '$ModelClass$ cadastrado com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método post do $ModelClass$Controller', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar salvar.'));
+    }
+  }
+
+  Future<void> put($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.put($ModelClassCamelCase$);
+      if(resultData == null) {
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+      }else{
+        $ModelClassCamelCase$Model = resultData;
+        emit($ModelClass$SuccessState(
+            successMessage: '$ModelClass$ cadastrado com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método put do $ModelClass$Controller', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+    }
+  }
+
+  Future<void> patch($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.patch($ModelClassCamelCase$);
+      if(resultData == null) {
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+      }else{
+        $ModelClassCamelCase$Model = resultData;
+        emit($ModelClass$SuccessState(
+            successMessage: '$ModelClass$ cadastrado com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método path do $ModelClass$Controller', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+    }
+  }
+
+  Future<void> delete($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.delete($ModelClassCamelCase$);
+      if(resultData == false) {
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar excluir o registro.'));
+      }else{
+        emit($ModelClass$SuccessState(
+          successMessage: '$ModelClass$ excluído com sucesso.',
+          $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+          $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+        ));
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método delete do $ModelClass$Controller', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar excluir o registro.'));
+    }
+  }
+}

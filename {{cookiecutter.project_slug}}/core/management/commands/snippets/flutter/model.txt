@@ -1,0 +1,107 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
+/// Model do objeto $ModelClass$
+/// 
+/// Os Métodos padrões gerados são:
+///     toString() -> Sobrescreve o toString para trazer todos os atributos da classe.
+///     fromMap() -> Realiza o parser do Json para o Model.
+///     toMap()   -> Realiza o parser do Model para Json.
+/// 
+import 'dart:convert';
+import 'package:intl/intl.dart';
+
+import '../../../core/util.dart';
+import '../../../core/exceptions/exception.dart';
+
+class $ModelClass$Model {
+  String id;
+  String nextUrl;
+  String previousUrl;
+  bool enabled;
+  bool deleted;
+  DateTime? createdOn;
+  DateTime? updatedOn;
+  $AttributeClass$
+
+  $ModelClass$Model({
+    this.id = '',
+    this.nextUrl = '',
+    this.previousUrl = '',
+    this.enabled = true,
+    this.deleted = false,
+    DateTime? createdOn,
+    DateTime? updatedOn,
+    $ConstructorModelClass$
+  });
+
+  factory $ModelClass$Model.fromMapGET(Map<String, dynamic> map){
+    try {
+      return switch (map) {
+        {
+          'id': final String id,
+          'nextUrl': final String nextUrl,
+          'previousUrl': final String previousUrl,
+          'deleted': final bool deleted,
+        } =>
+          $ModelClass$Model(
+            id: id,
+            deleted: deleted,
+            nextUrl: nextUrl,
+            previousUrl: previousUrl,
+            enabled: map['enabled'] ?? true,
+            createdOn: map.containsKey('created_on')
+                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on'])
+                : null,
+            updatedOn: map.containsKey('updated_on')
+                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on'])
+                : null,
+            $ParserfromMap$
+          ),
+        _ => throw ArgumentError('Json inválido do $ModelClass$Model'),
+      };
+    } catch (error, stackTrace) {
+      ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
+      return $ModelClass$Model();
+    }
+  }
+
+  factory $ModelClass$Model.fromMap(Map<String, dynamic> map){
+    try {
+      return $ModelClass$Model(
+      $ParserfromMap$
+      );
+    } catch (error, stackTrace) {
+      ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
+      return $ModelClass$Model();
+    }
+  }
+
+  Map<String, dynamic>? toMap(){
+    try{
+      return {
+        'nextUrl': nextUrl,
+        'previousUrl': previousUrl,
+        $ParserToMap$
+      };
+    } catch (error, stackTrace) {
+      ExceptionCustom.general('Ocorreu um erro no método toMap do $ModelClass$Model', error.toString(), stackTrace);
+      return null;
+    }
+  }
+ 
+  String toJson() => json.encode(toMap());
+
+  factory $ModelClass$Model.fromJson(String source) => $ModelClass$Model.fromMap(json.decode(source));
+
+  /// Sobscrevendo o método toString para retornar todos os atributos da classe.
+  @override
+  String toString() {
+    return '$StringReturn$';
+  }
+
+}

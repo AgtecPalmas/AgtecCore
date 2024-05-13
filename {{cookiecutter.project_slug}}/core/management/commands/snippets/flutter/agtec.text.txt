@@ -1,0 +1,273 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+///
+import 'package:flutter/material.dart';
+
+import 'custom.colors.dart';
+
+/// Classe Widget do label da tela de screen
+/// como apresentado na tela #t1 no Figma
+class TextSplashScreen extends StatelessWidget {
+  final String text;
+  const TextSplashScreen({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(color: customBlack, fontSize: 48, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}
+
+/// Classe Widget do label para o texto das mensagens na barra inferior
+/// como apresentado na tela #t6 no figma
+class TextFooterBar extends StatelessWidget {
+  final String text;
+  const TextFooterBar({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do título acima do gradiente
+class TitleHeadGradientPage extends StatelessWidget {
+  final String text;
+  const TitleHeadGradientPage({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customWhite,
+          fontSize: 24,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do título do card
+class TitleCardTopPage extends StatelessWidget {
+  final String text;
+  const TitleCardTopPage({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do content do card
+class TextContentCardTopPage extends StatelessWidget {
+  final String text;
+  const TextContentCardTopPage({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        maxLines: 2,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do título do card das telas de listagem
+/// como apresentado nas telas #t5 e #t6 no figma
+class TitleContentCardListViewPages extends StatelessWidget {
+  final String text;
+  const TitleContentCardListViewPages({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do conteúdo do card das telas de listagem
+/// como apresentado nas telas #t5 e #t6 no figma
+class TextContentCardListViewPages extends StatelessWidget {
+  final String text;
+  const TextContentCardListViewPages({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 15,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    );
+  }
+}
+
+/// Classe do Widget do conteúdo do card das telas de listagem
+/// como apresentado nas telas #t5 e #t6 no figma
+class TextButtonsListViewPages extends StatelessWidget {
+  final String text;
+  const TextButtonsListViewPages({Key? key, required this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      child: Text(
+        this.text,
+        style: TextStyle(
+          color: customWhite,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}
+
+class TextCardHomeOptions extends StatelessWidget {
+  final String labelText;
+  const TextCardHomeOptions({Key? key, required this.labelText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 8, top: 6),
+      padding: const EdgeInsets.only(top: 12, right: 8),
+      child: Text(
+        labelText,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+}
+
+/// Class para renderizar o label customizado dos formulários
+class CustomTextFormFieldLabel extends StatelessWidget {
+  final String labelText;
+
+  const CustomTextFormFieldLabel({Key? key, required this.labelText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        bottom: 8,
+        left: 4,
+      ),
+      child: Text(
+        labelText,
+        style: TextStyle(
+          color: customBlack,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTextTitleGeneralPage extends StatelessWidget {
+  final String labelText;
+  const CustomTextTitleGeneralPage({
+    Key? key,
+    required this.labelText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      labelText,
+      style: TextStyle(
+        color: customBlack,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
+class CustomTextSubtitleGeneralPage extends StatelessWidget {
+  final String labelText;
+  const CustomTextSubtitleGeneralPage({
+    Key? key,
+    required this.labelText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      labelText,
+      style: TextStyle(
+        color: Colors.black45,
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+}
+
+/// Classe para renderizar os títulos das perguntas do checklist
+/// bem como os títulos para os formulários de não conformidade
+class CustomTextAnswersPages extends StatelessWidget {
+  final String label;
+  const CustomTextAnswersPages({Key? key,required this.label}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(label, style: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+    ));
+  }
+}

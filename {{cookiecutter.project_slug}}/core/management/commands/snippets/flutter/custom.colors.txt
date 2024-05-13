@@ -1,0 +1,21 @@
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração das cores da aplicação, e que não deve ser alterado
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
+
+import 'package:flutter/material.dart';
+
+const Color iconCardColorHomePage = Colors.black38;
+const Color textCardColorHomePage = Colors.black38;
+const Color backgroundColorCardHomePageBegin = Colors.white;
+const Color backgroundColorCardHomePageEnd = Colors.white;
+const Color boxShadownColorCardHomePage = Colors.black38;
+const Color borderCardColorHomePage = Colors.black38;
+const Color appBarDefaultBackgroundColor = Color.fromARGB(92, 0, 153, 255);
+
+// Cores para o loading de pontos
+const Color colorOneDotsLoading = Colors.blueAccent; 
+const Color colorTwoDotsLoading = Colors.blueGrey;

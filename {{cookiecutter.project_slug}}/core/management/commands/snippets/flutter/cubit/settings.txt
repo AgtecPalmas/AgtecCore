@@ -1,0 +1,41 @@
+/// Cubit do Settings
+
+/// [Travar o arquivo]
+/// Caso deseje "travar" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// FileLocked
+
+import 'dart:developer' as dev;
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
+part 'state.dart';
+
+class SettingsCubit extends Cubit<SettingsState> {
+  bool lightTheme = true;
+
+  SettingsCubit() : super(SettingsInitial());
+
+  Future<void> setLightTheme() async {
+    try {
+      emit(SettingsProcessState());
+      lightTheme = true;
+      emit(const SettingsSuccessState(successMessage: ''));
+    } catch (e, s) {
+      dev.log('Settings', name: 'AgtecCore', error: e.toString(), stackTrace: s);
+      emit(SettingsErrorState(e.toString()));
+    }
+  }
+
+  Future<void> setDarkTheme() async {
+    try {
+      emit(SettingsProcessState());
+      lightTheme = false;
+      emit(const SettingsSuccessState(successMessage: ''));
+    } catch (e, s) {
+      dev.log('Settings', name: 'AgtecCore', error: e.toString(), stackTrace: s);
+      emit(SettingsErrorState(e.toString()));
+    }
+  }
+}

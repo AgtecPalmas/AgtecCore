@@ -1,0 +1,47 @@
+/// [Travar o arquivo]
+/// Caso deseje \"travar\" o arquivo para não ser parseado novamente
+/// pelo manage do Django adicione um # antes da palavra abaixo
+/// #FileLocked
+/// 
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import '../../../core/user_interface/widget.dart';
+
+class SigninPage extends StatefulWidget {
+  const SigninPage({super.key});
+
+  @override
+  State<SigninPage> createState() => _SigninPageState();
+}
+
+class _SigninPageState extends State<SigninPage> with SingleTickerProviderStateMixin {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _loadData();
+    });
+  }
+
+  void _loadData() async {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(backgroundColor: Colors.transparent),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    return Stack(children: <Widget>[const HeadWidget(), _buildPage()]);
+  }
+
+  Widget _buildPage() {
+    return const Column();
+  }
+}
