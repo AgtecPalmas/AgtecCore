@@ -1,5 +1,0 @@
-{
-    "custom_processing_card_label": "Processando...",
-    "label_generic_error": "Ocorreu um error, favor tentar novamente.",
-    "page_label_configuration": "Configuração"
-}
