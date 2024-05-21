@@ -177,7 +177,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     try{
       $EditedAttributes$
     }catch (error, stackTrace){
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
       showError(UpdateStringConstants.loadingError);
     }
   }
