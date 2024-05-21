@@ -157,18 +157,20 @@ class ParserHTMLBuild:
 
         try:
             foreign_key_template = Template(
-                """<div class="input-group">\
-                    {{ form.${field_name} }}\
+                """ <div class="d-flex gap-small">\
+                    <div class="flex-grow-1">\
+                        {{ form.${field_name} }}\
+                        <div class="invalid-feedback">\
+                            {{ form.$field_name.errors }}\
+                        </div>
+                    </div>
                     {% if form.${field_name}.field.queryset.model|has_add_permission:request %}\
-                        <span class="input-group-text btn btn-light" type="button" data-bs-toggle="modal"\
+                        <span class="br-button circle" type="button" data-bs-toggle="modal"\
                             title="Adicionar ${model}"\
                             data-bs-target="#form_${field_name}_modal">\
                             <i class="fas fa-plus"></i>\
                         </span>\
                     {% endif %}\
-                    <div class="invalid-feedback">\
-                        {{ form.$field_name.errors }}\
-                    </div>
                 </div>"""
             )
 
@@ -180,7 +182,8 @@ class ParserHTMLBuild:
             )
 
             return html + foreign_key_template.substitute(
-                field_name=custom_field.name, model=custom_field.model
+                field_name=custom_field.name,
+                model=field.related_model._meta.verbose_name,
             )
 
         except Exception as error:
