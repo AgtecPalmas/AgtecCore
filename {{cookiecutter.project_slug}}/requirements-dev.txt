@@ -332,7 +332,7 @@ regex==2023.12.25
     #   dateparser
     #   djlint
     #   mkdocs-material
-requests==2.31.0
+requests==2.32.0
     # via
     #   -r requirements.txt
     #   django-image-optimizer
