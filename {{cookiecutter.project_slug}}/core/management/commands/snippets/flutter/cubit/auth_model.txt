@@ -85,7 +85,7 @@ class AuthModel {
         result = false;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
     }
     return result;
   }
@@ -116,7 +116,7 @@ class AuthModel {
         idToken: map['idToken'] as String,
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
       return AuthModel();
     }
   }
@@ -142,7 +142,7 @@ class AuthModel {
         'idToken': idToken,
       };
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
       return {};
     }
   }
