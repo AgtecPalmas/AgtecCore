@@ -499,7 +499,14 @@ class BaseListView(
                 if model_ordering == [] and hasattr(self.model, "Meta"):
                     model_ordering = getattr(self.model.Meta, "ordering", [])
 
-            context["default_ordering"] = model_ordering[0] if model_ordering else "id"
+                if model_ordering and model_ordering[0].startswith("-"):
+                    model_ordering = model_ordering[0][1:]
+
+                else:
+                    model_ordering = model_ordering[0]
+
+            context["default_ordering"] = model_ordering or "pk"
+
 
             if query_params := dict(self.request.GET):
                 # retira o parametro page e add ele em outra variável, apenas dele
