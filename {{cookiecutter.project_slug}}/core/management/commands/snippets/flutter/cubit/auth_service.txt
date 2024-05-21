@@ -272,7 +272,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthService recoverPassword', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService recoverPassword', error, stackTrace);
     }
     return false;
   }
@@ -286,7 +286,7 @@ class AuthService {
         return AuthModel.fromMap(data);
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthService createAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService createAccount', error, stackTrace);
     }
     return null;
   }
@@ -300,7 +300,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthService disableAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService disableAccount', error, stackTrace);
     }
     return false;
   }
@@ -314,16 +314,16 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthService excludeAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService excludeAccount', error, stackTrace);
     }
     return false;
   }
 
   void _success(String message, {int statusCode = 200}) async {
     try {
-      AgteCoreLogger().debug(message);
+      AgtecCoreLogger().debug(message);
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
     }
   }
 }
