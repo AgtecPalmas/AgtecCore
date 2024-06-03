@@ -33,7 +33,9 @@ class ModelsBuilder:
         self._snippet_model = Utils.get_snippet(
             str(Path(f"{self.snippet_dir}/model.txt"))
         )
-        self._snippet_model = Utils.get_snippet(str(Path(f"{self.snippet_dir}/model.txt")))
+        self._snippet_model = Utils.get_snippet(
+            str(Path(f"{self.snippet_dir}/model.txt"))
+        )
 
     def build(self):
         try:

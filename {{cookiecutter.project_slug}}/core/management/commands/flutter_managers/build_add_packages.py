@@ -1,6 +1,6 @@
 from pathlib import Path
-from core.management.commands.parser_content import ParserContent
 
+from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
 
@@ -28,7 +28,7 @@ class AddPackagesBuilder:
                         self._project.lower(),
                         f"Projeto Flutter do sistema Django {self._project}",
                     ],
-                    _snippet_content
+                    _snippet_content,
                 ).replace()
                 _file.write(_content)
         except Exception as error:

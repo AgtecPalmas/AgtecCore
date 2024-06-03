@@ -7,9 +7,6 @@ import sys
 import time
 from pathlib import Path
 
-from django.apps import apps
-from django.core.management.base import BaseCommand
-
 from base.settings import FLUTTER_APPS, ORGANIZATION_FLUTTER_NAME
 from core.management.commands.constants.flutter import (
     DJANGO_TYPES,
@@ -46,6 +43,8 @@ from core.management.commands.flutter_managers import (
 )
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
+from django.apps import apps
+from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("django_debug")
 

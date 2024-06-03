@@ -34,9 +34,7 @@ class MainFileBuilder:
                     _model = model[1]
                     _app_model = f"{_app.title()}{_model}"
                     _app_model_snack_case = f"{_app.lower()}_{_model.lower()}_views"
-                    _imports_views += (
-                        f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
-                    )
+                    _imports_views += f"import 'apps/{_app}/{_model.lower()}/pages/list.dart' as {_app_model_snack_case};\n"
                     _list_views += f"Itens(title: '{model[0]._meta.verbose_name}', "
                     _list_views += (
                         f"icon: FontAwesomeIcons.folderOpen, uri: {_app_model}."

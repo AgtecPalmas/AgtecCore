@@ -22,13 +22,15 @@ class RegisterProviderControllerBuilder:
                 for _model in _current_app.models:
                     _model_name_lower = _model[1].lower()
                     self._imports += f"import 'apps/{_app_name_lower}/{_model_name_lower}/controller.dart';\n"
-                    self._registers += (
-                        f"BlocProvider<{_model[1]}Controller>(create: (_) => {_model[1]}Controller(),),\n"
-                    )
+                    self._registers += f"BlocProvider<{_model[1]}Controller>(create: (_) => {_model[1]}Controller(),),\n"
             self._imports += "import 'apps/auth/cubit.dart';\n"
-            self._registers += "BlocProvider<SettingsCubit>(create: (_) => SettingsCubit(),),\n"
+            self._registers += (
+                "BlocProvider<SettingsCubit>(create: (_) => SettingsCubit(),),\n"
+            )
             self._registers += "BlocProvider<AuthCubit>(create: (_) => AuthCubit(),),\n"
             return self._imports, self._registers
         except Exception as error:
-            Utils.show_error(f"Erro ao executar o build de RegisterControllerBuilder: {error}")
+            Utils.show_error(
+                f"Erro ao executar o build de RegisterControllerBuilder: {error}"
+            )
             return None, None
