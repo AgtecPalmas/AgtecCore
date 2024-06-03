@@ -6,7 +6,7 @@ from django.views.generic.edit import DeleteView
 
 from core.decorators import audit_delete
 from core.models import Base
-from core.views.utils import get_breadcrumbs, get_default_context_data
+from core.views.utils import get_breadcrumbs, get_default_context_data, get_url_str
 
 
 class BaseDeleteView(
@@ -36,12 +36,11 @@ class BaseDeleteView(
 
     def get_success_url(self):
         try:
-            success_message = messages.success(
+            messages.success(
                 request=self.request,
-                message=f"'{self.object}', Excluido com Sucesso!",
+                message=f"'{self.object}', Excluído com Sucesso!",
                 extra_tags="success",
             )
-            success_message
 
             if self.success_url and self.success_url != "":
                 return reverse(self.success_url)
@@ -74,8 +73,7 @@ class BaseDeleteView(
         context["many_fields"] = many_fields
         context = get_default_context_data(context, self)
 
-        url_str = reverse(context["url_list"]) + f' Apagar {context["object"].pk}'
-
+        url_str = get_url_str(context["url_list"], f"Apagar {context['object'].pk}")
         context["breadcrumbs"] = get_breadcrumbs(url_str)
 
         return context

@@ -1,0 +1,7 @@
+version: 2
+updates:
+  - package-ecosystem: "pip-compile"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    target-branch: "desenvolvimento"

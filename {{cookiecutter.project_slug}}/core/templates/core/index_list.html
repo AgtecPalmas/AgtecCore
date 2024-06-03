@@ -29,10 +29,7 @@
         {% endif %}
       </div>
     </div>
-    <div class="col-12 mb-2 mt-2 m-0 pr-0">
-      {% block filter %}
-      {% endblock filter %}
-    </div>
+    {% include "./block/filters.html" %}
     <div class="col-12 row mb-2 mt-2 m-0 pr-0">
       {% block barra_botoes_extra %}
       {% endblock barra_botoes_extra %}

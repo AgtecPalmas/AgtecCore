@@ -1,11 +1,11 @@
 from django.urls import include, path
 from rest_framework import routers
-from $app_name$.api.views.$model_name$ import $ModelName$CustomViewAPI, $ModelName$ViewAPI
+from $app_name$.api.views.$model_name$ import $ModelName$ReadOnlyAPI, $ModelName$ViewAPI
 
 router = routers.DefaultRouter()
 
 # URL para a API $ModelName$
 router.register(r"$model_name$", $ModelName$ViewAPI, "$model_name$-api")
-router.register(r"$model_name$/custom", $ModelName$CustomViewAPI, "$model_name$-get-api")
+router.register(r"$model_name$_readonly", $ModelName$ReadOnlyAPI, "$model_name$-readonly-api")
 
 urlpatterns = router.urls

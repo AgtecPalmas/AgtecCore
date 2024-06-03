@@ -100,6 +100,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       listener: (context, state) {
         switch (state) {
           case $ModelClass$ErrorState(:final error):
+
             AgtecCoreLogger().erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
             showError(ListStringConstants.error);
             break;
@@ -119,11 +120,11 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
           case $ModelClass$EmptyListState():
             return const Expanded(child: Center(child: Text('Nenhum item encontrado')));
           case $ModelClass$ErrorState():
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
           case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
             return _buildResultList($ModelClassCamelCase$List);
           default:
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
       },
     );

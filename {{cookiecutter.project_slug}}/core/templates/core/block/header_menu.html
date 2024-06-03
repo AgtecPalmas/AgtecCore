@@ -5,10 +5,14 @@
         <div class="container-lg ">
             <div class="header-top">
                 <div class="header-logo">
-                    <img src="{{ logo_sistema }}"
-                         alt="{{ system_name }}"
-                         height="80vh"
-                         width="auto" />
+                    <a href="{% url 'core:index' %}"
+                       class="rounder-pill p-1"
+                       title="Ir para a página inicial">
+                        <img src="{{ logo_sistema }}"
+                             alt="{{ system_name }}"
+                             height="80vh"
+                             width="auto" />
+                    </a>
                     <span class="br-divider vertical mx-half mx-sm-1"></span>
                     <div class="header-sign">{{ system_name }}</div>
                 </div>

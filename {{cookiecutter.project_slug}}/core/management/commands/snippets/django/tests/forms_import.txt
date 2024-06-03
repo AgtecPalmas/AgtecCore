@@ -2,4 +2,4 @@ import pytest
 from faker import Faker
 from model_bakery import baker
 
-from $app_name$.forms import $ModelClass$Form
+from $app_name$.forms.$model_name$ import $ModelClass$Form

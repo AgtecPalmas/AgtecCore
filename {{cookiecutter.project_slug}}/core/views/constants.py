@@ -13,6 +13,7 @@ IGNORED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "tempus_dominus",
+    "drf_spectacular",
 ]
 
 IGNORED_MODELS = [

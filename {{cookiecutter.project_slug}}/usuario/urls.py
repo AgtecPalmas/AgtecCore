@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import (
+from usuario.views.usuario import (
     UsuarioLoginView,
     UsuarioLogoutView,
     UsuarioProfileView,

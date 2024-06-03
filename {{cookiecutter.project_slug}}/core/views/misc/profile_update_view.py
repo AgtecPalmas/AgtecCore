@@ -1,25 +1,37 @@
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
-from django.views import View
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+
+from core.forms import UserUpdateForm
+from core.views.base import BaseUpdateView
 
 
-class ProfileUpdateView(LoginRequiredMixin, View):
+class ProfileUpdateView(BaseUpdateView):
     """Views para atualizar os dados do perfil do usuario"""
 
-    def get(self, request, *args, **kwargs):
-        return redirect("core:profile")
+    model = User
+    success_url = reverse_lazy("core:profile")
+    form_class = UserUpdateForm
+    template_name = "core/registration/profile.html"
 
-    def post(self, request, *args, **kwargs):
-        try:
-            data = request.POST
-            request.user.first_name = data.get("first_name")
-            request.user.last_name = data.get("last_name")
-            request.user.email = data.get("email")
-            request.user.save()
-            messages.success(request, "Dados do perfil atualizados com sucesso")
+    def get_success_message(self):
+        return "Dados do perfil atualizados com sucesso"
 
-        except Exception:
-            messages.error(request, "Erro ao atualizar os dados do perfil")
+    def get_object(self, queryset=None):
+        return self.request.user
 
-        return redirect("core:profile")  # Redirect using name url parameter
+    def get_permission_required(self):
+        return []
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        django_user = self.request.user
+        usuario = getattr(django_user, "usuario", None)
+
+        if usuario:
+            usuario.nome = f"{form.cleaned_data.get('first_name')} {form.cleaned_data.get('last_name')}".strip()
+            usuario.email = form.cleaned_data.get("email")
+            usuario.save()
+
+        django_user.username = email
+        django_user.save()
+        return super().form_valid(form)

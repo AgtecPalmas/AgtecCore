@@ -3,8 +3,17 @@ import secrets
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.forms.fields import BooleanField, DateField, DateTimeField, JSONField
+from django.forms.fields import (
+    BooleanField,
+    DateField,
+    DateTimeField,
+    JSONField,
+    TimeField,
+)
 from django.utils.translation import gettext_lazy as _
+
+from core.middleware.current_user import get_current_user
+from usuario.models import Usuario
 
 from .models import Audit, Base
 
@@ -29,23 +38,22 @@ class BaseForm(forms.ModelForm):
             # Aplica o padrão
             class_attrs.append("form-control")
 
-            # Verificando se o campo é Booleano
             if isinstance(self.fields[field], BooleanField):
                 class_attrs.append("form-check-input")
 
-            # Verificando se o campo é do tipo DateTime
             elif isinstance(self.fields[field], DateTimeField):
-                class_attrs.append("datetimefield")
                 self.fields[field].widget.attrs.update(
                     {"placeholder": "dd/mm/aaaa hh:mm"}
                 )
                 self.fields[field].widget.input_type = "datetime-local"
 
-            # Verificando se o campo é do tipo Date
             elif isinstance(self.fields[field], DateField):
-                class_attrs.append("datefield")
                 self.fields[field].widget.attrs.update({"placeholder": "dd/mm/aaaa"})
                 self.fields[field].widget.input_type = "date"
+
+            elif isinstance(self.fields[field], TimeField):
+                self.fields[field].widget.attrs.update({"placeholder": "hh:mm"})
+                self.fields[field].widget.input_type = "time"
 
             class_attrs.append(self.get_validation_class(field))
 
@@ -55,10 +63,9 @@ class BaseForm(forms.ModelForm):
 
     def update_fields_modal(self):
         """Atualiza os campos do formulário para serem usados em modais"""
+        random_str = secrets.token_urlsafe(5)
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update(
-                {"id": f"{secrets.token_urlsafe(5)}_{field}"}
-            )
+            self.fields[field].widget.attrs.update({"id": f"{random_str}_{field}"})
 
     def get_validation_class(self, field) -> str:
         """Retorna a classe de validação do campo"""
@@ -162,3 +169,43 @@ class ChangePasswordUserForm(PasswordChangeForm):
         max_length=150,
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
+
+
+class UserUpdateForm(BaseForm):
+
+    @staticmethod
+    def __valid_djangouser(user, email) -> bool:
+        """Valida se o email já está cadastrado no sistema por um DjangoUser"""
+        user_email = User.objects.filter(username=email)
+
+        return user_email and user_email != user
+
+    @staticmethod
+    def __valid_usuario(user, email) -> bool:
+        """Valida se o email já está cadastrado no sistema por um Usuario"""
+        usuario = getattr(user, "usuario", None)
+        updated_usuario = Usuario.objects.filter(email=email).first()
+
+        if usuario and updated_usuario:
+            return usuario == updated_usuario
+        return not updated_usuario
+
+    def clean_email(self):
+
+        email = self.cleaned_data.get("email")
+        django_user = get_current_user()
+
+        if not email:
+            raise forms.ValidationError("O campo email é obrigatório")
+
+        if self.__valid_djangouser(django_user, email) is False:
+            raise forms.ValidationError("Já existe um usuário com esse email")
+
+        if self.__valid_usuario(django_user, email) is False:
+            raise forms.ValidationError("Já existe um usuário com esse email")
+
+        return email
+
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name"]
