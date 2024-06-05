@@ -45,7 +45,7 @@ class AuthModel {
       final AuthData authData = AuthData();
       return authData.deleteAll();
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel logout', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel logout', error, stackTrace);
       return false;
     }
   }
@@ -55,7 +55,7 @@ class AuthModel {
       if (account.isEmpty) return '';
       return account;
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel profileName', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel profileName', error, stackTrace);
     }
     return '';
   }
@@ -70,7 +70,7 @@ class AuthModel {
         result = false;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithGoogle', error, stackTrace);
     }
     return result;
   }
@@ -85,7 +85,7 @@ class AuthModel {
         result = false;
       }
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel validateLocalUserSignInWithEmail', error, stackTrace);
     }
     return result;
   }
@@ -116,7 +116,7 @@ class AuthModel {
         idToken: map['idToken'] as String,
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel fromMap', error, stackTrace);
       return AuthModel();
     }
   }
@@ -142,7 +142,7 @@ class AuthModel {
         'idToken': idToken,
       };
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthModel toMap', error, stackTrace);
       return {};
     }
   }

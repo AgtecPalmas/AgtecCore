@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -48,7 +48,7 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           showError(DetailStringConstants.error);
-          AgteCoreLogger().erro('Ocorreu o erro ao executar o Detail Page BlocConsumer', state.error.toString());
+          AgtecCoreLogger().erro('Ocorreu o erro ao executar o Detail Page BlocConsumer', state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
           showSuccess(DetailStringConstants.success);

@@ -33,6 +33,9 @@ class ModelsBuilder:
         self._snippet_model = Utils.get_snippet(
             str(Path(f"{self.snippet_dir}/model.txt"))
         )
+        self._snippet_model = Utils.get_snippet(
+            str(Path(f"{self.snippet_dir}/model.txt"))
+        )
 
     def build(self):
         try:
@@ -90,17 +93,17 @@ class ModelsBuilder:
 
                     elif str(_atribute) == "double":
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] or 0.0,\n{' ' * 8}"
+                            f"{_name_dart}: map['{_name}'] ?? 0.0,\n{' ' * 8}"
                         )
 
                     elif str(_atribute) == "bool":
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] or False,\n{' ' * 8}"
+                            f"{_name_dart}: map['{_name}'] ?? false,\n{' ' * 8}"
                         )
 
                     else:
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] or '',\n{' ' * 8}"
+                            f"{_name_dart}: map['{_name}'] ?? '',\n{' ' * 8}"
                         )
 
                 if _field_type in {"DateTimeField", "DateField", "TimeField"}:

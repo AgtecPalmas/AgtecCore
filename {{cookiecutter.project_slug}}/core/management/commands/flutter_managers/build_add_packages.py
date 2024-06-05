@@ -1,6 +1,6 @@
 from pathlib import Path
-from core.management.commands.parser_content import ParserContent
 
+from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
 
 

@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travado por default]
 /// Por ser um mixin de verificação da conexão com a internet, e que não deve ser alterado
@@ -28,7 +28,7 @@ mixin ConnectionMixin<T extends StatefulWidget> on State<T> {
         }
       });
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o checarConexao ', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o checarConexao ', error, stackTrace);
     }
   }
 

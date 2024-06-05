@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -14,7 +14,7 @@
 ///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
 ///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
 ///
-/// Os métodos de acesso à API devem ser implementados no nessa classe.
+/// Os métodos de acesso à API devem ser implementados nessa classe.
 
 
 import 'dart:convert';
@@ -28,7 +28,7 @@ import 'interface.dart';
 
 
 class $ModelClass$Service implements $ModelClass$ServiceInterface {
-  final String _uri = '${Config.uri}api/v1/$App$/$Model$/';
+  final String _uri = '${Config.uri}$App$/api/v1/$Model$/';
   $ModelClass$Model _$ModelClassCamelCase$ = $ModelClass$Model();
   final List<$ModelClass$Model> _$ModelClassCamelCase$List = [];
 
@@ -57,7 +57,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service fetch', error);
+      AgtecCoreLogger().erro('ArgumentError no service fetch', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -83,7 +83,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service getMore', error);
+      AgtecCoreLogger().erro('ArgumentError no service getMore', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -100,7 +100,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service detail', error);
+      AgtecCoreLogger().erro('ArgumentError no service detail', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -118,7 +118,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service post', error);
+      AgtecCoreLogger().erro('ArgumentError no service post', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -137,7 +137,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service put', error);
+      AgtecCoreLogger().erro('ArgumentError no service put', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -156,7 +156,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service patch', error);
+      AgtecCoreLogger().erro('ArgumentError no service patch', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -175,7 +175,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return false;
     } on ArgumentError catch (error) {
-      AgteCoreLogger().erro('ArgumentError no service delete', error);
+      AgtecCoreLogger().erro('ArgumentError no service delete', [error]);
       return false;
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);

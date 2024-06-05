@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -95,7 +95,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
                   listener: (context, state) {
                     if (state is $ModelClass$ErrorState){
                       showError(InsertStringConstants.error);
-                      AgteCoreLogger().erro(
+                      AgtecCoreLogger().erro(
                         'Ocorreu o erro ao executar o Update Page BlocListner', 
                         state.error.toString(),
                       );
@@ -168,7 +168,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
 
       await $Model$Controller.put(_$Model$Model);
     }catch (error, stackTrace){
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page _put', error.toString(), stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o Update Page _put', error.toString(), stackTrace);
       showError(UpdateStringConstants.error);
     }
   }
@@ -177,7 +177,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     try{
       $EditedAttributes$
     }catch (error, stackTrace){
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
       showError(UpdateStringConstants.loadingError);
     }
   }
