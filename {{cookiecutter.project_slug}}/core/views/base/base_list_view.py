@@ -1,8 +1,16 @@
+import contextlib
 import logging
 from datetime import date, datetime
 from locale import normalize
 
 import pytz
+from core.models import Base
+from core.views.utils import (
+    get_breadcrumbs,
+    get_default_context_data,
+    get_url_str,
+    has_fk_attr,
+)
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -19,14 +27,6 @@ from django.db.models.fields.related_descriptors import (
 )
 from django.db.models.query_utils import DeferredAttribute
 from django.views.generic import ListView
-
-from core.models import Base
-from core.views.utils import (
-    get_breadcrumbs,
-    get_default_context_data,
-    get_url_str,
-    has_fk_attr,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -161,13 +161,10 @@ class BaseListView(
                 return queryset
 
             for field in self.search_fields:
-                try:
+                with contextlib.suppress(Exception):
                     queryset.filter(**{f"{field}__icontains": param_filter})
                     query_params |= Q(**{f"{field}__icontains": param_filter})
                     continue
-
-                except Exception as e:
-                    pass
 
                 if (
                     hasattr(self.model, field)
@@ -265,18 +262,17 @@ class BaseListView(
                         not_exact = True
                         chave = f'{chave.split("__")[0]}__exact'
 
-                    try:
-                        campo_date = DateTimeField().clean(valor)
+                    with contextlib.suppress(ValidationError):
+                        campo_date = DateTimeField().to_python(valor)
+
                         if not_exact:
                             queryset = queryset.exclude(**{chave: campo_date})
+
                         else:
                             queryset = queryset.filter(**{chave: campo_date})
+
                         continue
 
-                    except Exception as e_date:
-                        logger.error(
-                            f"Erro: {e_date}; No Metodo: BaseListView.get_queryset()"
-                        )
                     queryset = queryset.filter(**{chave: valor})
 
             return queryset
@@ -476,7 +472,7 @@ class BaseListView(
         return list_display
 
     def get_context_data(self, **kwargs):
-        try:
+        with contextlib.suppress(Exception):
             # se colocar o do super da erro de paginação
             # context = super().get_context_data(**kwargs)
             context = super(BaseListView, self).get_context_data(**kwargs)
@@ -506,7 +502,6 @@ class BaseListView(
                     model_ordering = model_ordering[0]
 
             context["default_ordering"] = model_ordering or "pk"
-
 
             if query_params := dict(self.request.GET):
                 # retira o parametro page e add ele em outra variável, apenas dele
@@ -725,6 +720,3 @@ class BaseListView(
             url_str = get_url_str(context["url_list"], "Listar")
             context["breadcrumbs"] = get_breadcrumbs(url_str)
             return context
-
-        except Exception as e:
-            pass
