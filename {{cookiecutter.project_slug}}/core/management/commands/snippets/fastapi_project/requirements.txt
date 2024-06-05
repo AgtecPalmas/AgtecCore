@@ -6,9 +6,9 @@
 #
 alembic==1.13.1
     # via -r requirements.in
-annotated-types==0.6.0
+annotated-types==0.7.0
     # via pydantic
-anyio==4.3.0
+anyio==4.4.0
     # via
     #   httpx
     #   starlette
@@ -17,56 +17,70 @@ async-timeout==4.0.3
     # via asyncpg
 asyncpg==0.29.0
     # via -r requirements.in
-certifi==2024.2.2
+certifi==2024.6.2
     # via
     #   elastic-apm
     #   httpcore
     #   httpx
 click==8.1.7
-    # via uvicorn
+    # via
+    #   typer
+    #   uvicorn
 colorama==0.4.6
     # via taskipy
 dnspython==2.6.1
     # via email-validator
 ecs-logging==2.1.0
     # via elastic-apm
-elastic-apm==6.21.4.post8347027212
+elastic-apm==6.22.2
     # via -r requirements.in
 email-validator==2.1.1
-    # via -r requirements.in
-exceptiongroup==1.2.0
+    # via
+    #   -r requirements.in
+    #   fastapi
+exceptiongroup==1.2.1
     # via anyio
-fastapi==0.110.0
+fastapi==0.111.0
     # via -r requirements.in
+fastapi-cli==0.0.4
+    # via fastapi
 greenlet==3.0.3
     # via sqlalchemy
-gunicorn==21.2.0
+gunicorn==22.0.0
     # via -r requirements.in
 h11==0.14.0
     # via
     #   httpcore
     #   uvicorn
-httpcore==1.0.4
+httpcore==1.0.5
     # via httpx
 httptools==0.6.1
     # via uvicorn
 httpx==0.27.0
-    # via -r requirements.in
-idna==3.6
+    # via
+    #   -r requirements.in
+    #   fastapi
+idna==3.7
     # via
     #   anyio
     #   email-validator
     #   httpx
+jinja2==3.1.4
+    # via fastapi
 loguru==0.7.2
     # via -r requirements.in
-mako==1.3.2
+mako==1.3.5
     # via alembic
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.5
-    # via mako
+    # via
+    #   jinja2
+    #   mako
 mdurl==0.1.2
     # via markdown-it-py
+orjson==3.10.3
+    # via fastapi
 packaging==24.0
     # via gunicorn
 passlib==1.7.4
@@ -75,16 +89,16 @@ psutil==5.9.8
     # via taskipy
 psycopg2-binary==2.9.9
     # via -r requirements.in
-pydantic==2.6.4
+pydantic==2.7.3
     # via
     #   -r requirements.in
     #   fastapi
     #   pydantic-settings
-pydantic-core==2.16.3
+pydantic-core==2.18.4
     # via pydantic
-pydantic-settings==2.2.1
+pydantic-settings==2.3.1
     # via -r requirements.in
-pygments==2.17.2
+pygments==2.18.0
     # via rich
 pyjwt==2.8.0
     # via -r requirements.in
@@ -94,26 +108,34 @@ python-dotenv==1.0.1
     #   pydantic-settings
     #   uvicorn
 python-multipart==0.0.9
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   fastapi
 pyyaml==6.0.1
     # via uvicorn
 rich==13.7.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   typer
+shellingham==1.5.4
+    # via typer
 sniffio==1.3.1
     # via
     #   anyio
     #   httpx
-sqlalchemy==2.0.28
+sqlalchemy==2.0.30
     # via
     #   -r requirements.in
     #   alembic
-starlette==0.36.3
+starlette==0.37.2
     # via fastapi
 taskipy==1.12.2
     # via -r requirements.in
 tomli==2.0.1
     # via taskipy
-typing-extensions==4.10.0
+typer==0.12.3
+    # via fastapi-cli
+typing-extensions==4.12.1
     # via
     #   alembic
     #   anyio
@@ -121,16 +143,21 @@ typing-extensions==4.10.0
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
+    #   typer
     #   uvicorn
+ujson==5.10.0
+    # via fastapi
 urllib3==2.2.1
     # via elastic-apm
-uvicorn[standard]==0.29.0
-    # via -r requirements.in
+uvicorn[standard]==0.30.1
+    # via
+    #   -r requirements.in
+    #   fastapi
 uvloop==0.19.0
     # via uvicorn
-watchfiles==0.21.0
+watchfiles==0.22.0
     # via uvicorn
 websockets==12.0
     # via uvicorn
-wrapt==1.14.1
+wrapt==1.16.0
     # via elastic-apm
