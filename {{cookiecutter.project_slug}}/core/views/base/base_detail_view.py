@@ -62,6 +62,7 @@ class BaseDetailView(
 
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
+        self.object: Base
         object_list, many_fields = self.object.get_all_related_fields()
         context["object_list"] = object_list
         context["many_fields"] = many_fields

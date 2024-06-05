@@ -36,7 +36,7 @@ FileLocked
                 {% for field in object_list %}
                     <div class="col-xl-6">
                         <h4 class="align-items-center my-4">{{ field.0|capfirst }}</h4>
-                        <p>{{ field.1 }}</p>
+                        <p>{{ field.1|safe }}</p>
                     </div>
                 {% endfor %}
             </div>
