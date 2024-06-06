@@ -5,6 +5,7 @@ FileLocked
 -->
 {% extends "core/index_list.html" %}
 {% load base %}
+{% load thumbnail %}
 {% block title %}
     Listagem $title$
 {% endblock title %}

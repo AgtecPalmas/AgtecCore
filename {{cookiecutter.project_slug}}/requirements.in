@@ -18,3 +18,4 @@ psycopg[binary]==3.*
 python-decouple==3.*
 regex==2023.*
 sentry-sdk==2.*
+sorl-thumbnail==12.*

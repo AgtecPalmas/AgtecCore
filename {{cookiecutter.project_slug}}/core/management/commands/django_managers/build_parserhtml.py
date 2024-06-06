@@ -4,6 +4,7 @@ from string import Template
 
 from django.db.models import Model
 from django.db.models.fields import Field
+from django.db.models.fields.files import ImageField
 from django.urls import NoReverseMatch, resolve, reverse
 
 from core.management.commands.constants.django import INPUT_TYPES
@@ -316,6 +317,24 @@ class ParserHTMLBuild:
         )
         return boolean.substitute(field_name=field_name)
 
+    def __render_list_image(self, field_name: str) -> str:
+        """Método responsável por renderizar o image field na listagem"""
+        image = Template(
+            """<td>
+                {% if item.$field_name %}
+                    {% thumbnail item.$field_name '100x100' crop='center' as thumb %}
+                        <img src="{{ thumb.url }}" alt="{{ item.$field_name }}"
+                            width={{ thumb.width }} height={{ thumb.height }}
+                            class="img-fluid rounder-md mr-2">
+                    {% endthumbnail %} 
+                    {{ item.$field_name }}
+                {% else %}
+                    Sem arquivo anexado
+                {% endif %}
+            </td>"""
+        )
+        return image.substitute(field_name=field_name)
+
     def get_reverse_url(self, list_view):
         """Método para coletar a URL reversa"""
         # Tenta coletar a URL,
@@ -378,6 +397,9 @@ class ParserHTMLBuild:
 
                 if app_field.get_internal_type() == "BooleanField":
                     tline += self.__render_list_boolean(item)
+
+                elif isinstance(app_field, ImageField):
+                    tline += self.__render_list_image(item)
 
                 else:
                     tline += "<td>{{{{ item.{} }}}}</td>\n".format(

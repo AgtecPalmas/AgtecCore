@@ -1,7 +1,7 @@
 import contextlib
 import uuid
+from string import Template
 
-from base.settings import DELETED_MANY_TO_MANY, USE_DEFAULT_MANAGER
 from django.contrib.admin.utils import NestedObjects, quote
 from django.contrib.auth import get_permission_codename
 from django.contrib.contenttypes.fields import (
@@ -27,6 +27,8 @@ from django.urls import NoReverseMatch, reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from rest_framework.pagination import PageNumberPagination
+
+from base.settings import DELETED_MANY_TO_MANY, USE_DEFAULT_MANAGER
 
 models.options.DEFAULT_NAMES += (
     "fk_fields_modal",
@@ -169,24 +171,38 @@ class Base(models.Model):
                                 else None
                             )
                             or field.name,
-                            "Sim" if self.__getattribute__(field.name) else "Nâo",
+                            "Sim" if self.__getattribute__(field.name) else "Não",
                         )
                     )
 
                 elif type(field) is ImageField or type(field) is FileField:
-                    tag = ""
                     if self.__getattribute__(field.name).name:
                         if type(field) is ImageField:
-                            tag = '<a href="{url}" target="_blank"> <img width="200px" src="{url}" alt="{nome}" class="rounder-md"/></a>'
-                        else:
-                            tag = '<a  href="{url}" > <i class="fas fa-file"></i> {nome}</a>'
-                        if tag:
-                            tag = tag.format(
-                                url=self.__getattribute__(field.name).url,
-                                nome=self.__getattribute__(field.name).name.split(".")[
-                                    0
-                                ],
+                            template = Template(
+                                """
+                                <a href="$url" target="_blank">
+                                    <img width="100px" height="100px"
+                                    style="object-fit: cover;"
+                                    src="$url" alt="$nome" class="rounder-md"/>
+                                </a><br/>$url
+                                """
                             )
+                        else:
+                            template = Template(
+                                """
+                                <a  href="$url" >
+                                    <i class="fas fa-file"></i> $nome
+                                </a>
+                                """
+                            )
+
+                        tag = template.substitute(
+                            url=self.__getattribute__(field.name).url,
+                            nome=self.__getattribute__(field.name).name,
+                        )
+
+                    else:
+                        tag = "Sem arquivo anexado"
 
                     object_list.append(
                         (
@@ -445,25 +461,39 @@ class BaseMetod(models.Model):
                                     else None
                                 )
                                 or field.name,
-                                "Sim" if self.__getattribute__(field.name) else "Nâo",
+                                "Sim" if self.__getattribute__(field.name) else "Não",
                                 field.name,
                             )
                         )
 
                     elif type(field) is ImageField or type(field) is FileField:
-                        tag = ""
                         if self.__getattribute__(field.name).name:
                             if type(field) is ImageField:
-                                tag = '<a href="{url}" target="_blank"> <img width="200px" src="{url}" alt="{nome}" class="rounder-md"/></a>'
-                            else:
-                                tag = '<a  href="{url}" > <i class="fas fa-file"></i> {nome}</a>'
-                            if tag:
-                                tag = tag.format(
-                                    url=self.__getattribute__(field.name).url,
-                                    nome=self.__getattribute__(field.name).name.split(
-                                        "."
-                                    )[0],
+                                template = Template(
+                                    """
+                                    <a href="$url" target="_blank">
+                                        <img width="100px" height="100px"
+                                        style="object-fit: cover;"
+                                        src="$url" alt="$nome" class="rounder-md"/>
+                                    </a><br/>$url
+                                    """
                                 )
+                            else:
+                                template = Template(
+                                    """
+                                    <a  href="$url" >
+                                        <i class="fas fa-file"></i> $nome
+                                    </a>
+                                    """
+                                )
+
+                            tag = template.substitute(
+                                url=self.__getattribute__(field.name).url,
+                                nome=self.__getattribute__(field.name).name,
+                            )
+
+                        else:
+                            tag = "Sem arquivo anexado"
 
                         object_list.append(
                             (

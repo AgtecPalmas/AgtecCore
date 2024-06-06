@@ -9,11 +9,12 @@ IGNORED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "drf_spectacular",
     "drf_yasg",
     "rest_framework",
     "rest_framework.authtoken",
+    "sorl.thumbnail",
     "tempus_dominus",
-    "drf_spectacular",
 ]
 
 IGNORED_MODELS = [

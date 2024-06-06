@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "configuracao_core",
     # "atendimento",
     "tempus_dominus",
+    "sorl.thumbnail",
     # Django Rest Framework
     "drf_spectacular",
     "dj_rest_auth",
