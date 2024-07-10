@@ -29,7 +29,7 @@ black==24.4.2
     # via -r requirements-dev.in
 brotli==1.1.0
     # via fonttools
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   -r requirements.txt
     #   elastic-apm
