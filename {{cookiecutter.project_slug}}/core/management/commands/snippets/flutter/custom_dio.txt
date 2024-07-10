@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
@@ -46,8 +46,8 @@ class CustomDio {
       final Response response = await _dio.get(uri ?? _url);
       if (response.statusCode == 200) {
         if (returnResult) return response.data['results'];
-        AgteCoreLogger().info('Retorno do método getHTTP');
-        AgteCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método getHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -73,8 +73,8 @@ class CustomDio {
       }
       final Response response = await _dio.post(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        AgteCoreLogger().info('Retorno do método postHTTP');
-        AgteCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método postHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -100,8 +100,8 @@ class CustomDio {
       }
       final Response response = await _dio.put(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        AgteCoreLogger().info('Retorno do método putHTTP');
-        AgteCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método putHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -124,8 +124,8 @@ class CustomDio {
     try {
       final Response response = await _dio.patch(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        AgteCoreLogger().info('Retorno do método patchHTTP');
-        AgteCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método patchHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -148,8 +148,8 @@ class CustomDio {
     try {
       final Response response = await _dio.delete(uri ?? _url, data: data);
       if (response.statusCode == 200 || response.statusCode == 204) {
-        AgteCoreLogger().info('Retorno do método deleteHTTP');
-        AgteCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método deleteHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;

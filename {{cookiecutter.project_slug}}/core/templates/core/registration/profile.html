@@ -1,129 +1,69 @@
-{% extends "core/base.html" %}
+{% extends "core/index_create.html" %}
+{% load base %}
 {% load static %}
 {% block title %}
     Meu Perfil
 {% endblock title %}
-{% block content %}
-    <div class="layout-content">
-        {% include "core/block/notifications.html" %}
-        <div class="container-fluid flex-grow-1 container-p-y">
-            {% if request.user.is_authenticated %}
-                <h4 class="font-weight-bold py-3 mb-4">Perfil</h4>
-                <div class="card overflow-hidden">
-                    <div class="row no-gutters row-bordered row-border-light">
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="account-general">
-                                <form id="update-form"
-                                      enctype="multipart/form-data"
-                                      name="update-form"
-                                      method="post"
-                                      action="{% url 'core:profile-update' %}">
-                                    {% csrf_token %}
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label class="form-label">Login</label>
-                                            <input disabled
-                                                   type="text"
-                                                   id="login"
-                                                   name="login"
-                                                   class="form-control mb-1"
-                                                   value="{{ user.username }}" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Nome</label>
-                                            <input type="text"
-                                                   id="first_name"
-                                                   name="first_name"
-                                                   class="form-control"
-                                                   value="{{ user.first_name }}" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Sobrenome</label>
-                                            <input type="text"
-                                                   id="last_name"
-                                                   name="last_name"
-                                                   class="form-control"
-                                                   value="{{ user.last_name }}" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">E-mail</label>
-                                            <input type="text"
-                                                   id="email"
-                                                   name="email"
-                                                   class="form-control"
-                                                   value="{{ user.email }}" />
-                                        </div>
-                                    </div>
-                                    <div class="flex-buttons-start gap-small p-3">
-                                        <div>
-                                            <a class="br-button block secondary"
-                                               href="{% url 'core:password-update' %}">Alterar Senha</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer flex-buttons-end gap-small">
-                                        <div>
-                                            <a class="br-button block" href="{% url 'core:index' %}">Voltar</a>
-                                        </div>
-                                        <div>
-                                            <input type="submit"
-                                                   class="br-button primary block"
-                                                   name="_continue"
-                                                   value="Salvar" />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+{% block title_modulo %}
+    <h4 class="font-weight-bold py-3 mb-4">
+        <span class="text-muted font-weight-light">Perfil /</span> Atualizar
+    </h4>
+{% endblock title_modulo %}
+<div class="row">
+    {% block form_app %}
+        <form id="update-form"
+              enctype="multipart/form-data"
+              name="update-form"
+              method="post"
+              action="{% url 'core:profile' %}">
+            <div class="col-lg-6 col-xl-4">
+                <div class="card-body">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input name="{{ form.login.html_name }}"
+                               placeholder="Login"
+                               id="{{ form.login.id_for_label }}"
+                               value="{{ user.username }}"
+                               type="text"
+                               class="form-control"
+                               readonly />
+                        <label for="{{ form.login.id_for_label }}">Login</label>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group  col-md-12">
+                            {{ form.first_name.label_tag }}
+                            {{ form.first_name }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form.last_name.label_tag }}
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            <div class="invalid-feedback">{{ form.email.errors }}</div>
                         </div>
                     </div>
                 </div>
-            {% else %}
+            </div>
+            <div class="flex-buttons-start gap-small p-3">
                 <div>
-                    <p>Você não está logado.</p>
-                    <p>Faça login para acessar o seu perfil.</p>
-                    <div class="flex-buttons-start">
-                        <div>
-                            <a class="br-button primary block" href="{% url 'core:login' %}">Login</a>
-                        </div>
-                    </div>
+                    <a class="br-button block secondary"
+                       href="{% url 'core:password-update' %}">Alterar Senha</a>
                 </div>
-            {% endif %}
-        </div>
-    </div>
-{% endblock content %}
-{% block extra_js %}
-    <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-                // Function validate new password
-                $("#confirm-password, #new-password").blur(function() {
-                    var new_pass = $("#new-password").val();
-                    var confirm_pass = $("#confirm-password").val();
-
-                    if (new_pass.length === 0) {
-                        $("#enter").prop('disabled', true)
-                    } else if (new_pass === confirm_pass) {
-                        $("#enter").prop('disabled', false)
-                        $("#password-error").addClass("d-none");
-                    } else {
-                        $("#enter").prop('disabled', true)
-                        $("#password-error").removeClass("d-none");
-                    }
-                });
-            }, false);
-        })();
-    </script>
-{% endblock extra_js %}
+            </div>
+            <div class="card-footer flex-buttons-end gap-small">
+                <div>
+                    <a class="br-button block" href="{% url 'core:index' %}">Voltar</a>
+                </div>
+                <div>
+                    <input type="submit" class="br-button primary block" value="Salvar" />
+                </div>
+            </div>
+        </form>
+    {% endblock form_app %}
+</div>

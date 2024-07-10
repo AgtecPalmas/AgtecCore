@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travado por default]
 /// Por ser um mixin de padronização das mensagens, e que não deve ser alterado

@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.generic import DetailView
 
 from core.models import Base
-from core.views.utils import get_breadcrumbs, get_default_context_data
+from core.views.utils import get_breadcrumbs, get_default_context_data, get_url_str
 
 
 class BaseDetailView(
@@ -62,12 +62,12 @@ class BaseDetailView(
 
     def get_context_data(self, **kwargs):
         context = super(BaseDetailView, self).get_context_data(**kwargs)
+        self.object: Base
         object_list, many_fields = self.object.get_all_related_fields()
         context["object_list"] = object_list
         context["many_fields"] = many_fields
         context = get_default_context_data(context, self)
 
-        url_str = reverse(context["url_list"]) + f' Detalhe {context["object"].pk}'
-
+        url_str = get_url_str(context["url_list"], f"Detalhe {context['object'].pk}")
         context["breadcrumbs"] = get_breadcrumbs(url_str)
         return context

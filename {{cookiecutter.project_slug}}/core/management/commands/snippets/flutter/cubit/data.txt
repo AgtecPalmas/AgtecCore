@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -74,7 +74,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return localList;
   }
@@ -101,7 +101,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return null;
   }
@@ -130,7 +130,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return false;
   }
@@ -156,7 +156,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return false;
   }
@@ -181,7 +181,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return false;
   }
@@ -210,7 +210,7 @@ class $ModelClass$Data implements $ModelClass$LocalDataInterface {
         'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
       );
     } finally {
-      db?.close();
+      await db?.close();
     }
     return false;
   }

@@ -162,20 +162,6 @@ Delete (Deletar um novo registro via API)
                     </div>
                   {% endfor %}
                 </div>
-                {% block extra_js %}
-                  {% if list_inlines and formset %}
-                    <script src="{% static 'core/js/jquery.formset.js' %}"></script>
-                    <script type="application/javascript">
-                      $(".{{ formset.prefix }}").formset({
-                        addText: 'Adicionar outro {{ formset.model.get_meta.verbose_name }}',
-                        deleteText: 'Remover {{ formset.model.get_meta.verbose_name }}',
-                        prefix: '{{ formset.prefix }}',
-                        deleteCssClass: 'br-button danger',
-                        addCssClass: 'br-button primary',
-                      });
-                    </script>
-                  {% endif %}
-                {% endblock extra_js %}
               </div>
             {% endfor %}
           {% endif %}
@@ -195,3 +181,18 @@ Delete (Deletar um novo registro via API)
   <!--REPLACE_MODAL_HTML-->
 {% endblock form_app %}
 </div>
+{% block extra_js %}
+  {% if list_inlines and formset %}
+    <script src="{% static 'core/js/jquery.formset.js' %}"></script>
+    <script src="{% static 'core/js/inline.js' %}"></script>
+    <script type="application/javascript">
+      $(".{{ formset.prefix }}").formset({
+        addText: 'Adicionar outro {{ formset.model.get_meta.verbose_name }}',
+        deleteText: 'Remover {{ formset.model.get_meta.verbose_name }}',
+        prefix: '{{ formset.prefix }}',
+        deleteCssClass: 'br-button danger',
+        addCssClass: 'br-button primary',
+      });
+    </script>
+  {% endif %}
+{% endblock extra_js %}

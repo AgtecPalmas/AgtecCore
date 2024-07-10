@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travado por default]
 /// Por ser um mixin de exibição do modal, e que não deve ser alterado

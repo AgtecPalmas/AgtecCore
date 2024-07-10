@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser o arquivo de geração das rotas nomeadas da aplicação, e que não deve ser alterado

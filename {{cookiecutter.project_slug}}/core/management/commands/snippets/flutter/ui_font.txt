@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travado por default]
 /// Por ser um arquivo para configurar os widgets das fonts do aplicativo, e que não deve ser alterado

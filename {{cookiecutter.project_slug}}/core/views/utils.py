@@ -2,9 +2,10 @@ import contextlib
 import logging
 from uuid import UUID
 
+from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.core.handlers.wsgi import WSGIRequest
-from django.db.models import Model
+from django.urls import reverse
 from django.utils.text import camel_case_to_spaces
 from django.views import View
 
@@ -17,6 +18,7 @@ from configuracao_core.models import (
     LogoSistema,
     RedeSocial,
 )
+from core.models import Base
 from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 
 # Configurando o logger
@@ -31,6 +33,22 @@ def has_fk_attr(classe=None, attr=None):
         return False
 
     return True
+
+
+def get_url_str(url: str, message: str = "Core") -> str:
+    """
+    Método para recuperar a url de um objeto
+    Arguments:
+        url {String} -- [Nome da url]
+        message {String} -- [Mensagem a ser exibida]
+    Returns:
+        [String] -- [Retorna a url do objeto]
+    """
+
+    try:
+        return f"{reverse(url)} {message}"
+    except Exception:
+        return f"Core/{message}"
 
 
 def get_breadcrumbs(url_str):
@@ -83,8 +101,6 @@ def get_apps():
     Returns:
         List -- Lista com as apps que o usuário tem acesso
     """
-
-    from django.apps import apps
 
     _apps = []
     for app in apps.get_app_configs():
@@ -171,7 +187,7 @@ def get_default_context_data(context: dict, view: View):
         ).title()
 
         context = get_default_urls(context, app, model)
-        context = check_permissions(context, view.request, view.model())
+        context = check_permissions(context, view.request, apps.get_model(app, model))
 
         context["audit"] = getattr(view.model._meta, "auditar", AUDIT_ENABLED)
 
@@ -185,16 +201,17 @@ def get_default_urls(context: dict, app: str, model: str):
     context["url_detail"] = f"{app}:{model}-detail"
     context["url_list"] = f"{app}:{model}-list"
     context["url_delete"] = f"{app}:{model}-delete"
+    context["url_restore"] = f"{app}:{model}-restore"
     return context
 
 
-def check_permissions(context: dict, request: WSGIRequest, model: Model):
+def check_permissions(context: dict, request: WSGIRequest, model: Base):
     """Adiciona as permissões padrão ao context das views"""
     try:
-        context["has_add_permission"] = model.has_add_permission(request)
-        context["has_change_permission"] = model.has_change_permission(request)
-        context["has_delete_permission"] = model.has_delete_permission(request)
-        context["has_view_permission"] = model.has_view_permission(request)
+        context["has_add_permission"] = model.has_add_permission(model, request)
+        context["has_change_permission"] = model.has_change_permission(model, request)
+        context["has_delete_permission"] = model.has_delete_permission(model, request)
+        context["has_view_permission"] = model.has_view_permission(model, request)
 
     except Exception:
         context["has_add_permission"] = False

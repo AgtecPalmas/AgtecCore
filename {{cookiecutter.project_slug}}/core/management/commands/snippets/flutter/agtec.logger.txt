@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
@@ -11,38 +11,38 @@
 /// visual dos logs
 /// Url Pacote: https://pub.dev/packages/logger/example
 /// [Exemplo de uso]
-///    AgteCoreLogger().info("Apenas uma informação teste");
-///    AgteCoreLogger().erro("Erro", "", StackTrace.current);
-///    AgteCoreLogger.debug("Debug", "", StackTrace.current);
-///    AgteCoreLogger.warning("Warning", "", StackTrace.current);
-///    AgteCoreLogger.crash("Crash", "", StackTrace.current);
-///    AgteCoreLogger().verbose({"chave": "valor"});
+///    AgtecCoreLogger().info("Apenas uma informação teste");
+///    AgtecCoreLogger().erro("Erro", "", StackTrace.current);
+///    AgtecCoreLogger.debug("Debug", "", StackTrace.current);
+///    AgtecCoreLogger.warning("Warning", "", StackTrace.current);
+///    AgtecCoreLogger.crash("Crash", "", StackTrace.current);
+///    AgtecCoreLogger().verbose({"chave": "valor"});
 ///
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-/// Classe com métodos abstratos para gerar logs costomizados
+/// Classe com métodos abstratos para gerar logs customizados
 ///
 /// [Exemplo de uso]
 /// ```
-/// AgteCoreLogger().info("Apenas uma informação teste");
+/// AgtecCoreLogger().info("Apenas uma informação teste");
 /// ```
 /// ```
-/// AgteCoreLogger().erro("Erro", "", StackTrace);
+/// AgtecCoreLogger().erro("Erro", "", StackTrace);
 /// ```
 /// ```
-/// AgteCoreLogger.debug("Debug", "", StackTrace.current);
+/// AgtecCoreLogger.debug("Debug", "", StackTrace.current);
 /// ```
 /// ```
-/// AgteCoreLogger.warning("Warning", "", StackTrace.current);
+/// AgtecCoreLogger.warning("Warning", "", StackTrace.current);
 /// ```
 /// ```
-/// AgteCoreLogger.crash("Crash", "", StackTrace);
+/// AgtecCoreLogger.crash("Crash", "", StackTrace);
 /// ```
 /// ```
-/// AgteCoreLogger().verbose({"chave": "valor"});
+/// AgtecCoreLogger().verbose({"chave": "valor"});
 /// ```
-class AgteCoreLogger {
+class AgtecCoreLogger {
   final Logger _logger = Logger();
 
   void erro(dynamic message, [dynamic error, StackTrace? stackTrace]) {

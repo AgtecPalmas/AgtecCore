@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -50,7 +50,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       $ModelClassCamelCase$List.clear();
       $ModelClassCamelCase$List = await _service.fetch();
       if($ModelClassCamelCase$List.isEmpty){
-        emit(const $ModelClass$EmpytListState('Nenhum registro encontrado.'));
+        emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
       }else{
         emit(
           $ModelClass$SuccessState(
@@ -77,7 +77,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       $ModelClassCamelCase$List.clear();
       $ModelClassCamelCase$List = await _service.fetch();
       if($ModelClassCamelCase$List.isEmpty){
-        emit(const $ModelClass$EmpytListState('Nenhum registro encontrado.'));
+        emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
       }else{
         emit(
           $ModelClass$SuccessState(

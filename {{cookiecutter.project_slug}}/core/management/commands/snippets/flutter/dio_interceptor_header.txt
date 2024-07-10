@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado

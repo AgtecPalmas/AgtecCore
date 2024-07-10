@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travar o arquivo]
 /// Caso deseje "travar" o arquivo para não ser parseado novamente
@@ -100,13 +100,12 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       listener: (context, state) {
         switch (state) {
           case $ModelClass$ErrorState(:final error):
-            AgteCoreLogger()
-                .erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
+
+            AgtecCoreLogger().erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
             showError(ListStringConstants.error);
             break;
           case $ModelClass$SuccessState():
-            AgteCoreLogger()
-                .info('Dados carregados com sucesso no List Page BlocConsumer | listener');
+            AgtecCoreLogger().info('Dados carregados com sucesso no List Page BlocConsumer | listener');
             showSuccess(ListStringConstants.success);
             break;
           default:
@@ -118,12 +117,14 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
         switch (state) {
           case $ModelClass$ProcessState():
             return showHideModal(show: true);
+          case $ModelClass$EmptyListState():
+            return const Expanded(child: Center(child: Text('Nenhum item encontrado')));
           case $ModelClass$ErrorState():
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
           case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
             return _buildResultList($ModelClassCamelCase$List);
           default:
-            return const SizedBox.shrink();
+            return const SliverToBoxAdapter(child: SizedBox.shrink());
         }
       },
     );
@@ -176,7 +177,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
     try {
       /// [Implementar o método de refresh da tela]
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o _refresh na listPage', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o _refresh na listPage', error, stackTrace);
       showError(ListStringConstants.refreshError);
     }
   }
@@ -187,7 +188,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       final $ModelClassCamelCase$Controller = context.read<$ModelClass$Controller>();
       await $ModelClassCamelCase$Controller.fetch();
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro ao executar o _loadData na listPage', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o _loadData na listPage', error, stackTrace);
     }
     
   }

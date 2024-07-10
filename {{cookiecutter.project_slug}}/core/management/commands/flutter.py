@@ -15,7 +15,9 @@ from core.management.commands.constants.flutter import (
 )
 from core.management.commands.flutter_managers import (
     AddPackagesBuilder,
+    AnalisysOptionsBuilder,
     AuthAppBuilder,
+    ColorsSchemeBuilder,
     ControllerBuilder,
     CustomColorsBuilder,
     CustomDIOBuilder,
@@ -517,6 +519,22 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_logger_file {error}")
 
+    def _build_colors_schemes_file(self):
+        try:
+            if not Utils.check_dir(self.core_dir):
+                os.makedirs(self.core_dir)
+            ColorsSchemeBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _build_colors_schemes_file {error}")
+
+    def _build_analysis_options_file(self):
+        try:
+            if not Utils.check_dir(self.core_dir):
+                os.makedirs(self.core_dir)
+            AnalisysOptionsBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _build_colors_schemes_file {error}")
+
     def _controller_parser(self, app):
         try:
             if app.model is None:
@@ -619,9 +637,7 @@ class Command(BaseCommand):
             Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
 
             with Utils.ProgressBar() as bar:
-                task = bar.add_task(
-                    "", total=len(self.current_app_model.models), start=False
-                )
+                task = bar.add_task("", total=len(self.current_app_model.models))
                 for i, model in enumerate(self.current_app_model.models):
                     bar.update(
                         task,
@@ -681,6 +697,10 @@ class Command(BaseCommand):
         return True
 
     def call_methods(self, options):
+        if self._check_flutter_installation() is False:
+            Utils.show_error("Flutter não está instalado na máquina.", exit=True)
+            return
+
         if options["main"]:
             self._replace_main()
             return
@@ -710,6 +730,8 @@ class Command(BaseCommand):
             self._build_custom_style()
             self._build_translate_strings()
             self._build_logger_file()
+            self._build_colors_schemes_file()
+            self._build_analysis_options_file()
             self._build_string_extensions()
             self._build_sized_extensions()
             self._build_config_utils_file()

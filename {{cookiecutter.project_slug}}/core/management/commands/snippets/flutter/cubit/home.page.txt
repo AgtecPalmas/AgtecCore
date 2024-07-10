@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       try {
         AuthCubit().defaultAuthenticationFastAPI();
       } catch (error, stackTrace) {
-        AgteCoreLogger().erro(error.toString(), stackTrace);
+        AgtecCoreLogger().erro(error.toString(), stackTrace);
       }
     });
   }

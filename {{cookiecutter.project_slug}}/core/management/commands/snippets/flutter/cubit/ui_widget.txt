@@ -1,4 +1,4 @@
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
 /// [Travado por default]
 /// Por ser o arquivo de criação de vários widgets, e que não deve ser alterado
@@ -76,7 +76,7 @@ class CustomRaisedButton extends StatelessWidget {
         ),
       );
     } catch (error, stackTrace) {
-      AgteCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
       return const SizedBox.shrink();
     }
   }

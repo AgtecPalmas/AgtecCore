@@ -1,3 +1,4 @@
+import contextlib
 import uuid
 
 from base.settings import DELETED_MANY_TO_MANY, USE_DEFAULT_MANAGER
@@ -86,7 +87,7 @@ class Base(models.Model):
     # da configuraçao do use_default_manager
     objects_all = models.Manager()
 
-    def get_all_related_fields(self):
+    def get_all_related_fields(self) -> tuple[list, list]:
         """Método para retornar todos os campos que fazem referência ao
         registro que está sendo manipulado
 
@@ -152,16 +153,13 @@ class Base(models.Model):
                     )
 
                 elif type(field) is OneToOneRel:
-                    try:
+                    with contextlib.suppress(Exception):
                         object_list.append(
                             (
                                 field.related_model._meta.verbose_name or field.name,
                                 self.object.__getattribute__(field.name),
                             )
                         )
-                    except Exception:
-                        pass
-
                 elif type(field) is BooleanField:
                     object_list.append(
                         (
@@ -179,8 +177,8 @@ class Base(models.Model):
                     tag = ""
                     if self.__getattribute__(field.name).name:
                         if type(field) is ImageField:
-                            tag = '<img width="100px" src="{url}" alt="{nome}" />'
-                        elif type(field) is FileField:
+                            tag = '<a href="{url}" target="_blank"> <img width="200px" src="{url}" alt="{nome}" class="rounder-md"/></a>'
+                        else:
                             tag = '<a  href="{url}" > <i class="fas fa-file"></i> {nome}</a>'
                         if tag:
                             tag = tag.format(
@@ -219,7 +217,7 @@ class Base(models.Model):
             # Retornando as listas
             return object_list, many_fields
 
-    def delete(self, using="soft_delete", keep_parents=False):
+    def delete(self, using="soft_delete"):
         """
         Sobrescrevendo o método para marcar os campos
         deleted como True e enabled como False. Assim o
@@ -233,10 +231,10 @@ class Base(models.Model):
             # Iniciando uma transação para garantir a integridade dos dados
             with transaction.atomic():
                 # Recuperando as listas com os campos do objeto
-                object_list, many_fields = self.get_all_related_fields()
+                _, many_fields = self.get_all_related_fields()
 
                 # Percorrendo todos os campos que possuem relacionamento com o objeto
-                for obj, values in many_fields:
+                for _, values in many_fields:
                     if values is not None and values.all():
                         values.all().update(deleted=True, enabled=False)
 
@@ -257,22 +255,22 @@ class Base(models.Model):
     def get_meta(self):
         return self._meta
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request) -> bool:
         opts = self._meta
         codename = get_permission_codename("add", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self, request) -> bool:
         opts = self._meta
         codename = get_permission_codename("change", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request) -> bool:
         opts = self._meta
         codename = get_permission_codename("delete", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_view_permission(self, request, obj=None):
+    def has_view_permission(self, request) -> bool:
         opts = self._meta
         codename = get_permission_codename("view", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
@@ -315,9 +313,7 @@ class ParameterForBase(Base):
     url_integracao = models.CharField(max_length=500, blank=True, null=True, default="")
     audit_enable = models.BooleanField(default=False)
 
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
+    def save(self):
         if parametro := ParameterForBase.objects.first():
             self.id = parametro.id
             self.pk = parametro.pk
@@ -339,7 +335,9 @@ class BaseMetod(models.Model):
 
     objects_all = models.Manager()
 
-    def get_all_related_fields(self, view=None, include_many_to_many=True):
+    def get_all_related_fields(
+        self, view=None, include_many_to_many=True
+    ) -> tuple[list, list]:
         try:
             # Lista para retornar os campos que não são de relacionamento
             object_list = []
@@ -383,7 +381,7 @@ class BaseMetod(models.Model):
                     ):
                         continue
 
-                try:
+                with contextlib.suppress(Exception):
                     # Verificando o tipo do relacionamento entre os campos
                     if type(field) is ManyToManyField and include_many_to_many:
                         if self.__getattribute__(field.name).exists():
@@ -456,8 +454,8 @@ class BaseMetod(models.Model):
                         tag = ""
                         if self.__getattribute__(field.name).name:
                             if type(field) is ImageField:
-                                tag = '<img width="100px" src="{url}" alt="{nome}" />'
-                            elif type(field) is FileField:
+                                tag = '<a href="{url}" target="_blank"> <img width="200px" src="{url}" alt="{nome}" class="rounder-md"/></a>'
+                            else:
                                 tag = '<a  href="{url}" > <i class="fas fa-file"></i> {nome}</a>'
                             if tag:
                                 tag = tag.format(
@@ -510,16 +508,13 @@ class BaseMetod(models.Model):
                             )
                         )
 
-                except Exception:
-                    pass
-
         finally:
             # Retornando as listas
             return object_list, many_fields
 
     def get_deleted_objects(self, objs, user, using="default"):
         try:
-            from django.db import models, router
+            from django.db import router
 
             try:
                 obj = objs[0]
@@ -537,7 +532,6 @@ class BaseMetod(models.Model):
 
         def format_callback(obj):
             opts = obj._meta
-            model = obj.__class__
             no_edit_link = f"{str(opts.verbose_name).title()}: {obj}"
 
             p = f'{opts.app_label}.{get_permission_codename("delete", opts)}'
@@ -560,17 +554,11 @@ class BaseMetod(models.Model):
                 '{}: <a href="{}">{}</a>', str(opts.verbose_name).title(), url, obj
             )
 
-        to_delete = collector.nested(format_callback)
-
         protected = [format_callback(obj) for obj in collector.protected]
-        model_count = {
-            model._meta.verbose_name_plural: len(objs)
-            for model, objs in collector.model_objs.items()
-        }
 
         return perms_needed, protected
 
-    def delete(self, using="soft_delete", keep_parents=False):
+    def delete(self, using="soft_delete"):
         if using == "default" or USE_DEFAULT_MANAGER is True:
             super().delete()
 
@@ -578,13 +566,13 @@ class BaseMetod(models.Model):
             # Iniciando uma transação para garantir a integridade dos dados
             with transaction.atomic():
                 # Recuperando as listas com os campos do objeto
-                object_list, many_fields = self.get_all_related_fields(
+                _, many_fields = self.get_all_related_fields(
                     include_many_to_many=DELETED_MANY_TO_MANY
                 )
 
                 # Percorrendo todos os campos que possuem relacionamento com o objeto
                 for itens in many_fields:
-                    verbose_name, obj, fild_name = itens
+                    _, obj, _ = itens
                     if obj.all():
                         obj.all().update(deleted=True, enabled=False)
 
@@ -607,7 +595,7 @@ class BaseMetod(models.Model):
     def get_meta(self):
         return self._meta
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request) -> bool:
         """
         Returns True if the given request has permission to add an object.
         Can be overridden by the user in subclasses.
@@ -616,7 +604,7 @@ class BaseMetod(models.Model):
         codename = get_permission_codename("add", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self, request) -> bool:
         """
         Returns True if the given request has permission to change the given
         Django model instance, the default implementation doesn't examine the
@@ -631,7 +619,7 @@ class BaseMetod(models.Model):
         codename = get_permission_codename("change", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request) -> bool:
         """
         Returns True if the given request has permission to change the given
         Django model instance, the default implementation doesn't examine the
@@ -646,7 +634,7 @@ class BaseMetod(models.Model):
         codename = get_permission_codename("delete", opts)
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
-    def has_view_permission(self, request, obj=None):
+    def has_view_permission(self, request) -> bool:
         """
         Returns True if the given request has permission to change the given
         Django model instance, the default implementation doesn't examine the
@@ -703,10 +691,10 @@ class Audit(BaseMetod):
     def __str__(self):
         return f"{self.created} - {self.user_change.get('fields').get('username')}"
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self) -> bool:
         return False
 
-    def has_change_permission(self, request, obj=None):
+    def has_change_permission(self) -> bool:
         return False
 
     class Meta:

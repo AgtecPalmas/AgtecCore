@@ -23,10 +23,6 @@ class DataServiceLayerBuild:
         self._local_data_path_file = Path(
             f"{self._path_flutter}/lib/apps/{self._app_name_lower}/{self._model_name_lower}/data.dart"
         )
-
-    def build(self):
-        self._parser_interface()
-        self._parser_service()
         self._parser_local_data()
 
     def _parser_content(self, path_snippet, service=False):

@@ -1,8 +1,8 @@
 from pathlib import Path
 
 from base.settings import (
-    API_PATH,
     FLUTTER_API_PASSWORD_DEV,
+    FLUTTER_API_PATH,
     FLUTTER_API_USER_DEV,
     SYSTEM_NAME,
 )
@@ -42,8 +42,8 @@ class UtilsBuilder:
                 ],
                 [
                     SYSTEM_NAME,
-                    API_PATH,
-                    API_PATH,
+                    FLUTTER_API_PATH,
+                    FLUTTER_API_PATH,
                     FLUTTER_API_PASSWORD_DEV,
                     FLUTTER_API_USER_DEV,
                 ],
@@ -63,7 +63,7 @@ class UtilsBuilder:
                 return
             _content = ParserContent(
                 ["$AppName$", "$DjangoAPIPath$"],
-                [SYSTEM_NAME, API_PATH],
+                [SYSTEM_NAME, FLUTTER_API_PATH],
                 Utils.get_snippet(str(self._util_snippet_file)),
             ).replace()
             with open(self._util_target_file, "w", encoding="utf-8") as _file:

@@ -214,11 +214,12 @@ FLUTTER_APPS = [
 ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
 
 # Usados apenas para desenvolvimento do Flutter
-FLUTTER_API_USER_DEV = config("FLUTTER_API_USER_DEV")
-FLUTTER_API_PASSWORD_DEV = config("FLUTTER_API_PASSWORD_DEV")
+FLUTTER_API_USER_DEV = config("FLUTTER_API_USER_DEV", "")
+FLUTTER_API_PASSWORD_DEV = config("FLUTTER_API_PASSWORD_DEV", "")
 
 # TODO Configure o caminho da API no arquivo .env criado para utilizar o Python Decouple
-API_PATH = config("API_PATH")
+API_PATH = config("API_PATH", "")
+FLUTTER_API_PATH = config("FLUTTER_API_PATH", "")
 
 """
 Configuração para o Middleware Header_control
@@ -243,6 +244,7 @@ if DEBUG is False:
 
     from .elastic import ELASTIC_APM
 
+    ELASTIC_APM
     INSTALLED_APPS.append("elasticapm.contrib.django")
     MIDDLEWARE.append("elasticapm.contrib.django.middleware.TracingMiddleware")
 
@@ -251,9 +253,6 @@ TEMPUS_DOMINUS_LOCALIZE = True
 TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 TEMPUS_DOMINUS_DATE_FORMAT = "DD/MM/YYYY"
 TEMPUS_DOMINUS_TIME_FORMAT = "HH:mm"
-
-# Renderizar campo booleano corretamente
-BOOLEAN_FIELD_IS_SWITCH = True
 
 # Campo primary auto create
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -266,6 +265,8 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+EMAIL_TIMEOUT = config("EMAIL_TIMEOUT", default=10, cast=int)
 
 # Swagger e Redoc
 SPECTACULAR_SETTINGS = {
