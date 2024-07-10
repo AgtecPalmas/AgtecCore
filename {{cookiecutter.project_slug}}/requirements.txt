@@ -41,7 +41,7 @@ django-js-asset==2.2.0
     # via django-ckeditor
 django-tempus-dominus==5.1.2.17
     # via -r requirements.in
-djangorestframework==3.15.1
+djangorestframework==3.15.2
     # via
     #   -r requirements.in
     #   djangorestframework-simplejwt
