@@ -147,7 +147,7 @@ typing-extensions==4.12.1
     #   uvicorn
 ujson==5.10.0
     # via fastapi
-urllib3==2.2.1
+urllib3==2.2.2
     # via elastic-apm
 uvicorn[standard]==0.30.1
     # via
