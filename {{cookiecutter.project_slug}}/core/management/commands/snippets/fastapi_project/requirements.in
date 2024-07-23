@@ -17,3 +17,4 @@ rich==13.*
 SQLAlchemy==2.*
 taskipy==1.*
 uvicorn[standard]==0.*
+redis==5.0.*

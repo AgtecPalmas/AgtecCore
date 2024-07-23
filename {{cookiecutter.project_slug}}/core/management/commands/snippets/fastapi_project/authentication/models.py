@@ -19,6 +19,7 @@ Arquivo com os  models da app de autenticação
 """
 
 
+
 class ContentType(Base):
     __tablename__ = "django_content_type"
 
@@ -61,7 +62,6 @@ user_group = Table(
     Column("group_id", ForeignKey("auth_group.id"), primary_key=True),
     Column("user_id", ForeignKey("auth_user.id"), primary_key=True),
 )
-
 
 class User(Base):
     __tablename__ = "auth_user"
