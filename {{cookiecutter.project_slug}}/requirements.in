@@ -8,6 +8,7 @@ django-image-optimizer==1.*
 django-tempus-dominus==5.*
 djangorestframework==3.*
 djangorestframework-simplejwt==5.*
+dj-rest-auth
 drf-jsonmask==0.*
 drf-spectacular==0.*
 elastic-apm==6.*

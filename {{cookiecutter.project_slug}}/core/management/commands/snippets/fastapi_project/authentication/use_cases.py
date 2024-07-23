@@ -18,6 +18,9 @@ from core.exceptions import GenericException
 from core.security import get_password_hash, verify_password
 from core.use_cases import BaseUseCases
 
+from core.redis import redis_service
+
+
 
 class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
     async def get_by_email(self, db: AsyncDBDependency, email: str) -> Optional[User]:
