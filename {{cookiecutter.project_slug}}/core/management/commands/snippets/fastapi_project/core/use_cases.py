@@ -1,15 +1,19 @@
 import datetime
 import json
+import timeit
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
-from fastapi import HTTPException, Request
+from fastapi import BackgroundTasks, HTTPException, Request
 from fastapi.datastructures import URL
 from pydantic import BaseModel
 from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from coisa.coisa.models import Coisa
 from core.database import AsyncDBDependency, CoreBase
 from core.exceptions import InternalServerException, NotFoundException
 from core.schemas import PaginationBase
+from core.redis import redis_service
 
 ModelType = TypeVar("ModelType", bound=CoreBase)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -27,6 +31,29 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         * `schema`: A Pydantic model (schema) class
         """
         self.model = model
+
+    @staticmethod
+    def __get_dict_from_orm(orm_object: ModelType) -> dict:
+        """
+        __get_dict_from_orm
+        ----------
+        Método estático responsável por obter um dicionário correspondente a um
+        objeto ORM do SQLAlquemy.
+
+        Parameters
+        ----------
+        orm_object : ModelType
+            Objeto ORM do qual o dicionário será obtido
+
+        Returns
+        -------
+        dict:
+            Dicionário correspondente a um objeto ORM.
+        """
+        orm_dict = orm_object.__dict__
+        orm_dict.pop("_sa_instance_state", None)
+
+        return orm_dict
 
     @staticmethod
     def __get_pages(url: URL, total: int, limit: int, offset: int) -> tuple:
@@ -388,6 +415,48 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         model.updated_on = datetime.datetime.now()
         return await self._add_commit_and_refresh(db, model)
 
+    async def refresh_cache(
+        self,
+        request: Request,
+        db: AsyncSession,
+        bg_tasks: BackgroundTasks,
+        resource: str,
+    ):
+        """
+        refresh_cache
+        -----------------------
+        Método responsável por executar o processo de atualização do cache
+        de um recurso no Redis.
+
+        Parameters
+        ----------
+        request : Request
+            Objeto da requisição
+
+        db : AsyncSession
+            Sessão de conexão com o banco de dados
+
+        bg_tasks : BackgroundTasks
+            Instância de uma BackgroundTasks do FastAPI
+
+        resource : str
+            Nome do recurso a ter o cache atualizado
+
+        Returns
+        -------
+        list
+            Lista com as chaves do Redis e seus respectivos valores
+        """
+        if invalid_keys := redis_service.get_keys(resource):
+            invalid_keys = [self._get_key_data(resource, key) for key in invalid_keys]
+
+            data = await self._get_updated_data_from_db(
+                request=request, db=db, keys=invalid_keys
+            )
+
+            bg_tasks.add_task(self._update_keys_on_redis, data)
+            return [item.get('value') for item in data]
+
     async def _add_commit_and_refresh(self, db, db_obj):
         """
         _add_commit_and_refresh
@@ -421,3 +490,225 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         except Exception as e:
             await db.rollback()
             raise InternalServerException() from e
+
+    def _get_key_data(self, resource: str, key: str) -> dict:
+        """
+        _get_key_data
+        -----------------------
+        Método que extrai dados de uma chave do Redis e os retorna
+        organizados em um dicionário.
+
+        Parameters
+        ----------
+        resource : str
+            Nome do recurso em questão
+
+        key : str
+            Chave do Redis a ser tratada
+
+        Returns
+        -------
+        dict
+            Dicionário com os dados de uma chave do Redis
+        """
+        key_data = {"key": key}
+
+        if "fetch" in key:
+            key = key.replace("fetch:", "")
+        key = key.replace(f"{resource}:", "")
+        key = key.split(":")
+
+        key_data["params"] = {key[i]: key[i + 1] for i in range(0, len(key), 2)}
+        return key_data
+
+    def _get_query_from_dict(self, params: dict):
+        """
+        _get_query_from_dict
+        -----------------------
+        Método que monta uma query dinamicamente através dos campos de um
+        dicionário. Esses campos devem corresponder aos campos do Model em
+        questão.
+
+        Parameters
+        ----------
+        params : dict
+            Dicionário com os parâmetros da consulta
+
+        Returns
+        -------
+        Select
+            Um objeto de query do SQLAlchemy
+        """
+        query = select(self.model)
+        for key, value in params.items():
+            if hasattr(self.model, key):
+                query.where(getattr(self.model, key) == value)
+        return query
+
+    async def _get_cached_data_from_db(self, db: AsyncSession, params: dict) -> dict:
+        """
+        _get_cached_data_from_db
+        -----------------------
+        Método que consulta os dados de um cache do Redis no
+        banco de dados.
+
+        Parameters
+        ----------
+        db : AsyncSession
+            Sessão de conexão com o banco de dados
+
+        params : dict
+            Dicionário com os parâmetros da consulta
+
+        Returns
+        -------
+        dict
+            Dicionário correspondente ao objeto consultado
+        """
+        try:
+            query = self._get_query_from_dict(params)
+            obj = await db.execute(query)
+            obj = obj.scalar()
+
+            return self.__get_dict_from_orm(obj)
+        except Exception as e:
+            raise InternalServerException(f"Erro ao obter resposta do banco: {e}")
+
+    async def _get_cached_data_from_db_paginated(
+        self, request: Request, db: AsyncSession, params: dict, offset: int, limit: int
+    ) -> dict:
+        """
+        _get_cached_data_from_db_paginated
+        -----------------------
+        Método que consulta os dados de um cache do Redis no banco
+        de dados, retornando o resultado no Schema PaginationBase
+
+        Parameters
+        ----------
+        request : Request
+            Objeto da requisição
+
+        db : AsyncSession
+            Sessão de conexão com o banco de dados
+
+        params : dict
+            Dicionário com os parâmetros da consulta
+
+        offset : int
+            Parâmetro de offset a ser aplicado na consulta
+
+        limit : int
+            Parâmetro de limit a ser aplicado na consulta
+
+        Returns
+        -------
+        dict
+            Dicionário correspondente ao objeto consultado
+        """
+        query = self._get_query_from_dict(params)
+
+        try:
+            obj_list = await db.execute(query.offset(offset).limit(limit))
+            obj_list = obj_list.scalars().all()
+
+            count_query = select(func.count()).select_from(query)
+            obj_count = await db.execute(count_query)
+            obj_count = obj_count.scalar()
+
+            next_url, previous_url = self.__get_pages(
+                url=request.url, total=obj_count, limit=limit, offset=offset
+            )
+
+            return {
+                "total": obj_count,
+                "next": next_url,
+                "previous": previous_url,
+                "results": [self.__get_dict_from_orm(obj) for obj in obj_list],
+            }
+        except Exception as e:
+            raise InternalServerException(error=f"Erro ao obter resposta paginada: {e}")
+
+    async def _get_data(self, request: Request, db: AsyncSession, key_data: dict):
+        """
+        _get_data
+        -----------------------
+        Método que extrai limit e offset dos dados da chave e realiza
+        a consulta necessária para buscar os dados no Schema correto.
+
+        Parameters
+        ----------
+        request : Request
+            Objeto da requisição
+
+        db : AsyncSession
+            Sessão de conexão com o banco de dados
+
+        key_data : dict
+            Dicionário com os dados da chave do Redis
+
+        Returns
+        -------
+        dict
+            Dicionário correspondente ao objeto consultado
+        """
+        offset = key_data.get("params").pop("offset", None)
+        limit = key_data.get("params").pop("limit", None)
+
+        if limit or offset:
+            return await self._get_cached_data_from_db_paginated(
+                request=request,
+                db=db,
+                params=key_data.get("params"),
+                offset=int(offset),
+                limit=int(limit),
+            )
+        return await self._get_cached_data_from_db(db=db, params=key_data.get("params"))
+
+    async def _get_updated_data_from_db(
+        self, request: Request, db: AsyncSession, keys: list[dict]
+    ) -> list:
+        """
+        _get_updated_data_from_db
+        -----------------------
+        Método que obtém do banco uma lista de dados 
+        atualizados para serem rearmazenados em cache.
+
+        Parameters
+        ----------
+        request : Request
+            Objeto da requisição
+
+        db : AsyncSession
+            Sessão de conexão com o banco de dados
+
+        keys : dict
+            Lista de dicionários com dados de chaves do Redis
+
+        Returns
+        -------
+        list
+            Lista com as chaves do Redis e seus respectivos valores
+        """
+        return [
+            {
+                "key": key_data["key"],
+                "value": await self._get_data(
+                    request=request, db=db, key_data=key_data
+                ),
+            }
+            for key_data in keys
+        ]
+
+    async def _update_keys_on_redis(self, updated_data: list[dict]):
+        """
+        _update_keys_on_redis
+        -----------------------
+        Método que atualiza as chaves no Redis com seus novos valores
+
+        Parameters
+        ----------
+        list[dict] :
+            Lista de dicionários com valores atualizados de chaves do Redis
+        """
+        for data in updated_data:
+            redis_service.save_key(key=data.get("key"), value=data.get("value"))
