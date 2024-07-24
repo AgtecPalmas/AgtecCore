@@ -75,7 +75,7 @@ class RedisService:
                 return pickle.loads(_item)
             raise KeyError
         except Exception as e:
-            raise ("Erro ao buscar dados no Redis: ", e)
+            raise Exception("Erro ao buscar dados no Redis: ", e)
 
     def save_key(self, key: str, value: str | dict, expire_in: int = 60) -> bool:
         """
@@ -118,7 +118,7 @@ class RedisService:
             self.redis_conn.hset(key, field, pickle.dumps(field_value))
             self.redis_conn.expire(key, expire_in * MINUTES)
         except Exception as e:
-            raise ("Erro ao salvar dados no Redis usando hash: ", e)
+            raise Exception("Erro ao salvar dados no Redis usando hash: ", e)
 
     def delete(self, key: str) -> bool:
         """
@@ -160,7 +160,7 @@ class RedisService:
             self.redis_conn.hdel(key, field)
             return True
         except Exception as e:
-            raise ("Erro ao deletar chave do hash: ", e)
+            raise Exception("Erro ao deletar chave do hash: ", e)
 
     def delete_all_keys(self) -> bool:
         """
@@ -177,7 +177,7 @@ class RedisService:
             self.redis_conn.flushdb()
             return True
         except Exception as e:
-            raise ("Erro ao deletar todas chaves: ", e)
+            raise Exception("Erro ao deletar todas chaves: ", e)
 
     def delete_specific_keys(self, key_name: str) -> bool:
         """
@@ -195,7 +195,7 @@ class RedisService:
                 self.redis_conn.delete(key)
             return True
         except Exception as e:
-            raise ("Erro ao deletar chave específica: ", e)
+            raise Exception("Erro ao deletar chave específica: ", e)
 
     def invalidate_pattern(self, pattern: str) -> bool:
         """
@@ -233,7 +233,7 @@ class RedisService:
                     return teste
             return None
         except Exception as e:
-            raise (f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
+            raise Exception(f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
 
     def get_hash_field(self, key: str, field: str):
         try:
