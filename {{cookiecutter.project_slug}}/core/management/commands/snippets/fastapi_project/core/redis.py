@@ -242,7 +242,7 @@ class RedisService:
                 return pickle.loads(object_redis)
             return None
         except Exception as e:
-            return None
+            raise Exception(f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
 
     def _init_chave(
         self, recurso: str, id_recursos: list[str], requisicao_kwargs: Any
