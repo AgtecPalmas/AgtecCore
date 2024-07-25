@@ -8,7 +8,6 @@ from rich.progress import (
     BarColumn,
     Progress,
     SpinnerColumn,
-    TaskProgressColumn,
     TimeRemainingColumn,
 )
 from subprocess import DEVNULL, PIPE
@@ -41,11 +40,17 @@ GIT_COMMANDS = [
     "git checkout -b desenvolvimento",
 ]
 
+VENV_ACTIVATED = os.environ.get("VIRTUAL_ENV")
+
 
 def run_command(
     command: t.Union[str, list], silent: bool = False, exit_on_fail=False
 ) -> bool:
     """Método para executar um comando, retorna True se sucedido"""
+
+    if not VENV_ACTIVATED:
+        print(f"{EMOJIS['error']} Virtualenv desativado, comando ignorado")
+        return False
 
     try:
         if silent:
@@ -63,7 +68,7 @@ def run_command(
 
     except Exception as e:
         if exit_on_fail:
-            raise Exception(f"Erro ao executar {command}: {e}") from e
+            raise subprocess.SubprocessError(f"Erro ao executar {command}: {e}") from e
 
         print(f"{EMOJIS['error']} Erro ao executar {command}: {e}")
 
@@ -164,7 +169,6 @@ def pip_install_requirements() -> bool:
         with Progress(
             SpinnerColumn(spinner_name="bouncingBall", speed=0.3),
             "[progress.description]{task.description}",
-            TaskProgressColumn(),
             BarColumn(),
             TimeRemainingColumn(),
             transient=True,
