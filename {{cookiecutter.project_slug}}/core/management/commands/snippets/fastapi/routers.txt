@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 
-from fastapi import APIRouter, Depends, Request, Response, status
+from fastapi import APIRouter, Depends, Request, Response, status, BackgroundTasks
 
 from authentication import security
 from core.database import AsyncDBDependency
@@ -26,6 +26,21 @@ model_router = APIRouter(
         prefix=f"/{MODEL_NAME}",
         tags=[f"{MODEL_NAME}"],
         dependencies=[security.ACTIVE_USER_DEPENDENCY]
+    )
+
+@model_router.get("/clear-cache", dependencies=[GET_DEPENDENCY])
+async def clear_cache(request: Request) -> Any:
+    result = use_cases.clear_cache(MODEL_NAME)
+    if result:
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@model_router.get("/refresh_cache", dependencies=[GET_DEPENDENCY])
+async def refresh_cache(
+    bg_tasks: BackgroundTasks, request: Request, db: AsyncDBDependency
+) -> Any:
+    return await use_cases.refresh_cache(
+        request=request, bg_tasks=bg_tasks, db=db, resource=MODEL_NAME
     )
 
 @model_router.get(
