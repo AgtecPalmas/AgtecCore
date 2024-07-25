@@ -24,7 +24,98 @@ class RedisService:
             host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=False
         )
 
-    def _get_chave_paginada(self, chave: str, offset: int, limit: int) -> str:
+    def _get_cached_response(self, request: Request, key: str) -> Any:
+        """Method that gets the cached response for a HTTP request.
+
+        Args:
+            request (Request): the instance of the request
+            key (str): the Redis key in which the response might be cached
+
+        Returns:
+            Any: The cached response
+        """
+        if request.method == "GET":
+            resultado_cache = self.get_key(key)
+            if type(resultado_cache) in [str, bytes, bytearray]:
+                return json.loads(resultado_cache)
+            return resultado_cache
+
+    def _cache_response(
+        self, request: Request, key: str, response: Any, expire_in: int
+    ):
+        """Method that stores a request's response on cache. Only saves the response
+        if it's status code is OK.
+
+        Args:
+            request (Request): An instance of the request
+            key (str): The key in which the response will be stored
+            response (Any): The content of the response
+            expire_in (int): The expiration time in seconds
+        """
+        if (
+            request.method == "GET"
+            and getattr(response, "status_code", HTTPStatus.OK) == HTTPStatus.OK
+        ):
+            resultado_cache = jsonable_encoder(response)
+            resultado_cache = json.dumps(resultado_cache)
+            self.save_key(key, resultado_cache, expire_in)
+
+    def _init_redis_key(
+        self, resource: str, id_resources: list[str], request_kwargs: Any
+    ) -> str:
+        """Initializes a Redis key based on the data from the request.
+
+        Args:
+            resource (str): The resource to be cached through the key
+            id_resources (list[str]): The resource identificators' names
+            request_kwargs (Any): The arguments of the request
+
+        Returns:
+            str: The resultant key
+        """
+        params = {id_name: request_kwargs.get(id_name) for id_name in id_resources}
+        # Inicializa a chave e adiciona a ela os parâmetros desejados,
+        # no padrão "parâmetro:valor_do_parâmetro"
+        redis_key = f"{resource}"
+
+        if params:
+            for key, value in params.items():
+                redis_key += f":{key}:{value}"
+
+        else:
+            redis_key += ":fetch"
+
+        return redis_key
+
+    def _handle_resource_update(
+        self, recurso: str, chave: str, padrao_invalidado: str
+    ) -> None:
+        """
+        Handles the update of a resource in Redis by invalidating cached keys based on provided patterns.
+
+        Args:
+            recurso (str): The name of the resource being updated.
+            chave (str): The key associated with the resource.
+            padrao_invalidado (str): The pattern to invalidate keys. If empty, a default pattern is used.
+
+        Returns:
+            None
+        """
+        with contextlib.suppress(Exception):
+            self.invalidate_pattern(chave)
+            if not padrao_invalidado:
+                self.invalidate_pattern(f"{recurso}:fetch")
+
+            else:
+                self.invalidate_pattern(padrao_invalidado)
+
+    def _decode_scan_result(self, result):
+        try:
+            return [key.decode() for key in result]
+        except Exception as e:
+            raise Exception("Erro ao decodificar resultados de SCAN: ", e)
+
+    def _get_paginated_key(self, chave: str, offset: int, limit: int) -> str:
         if not offset:
             offset = 0
 
@@ -197,12 +288,6 @@ class RedisService:
         except Exception as e:
             raise Exception("Erro ao deletar chave específica: ", e)
 
-    def _decode_scan_result(self, result):
-        try:
-            return [key.decode() for key in result[1]]
-        except Exception as e:
-            raise Exception("Erro ao decodificar resultados de SCAN: ", e)
-
     def invalidate_pattern(self, pattern: str) -> bool:
         """
         Invalidate all the cached keys that match a pattern.
@@ -214,8 +299,8 @@ class RedisService:
             bool: True if success, False otherwise.
         """
         try:
-            keys = self.redis_conn.scan(match=f"*{pattern}*")
-            for key in self._decode_scan_result(keys):
+            keys = self.redis_conn.scan_iter(match=f"*{pattern}*")
+            for key in keys:
                 self.delete(key)
             return True
 
@@ -238,7 +323,7 @@ class RedisService:
         try:
             # Filtrando todas as chaves no Redis
             # que começam com a chave passada
-            registers = self.redis_conn.keys(f"{key}*")
+            registers = self.redis_conn.scan_iter(f"{key}*")
             for register in registers:
                 self.delete(register)
             return True
@@ -274,57 +359,6 @@ class RedisService:
         except Exception as e:
             raise Exception(f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
 
-    def _init_chave(
-        self, recurso: str, id_recursos: list[str], requisicao_kwargs: Any
-    ) -> str:
-        """Initializes a Redis key based on the data from the request.
-
-        Args:
-            recurso (str): The resource to be cached through the key
-            id_recursos (list[str]): The resource identificators' names
-            requisicao_kwargs (Any): The arguments of the request
-
-        Returns:
-            str: The resultant key
-        """
-        params = {
-            id_name: requisicao_kwargs.get(id_name) for id_name in id_recursos
-        }
-        # Inicializa a chave e adiciona a ela os parâmetros desejados,
-        # no padrão "parâmetro:valor_do_parâmetro"
-        chave = f"{recurso}"
-
-        if params:
-            for key, value in params.items():
-                chave += f":{key}:{value}"
-
-        else:
-            chave += ":fetch"
-
-        return chave
-
-    def _handle_resource_update(
-        self, recurso: str, chave: str, padrao_invalidado: str
-    ) -> None:
-        """
-        Handles the update of a resource in Redis by invalidating cached keys based on provided patterns.
-
-        Args:
-            recurso (str): The name of the resource being updated.
-            chave (str): The key associated with the resource.
-            padrao_invalidado (str): The pattern to invalidate keys. If empty, a default pattern is used.
-
-        Returns:
-            None
-        """
-        with contextlib.suppress(Exception):
-            self.invalidate_pattern(chave)
-            if not padrao_invalidado:
-                self.invalidate_pattern(f"{recurso}:fetch")
-
-            else:
-                self.invalidate_pattern(padrao_invalidado)
-
     def healthy(self):
         """Method that verifies if the Redis instance is running or not.
 
@@ -336,42 +370,6 @@ class RedisService:
             return True
         except Exception:
             return False
-
-    def _get_cached_response(self, request: Request, key: str) -> Any:
-        """Method that gets the cached response for a HTTP request.
-
-        Args:
-            request (Request): the instance of the request
-            key (str): the Redis key in which the response might be cached
-
-        Returns:
-            Any: The cached response 
-        """
-        if request.method == "GET":
-            resultado_cache = self.get_key(key)
-            if type(resultado_cache) in [str, bytes, bytearray]:
-                return json.loads(resultado_cache)
-            return resultado_cache
-
-    def _cache_response(self, request: Request, key: str, response: Any, expire_in: int):
-        """Method that stores a request's response on cache. Only saves the response
-        if it's status code is OK.
-
-        Args:
-            request (Request): An instance of the request
-            key (str): The key in which the response will be stored
-            response (Any): The content of the response
-            expire_in (int): The expiration time in seconds
-        """
-        if (
-            request.method == "GET"
-            and getattr(response, "status_code", HTTPStatus.OK)
-            == HTTPStatus.OK
-        ):
-            resultado_cache = jsonable_encoder(response)
-            resultado_cache = json.dumps(resultado_cache)
-            self.save_key(key, resultado_cache, expire_in)
-
 
     def cache_request(
         self,
@@ -396,19 +394,19 @@ class RedisService:
                 if not self.healthy():
                     return await func(request, *args, **kwargs)
 
-                chave = self._init_chave(
-                    recurso=recurso, id_recursos=id_recursos, requisicao_kwargs=kwargs
+                chave = self._init_redis_key(
+                    resource=recurso, id_resources=id_recursos, request_kwargs=kwargs
                 )
 
                 if request.method in ["POST", "PUT", "PATCH", "DELETE"]:
                     self._handle_resource_update(recurso, chave, padrao_invalidado)
                     return await func(request, *args, **kwargs)
 
-                # Tratando caso o resultado seja paginado e o usuário tenha 
-                # inserido um valor vazio para os query params 'página' ou 
+                # Tratando caso o resultado seja paginado e o usuário tenha
+                # inserido um valor vazio para os query params 'página' ou
                 # 'total_por_página'
                 if kwargs.get("offset") or kwargs.get("limit"):
-                    chave = self._get_chave_paginada(
+                    chave = self._get_paginated_key(
                         chave, kwargs.get("offset"), kwargs.get("limit")
                     )
 
