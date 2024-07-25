@@ -4,7 +4,7 @@ O AgtecCore possue um manager que gera um projeto fastapi já integrado com a ca
 
 ### Observação
 
-#### O projeto gerado utiliza o controle de permissões e altorizações do projeto Django
+#### O projeto gerado utiliza o controle de permissões e autorizações do projeto Django
 
 ### Executando o build do projeto fastapi
 
