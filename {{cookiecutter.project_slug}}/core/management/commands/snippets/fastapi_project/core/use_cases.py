@@ -457,6 +457,24 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             bg_tasks.add_task(self._update_keys_on_redis, data)
             return [item.get('value') for item in data]
 
+    def clear_cache(self, resource: str):
+        """
+        clear_cache
+        -----------------------
+        Método responsável por limpar o cache de um recurso no Redis.
+
+        Parameters
+        ----------
+        resource : str
+            Nome do recurso
+
+        Returns
+        -------
+        bool
+            Se o cache foi limpado com sucesso ou não
+        """
+        return redis_service.clear_cache(resource)
+
     async def _add_commit_and_refresh(self, db, db_obj):
         """
         _add_commit_and_refresh
@@ -542,7 +560,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         query = select(self.model)
         for key, value in params.items():
             if hasattr(self.model, key):
-                query.where(getattr(self.model, key) == value)
+                query = query.where(getattr(self.model, key) == value)
         return query
 
     async def _get_cached_data_from_db(self, db: AsyncSession, params: dict) -> dict:

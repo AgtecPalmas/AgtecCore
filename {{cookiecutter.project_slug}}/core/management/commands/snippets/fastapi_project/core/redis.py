@@ -50,7 +50,7 @@ class RedisService:
     def get_keys(self, pattern: str):
         try:
             keys = self.redis_conn.scan(match=f"*{pattern}*")
-            return [key.decode() for key in keys[1]]
+            return self._decode_scan_result(keys)
         except Exception:
             return []
 
@@ -197,6 +197,12 @@ class RedisService:
         except Exception as e:
             raise Exception("Erro ao deletar chave específica: ", e)
 
+    def _decode_scan_result(self, result):
+        try:
+            return [key.decode() for key in result[1]]
+        except Exception as e:
+            raise Exception("Erro ao decodificar resultados de SCAN: ", e)
+
     def invalidate_pattern(self, pattern: str) -> bool:
         """
         Invalidate all the cached keys that match a pattern.
@@ -208,12 +214,36 @@ class RedisService:
             bool: True if success, False otherwise.
         """
         try:
-            keys = self.redis_conn.keys(f"*{pattern}*")
-            for key in keys:
+            keys = self.redis_conn.scan(match=f"*{pattern}*")
+            for key in self._decode_scan_result(keys):
                 self.delete(key)
             return True
 
-        except Exception:
+        except Exception as e:
+            print(e)
+            return False
+
+    def clear_cache(self, key: str) -> bool:
+        """
+        Método para limpar o cache do Redis.
+        Parameters
+        ----------
+        key : str - nome da chave no banco
+
+        Returns
+        -------
+        bool - True em caso de sucesso, False no caso contrário
+
+        """
+        try:
+            # Filtrando todas as chaves no Redis
+            # que começam com a chave passada
+            registers = self.redis_conn.keys(f"{key}*")
+            for register in registers:
+                self.delete(register)
+            return True
+        except Exception as error:
+            print(f"Erro: {error} ao chamar o método clear_cache")
             return False
 
     def get_specific_field(self, key_name: str, field: str) -> Optional[str]:
@@ -280,9 +310,11 @@ class RedisService:
         with contextlib.suppress(Exception):
             self.invalidate_pattern(chave)
             if not padrao_invalidado:
+                print('oi 2 ')
                 self.invalidate_pattern(f"{recurso}:fetch")
 
             else:
+                print('tchau')
                 self.invalidate_pattern(padrao_invalidado)
 
     def healthy(self):
