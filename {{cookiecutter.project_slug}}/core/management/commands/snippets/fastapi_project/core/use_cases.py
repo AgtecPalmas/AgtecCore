@@ -473,7 +473,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         bool
             Se o cache foi limpado com sucesso ou não
         """
-        return redis_service.clear_cache(resource)
+        return redis_service.delete_specific_keys(resource)
 
     async def _add_commit_and_refresh(self, db, db_obj):
         """

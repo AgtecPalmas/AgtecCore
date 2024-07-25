@@ -8,6 +8,7 @@ from typing import Any, Callable, Optional
 from fastapi import Request
 from fastapi.encoders import jsonable_encoder
 from redis import Redis
+from redis.exceptions import RedisError
 
 from .config import settings
 
@@ -113,7 +114,7 @@ class RedisService:
         try:
             return [key.decode() for key in result]
         except Exception as e:
-            raise Exception("Erro ao decodificar resultados de SCAN: ", e)
+            raise Exception(f"Erro ao decodificar resultados de SCAN: {e}")
 
     def _get_paginated_key(self, chave: str, offset: int, limit: int) -> str:
         if not offset:
@@ -140,7 +141,7 @@ class RedisService:
 
     def get_keys(self, pattern: str):
         try:
-            keys = self.redis_conn.scan(match=f"*{pattern}*")
+            keys = self.redis_conn.scan_iter(match=f"*{pattern}*")
             return self._decode_scan_result(keys)
         except Exception:
             return []
@@ -165,8 +166,10 @@ class RedisService:
             if _item:
                 return pickle.loads(_item)
             raise KeyError
-        except Exception as e:
-            raise Exception("Erro ao buscar dados no Redis: ", e)
+        except pickle.PickleError as e:
+            raise pickle.PickleError(f"Error while unpickling data. Detail: {e}")
+        except RedisError as e:
+            raise RedisError("Erro ao buscar dados no Redis: ", e)
 
     def save_key(self, key: str, value: str | dict, expire_in: int = 60) -> bool:
         """
@@ -181,7 +184,7 @@ class RedisService:
         bool: True if the save was successful, False otherwise.
 
         Raises:
-        Exception: Any exception raised while saving to Redis.
+        RedisError: Any exception raised while saving to Redis.
         """
 
         try:
@@ -189,7 +192,7 @@ class RedisService:
             self.redis_conn.expire(key, expire_in * MINUTES)
             return True
 
-        except Exception:
+        except RedisError:
             return False
 
     def save_hash_data(self, key: str, field: str, field_value: dict, expire_in=60):
@@ -203,14 +206,14 @@ class RedisService:
         - expire_in (int, optional): Number of minutes until the key expires. Defaults to 60.
 
         Raises:
-        - Exception: Any exception raised while saving to Redis.
+        - RedisError: Any exception raised while saving to Redis.
         """
         try:
             self.redis_conn.hset(key, field, pickle.dumps(field_value))
             self.redis_conn.expire(key, expire_in * MINUTES)
-        except Exception as e:
-            raise Exception("Erro ao salvar dados no Redis usando hash: ", e)
-
+        except RedisError as e:
+            raise RedisError(f"Error while storing hash data on Redis: {e}")
+ 
     def delete(self, key: str) -> bool:
         """
         Deletes a key from Redis.
@@ -222,17 +225,17 @@ class RedisService:
         bool: True if the delete was successful, False otherwise.
 
         Raises:
-        Exception: Any exception raised while deleting from Redis.
+        RedisError: Any exception raised while deleting from Redis.
         """
 
         try:
             self.redis_conn.delete(key)
             return True
 
-        except Exception:
+        except RedisError:
             return False
 
-    def delete_hash(self, key: str, field: str) -> bool:
+    def delete_hash_field(self, key: str, field: str) -> bool:
         """
         Deletes a field from a Redis hash.
 
@@ -244,14 +247,14 @@ class RedisService:
         bool: True if the delete was successful, False otherwise.
 
         Raises:
-        Exception: Any exception raised while deleting from Redis.
+        RedisError: Any exception raised while deleting from Redis.
         """
 
         try:
             self.redis_conn.hdel(key, field)
             return True
-        except Exception as e:
-            raise Exception("Erro ao deletar chave do hash: ", e)
+        except RedisError as e:
+            raise RedisError(f"Error while deleting hash field: {e}")
 
     def delete_all_keys(self) -> bool:
         """
@@ -261,14 +264,14 @@ class RedisService:
         bool: True if the delete was successful, False otherwise.
 
         Raises:
-        Exception: Any exception raised while deleting from Redis.
+        RedisError: Any exception raised while deleting from Redis.
         """
 
         try:
             self.redis_conn.flushdb()
             return True
-        except Exception as e:
-            raise Exception("Erro ao deletar todas chaves: ", e)
+        except RedisError as e:
+            raise RedisError(f"Error while deletig all keys: {e}")
 
     def delete_specific_keys(self, key_name: str) -> bool:
         """
@@ -278,58 +281,36 @@ class RedisService:
         bool: True if the delete was successful, False otherwise.
 
         Raises:
-        Exception: Any exception raised while deleting from Redis.
+        RedisError: Any exception raised while deleting from Redis.
         """
 
         try:
             for key in self.redis_conn.scan_iter(key_name + "*"):
                 self.redis_conn.delete(key)
             return True
-        except Exception as e:
-            raise Exception("Erro ao deletar chave específica: ", e)
+        except RedisError as e:
+            raise RedisError(f"Error while deleting key '{key_name}': {e}")
 
     def invalidate_pattern(self, pattern: str) -> bool:
         """
-        Invalidate all the cached keys that match a pattern.
+        Invalidate all the cached keys that contain a pattern.
 
         Args:
             pattern (str): The desired pattern. Might be the ID of a resource, for example.
 
         Returns:
             bool: True if success, False otherwise.
+
+        Raises:
+        RedisError: Any exception raised while deleting from Redis.
         """
         try:
-            keys = self.redis_conn.scan_iter(match=f"*{pattern}*")
-            for key in keys:
+            for key in self.redis_conn.scan_iter(match=f"*{pattern}*"):
                 self.delete(key)
             return True
 
-        except Exception as e:
-            print(e)
-            return False
-
-    def clear_cache(self, key: str) -> bool:
-        """
-        Método para limpar o cache do Redis.
-        Parameters
-        ----------
-        key : str - nome da chave no banco
-
-        Returns
-        -------
-        bool - True em caso de sucesso, False no caso contrário
-
-        """
-        try:
-            # Filtrando todas as chaves no Redis
-            # que começam com a chave passada
-            registers = self.redis_conn.scan_iter(f"{key}*")
-            for register in registers:
-                self.delete(register)
-            return True
-        except Exception as error:
-            print(f"Erro: {error} ao chamar o método clear_cache")
-            return False
+        except RedisError as e:
+            raise RedisError(f"Error while invalidating pattern '{pattern}': {e}")
 
     def get_specific_field(self, key_name: str, field: str) -> Optional[str]:
         """
@@ -340,15 +321,18 @@ class RedisService:
             field (str): _description_
 
         Returns:
-            bool: _description_
+            bool: 
+
+        Raises:
+        RedisError: Any exception raised while getting key from Redis.
         """
         try:
             for key in self.redis_conn.scan_iter(key_name + "*"):
-                if teste := self.redis_conn.hget(key, field):
-                    return teste
+                if field := self.redis_conn.hget(key, field):
+                    return field
             return None
-        except Exception as e:
-            raise Exception(f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
+        except RedisError as e:
+            raise RedisError(f"Error while getting data from Redis. Detail: {e}")
 
     def get_hash_field(self, key: str, field: str):
         try:
@@ -356,8 +340,10 @@ class RedisService:
             if object_redis:
                 return pickle.loads(object_redis)
             return None
-        except Exception as e:
-            raise Exception(f"Erro ao encontrar o campo nos hashes. Detail: {e}", e)
+        except pickle.PickleError as e:
+            raise pickle.PickleError(f"Error while unpickling data. Detail: {e}")
+        except RedisError as e:
+            raise RedisError(f"Error while getting data from Redis. Detail: {e}")
 
     def healthy(self):
         """Method that verifies if the Redis instance is running or not.
@@ -368,7 +354,7 @@ class RedisService:
         try:
             self.redis_conn.ping()
             return True
-        except Exception:
+        except RedisError:
             return False
 
     def cache_request(
