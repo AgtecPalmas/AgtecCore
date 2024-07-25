@@ -277,15 +277,25 @@ class RedisService:
     def _init_chave(
         self, recurso: str, id_recursos: list[str], requisicao_kwargs: Any
     ) -> str:
-        parametros = {
-            nome_id: requisicao_kwargs.get(nome_id) for nome_id in id_recursos
+        """Initializes a Redis key based on the data from the request.
+
+        Args:
+            recurso (str): The resource to be cached through the key
+            id_recursos (list[str]): The resource identificators' names
+            requisicao_kwargs (Any): The arguments of the request
+
+        Returns:
+            str: The resultant key
+        """
+        params = {
+            id_name: requisicao_kwargs.get(id_name) for id_name in id_recursos
         }
         # Inicializa a chave e adiciona a ela os parâmetros desejados,
         # no padrão "parâmetro:valor_do_parâmetro"
         chave = f"{recurso}"
 
-        if parametros:
-            for key, value in parametros.items():
+        if params:
+            for key, value in params.items():
                 chave += f":{key}:{value}"
 
         else:
