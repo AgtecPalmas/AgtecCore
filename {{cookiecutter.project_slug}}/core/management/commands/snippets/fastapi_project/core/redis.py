@@ -310,19 +310,58 @@ class RedisService:
         with contextlib.suppress(Exception):
             self.invalidate_pattern(chave)
             if not padrao_invalidado:
-                print('oi 2 ')
                 self.invalidate_pattern(f"{recurso}:fetch")
 
             else:
-                print('tchau')
                 self.invalidate_pattern(padrao_invalidado)
 
     def healthy(self):
+        """Method that verifies if the Redis instance is running or not.
+
+        Returns:
+            bool: If the redis instance is healthy or not
+        """
         try:
             self.redis_conn.ping()
             return True
         except Exception:
             return False
+
+    def _get_cached_response(self, request: Request, key: str) -> Any:
+        """Method that gets the cached response for a HTTP request.
+
+        Args:
+            request (Request): the instance of the request
+            key (str): the Redis key in which the response might be cached
+
+        Returns:
+            Any: The cached response 
+        """
+        if request.method == "GET":
+            resultado_cache = self.get_key(key)
+            if type(resultado_cache) in [str, bytes, bytearray]:
+                return json.loads(resultado_cache)
+            return resultado_cache
+
+    def _cache_response(self, request: Request, key: str, response: Any, expire_in: int):
+        """Method that stores a request's response on cache. Only saves the response
+        if it's status code is OK.
+
+        Args:
+            request (Request): An instance of the request
+            key (str): The key in which the response will be stored
+            response (Any): The content of the response
+            expire_in (int): The expiration time in seconds
+        """
+        if (
+            request.method == "GET"
+            and getattr(response, "status_code", HTTPStatus.OK)
+            == HTTPStatus.OK
+        ):
+            resultado_cache = jsonable_encoder(response)
+            resultado_cache = json.dumps(resultado_cache)
+            self.save_key(key, resultado_cache, expire_in)
+
 
     def cache_request(
         self,
@@ -355,32 +394,19 @@ class RedisService:
                     self._handle_resource_update(recurso, chave, padrao_invalidado)
                     return await func(request, *args, **kwargs)
 
-                # Tratando caso o usuário tenha inserido um valor vazio para os
-                # query params 'página' ou 'total_por_página'
+                # Tratando caso o resultado seja paginado e o usuário tenha 
+                # inserido um valor vazio para os query params 'página' ou 
+                # 'total_por_página'
                 if kwargs.get("offset") or kwargs.get("limit"):
                     chave = self._get_chave_paginada(
                         chave, kwargs.get("offset"), kwargs.get("limit")
                     )
 
-                if request.method == "GET":
-                    resultado_cache = self.get_key(chave)
-                    if resultado_cache:
-                        if type(resultado_cache) in [str, bytes, bytearray]:
-                            return json.loads(resultado_cache)
-                        return resultado_cache
+                if cached_response := self._get_cached_response(request, chave):
+                    return cached_response
 
                 resultado = await func(request, *args, **kwargs)
-
-                # Para garantir que a requisição só será salva em cache
-                # quando retornar código OK.
-                if (
-                    request.method == "GET"
-                    and getattr(resultado, "status_code", HTTPStatus.OK)
-                    == HTTPStatus.OK
-                ):
-                    resultado_cache = jsonable_encoder(resultado)
-                    resultado_cache = json.dumps(resultado_cache)
-                    self.save_key(chave, resultado_cache, expiracao)
+                self._cache_response(request, chave, resultado, expiracao)
 
                 return resultado
 
