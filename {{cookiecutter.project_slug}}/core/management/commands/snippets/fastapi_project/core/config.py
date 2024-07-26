@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     redis_password: str
     redis_username: str
 
+    cache_default_expire_in_minutes: int
+
     # Sentry
     sentry_dsn: str
 
