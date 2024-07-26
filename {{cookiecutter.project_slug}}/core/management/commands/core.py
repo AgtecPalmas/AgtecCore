@@ -308,14 +308,12 @@ class Command(BaseCommand):
             file.write(download.content)
 
     def __upgrade_core(self) -> None:
-        """Delete and replace the Core folder"""
+        """Compress the current core folder and move the new core folder"""
 
         Utils.show_message("Atualizando Core")
         try:
-            shutil.move(
-                "core",
-                "core_backup",
-            )
+            shutil.make_archive("core_bkp", "zip", "core")
+            shutil.rmtree("core")
             shutil.copytree(
                 "temp/core",
                 "core",
