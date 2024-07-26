@@ -15,6 +15,7 @@ from .config import settings
 REDIS_HOST = settings.redis_host
 REDIS_PORT = settings.redis_port
 REDIS_DB = settings.redis_db
+CACHE_DEFAULT_EXPIRE_IN_MINUTES = settings.cache_default_expire_in_minutes
 
 MINUTES: int = 60
 
@@ -42,7 +43,11 @@ class RedisService:
             return resultado_cache
 
     def _cache_response(
-        self, request: Request, key: str, response: Any, expire_in: int
+        self,
+        request: Request,
+        key: str,
+        response: Any,
+        expire_in: int = CACHE_DEFAULT_EXPIRE_IN_MINUTES * MINUTES,
     ):
         """Method that stores a request's response on cache. Only saves the response
         if it's status code is OK.
@@ -171,7 +176,12 @@ class RedisService:
         except RedisError as e:
             raise RedisError("Erro ao buscar dados no Redis: ", e)
 
-    def save_key(self, key: str, value: str | dict, expire_in: int = 60) -> bool:
+    def save_key(
+        self,
+        key: str,
+        value: str | dict,
+        expire_in: int = CACHE_DEFAULT_EXPIRE_IN_MINUTES * MINUTES,
+    ) -> bool:
         """
         Saves a value to Redis with a key and optional expiration.
 
@@ -195,7 +205,13 @@ class RedisService:
         except RedisError:
             return False
 
-    def save_hash_data(self, key: str, field: str, field_value: dict, expire_in=60):
+    def save_hash_data(
+        self,
+        key: str,
+        field: str,
+        field_value: dict,
+        expire_in: int = CACHE_DEFAULT_EXPIRE_IN_MINUTES * MINUTES,
+    ):
         """
         Save data to Redis using a key for a hash and an optional expiration time.
 
@@ -213,7 +229,7 @@ class RedisService:
             self.redis_conn.expire(key, expire_in * MINUTES)
         except RedisError as e:
             raise RedisError(f"Error while storing hash data on Redis: {e}")
- 
+
     def delete(self, key: str) -> bool:
         """
         Deletes a key from Redis.
@@ -321,7 +337,7 @@ class RedisService:
             field (str): _description_
 
         Returns:
-            bool: 
+            bool:
 
         Raises:
         RedisError: Any exception raised while getting key from Redis.
