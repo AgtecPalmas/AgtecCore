@@ -1,6 +1,7 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_validator
+from core.security import get_password_hash
 
 """
 Arquivo com os schemas da app
@@ -23,6 +24,11 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
     groups: Optional[list] = []
+
+    @field_validator('password')
+    @classmethod
+    def hash_password(cls, password: str):
+        return get_password_hash(password)
 
 
 # Properties to receive via API on update
