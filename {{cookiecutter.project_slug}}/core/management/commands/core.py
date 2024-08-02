@@ -312,7 +312,7 @@ class Command(BaseCommand):
 
         Utils.show_message("Atualizando Core")
         try:
-            shutil.make_archive("core_bkp", "zip", "core")
+            shutil.make_archive("core_bkp", "zip", ".", "core")
             shutil.rmtree("core")
             shutil.copytree(
                 "temp/core",
@@ -388,6 +388,7 @@ class Command(BaseCommand):
             Utils.show_error(
                 "Erro ao tentar compilar os arquivos de requirements, faça 'pip-compile <arquivo>' manualmente",
                 emoji="rotating_light",
+                exit=False,
             )
 
     def __update_command_object(self) -> None:
