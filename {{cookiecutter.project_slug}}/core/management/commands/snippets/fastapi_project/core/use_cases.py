@@ -9,7 +9,6 @@ from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from coisa.coisa.models import Coisa
 from core.database import AsyncDBDependency, CoreBase
 from core.exceptions import InternalServerException, NotFoundException
 from core.schemas import PaginationBase
