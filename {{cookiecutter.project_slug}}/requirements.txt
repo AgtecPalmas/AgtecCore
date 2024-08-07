@@ -21,7 +21,7 @@ dateparser==1.2.0
     # via -r requirements.in
 dj-rest-auth==6.0.0
     # via -r requirements.in
-django==4.2.13
+django==4.2.15
     # via
     #   -r requirements.in
     #   dj-rest-auth
@@ -126,7 +126,9 @@ sqlparse==0.5.0
 tinify==1.6.0
     # via django-image-optimizer
 typing-extensions==4.12.1
-    # via psycopg
+    # via
+    #   asgiref
+    #   psycopg
 tzlocal==5.2
     # via dateparser
 uritemplate==4.1.1
