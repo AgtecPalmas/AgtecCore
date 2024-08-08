@@ -63,10 +63,10 @@ class AppModel:
             if model_name is not None:
                 self.model = self.app.get_model(self.model_name)
             else:
-                self.models = (
+                self.models = [
                     (x, x.__name__.strip(), x.__name__.strip().lower())
                     for x in self.app.get_models()
-                )
+                ]
             self.operation_system = platform.system().lower()
 
         except Exception as error:
