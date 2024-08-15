@@ -1,52 +1,117 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  database:
-    image: postgres:13.4-alpine
-    restart: always
-    volumes:
-      - ./db:/var/lib/postgresql/data
-    environment:
-      - LC_ALL=C.UTF-8
-      - POSTGRES_DB={{cookiecutter.project_slug}}_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+  # For production we sugest u to use a proper dedicated database service, but in case of need u can uncoment this section
+  #
+  # db:
+  #   container_name: {{cookiecutter.project_slug.lower()}}_database_dev
+  #   image: postgres:14.3
+  #   restart: always
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #   environment:
+  #     TZ: "America/Araguaina"
+  #     LC_ALL: C.UTF-8
+  #     POSTGRES_DB: ${DB_NAME}
+  #     POSTGRES_USER: ${DB_USER}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #     POSTGRES_HOST_AUTH_METHOD: md5
+  #   networks:
+  #     - db
+  #   expose:
+  #     - 5432
+
   web:
-    image: {{cookiecutter.project_slug}}
-    environment:
-      - DB_NAME={{cookiecutter.project_slug.lower()}}_db
-      - DB_HOST={{cookiecutter.project_slug.lower()}}_database
-      - DB_PASSWORD=2LiyBoLHeHo5yGfxan8euHGIzEEzIs
-      - DB_ENGINE=django.db.backends.postgresql
-      - DB_USER={{cookiecutter.project_slug.lower()}}_dbmanager_2LiyBoLHeHo5yG
-      - DB_PORT=5432
-      - SECRET_KEY=NYPmGeU11uQ96YQtX9UjOZ_EuAGsuJltGJt5XBrXt0HQhgShCP7KIWlLFgxtZDhl0z4
-      - ALLOWED_HOSTS=.localhost,*
-      - DEBUG=True
-      - SENTRY_DNS=""
-      - API_PATH=http://localhost:8080/
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
-      - EMAIL_PASSWORD=''
-      - EMAIL_LOGIN=''
-      - EMAIL_SMTP=''
-      - EMAIL_PORTA=''
-      - EMAIL_DESTINO=''
-      - FCM_KEY=''
-      - GOOGLE_API_KEY=''
-      - HORAS_SEM_ATENDIMENTO=19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 12
-      - DIAS_DA_SEMANA=0, 1, 2, 3, 4
-      - SENHA_PADRAO=123456
-      - CSRF_TRUSTED_ORIGINS=''
-      - ORGANIZATION_NAME='Agtec Core'
-      - ORGANIZATION_FLUTTER_NAME='agtec_core'
+    image: {{cookiecutter.project_slug}}:latest
+    container_name: web_{{cookiecutter.project_slug}}
     build:
       context: .
-      dockerfile: ./Dockerfile
-    command: [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+      dockerfile: Dockerfile
+    environment:
+      TZ: "America/Araguaina"
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ENGINE: ${DB_ENGINER}
+      DB_USER: ${DB_USER}
+      DB_PORT: ${DB_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      DEBUG: ${DEBUG}
+      SENTRY_DNS: ${SENTRY_DNS}
+      API_PATH: ${API_PATH}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD} 
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS}
+      EMAIL_TIMEOUT: ${EMAIL_TIMEOUT}
+      FCM_KEY: ${FCM_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      HORAS_SEM_ATENDIMENTO: ${HORAS_SEM_ATENDIMENTO}
+      DIAS_DA_SEMANA: ${DIAS_DA_SEMANA}
+      SENHA_PADRAO: ${SENHA_PADRAO}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      ORGANIZATION_NAME: ${ORGANIZATION_NAME}
+      ORGANIZATION_FLUTTER_NAME: ${ORGANIZATION_FLUTTER_NAME}
+    command: [ "gunicorn", "-b", "0.0.0.0:${APPLICATION_PORT}", "--workers=${WORKERS}","base.wsgi:application", "--name={{cookiecutter.project_slug.lower()}}" ]
+    networks:
+      - intranet
+      # uncomment only if u will use a containerd database
+      #- db
     volumes:
-      - .:/app
+      - volume-static:/home/app/{{cookiecutter.project_slug.lower()}}/static
+      - volume-media:/home/app/{{cookiecutter.project_slug.lower()}}/media
+    expose:
+      - ${APPLICATION_PORT}
+    # uncomment only if u will use a containerd database
+    # depends_on:
+    #   - db
+    labels:
+      - com.host.description=agtec_core_project
+
+  gateway:
+    image: nginx:1.21-alpine
+    container_name: gateway-{{cookiecutter.project_slug.lower()}}
+    restart: unless-stopped
+    networks:
+      - intranet
+    expose:
+      - 443
+      - 80
     ports:
-      - 8000:8000
+      - "443:443"
+      - "80:80"
     depends_on:
-      - database
+      - web
+    configs:
+      - source: ngx_config
+        target: /etc/nginx/conf.d/default.conf
+    volumes:
+      - volume-static:/home/app/{{cookiecutter.project_slug.lower()}}/static
+      - volume-media:/home/app/{{cookiecutter.project_slug.lower()}}/media
+    labels:
+      - com.host.description=agtec_core_project
+
+networks:
+  intranet:
+    name: {{cookiecutter.project_slug.lower()}}_network
+  # uncomment only if u will use a containerd database
+  # db:
+  #   name: {{cookiecutter.project_slug.lower()}}_db_network
+
+volumes:
+  # uncomment only if u will use a containerd database
+  # db_data:
+  #   type: local
+  #   name: {{cookiecutter.project_slug.lower()}}_db
+  media_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_media
+  static_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_static
+
+configs:
+  ngx_config:
+    file: $PWD/nginx.config

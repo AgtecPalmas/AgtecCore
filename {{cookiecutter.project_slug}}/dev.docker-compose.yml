@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: {{cookiecutter.project_slug.lower()}}_database_dev
+    image: postgres:14.3
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      TZ: "America/Araguaina"
+      LC_ALL: C.UTF-8
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: md5
+    networks:
+      - db
+    expose:
+      - 5432
+    ports:
+      - "{{cookiecutter.postgre_port}}:5432"
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    container_name: {{cookiecutter.project_slug.lower()}}_pgadmin_dev
+    restart: always
+    environment:
+      TZ: "America/Araguaina"
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    volumes:
+      - pgadmin4:/var/lib/pgadmin
+    expose:
+      - 80
+    ports:
+      - "8080:80"
+    networks:
+      - db
+    depends_on:
+      - db
+
+  web:
+    container_name: {{cookiecutter.project_slug.lower()}}_django
+    image: {{cookiecutter.project_slug.lower()}}:test_build
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    environment:
+      TZ: "America/Araguaina"
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ENGINE: ${DB_ENGINER}
+      DB_USER: ${DB_USER}
+      DB_PORT: ${DB_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      DEBUG: ${DEBUG}
+      SENTRY_DNS: ${SENTRY_DNS}
+      API_PATH: ${API_PATH}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD} 
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS}
+      EMAIL_TIMEOUT: ${EMAIL_TIMEOUT}
+      FCM_KEY: ${FCM_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      HORAS_SEM_ATENDIMENTO: ${HORAS_SEM_ATENDIMENTO}
+      DIAS_DA_SEMANA: ${DIAS_DA_SEMANA}
+      SENHA_PADRAO: ${SENHA_PADRAO}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      ORGANIZATION_NAME: ${ORGANIZATION_NAME}
+      ORGANIZATION_FLUTTER_NAME: ${ORGANIZATION_FLUTTER_NAME}
+    networks:
+      - intranet
+      - db
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000;"
+    volumes:
+      - .:/app/{{cookiecutter.project_slug.lower()}}
+      - media_data:/app/{{cookiecutter.project_slug.lower()}}/media
+      - static_data:/app/{{cookiecutter.project_slug.lower()}}/static
+      - ../../FastAPI/{{cookiecutter.project_slug.lower()}}:/FastAPI
+    expose:
+      - 8000
+    ports:
+      - "{{cookiecutter.docker_port}}:8000"
+    depends_on:
+      - db
+
+networks:
+  intranet:
+    name: {{cookiecutter.project_slug.lower()}}_network
+  db:
+    name: {{cookiecutter.project_slug.lower()}}_db_network
+
+volumes:
+  db_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_db_dev
+  pgadmin4_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_pg4_dev
+  media_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_media_dev
+  static_data:
+    type: local
+    name: {{cookiecutter.project_slug.lower()}}_static_dev
+
