@@ -12,6 +12,9 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
+RUN adduser -u 5678 --disabled-password --gecos "" builduser && chown -R builduser /app
+USER builduser
+
 FROM python:3.9.13-slim
 
 ENV HOME=/home/app
