@@ -7,16 +7,26 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 WORKDIR /app
 
 RUN apt-get clean && apt-get update \
-    && apt-get -y install ffmpeg gcc git libxml2-dev libxslt-dev libffi-dev libpq-dev libc-dev libsm6 libxext6 \
+    && apt-get -y install \
+    ffmpeg \
+    gcc \
+    git \
+    libc-dev \
+    libffi-dev \
+    libsm6 \
+    libpq-dev \
+    libxext6 \
+    libxml2-dev \
+    libxslt-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-
-RUN adduser -u 5678 --disabled-password --gecos "" builduser \
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt \
+    && adduser -u 5678 --disabled-password --gecos "" builduser \
     && chown -R builduser /app
+
 USER builduser
 
 FROM python:3.9.13-slim
@@ -35,10 +45,10 @@ COPY . /app
 RUN mkdir -p $APP_HOME/static \
     && mkdir -p $APP_HOME/media \
     && pip install -U setuptools pip \
-    && pip install --no-cache /wheels/*
-
+    && pip install --no-cache /wheels/* \
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser \
+    && adduser -u 5678 --disabled-password --gecos "" appuser \
     && chown -R appuser $APP_HOME 
+
 USER appuser
