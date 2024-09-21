@@ -258,9 +258,10 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   @override
-  Future<Either<$ModelClass$Model?>> detailEither(String uri) async {
+  Future<Either<$ModelClass$Model?>> detailEither(String $ModelClassCamelCase$ID) async {
     try {
-      final CustomDio dio = CustomDio(uri);
+      final url = '$_uri${$ModelClassCamelCase$ID}/';
+      final CustomDio dio = CustomDio(url);
       final dataResponse = await dio.getHttpEither(uri: url);
 
       if (dataResponse.isSuccess) {

@@ -13,7 +13,12 @@
 ///     post() -> Salva um novo $ModelClass$.
 ///     put() -> Atualiza os dados de um $ModelClass$.
 ///     delete() -> Deleta um $ModelClass$.
-
+///     fetchEither() -> Recupera a lista de $ModelClass$ da API com retorno Either.
+///     detailEither() -> Recupera os detalhes de $ModelClass$ da API com retorno Either.
+///     postEither() -> Salva os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     putEither() -> Atualiza os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     deleteEither() -> Deleta os dados de uma instância do $ModelClass$ na API com retorno Either.
+///
 ///   Métodos do Data
 ///     fetchLocal() -> Recupera a lista de $ModelClass$
 ///     reloadLocal() -> Recarrega a lista de $ModelClass$
@@ -179,4 +184,309 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar excluir o registro.'));
     }
   }
+
+  ///
+  /// [===============================================================]
+  /// [===============================================================]
+  /// [ Métodos com retorno Either ]
+  /// [===============================================================]
+  /// [===============================================================]
+  /// 
+  /// 
+  
+
+  /// 
+  /// [fetchEither]
+  /// 
+  /// Método que recupera a lista de $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<List<$ModelClass$Model>?> -> Lista de $ModelClass$ ou Error.
+  /// 
+  Future<Either<List<$ModelClass$Model>?>> fetchEither() async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.fetchEither();
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty_list');
+        }else{
+          $ModelClassCamelCase$List.clear();
+          $ModelClassCamelCase$List = _resultData;
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$List);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método fetchEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [reloadEither]
+  /// 
+  /// Método que recupera a lista de $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<List<$ModelClass$Model>?> -> Lista de $ModelClass$ ou Error.
+  /// 
+  Future<Either<List<$ModelClass$Model>?>> reloadEither() async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.fetchEither();
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty_list');
+        }else{
+          $ModelClassCamelCase$List.clear();
+          $ModelClassCamelCase$List = _resultData;
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$List);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método reloadEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar consultar os dados.'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [detailEither]
+  /// 
+  /// Método que recupera o $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<$ModelClass$Model?> -> Lista de $ModelClass$ ou Error.
+  /// 
+  Future<Either<$ModelClass$Model?>> detailEither(String $ModelClassCamelCase$ID) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.detailEither($ModelClassCamelCase$ID);
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar detalhar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar detalhar o item.'));
+        return Either.failure('Ocorreu um erro ao tentar detalhar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty');
+        }else{
+          $ModelClassCamelCase$Model = _resultData;
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$Model);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método detailEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar detalher o item.'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [postEither]
+  /// 
+  /// Método que recupera o $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<$ModelClass$Model?> -> Lista de $ModelClass$ ou Error.
+  /// 
+  Future<Either<$ModelClass$Model?>> postEither($ModelClass$Model $ModelClassCamelCase$Model) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.postEither($ModelClassCamelCase$Model);
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar cadastrar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar cadastrar o item.'));
+        return Either.failure('Ocorreu um erro ao tentar cadastrar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty');
+        }else{
+          $ModelClassCamelCase$Model = _resultData;
+          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$Model);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método postEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar cadastrar.'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [patchEither]
+  /// 
+  /// Método que recupera o $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<$ModelClass$Model?> -> $ModelClass$Model ou Error.
+  /// 
+  Future<Either<$ModelClass$Model?>> patchEither($ModelClass$Model $ModelClassCamelCase$Model) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.patchEither($ModelClassCamelCase$Model);
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+        return Either.failure('Ocorreu um erro ao tentar consultar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty');
+        }else{
+          $ModelClassCamelCase$Model = _resultData;
+          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$Model);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método patchEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar.'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [putEither]
+  /// 
+  /// Método que recupera o $ModelClass$ da API com retorno Either.
+  /// 
+  /// [return]
+  ///  - Either<$ModelClass$Model?> -> $ModelClass$Model ou Error.
+  /// 
+  Future<Either<$ModelClass$Model?>> putEither($ModelClass$Model $ModelClassCamelCase$Model) async {
+    try {
+      emit($ModelClass$ProcessState());
+      final resultData = await _service.putEither($ModelClassCamelCase$Model);
+      // Chamada falhou
+      if(resultData.isFailure){
+        emit($ModelClass$ErrorState(resultData.failure.toString()));
+        return Either.failure('Ocorreu um erro ao tentar atualizar os dados.');
+      }
+      if(resultData.success == null){
+        emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar (PUT).'));
+        return Either.failure('Ocorreu um erro ao tentar atualizar os dados.');
+      }
+      if (resultData.success != null){
+        // Chamada bem sucedida
+        final _resultData = resultData.success!;
+        if(_resultData.isEmpty){
+          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
+          return Either.failure('empty_list');
+        }else{
+          $ModelClassCamelCase$Model = _resultData;
+          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+          emit(
+            $ModelClass$SuccessState(
+              successMessage: 'Dados carregados com sucesso.',
+              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+            ),
+          );
+          return Either.success($ModelClassCamelCase$Model);
+        }
+      }
+    } catch (error, stackTrace) {
+      ExceptionCustom.state('Ocorreu um erro ou executar o método patchEither', 
+        error.toString(), error, stackTrace,);
+      emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar atualizar (PUT).'));
+      return Either.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [===============================================================]
+  /// [ fim dos métodos com retorno Either]
+  /// [===============================================================]
+  /// 
+  /// 
+
 }

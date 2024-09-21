@@ -35,9 +35,9 @@ abstract class $ModelClass$ServiceInterface {
   Future<$ModelClass$Model?> patch($ModelClass$Model $ModelClassCamelCase$);
   Future<bool> delete($ModelClass$Model $ModelClassCamelCase$);
   /// [Método com retorno Either]
-  Future<Either<List<JogoModel>?>> fetchEither({String? url});
-  Future<Either<List<JogoModel>?>> getMoreEither(String uri);
-  Future<Either<$ModelClass$Model?>> detailEither($ModelClass$Model $ModelClassCamelCase$);
+  Future<Either<List<$ModelClass$Model>?>> fetchEither({String? url});
+  Future<Either<List<$ModelClass$Model>?>> getMoreEither(String uri);
+  Future<Either<$ModelClass$Model?>> detailEither(String $ModelClassCamelCase$ID);
   Future<Either<$ModelClass$Model?>> postEither($ModelClass$Model $ModelClassCamelCase$);
   Future<Either<$ModelClass$Model?>> putEither($ModelClass$Model $ModelClassCamelCase$);
   Future<Either<$ModelClass$Model?>> patchEither($ModelClass$Model $ModelClassCamelCase$);
