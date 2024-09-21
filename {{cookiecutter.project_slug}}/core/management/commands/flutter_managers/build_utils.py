@@ -16,6 +16,7 @@ class UtilsBuilder:
         self._command_dir = Path(f"{self.command.path_command}/snippets/flutter/")
         self._snippet_dir = self.command.snippet_dir
         self._config_snippet_file = Path(f"{self._snippet_dir}/config.txt")
+        self._either_snippet_file = Path(f"{self._snippet_dir}/either.txt")
         self._config_target_file = Path(f"{self.command.config_file}")
         self._util_snippet_file = Path(f"{self._snippet_dir}/util.txt")
         self._util_target_file = Path(f"{self.command.util_file}")
@@ -49,6 +50,19 @@ class UtilsBuilder:
                 ],
                 Utils.get_snippet(str(self._config_snippet_file)),
             ).replace()
+            with open(self._config_target_file, "w", encoding="utf-8") as _file:
+                _file.write(_content)
+        except Exception as e:
+            Utils.show_error(
+                f"Erro ao executar o _parser_config_file do UtilsBuilder: {e}"
+            )
+            return
+
+    def _parser_either_file(self):
+        try:
+            if Utils.check_file_is_locked(str(self._either_snippet_file)):
+                return
+            _content = Utils.get_snippet(str(self._config_snippet_file)),
             with open(self._config_target_file, "w", encoding="utf-8") as _file:
                 _file.write(_content)
         except Exception as e:

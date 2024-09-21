@@ -14,6 +14,7 @@ import '../../core/exceptions/exception.dart';
 import '../agtec.logger.dart';
 import 'interceptors/header_token_interceptor.dart';
 import 'interceptors/refresh_token_interceptor.dart';
+import '../either.dart';
 
 class CustomDio {
   late Dio _dio;
@@ -167,4 +168,218 @@ class CustomDio {
       return null;
     }
   }
+
+  
+  ///  ==============================================================================
+  ///  ==============================================================================
+  ///  ==============================================================================
+  ///
+  /// [ Bloco de código para as requisições HTTP retornando um objeto do tipo Either ]
+  ///
+  ///  ==============================================================================
+  ///  ==============================================================================
+  ///  ==============================================================================
+  ///
+
+  ///
+  /// [getHttpEither]
+  /// 
+  /// Método que realiza uma requisição GET e retorna um objeto do tipo Either
+  ///
+  /// [Params]
+  /// - data - dynamic - Dados que serão enviados na requisição
+  /// - uri - String - URI que será utilizada na requisição
+  /// - multipart - bool - Flag que indica se a requisição será do tipo multipart
+  ///
+  /// [Return]
+  ///  Either<dynamic> - Objeto do tipo Either que pode conter o retorno da 
+  ///                    requisição ou uma mensagem de erro
+  ///
+  Future<Either<dynamic>> getHttpEither({returnResult = false, String? uri}) async {
+    try {
+      AgtecCoreLogger().info('#dio_custom URl: $_url');
+      AgtecCoreLogger().info('#dio_custom Dio Headers: ${_dio.options.headers}');
+      final Response response = await _dio.get(uri ?? _url);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('#dio_custom Retorno do método getHttpEither');
+        AgtecCoreLogger().verbose(response);
+        if (returnResult) return Either<dynamic>.success(response.data['results']);
+        return Either<dynamic>.success(response.data);
+      }
+      return Either<dynamic>.failure('Erro ao tentar executar o getHttpEither');
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        '#dio_custom Ocorreu o erro: ${error.response?.data?.toString()} no getHttpEither',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return Either<dynamic>.failure(error.response?.data?.toString());
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          '#dio_custom Ocorreu um erro desconhecido no método getHttpEither do Dio', errorGeneral.toString());
+      return Either<dynamic>.failure(errorGeneral.toString());
+    }
+  }
+
+  ///
+  /// [postHttpEither]
+  /// Método que realiza uma requisição POST e retorna um objeto do tipo Either
+  ///
+  /// [Params]
+  /// - data - dynamic - Dados que serão enviados na requisição
+  /// - uri - String - URI que será utilizada na requisição
+  /// - multipart - bool - Flag que indica se a requisição será do tipo multipart
+  ///
+  /// [Return]
+  ///  Either<dynamic> - Objeto do tipo Either que pode conter o retorno da requisição ou uma mensagem de erro
+  ///
+  Future<Either<dynamic>> postHttpEither(data, {String? uri, bool multipart = false}) async {
+    try {
+      if (multipart == true) {
+        _dio.options.headers['Content-Type'] = 'multipart/form-data';
+      }
+      final Response response = await _dio.post(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('#dio_custom Retorno do método postHTTP');
+        AgtecCoreLogger().verbose(response);
+        return Either<dynamic>.success(response.data);
+      }
+      return Either<dynamic>.failure('Erro ao tentar executar o PostHttp');
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        '#dio_custom Ocorreu o erro: ${error.response?.data?.toString()} no PostHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          '#dio_custom Ocorreu um erro desconhecido no método PostHttp do Dio', errorGeneral.toString());
+      return Either<dynamic>.failure(errorGeneral.toString());
+    }
+  }
+
+  ///
+  /// [putHttpEither]
+  /// Método que realiza uma requisição put e retorna um objeto do tipo Either
+  ///
+  /// [Params]
+  /// - data - dynamic - Dados que serão enviados na requisição
+  /// - uri - String - URI que será utilizada na requisição
+  /// - multipart - bool - Flag que indica se a requisição será do tipo multipart
+  ///
+  /// [Return]
+  ///  Either<dynamic> - Objeto do tipo Either que pode conter o retorno da requisição ou uma mensagem de erro
+  ///
+  Future<Either<dynamic>> putHttpEither(data, {String? uri, bool multipart = false}) async {
+    try {
+      if (multipart == true) {
+        _dio.options.headers['Content-Type'] = 'multipart/form-data';
+      }
+      final Response response = await _dio.put(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('#dio_custom Retorno do método putHTTP');
+        AgtecCoreLogger().verbose(response);
+        return Either<dynamic>.success(response.data);
+      }
+      return Either<dynamic>.failure('Erro ao tentar executar o putHttp');
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        '#dio_custom Ocorreu o erro: ${error.response?.data?.toString()} no putHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          '#dio_custom Ocorreu um erro desconhecido no método putHttp do Dio', errorGeneral.toString());
+      return Either<dynamic>.failure(errorGeneral.toString());
+    }
+  }
+
+  ///
+  /// [putHttpEither]
+  ///
+  /// Método que realiza uma requisição PUT e retorna um objeto do tipo Either
+  ///
+  /// [Params]
+  ///  - data - dynamic - Dados que serão enviados na requisição
+  ///  - id - String - ID que será utilizado na requisição
+  ///  - uri - String - URI que será utilizada na requisição
+  ///
+  /// [Return]
+  ///  Either<dynamic> - Objeto do tipo Either que pode conter o retorno da requisição ou uma mensagem de erro
+  ///
+  Future<Either<dynamic>> patchHttpEither(data, {String? uri, bool multipart = false}) async {
+    try {
+      if (multipart == true) {
+        _dio.options.headers['Content-Type'] = 'multipart/form-data';
+      }
+      final Response response = await _dio.patch(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('#dio_custom Retorno do método patch HTTP');
+        AgtecCoreLogger().verbose(response);
+        return Either<dynamic>.success(response.data);
+      }
+      return Either<dynamic>.failure('Erro ao tentar executar o PatchHttp');
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        '#dio_custom Ocorreu o erro: ${error.response?.data?.toString()} no PatchHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          '#dio_custom Ocorreu um erro desconhecido no método PatchHttp do Dio', errorGeneral.toString());
+      return Either<dynamic>.failure(errorGeneral.toString());
+    }
+  }
+
+  ///
+  /// [deleteHttpEither]
+  ///
+  /// Método que realiza uma requisição Delete e retorna um objeto do tipo Either
+  ///
+  /// [Params]
+  ///  - data - dynamic - Dados que serão enviados na requisição
+  ///  - id - String - ID que será utilizado na requisição
+  ///  - uri - String - URI que será utilizada na requisição
+  ///
+  /// [Return]
+  ///  Either<dynamic> - Objeto do tipo Either que pode conter o retorno da requisição ou uma mensagem de erro
+  ///
+  Future<Either<dynamic>> deleteHttpEither(data, String id, {String? uri}) async {
+    try {
+      final Response response = await _dio.delete(uri ?? _url, data: data);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        AgtecCoreLogger().info('#dio_custom Retorno do método delete HTTP');
+        AgtecCoreLogger().verbose(response);
+        return Either<dynamic>.success(response.data);
+      }
+      return Either<dynamic>.failure('Erro ao tentar executar o DeleteHttp');
+    } on DioException catch (error) {
+      ExceptionCustom.dio(
+        error.response?.statusCode ?? 0,
+        '#dio_custom Ocorreu o erro: ${error.response?.data?.toString()} no DeleteHttp',
+        error.message,
+        error.requestOptions.uri.toString(),
+        error,
+      );
+      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+    } catch (errorGeneral) {
+      ExceptionCustom.general(
+          '#dio_custom Ocorreu um erro desconhecido no método DeleteHttp do Dio', errorGeneral.toString());
+      return Either<dynamic>.failure(errorGeneral.toString());
+    }
+  }
+
 }

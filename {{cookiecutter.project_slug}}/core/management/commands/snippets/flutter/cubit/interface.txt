@@ -1,3 +1,4 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
@@ -11,11 +12,19 @@
 ///     post()     -> Salva os dados de uma instância do $ModelClass$ na API.
 ///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
 ///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
+///     fetchEither() -> Recupera a lista de $ModelClass$ da API com retorno Either.
+///     getMoreEither() -> Recupera a lista de $ModelClass$ da API com retorno Either.
+///     detailEither() -> Recupera os detalhes de $ModelClass$ da API com retorno Either.
+///     postEither() -> Salva os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     putEither() -> Atualiza os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     deleteEither() -> Deleta os dados de uma instância do $ModelClass$ na API com retorno Either.
 ///
 
 
-import 'model.dart';
 import 'package:sembast/sembast.dart' as smbt;
+
+import '../../../core/either.dart';
+import 'model.dart';
 
 abstract class $ModelClass$ServiceInterface {
   Future<List<$ModelClass$Model>> fetch({String? url});
@@ -25,6 +34,14 @@ abstract class $ModelClass$ServiceInterface {
   Future<$ModelClass$Model?> put($ModelClass$Model $ModelClassCamelCase$);
   Future<$ModelClass$Model?> patch($ModelClass$Model $ModelClassCamelCase$);
   Future<bool> delete($ModelClass$Model $ModelClassCamelCase$);
+  /// [Método com retorno Either]
+  Future<Either<List<JogoModel>?>> fetchEither({String? url});
+  Future<Either<List<JogoModel>?>> getMoreEither(String uri);
+  Future<Either<$ModelClass$Model?>> detailEither($ModelClass$Model $ModelClassCamelCase$);
+  Future<Either<$ModelClass$Model?>> postEither($ModelClass$Model $ModelClassCamelCase$);
+  Future<Either<$ModelClass$Model?>> putEither($ModelClass$Model $ModelClassCamelCase$);
+  Future<Either<$ModelClass$Model?>> patchEither($ModelClass$Model $ModelClassCamelCase$);
+  Future<Either<bool?>> deleteEither($ModelClass$Model $ModelClassCamelCase$);
 }
 
 abstract class $ModelClass$LocalDataInterface {

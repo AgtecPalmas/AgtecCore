@@ -1,0 +1,35 @@
+///
+/// Either class para gerenciar sucesso ou falha de uma operação
+///
+/// Quando for utilizada para verificar o resultado de uma operação,
+/// deve-se verificar se a operação foi bem sucedida ou falhou
+///
+/// [Exemplo]
+///
+///  final result = await XPTO.getSomething();
+///  if (result.isSuccess) {
+///   final data = result.success;
+///   ...
+/// } else {
+///  final error = result.failure;
+///  ...
+/// }
+///
+/// [return]:
+///  - [success]: valor de sucesso, pode ser qualquer tipo <T>
+///  - [failure]: String com a mensagem de erro
+///
+/// [isSuccess]: retorna true se a operação foi bem sucedida
+/// [isFailure]: retorna true se a operação falhou
+///
+
+class Either<T> {
+  final T? success;
+  final String? failure;
+
+  Either.success(this.success) : failure = null;
+  Either.failure(this.failure) : success = null;
+
+  bool get isSuccess => success != null;
+  bool get isFailure => failure != null;
+}
