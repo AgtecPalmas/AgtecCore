@@ -1,9 +1,15 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
+
+///
+/// [Arquivo destravado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// após a geração sugerimos que adicione o # como prefixo da palavra FileLocked.
+/// 
 /// FileLocked
+///
+
 ///
 /// Os Métodos padrões gerados são:
 ///     fecthAll() -> Recupera a lista de $ModelClass$.

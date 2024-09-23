@@ -1,10 +1,20 @@
 ///
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+///
 /// Either class para gerenciar sucesso ou falha de uma operação
 ///
 /// Quando for utilizada para verificar o resultado de uma operação,
 /// deve-se verificar se a operação foi bem sucedida ou falhou
 ///
-/// [Exemplo]
+/// [Exemplo de uso]
 ///
 ///  final result = await XPTO.getSomething();
 ///  if (result.isSuccess) {

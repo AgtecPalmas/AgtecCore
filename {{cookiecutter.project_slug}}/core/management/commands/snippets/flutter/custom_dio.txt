@@ -1,10 +1,13 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
-/// [Travado por default]
-/// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
-/// por um novo build do Core, o mesmo está travado por default.
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
 import 'dart:async';
 
 import 'package:dio/dio.dart';
@@ -256,7 +259,7 @@ class CustomDio {
         error.requestOptions.uri.toString(),
         error,
       );
-      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+      return Either<dynamic>.failure(error.response?.data?.toString());
     } catch (errorGeneral) {
       ExceptionCustom.general(
           '#dio_custom Ocorreu um erro desconhecido no método PostHttp do Dio', errorGeneral.toString());
@@ -296,7 +299,7 @@ class CustomDio {
         error.requestOptions.uri.toString(),
         error,
       );
-      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+      return Either<dynamic>.failure(error.response?.data?.toString());
     } catch (errorGeneral) {
       ExceptionCustom.general(
           '#dio_custom Ocorreu um erro desconhecido no método putHttp do Dio', errorGeneral.toString());
@@ -337,7 +340,7 @@ class CustomDio {
         error.requestOptions.uri.toString(),
         error,
       );
-      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+      return Either<dynamic>.failure(error.response?.data?.toString());
     } catch (errorGeneral) {
       ExceptionCustom.general(
           '#dio_custom Ocorreu um erro desconhecido no método PatchHttp do Dio', errorGeneral.toString());
@@ -375,7 +378,7 @@ class CustomDio {
         error.requestOptions.uri.toString(),
         error,
       );
-      return Either<dynamic>.failure(clearErrorMessage(error.response?.data?.toString()));
+      return Either<dynamic>.failure(error.response?.data?.toString());
     } catch (errorGeneral) {
       ExceptionCustom.general(
           '#dio_custom Ocorreu um erro desconhecido no método DeleteHttp do Dio', errorGeneral.toString());

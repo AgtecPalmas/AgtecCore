@@ -1,8 +1,14 @@
-/// [Travar o arquivo]
-/// Caso deseje 'travar' o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 

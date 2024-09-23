@@ -1,10 +1,16 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+
 ///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+
 /// Os Métodos padrões gerados são:
 ///   Métodos da API
 ///     fecth() -> Recupera a lista de $ModelClass$.
@@ -32,6 +38,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../core/exceptions/exception.dart';
+import '../../../core/either.dart';
 
 import 'model.dart';
 import 'service.dart';
@@ -218,13 +225,13 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       }
       if (resultData.success != null){
         // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
+        final successData = resultData.success!;
+        if(successData.isEmpty){
           emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
           return Either.failure('empty_list');
         }else{
           $ModelClassCamelCase$List.clear();
-          $ModelClassCamelCase$List = _resultData;
+          $ModelClassCamelCase$List = successData;
           emit(
             $ModelClass$SuccessState(
               successMessage: 'Dados carregados com sucesso.',
@@ -235,6 +242,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           return Either.success($ModelClassCamelCase$List);
         }
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método fetchEither', 
         error.toString(), error, stackTrace,);
@@ -266,13 +274,13 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       }
       if (resultData.success != null){
         // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
+        final successData = resultData.success!;
+        if(successData.isEmpty){
           emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
           return Either.failure('empty_list');
         }else{
           $ModelClassCamelCase$List.clear();
-          $ModelClassCamelCase$List = _resultData;
+          $ModelClassCamelCase$List = successData;
           emit(
             $ModelClass$SuccessState(
               successMessage: 'Dados carregados com sucesso.',
@@ -283,6 +291,7 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
           return Either.success($ModelClassCamelCase$List);
         }
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método reloadEither', 
         error.toString(), error, stackTrace,);
@@ -313,23 +322,20 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
         return Either.failure('Ocorreu um erro ao tentar detalhar os dados.');
       }
       if (resultData.success != null){
-        // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
-          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
-          return Either.failure('empty');
-        }else{
-          $ModelClassCamelCase$Model = _resultData;
-          emit(
-            $ModelClass$SuccessState(
-              successMessage: 'Dados carregados com sucesso.',
-              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
-              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
-            ),
-          );
-          return Either.success($ModelClassCamelCase$Model);
-        }
+        final successData = resultData.success!;
+
+        $ModelClassCamelCase$Model = successData;
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+        return Either.success($ModelClassCamelCase$Model);
+
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método detailEither', 
         error.toString(), error, stackTrace,);
@@ -361,23 +367,21 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       }
       if (resultData.success != null){
         // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
-          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
-          return Either.failure('empty');
-        }else{
-          $ModelClassCamelCase$Model = _resultData;
-          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
-          emit(
-            $ModelClass$SuccessState(
-              successMessage: 'Dados carregados com sucesso.',
-              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
-              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
-            ),
-          );
-          return Either.success($ModelClassCamelCase$Model);
-        }
+        final successData = resultData.success!;
+      
+        $ModelClassCamelCase$Model = successData;
+        $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+        return Either.success($ModelClassCamelCase$Model);
+
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método postEither', 
         error.toString(), error, stackTrace,);
@@ -409,23 +413,21 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       }
       if (resultData.success != null){
         // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
-          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
-          return Either.failure('empty');
-        }else{
-          $ModelClassCamelCase$Model = _resultData;
-          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
-          emit(
-            $ModelClass$SuccessState(
-              successMessage: 'Dados carregados com sucesso.',
-              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
-              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
-            ),
-          );
-          return Either.success($ModelClassCamelCase$Model);
-        }
+        final successData = resultData.success!;
+      
+        $ModelClassCamelCase$Model = successData;
+        $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+        return Either.success($ModelClassCamelCase$Model);
+        
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método patchEither', 
         error.toString(), error, stackTrace,);
@@ -457,23 +459,21 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       }
       if (resultData.success != null){
         // Chamada bem sucedida
-        final _resultData = resultData.success!;
-        if(_resultData.isEmpty){
-          emit(const $ModelClass$EmptyListState('Nenhum registro encontrado.'));
-          return Either.failure('empty_list');
-        }else{
-          $ModelClassCamelCase$Model = _resultData;
-          $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
-          emit(
-            $ModelClass$SuccessState(
-              successMessage: 'Dados carregados com sucesso.',
-              $ModelClassCamelCase$List: $ModelClassCamelCase$List,
-              $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
-            ),
-          );
-          return Either.success($ModelClassCamelCase$Model);
-        }
+        final successData = resultData.success!;
+
+        $ModelClassCamelCase$Model = successData;
+        $ModelClassCamelCase$List.add($ModelClassCamelCase$Model);
+        emit(
+          $ModelClass$SuccessState(
+            successMessage: 'Dados carregados com sucesso.',
+            $ModelClassCamelCase$List: $ModelClassCamelCase$List,
+            $ModelClassCamelCase$Model: $ModelClassCamelCase$Model,
+          ),
+        );
+        return Either.success($ModelClassCamelCase$Model);
+
       }
+      return Either.failure('Ocorreu um erro genérico.');
     } catch (error, stackTrace) {
       ExceptionCustom.state('Ocorreu um erro ou executar o método patchEither', 
         error.toString(), error, stackTrace,);

@@ -1,11 +1,16 @@
 ///
 /// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
-/// [Travado por default]
-/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
-/// por um novo build do Core, o mesmo está travado por default.
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
+/// 
 /// Os Métodos padrões gerados são:
 ///     fecthAll() -> Recupera a lista de $ModelClass$ da API.
 ///     detail()   -> Recupera os detalhes de $ModelClass$ da API.

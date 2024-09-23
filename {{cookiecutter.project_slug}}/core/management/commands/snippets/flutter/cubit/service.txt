@@ -1,9 +1,15 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
 ///
 /// Service do model $ModelClass$
 /// 
@@ -206,12 +212,12 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       final dataResponse = await dio.getHttpEither(uri: url);
 
       if(dataResponse.isSuccess){
-        final _data = dataResponse.success;
+        final items = dataResponse.success;
         for (var item in items) {
           item.addAll(
             {
-              'nextUrl': dataResponse['next'] ?? '',
-              'previousUrl': dataResponse['previous'] ?? '',
+              'nextUrl': items['next'] ?? '',
+              'previousUrl': items['previous'] ?? '',
             },
           );
           final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
@@ -219,6 +225,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
         return Either<List<$ModelClass$Model>?>.success(_$ModelClassCamelCase$List);
       }
+      return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
       AgtecCoreLogger().erro('ArgumentError no service fetchEither', [error]);
       return Either<List<$ModelClass$Model>?>.failure(error.toString());
@@ -229,18 +236,18 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   }
 
   @override
-  Future<Either<List<$ModelClass$Model>?>> getMoreEither(String uri) async {
+  Future<Either<List<$ModelClass$Model>?>> getMoreEither(String url) async {
     try {
-      final CustomDio dio = CustomDio(uri);
+      final CustomDio dio = CustomDio(_uri);
       final dataResponse = await dio.getHttpEither(uri: url);
 
       if(dataResponse.isSuccess){
-        final _data = dataResponse.success;
+        final items = dataResponse.success;
         for (var item in items) {
           item.addAll(
             {
-              'nextUrl': dataResponse['next'] ?? '',
-              'previousUrl': dataResponse['previous'] ?? '',
+              'nextUrl': items['next'] ?? '',
+              'previousUrl': items['previous'] ?? '',
             },
           );
           final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
@@ -248,6 +255,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
         return Either<List<$ModelClass$Model>?>.success(_$ModelClassCamelCase$List);
       }
+      return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
       AgtecCoreLogger().erro('ArgumentError no service getMoreEither', [error]);
       return Either<List<$ModelClass$Model>?>.failure(error.toString());
@@ -260,7 +268,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<Either<$ModelClass$Model?>> detailEither(String $ModelClassCamelCase$ID) async {
     try {
-      final url = '$_uri${$ModelClassCamelCase$ID}/';
+      final url = '$_uri$$ModelClassCamelCase$ID/';
       final CustomDio dio = CustomDio(url);
       final dataResponse = await dio.getHttpEither(uri: url);
 
@@ -281,9 +289,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<Either<$ModelClass$Model?>> postEither($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final CustomDio dio = CustomDio(uri);
+      final CustomDio dio = CustomDio(_uri);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
-      final dataResponse = await dio.postHttpEither(uri: url);
+      final dataResponse = await dio.postHttpEither(dataMap);
 
       if (dataResponse.isSuccess) {
         final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
@@ -302,9 +310,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<Either<$ModelClass$Model?>> putEither($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final CustomDio dio = CustomDio(uri);
+      final CustomDio dio = CustomDio(_uri);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
-      final dataResponse = await dio.putHttpEither(uri: url);
+      final dataResponse = await dio.putHttpEither(dataMap);
 
       if (dataResponse.isSuccess) {
         final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
@@ -323,9 +331,9 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
   @override
   Future<Either<$ModelClass$Model?>> patchEither($ModelClass$Model $ModelClassCamelCase$) async {
     try {
-      final CustomDio dio = CustomDio(uri);
+      final CustomDio dio = CustomDio(_uri);
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
-      final dataResponse = await dio.patchHttpEither(uri: url);
+      final dataResponse = await dio.patchHttpEither(dataMap);
 
       if (dataResponse.isSuccess) {
         final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
@@ -350,8 +358,8 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       final dataMap = json.encode($ModelClassCamelCase$.toMap());
 
       final dataResponse = await dio.deleteHttpEither(
-        data: dataMap,
-        id: $ModelClassCamelCase$.id.toString(),
+        dataMap,
+        $ModelClassCamelCase$.id.toString(),
         uri: url,
       );
 
