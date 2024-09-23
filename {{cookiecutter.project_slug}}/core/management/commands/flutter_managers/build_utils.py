@@ -16,8 +16,9 @@ class UtilsBuilder:
         self._command_dir = Path(f"{self.command.path_command}/snippets/flutter/")
         self._snippet_dir = self.command.snippet_dir
         self._config_snippet_file = Path(f"{self._snippet_dir}/config.txt")
-        self._either_snippet_file = Path(f"{self._snippet_dir}/either.txt")
         self._config_target_file = Path(f"{self.command.config_file}")
+        self._either_snippet_file = Path(f"{self._snippet_dir}/either.txt")
+        self._either_target_file = Path(f"{self.command.either_file}")
         self._util_snippet_file = Path(f"{self._snippet_dir}/util.txt")
         self._util_target_file = Path(f"{self.command.util_file}")
 
@@ -25,6 +26,7 @@ class UtilsBuilder:
         try:
             self._parser_config_file()
             self._parser_util_file()
+            self._parser_either_file()
         except Exception as e:
             Utils.show_error(f"Erro ao executar o build de UtilsBuilder: {e}")
             return
@@ -42,10 +44,10 @@ class UtilsBuilder:
                     "$FastAPIUserDevelopment$",
                 ],
                 [
-                    SYSTEM_NAME,
-                    FLUTTER_API_PATH,
-                    FLUTTER_API_PATH,
-                    FLUTTER_API_PASSWORD_DEV,
+                    SYSTEM_NAME, 
+                    FLUTTER_API_PATH, 
+                    FLUTTER_API_PATH, 
+                    FLUTTER_API_PASSWORD_DEV, 
                     FLUTTER_API_USER_DEV,
                 ],
                 Utils.get_snippet(str(self._config_snippet_file)),
@@ -60,14 +62,15 @@ class UtilsBuilder:
 
     def _parser_either_file(self):
         try:
-            if Utils.check_file_is_locked(str(self._either_snippet_file)):
+            if Utils.check_file_is_locked(str(self._either_target_file)):
                 return
-            _content = Utils.get_snippet(str(self._config_snippet_file)),
-            with open(self._config_target_file, "w", encoding="utf-8") as _file:
-                _file.write(_content)
+
+            _content = Utils.get_snippet(str(self._either_snippet_file))
+            with open(self._either_target_file, "w", encoding="utf-8") as _either_file:
+                _either_file.write(_content)
         except Exception as e:
             Utils.show_error(
-                f"Erro ao executar o _parser_config_file do UtilsBuilder: {e}"
+                f"Erro ao executar o _parser_either_file do UtilsBuilder: {e}"
             )
             return
 
