@@ -8,12 +8,57 @@
 /// #FileLocked
 ///
 
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'agtec.logger.dart';
+
+import 'application.config.dart';
+
+const bool developingAtHome = false;
+const String homeIPAddress = 'http://$IpAddress$';
+const String workIPAddress = 'http://$IpAddress$';
+
 
 const heightAppBarPage = 22.0;
 const marginTopCustomAppBar = 12.0;
 const marginHorizontalSectionsDataPage = 12.0;
+const defaultPaddingListButtonsColumsAction = 8.0;
+const defaultSizeIconsLegendButtons = 16.0;
+const defaultWidhtSvgPicture = 24.0;
+const limitGamesUserList = 4;
+const suffixIconWidhtHeight = 24.0;
+
+// Constante para determinar a largura padrão dos botões de ação das listagens
+const defaultWidthButtonAction = 40.0;
+
+// Constante para determinar a altura padrão dos botões de ação das listagens
+const defaultHeightButtonAction = 40.0;
+
+// Constante para determinar o valor padrão para o Debouncer
+const defaultDurationDebouncer = 5000;
+
+// Constante para determinar o height maximo da barra de botoms
+const double maxHeightBottomBar = 52.0;
+
+// Constante para determinar o tamanho da listView devendo ser o valor
+// de maxHeightBottomBar acrescido de 5.0
+
+const double heightListViewBottomBar = 57.0;
+
+// Constante para determinar de forma padronizada o %
+// de altura do topo da tela para o HeaderLogoNameImage
+const percentHeightHeadTop = 0.08;
+
+// Constante para determinar de forma padronizada o
+// tamanho da imagem da logo no HeaderLogoNameImage
+const widthIconHeaderLogoNameImage = 65.0;
+
+// Área para nome de constantes que servirão de chave para os dados
+const accessTokenDRF = 'accessTokenDRF';
+const refreshTokenDRF = 'refreshTokenDRF';
+const accessTokenFastAPI = 'accessTokenFastAPI';
+const refreshTokenFastAPI = 'refreshTokenFastAPI';
+const arenaManagementID = 'arenaManagementID';
 
 // Definindo o width e o height do ScreenUtil Extensions
 const double widthScreenUtil = 390;
@@ -23,14 +68,15 @@ const double heightScreenUtil = 844;
 const bool enabledBottomNavigationBar = false;
 
 // Chave para determinar se a versão está em desenvolvimento ou produção
-const bool releaseVersion = false;
+const bool releaseVersion = !kDebugMode;
 
 // URI para desenvolvimento
-// URI definida do settings do Projeto Django -> $DjangoAPIPath$
-const String uriDeveloper = '$UriAPIDeveloper$';
+const String uriDeveloper = developingAtHome ? '$homeIPAddress:8000/' : '$workIPAddress:8000/';
+const String fastAPIURIDeveloper = developingAtHome ? '$homeIPAddress:8181/' : '$workIPAddress:8181/';
 
 // URI para produção
 const String uriRelease = '';
+const String uriFastAPIRelease = '';
 
 // URL para os termos de uso
 const String urlTermoUso = '';
@@ -41,16 +87,48 @@ const bool enabledGoogleAccount = false;
 const bool enabledEmailAccount = false;
 const bool enabledOTPAccount = false;
 
+///
+/// [getRemoteConfigExample]
+///
+/// Método de exemplo para recuperar uma chave do Firebase Remote Config, 
+/// 
+/// [Params]:
+///  String nomeChaveFirebaseConfig - Nome da chave a ser recuperada
+///
+/// [Return]:
+///  String - Valor da chave buscada ou ''
+///
+Future<String> getRemoteConfigExample(String nomeChaveFirebaseConfig) async {
+  try {
+    if (releaseVersion == false) {
+      // Caso esteja em desenvolvimento e desejar retornar um valor fixo basta alterar a linha abaixo.
+      return '';
+    }
+    final String? config = await ApplicationConfig.getFirebaseRemoteConfig(nomeChaveFirebaseConfig);
+    if (config != null) {
+      return config;
+    }
+    return '';
+  } catch (error, stackTrace) {
+    AgtecCoreLogger().erro('Erro ao chamar o getRemoteConfigExample', error, stackTrace);
+    return '';
+  }
+}
+
 class Config {
   static const uri = releaseVersion ? uriRelease : uriDeveloper;
   static const uriAuth = '';
 
-  // Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.
+  /// 
+  /// [Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework]
+  /// TODO: Adicione o token DRF
+  /// 
   static const drfToken = 'Token ';
 
   // Dados de acesso à camada FastAPI
   static const fastAPIUserDevelopment = '$FastAPIUserDevelopment$';
   static const fastAPIPasswordDevelopment = '$FastAPIPasswordDevelopment$';
+  static const fastAPIURI = releaseVersion ? uriFastAPIRelease : fastAPIURIDeveloper;
 
   static const String uriMedia = 'media/';
   static const String appTitle = 'App Flutter';

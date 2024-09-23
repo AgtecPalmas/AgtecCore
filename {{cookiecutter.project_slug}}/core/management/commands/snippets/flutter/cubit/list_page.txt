@@ -116,18 +116,17 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
         }
       },
       builder: (context, state) {
-        // Refatorando o pattern matching
         switch (state) {
           case $ModelClass$ProcessState():
             return showHideModal(show: true);
           case $ModelClass$EmptyListState():
             return const Expanded(child: Center(child: Text('Nenhum item encontrado')));
-          case $ModelClass$ErrorState():
-            return const SliverToBoxAdapter(child: SizedBox.shrink());
+          case $ModelClass$ErrorState(:final error):
+            return Expanded(child: Center(child: Text('erro: ${error.toString()}')));
           case $ModelClass$SuccessState(: final $ModelClassCamelCase$List):
             return _buildResultList($ModelClassCamelCase$List);
           default:
-            return const SliverToBoxAdapter(child: SizedBox.shrink());
+            return const SizedBox.shrink();
         }
       },
     );
