@@ -1,12 +1,13 @@
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travado por default]
-/// Por ser o arquivo de criação de vários widgets, e que não deve ser alterado
-/// por um novo build do Core, o mesmo está travado por default.
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
-/// Arquivo contendo os Widgets componentizados da aplicação
-///
+
 import 'package:flutter/material.dart';
 
 import '../../core/agtec.logger.dart';
@@ -335,6 +336,59 @@ class CustomAppBar extends StatelessWidget {
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               )),
+        ],
+      ),
+    );
+  }
+}
+
+
+///
+/// [CustomContainerWithLabelAndTextFormField]
+///
+/// Classe para criar um componente TextFormField com o label interno
+/// ao container.
+///
+/// [Params]:
+///  - labelText -> String contendo o texto do label
+///  - textFormField -> TextFormField do formulário
+///
+/// [Return]:
+///   Container com uma column como filho contendo o label e o TextFormField
+///
+class CustomContainerWithLabelAndTextFormField extends StatelessWidget {
+  final String labelText;
+  final TextFormField textFormField;
+
+  const CustomContainerWithLabelAndTextFormField({super.key, required this.labelText, required this.textFormField});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 8, top: 6, bottom:6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            labelText,
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          textFormField,
         ],
       ),
     );

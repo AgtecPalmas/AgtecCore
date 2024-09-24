@@ -1,9 +1,15 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
 ///
 /// Service do model $ModelClass$
 /// 
@@ -13,6 +19,11 @@
 ///     post()     -> Salva os dados de uma instância do $ModelClass$ na API.
 ///     put()      -> Atualiza os dados de uma instância do $ModelClass$ na API.
 ///     delete()   -> Deleta os dados de uma instância do $ModelClass$ na API.
+///     fetchEither() -> Recupera a lista de $ModelClass$ da API com retorno Either.
+///     detailEither() -> Recupera os detalhes de $ModelClass$ da API com retorno Either.
+///     postEither() -> Salva os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     putEither() -> Atualiza os dados de uma instância do $ModelClass$ na API com retorno Either.
+///     deleteEither() -> Deleta os dados de uma instância do $ModelClass$ na API com retorno Either.
 ///
 /// Os métodos de acesso à API devem ser implementados nessa classe.
 
@@ -21,6 +32,7 @@ import 'dart:convert';
 
 import '../../../core/agtec.logger.dart';
 import '../../../core/dio/custom_dio.dart';
+import '../../../core/either.dart';
 import '../../../core/exceptions/exception.dart';
 import '../../../core/config.dart';
 import 'model.dart';
@@ -182,4 +194,192 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       return false;
     }
   }
+
+  ///
+  /// [===============================================================]
+  /// [===============================================================]
+  /// [ Métodos com retorno Either ]
+  /// [===============================================================]
+  /// [===============================================================]
+  /// 
+  
+  @override
+  Future<Either<List<$ModelClass$Model>?>> fetchEither({String? url}) async {
+    try {
+      final url = _uri;
+      _$ModelClassCamelCase$List.clear();
+      final CustomDio dio = CustomDio(url);
+      final dataResponse = await dio.getHttpEither(uri: url);
+
+      if(dataResponse.isSuccess){
+        final items = dataResponse.success;
+        for (var item in items) {
+          item.addAll(
+            {
+              'nextUrl': items['next'] ?? '',
+              'previousUrl': items['previous'] ?? '',
+            },
+          );
+          final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
+          _$ModelClassCamelCase$List.add($ModelClassCamelCase$);
+        }
+        return Either<List<$ModelClass$Model>?>.success(_$ModelClassCamelCase$List);
+      }
+      return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service fetchEither', [error]);
+      return Either<List<$ModelClass$Model>?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<List<$ModelClass$Model>?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<List<$ModelClass$Model>?>> getMoreEither(String url) async {
+    try {
+      final CustomDio dio = CustomDio(_uri);
+      final dataResponse = await dio.getHttpEither(uri: url);
+
+      if(dataResponse.isSuccess){
+        final items = dataResponse.success;
+        for (var item in items) {
+          item.addAll(
+            {
+              'nextUrl': items['next'] ?? '',
+              'previousUrl': items['previous'] ?? '',
+            },
+          );
+          final $ModelClass$Model $ModelClassCamelCase$ = $ModelClass$Model.fromMapGET(item);
+          _$ModelClassCamelCase$List.add($ModelClassCamelCase$);
+        }
+        return Either<List<$ModelClass$Model>?>.success(_$ModelClassCamelCase$List);
+      }
+      return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service getMoreEither', [error]);
+      return Either<List<$ModelClass$Model>?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<List<$ModelClass$Model>?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<$ModelClass$Model?>> detailEither(String $ModelClassCamelCase$ID) async {
+    try {
+      final url = '$_uri$$ModelClassCamelCase$ID/';
+      final CustomDio dio = CustomDio(url);
+      final dataResponse = await dio.getHttpEither(uri: url);
+
+      if (dataResponse.isSuccess) {
+        final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
+        return Either<$ModelClass$Model?>.success(data);
+      }
+      return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service detailEither', [error]);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<$ModelClass$Model?>> postEither($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final CustomDio dio = CustomDio(_uri);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.postHttpEither(dataMap);
+
+      if (dataResponse.isSuccess) {
+        final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
+        return Either<$ModelClass$Model?>.success(data);
+      }
+      return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service postEither', [error]);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<$ModelClass$Model?>> putEither($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final CustomDio dio = CustomDio(_uri);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.putHttpEither(dataMap);
+
+      if (dataResponse.isSuccess) {
+        final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
+        return Either<$ModelClass$Model?>.success(data);
+      }
+      return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service putEither', [error]);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<$ModelClass$Model?>> patchEither($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final CustomDio dio = CustomDio(_uri);
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+      final dataResponse = await dio.patchHttpEither(dataMap);
+
+      if (dataResponse.isSuccess) {
+        final $ModelClass$Model data = $ModelClass$Model.fromMap(dataResponse.success);
+        return Either<$ModelClass$Model?>.success(data);
+      }
+      return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service patchEither', [error]);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<$ModelClass$Model?>.failure(error.toString());
+    }
+  }
+
+  @override
+  Future<Either<bool?>> deleteEither($ModelClass$Model $ModelClassCamelCase$) async {
+    try {
+      final url = '$_uri${$ModelClassCamelCase$.id}/';
+      final CustomDio dio = CustomDio(url);
+
+      final dataMap = json.encode($ModelClassCamelCase$.toMap());
+
+      final dataResponse = await dio.deleteHttpEither(
+        dataMap,
+        $ModelClassCamelCase$.id.toString(),
+        uri: url,
+      );
+
+      if (dataResponse.isSuccess) {
+        return Either<bool?>.success(true);
+      }
+      return Either<bool?>.failure(dataResponse.failure.toString());
+    } on ArgumentError catch (error) {
+      AgtecCoreLogger().erro('ArgumentError no service patchEither', [error]);
+      return Either<bool?>.failure(error.toString());
+    } catch (error, stackTrace)  {
+      ExceptionCustom.service('Erro no service', error, error, stackTrace);
+      return Either<bool?>.failure(error.toString());
+    }
+  }
+
+  /// 
+  /// [===============================================================]
+  /// [ fim dos métodos com retorno Either]
+  /// [===============================================================]
+  /// 
+  /// 
 }

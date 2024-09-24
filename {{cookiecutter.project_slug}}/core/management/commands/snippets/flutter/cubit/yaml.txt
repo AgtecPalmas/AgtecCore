@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.7.3 #Lib para autenticação com contas Firebase.
   firebase_core: ^2.15.1 #lib para trabalhar com o Firebase
   firebase_crashlytics: ^3.3.5
+  firebase_remote_config: ^4.3.17 # Lib para trabalhar com configurações remotas do Firebase.
 
   # Sentry Plataforma de monitoramento de bugs
   sentry_flutter: ^7.9.0

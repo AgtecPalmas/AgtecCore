@@ -3,7 +3,7 @@ from core.management.commands.utils import Utils
 
 
 class RegisterProviderControllerBuilder:
-    def __init__(self, command) -> tuple:
+    def __init__(self, command):
         self.command = command
         self._snippet_dir = self.command.snippet_dir
         self._flutter_dir = self.command.flutter_dir
@@ -11,7 +11,7 @@ class RegisterProviderControllerBuilder:
         self._imports = ""
         self._registers = ""
 
-    def build(self) -> tuple:
+    def build(self):
         from core.management.commands.flutter import AppModel
 
         try:

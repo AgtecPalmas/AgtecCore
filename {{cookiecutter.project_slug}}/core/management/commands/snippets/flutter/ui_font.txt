@@ -1,10 +1,13 @@
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travado por default]
-/// Por ser um arquivo para configurar os widgets das fonts do aplicativo, e que não deve ser alterado
-/// por um novo build do Core, o mesmo está travado por default.
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
 
 import 'package:flutter/material.dart';
 

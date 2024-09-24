@@ -4,7 +4,7 @@ from core.management.commands.utils import Utils
 
 
 class SettingsControllerBuilder:
-    def __init__(self, command) -> None:
+    def __init__(self, command):
         self.command = command
         self._command_dir = Path(f"{self.command.path_command}/snippets/flutter/")
         self._snippet_dir = self.command.snippet_dir

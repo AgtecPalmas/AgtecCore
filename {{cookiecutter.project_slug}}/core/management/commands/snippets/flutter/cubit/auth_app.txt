@@ -1,14 +1,21 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
 /// Cubit do model Auth
-
+/// 
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+///
 /// As regras de negócio devem ser implementadas nesse arquivo evitando ao máximo
 /// de serem implementadas nos arquivos das views/pages.
 ///
-/// Os métodos de acesso à API devem ser implementados no Service.
+/// [Os métodos de acesso à API devem ser implementados no Service.]
+///
 
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
