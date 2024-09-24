@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automatimante pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
