@@ -341,3 +341,56 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 }
+
+
+///
+/// [CustomContainerWithLabelAndTextFormField]
+///
+/// Classe para criar um componente TextFormField com o label interno
+/// ao container.
+///
+/// [Params]:
+///  - labelText -> String contendo o texto do label
+///  - textFormField -> TextFormField do formulário
+///
+/// [Return]:
+///   Container com uma column como filho contendo o label e o TextFormField
+///
+class CustomContainerWithLabelAndTextFormField extends StatelessWidget {
+  final String labelText;
+  final TextFormField textFormField;
+
+  const CustomContainerWithLabelAndTextFormField({super.key, required this.labelText, required this.textFormField});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 8, top: 6, bottom:6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            labelText,
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          textFormField,
+        ],
+      ),
+    );
+  }
+}

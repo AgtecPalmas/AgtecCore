@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'core/application.config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'routers.dart';
@@ -25,9 +25,13 @@ $ImportCubit$
 String currentLanguage = '';
 
 void main() async {
-  /// Descomentar as linhas abaixo para inicializar o Firebase
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  /// [FirebaseRemoteConfig]
+  /// Para habilitar o acesso ao Firebase Remote Config
+  /// faça as configurações necessárias conforme a documentação do Firebase, 
+  /// https://firebase.google.com/docs/flutter/setup?hl=pt-br&platform=ios
+  /// e depois descomente a linha abaixo.
+  /// await ApplicationConfig().config();
+  
   runApp(const MyApp());
 }
 

@@ -1,0 +1,62 @@
+///
+/// [Arquivo gerado automatimante pelo NuvolsCore]
+///
+/// [Travado por default]
+/// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
+/// por um novo build do Core, o mesmo está travado por default.
+/// #FileLocked
+///
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/material.dart';
+
+import 'agtec.logger.dart';
+
+class ApplicationConfig {
+  Future<void> config() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await _configFirebase();
+    await _configSentry();
+  }
+
+  Future<void> _configFirebase() async {
+    try {
+      await Firebase.initializeApp();
+      final remoteConfig = FirebaseRemoteConfig.instance;
+      await remoteConfig.setConfigSettings(
+        RemoteConfigSettings(
+          fetchTimeout: const Duration(minutes: 1),
+          minimumFetchInterval: const Duration(minutes: 1),
+        ),
+      );
+      await remoteConfig.fetchAndActivate();
+    } catch (error) {
+      AgtecCoreLogger().erro('Erro ao inicializar o Firebase:', error);
+    }
+  }
+
+  Future<void> _configSentry() async {}
+
+  ///
+  /// [getFirebaseRemoteConfig]
+  /// 
+  /// Método para buscar uma chave no Firebase Remote Config
+  ///
+  /// Params:
+  ///  [key] chave a ser buscada no Firebase Remote Config
+  ///
+  /// Return:
+  ///  [String] valor da chave buscada
+  ///  [null] caso ocorra um erro ao buscar a chave
+  ///
+  static Future<String?> getFirebaseRemoteConfig(String key) async {
+    try {
+      final remoteConfig = FirebaseRemoteConfig.instance;
+      return remoteConfig.getString(key);
+    } catch (error) {
+      AgtecCoreLogger().erro('Erro ao buscar a chave $key no Firebase Remote Config:', error);
+      return null;
+    }
+  }
+}
