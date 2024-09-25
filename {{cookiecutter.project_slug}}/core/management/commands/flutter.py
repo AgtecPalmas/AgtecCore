@@ -302,6 +302,10 @@ class Command(BaseCommand):
         )
 
         self.config_file = str(Path(f"{self.core_dir}/config.dart"))
+        self.either_file = str(Path(f"{self.core_dir}/either.dart"))
+        self.application_config_file = str(
+            Path(f"{self.core_dir}/application.config.dart")
+        )
         self.util_file = str(Path(f"{self.core_dir}/util.dart"))
         self.snippet_dir = str(
             Path(f"{self.path_core}/management/commands/snippets/flutter")

@@ -223,15 +223,19 @@ FLUTTER_API_PATH = config("FLUTTER_API_PATH", "")
 
 """
 Configuração para o Middleware Header_control
-O middleware header_control é responsavel por controlar
-Se o componente header do agtec_core vai ser renderizado ou não
+O middleware header_control é responsável por controlar quais elementos do header serão renderizados
+
+    HEADER_COMPLETO = True -> Renderiza o header completo
+    HEADER_ACTIONS = True -> Renderiza as ações do header
+    HEADER_VERTICAL = True -> Renderiza o menu vertical
+    BREAD_CRUMBS = True -> Renderiza o bread crumbs
+
 """
-# Middleware Header Control
+
 HEADER_COMPLETO = True
 HEADER_ACTIONS = True
 HEADER_VERTICAL = True
 BREAD_CRUMBS = True
-# Fim da configuração do Middleware Header Control
 
 if DEBUG is False:
     sentry_sdk.init(
