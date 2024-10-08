@@ -220,7 +220,7 @@ FLUTTER_API_PASSWORD_DEV = config("FLUTTER_API_PASSWORD_DEV", "")
 # TODO Configure o caminho da API no arquivo .env criado para utilizar o Python Decouple
 API_PATH = config("API_PATH", "")
 FLUTTER_API_PATH = config("FLUTTER_API_PATH", "")
-IP_ADDRESS_DEFAULT_FLUTTER = config("IP_ADDRESS_DEFAULT_FLUTTER", "8.8.8.8")
+IP_ADDRESS_DEFAULT_FLUTTER = config("IP_ADDRESS_DEFAULT_FLUTTER", "")
 
 """
 Configuração para o Middleware Header_control
