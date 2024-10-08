@@ -5,6 +5,7 @@ from base.settings import (
     FLUTTER_API_PATH,
     FLUTTER_API_USER_DEV,
     SYSTEM_NAME,
+    IP_ADDRESS_DEFAULT_FLUTTER,
 )
 from core.management.commands.parser_content import ParserContent
 from core.management.commands.utils import Utils
@@ -38,7 +39,7 @@ class UtilsBuilder:
         try:
             import socket
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-                s.connect(("8.8.8.8", 80))
+                s.connect((IP_ADDRESS_DEFAULT_FLUTTER, 80))
                 return s.getsockname()[0]
         except Exception as e:
             Utils.show_error(f"Erro ao executar o _get_real_ip_address do UtilsBuilder: {e}")
