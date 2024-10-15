@@ -1,9 +1,15 @@
+///
 /// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travar o arquivo]
-/// Caso deseje "travar" o arquivo para não ser parseado novamente
-/// pelo manage do Django adicione um # antes da palavra abaixo
-/// FileLocked
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
 ///
 /// Model do objeto $ModelClass$
 /// 
@@ -11,7 +17,8 @@
 ///     toString() -> Sobrescreve o toString para trazer todos os atributos da classe.
 ///     fromMap() -> Realiza o parser do Json para o Model.
 ///     toMap()   -> Realiza o parser do Model para Json.
-/// 
+///
+ 
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
@@ -41,29 +48,21 @@ class $ModelClass$Model {
 
   factory $ModelClass$Model.fromMapGET(Map<String, dynamic> map){
     try {
-      return switch (map) {
-        {
-          'id': final String id,
-          'nextUrl': final String nextUrl,
-          'previousUrl': final String previousUrl,
-          'deleted': final bool deleted,
-        } =>
-          $ModelClass$Model(
-            id: id,
-            deleted: deleted,
-            nextUrl: nextUrl,
-            previousUrl: previousUrl,
-            enabled: map['enabled'] ?? true,
-            createdOn: map.containsKey('created_on')
-                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on'])
-                : null,
-            updatedOn: map.containsKey('updated_on')
-                ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on'])
-                : null,
-            $ParserfromMap$
-          ),
-        _ => throw ArgumentError('Json inválido do $ModelClass$Model'),
-      };
+      final model = $ModelClass$Model();
+      model.id = map.containsKey('id') ? map['id'] : 0;
+      model.nextUrl = map.containsKey('next_url') ? map['next_url'] : '';
+      model.previousUrl = map.containsKey('previous_url') ? map['previous_url'] : '';
+      model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
+      model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
+      model.createdOn =
+          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+      model.updatedOn =
+          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+
+      $ParserfromMap$
+
+      return model;
+      
     } catch (error, stackTrace) {
       ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
       return $ModelClass$Model();
@@ -72,9 +71,21 @@ class $ModelClass$Model {
 
   factory $ModelClass$Model.fromMap(Map<String, dynamic> map){
     try {
-      return $ModelClass$Model(
+      final model = $ModelClass$Model();
+      model.id = map.containsKey('id') ? map['id'] : 0;
+      model.nextUrl = map.containsKey('next_url') ? map['next_url'] : '';
+      model.previousUrl = map.containsKey('previous_url') ? map['previous_url'] : '';
+      model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
+      model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
+      model.createdOn =
+          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+      model.updatedOn =
+          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+
       $ParserfromMap$
-      );
+
+      return model;
+      
     } catch (error, stackTrace) {
       ExceptionCustom.general('Ocorreu um erro no método fromMap do $ModelClass$Model', error.toString(), stackTrace);
       return $ModelClass$Model();

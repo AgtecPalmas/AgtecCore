@@ -41,7 +41,7 @@ class Command(BaseCommand):
         self.path_core = Path(__file__).parent.parent.parent
         self.path_management_directory = Path(__file__).parent.parent
         self.path_root = Path(__file__).parent.parent.parent.parent
-        self.project_dir = Path(__file__).parent.parent.parent.parent.parent
+        self.project_dir = Path(__file__).parent.parent.parent.parent.parent.parent
         self.path_command = Path(__file__).parent
         self.project = str(self.path_root).split("\\")[-1]
         if self.operation_system != "windows":

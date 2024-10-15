@@ -36,6 +36,7 @@ DJANGO_TYPES = [
     "UUIDField",
     "ForeignKey",
     "OneToOneField",
+    "OptimizedImageField",
 ]
 
 DJANGO_USER_FIELDS = [
@@ -90,6 +91,7 @@ FLUTTER_TYPES = [
     "String",
     "String",
     "int",
+    "String",
 ]
 
 SQLLITE_TYPES = [

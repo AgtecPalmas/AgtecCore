@@ -16,6 +16,10 @@ PS C:\Users\Suporte> flutter doctor -v
     • Dart version 3.1.0
     • DevTools version 2.25.0
 ```
+# Integração com a camada de API, projeto Django ou FastAPI
+
+Por padrão todos os endpoint's das API's necessitam de autenticação, caso 
+deseje desenvolver sem a necessidade de autenticar, acesse os projetos Django/FastAPI e desabilite a autenticação.
 
 ## Dica de linter para o projeto
 
@@ -63,10 +67,12 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
 
 ```dart
 void main() async {
-    /// Descomentar as linhas abaixo para inicializar o Firebase
-    
-    // WidgetsFlutterBinding.ensureInitialized();
-    // await Firebase.initializeApp();
+    /// [FirebaseRemoteConfig]
+    /// Para habilitar o acesso ao Firebase Remote Config
+    /// faça as configurações necessárias conforme a documentação do Firebase,
+    /// https://firebase.google.com/docs/flutter/setup?hl=pt-br&platform=ios
+    /// e depois descomente a linha abaixo.
+    /// await ApplicationConfig().config();
     runApp(MyApp());
 }
 ```

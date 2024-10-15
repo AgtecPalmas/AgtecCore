@@ -1,3 +1,14 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+
 import '../../core/agtec.logger.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

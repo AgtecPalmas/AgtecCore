@@ -1,10 +1,13 @@
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travado por default]
-/// Por ser um mixin de verificação da conexão com a internet, e que não deve ser alterado
-/// por um novo build do Core, o mesmo está travado por default.
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';

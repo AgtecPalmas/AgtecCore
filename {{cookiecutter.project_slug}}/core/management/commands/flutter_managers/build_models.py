@@ -89,21 +89,22 @@ class ModelsBuilder:
                         )
 
                     if str(_atribute) == "DateTime?":
-                        self._content_from_json += f"{_name_dart}: map.containsKey('{_name}')? Util.convertDate(map['{_name}']): null, \n"
+                        self._content_from_json += (
+                            f"model.{_name_dart} = map.containsKey('{_name}')? Util.convertDate(map['{_name}']): null; \n")
 
                     elif str(_atribute) == "double":
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] ?? 0.0,\n{' ' * 8}"
+                            f"model.{_name_dart} = map.containsKey('{_name}')? map['{_name}'] ?? 0.0: 0.0;\n{' ' * 8}"
                         )
 
                     elif str(_atribute) == "bool":
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] ?? false,\n{' ' * 8}"
+                            f"model.{_name_dart} = map.containsKey('{_name}')? map['{_name}'] ?? false: false;\n{' ' * 8}"
                         )
 
                     else:
                         self._content_from_json += (
-                            f"{_name_dart}: map['{_name}'] ?? '',\n{' ' * 8}"
+                            f"model.{_name_dart} = map.containsKey('{_name}')? map['{_name}'] ?? '': '';\n{' ' * 8}"
                         )
 
                 if _field_type in {"DateTimeField", "DateField", "TimeField"}:

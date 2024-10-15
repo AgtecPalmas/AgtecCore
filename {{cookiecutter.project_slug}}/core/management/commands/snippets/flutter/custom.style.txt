@@ -1,10 +1,13 @@
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
 ///
-/// [Travado por default]
-/// Por ser um arquivo de customização do TextFormField, e que não deve ser alterado
-/// por um novo build do Core, o mesmo está travado por default.
+/// [Arquivo gerado automaticamente pelo AgtecCore]
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
 /// #FileLocked
 ///
+
 import 'package:flutter/material.dart';
 
 // Exemplo de USO
@@ -41,6 +44,43 @@ class CustomTextFormFieldStyle {
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+    );
+  }
+}
+
+
+///
+/// [CustomTextFormFieldStyleWithInternalLabel]
+///
+/// TextFormFieldStyle para ser utilizado nos input's
+/// com label interno, sendo o parâmetro decoration do TextFormField, que
+/// será filho do componente CustomContainerWithLabelAndTextFormField
+///
+class CustomTextFormFieldStyleWithInternalLabel {
+  static InputDecoration textFieldStyle({
+    String hintText = '',
+    bool hiddenCounter = false,
+  }) {
+    return InputDecoration(
+      hintText: hintText,
+      counter: hiddenCounter ? const Offstage() : null,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      contentPadding: const EdgeInsets.only(left: 0, top: 4, bottom: -2),
+      hintStyle: const TextStyle(
+        color: Colors.grey,
+        fontSize: 14,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w400,
+      ),
+      errorStyle: TextStyle(
+        fontSize: 12,
+        color: Colors.red.shade300,
+        fontWeight: FontWeight.w400,
+      ),
+      isDense: true,
+      errorBorder: InputBorder.none,
+      border: InputBorder.none,
+      focusedErrorBorder: InputBorder.none,
     );
   }
 }
