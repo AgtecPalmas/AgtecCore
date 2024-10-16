@@ -302,6 +302,10 @@ class Command(BaseCommand):
         )
 
         self.config_file = str(Path(f"{self.core_dir}/config.dart"))
+        self.either_file = str(Path(f"{self.core_dir}/either.dart"))
+        self.application_config_file = str(
+            Path(f"{self.core_dir}/application.config.dart")
+        )
         self.util_file = str(Path(f"{self.core_dir}/util.dart"))
         self.snippet_dir = str(
             Path(f"{self.path_core}/management/commands/snippets/flutter")
@@ -385,7 +389,6 @@ class Command(BaseCommand):
     def _init_flutter(self):
         try:
             if not Utils.check_dir(self.flutter_dir):
-
                 Utils.show_message("Criando projeto Flutter")
 
                 _cmd = [
@@ -641,7 +644,7 @@ class Command(BaseCommand):
                 for i, model in enumerate(self.current_app_model.models):
                     bar.update(
                         task,
-                        description=f"Gerando App [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i+1}/{len(self.current_app_model.models)}]",
+                        description=f"Gerando App [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i + 1}/{len(self.current_app_model.models)}]",
                     )
                     self._create_source_files(self.current_app_model.app_name, model[1])
                     bar.advance(task, 1)
