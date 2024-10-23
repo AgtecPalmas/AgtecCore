@@ -48,6 +48,15 @@ class CoreBase(Base):
         return cls.__name__.lower()
 
 
+class CoreBaseInherit(Base):
+    __abstract__ = True
+
+    # Generate __tablename__ automatically
+    @declared_attr
+    def __tablename__(cls) -> str:
+        return cls.__name__.lower()
+
+
 DB_ENGINE = settings.db_engine
 DB_USER = settings.db_user
 DB_PASSWORD = settings.db_password
