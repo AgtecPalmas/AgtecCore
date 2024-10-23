@@ -62,6 +62,8 @@ class ModelsBuild:
             result = ""
             imports = ""
             many_to_many = ""
+            class_is_inherited = model.__bases__[0].__name__ != "Base"
+
             for field in iter(fields):
                 item = {
                     "app": (str(field).split("."))[0],
@@ -112,7 +114,12 @@ class ModelsBuild:
                         attribute = self.__add_attr_default(field, mapped_field)
                     if field.unique is True:
                         attribute += f" ,unique={field.unique}"
-                    result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
+                    # Verificando se o field_name é django_user_id e se o class_is_inherited é True para retornar ''
+                    # para não criar o campo django_user_id na tabela das classe que não herdam de Base
+                    if field_name == "django_user_id" and class_is_inherited is True:
+                        result += ""
+                    else:
+                        result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
                     if relationship is not None:
                         result += relationship
 
