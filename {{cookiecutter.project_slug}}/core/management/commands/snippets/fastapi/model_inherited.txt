@@ -1,0 +1,25 @@
+import datetime
+from sqlalchemy import (
+    UUID,
+    Boolean,
+    Column,
+    Date,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Time,
+)
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from core.database import CoreBase
+
+$imports$
+
+$manyToMany$
+class $ModelClass$(CoreBase):
+	__tablename__ = "$table$"
+
+$columns$

@@ -53,16 +53,18 @@ class ModelsBuild:
 
     def build(self):
         try:
-            content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/model.txt")))
-            content = content.replace("$ModelClass$", self.model)
             model = self.app_instance.get_model(self.model)
+            class_is_inherited = model.__bases__[0].__name__ != "Base"
+            content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/model.txt")))
+            if class_is_inherited is True:
+                content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/model_inherited.txt")))
+            content = content.replace("$ModelClass$", self.model)
             content = content.replace("$table$", model._meta.db_table)
             fields = model._meta.fields
             related_fields = model._meta.many_to_many
             result = ""
             imports = ""
             many_to_many = ""
-            class_is_inherited = model.__bases__[0].__name__ != "Base"
 
             for field in iter(fields):
                 item = {
@@ -94,6 +96,12 @@ class ModelsBuild:
                             field_name = field.get_attname_column()[1]
                             __model = field.related_model._meta
                             attribute = f"ForeignKey('{__model.db_table}.id')"
+
+                            # Verificando se o class_is_inherited é True, ou seja é herança, para
+                            # criar o campo para a classe pai e adicionar o parâmetro primary_key=True
+                            if class_is_inherited is True:
+                                attribute = f"ForeignKey('{__model.db_table}.id'), primary_key=True"
+
                             if __model.app_label not in [item.get("app"), "auth"]:
                                 imports += f"from {__model.app_label}.{__model.object_name.lower()}.models import {__model.object_name}\n"
                             if item.get("name") != "django_user":
