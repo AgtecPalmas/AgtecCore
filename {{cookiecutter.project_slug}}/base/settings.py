@@ -225,7 +225,6 @@ ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="agtec_c
 
 PATH_PRODUCTION = config("PATH_PRODUCTION", default="")
 
-# TODO Configure as variáveis do projeto Flutter no arquivo .env ou no docker-compose
 FLUTTER_API_PATH = config("FLUTTER_API_PATH", "")
 IP_ADDRESS_DEFAULT_FLUTTER = config("IP_ADDRESS_DEFAULT_FLUTTER", "")
 
