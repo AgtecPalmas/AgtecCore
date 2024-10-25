@@ -9,22 +9,41 @@ Arquivo gerado pelo Build FastAPI
 """
 
 import datetime
-from sqlalchemy import (
-    UUID, Boolean, Column, Date, DateTime,
-    Float, ForeignKey, Integer, String, Table, Time)
+from typing import Optional, Set
+from uuid import UUID
 
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pydantic import BaseModel, EmailStr
 
-from core.database import CoreBaseInherit
-
-$imports$
+$auth_import$
 
 """
 TODO Verifique se os atributos foram renderizados corretamente
 """
 
-$manyToMany$
-class $ModelClass$(CoreBaseInherit):
-	__tablename__ = "$table$"
+# $ModelClass$
+class $ModelClass$Base(BaseModel):
+$fields$
 
-$columns$
+class $ModelClass$Create($ModelClass$Base):
+    pass
+
+
+class $ModelClass$Update($ModelClass$Base):
+    pass
+
+
+class $ModelClass$InDBBase($ModelClass$Base):
+$fields_db$
+
+    class Config:
+        from_attributes = True
+
+
+# Additional properties to return via API
+class $ModelClass$($ModelClass$InDBBase):
+    pass
+
+
+# Additional properties stored in DB
+class $ModelClass$InDB($ModelClass$InDBBase):
+    pass
