@@ -1,11 +1,19 @@
 """
-Arquivo gerado pelo Build FastAPI
 ==================================================================================
-| Esta classe foi definida no projeto Django como herdando de outra
-| classe, o build do FastAPI tentou filtrar apenas os atributos pertencentes
-| a classe filha, entretanto é necessário da sua parte verificar se algum
-| atributo da classe pai passou pelo nosso processo de filtragem
+Atenção.
 ==================================================================================
+
+Arquivo gerado pelo Build FastAPI, portanto é necessário
+verificar se todos os atributos foram renderizados corretamente.
+
+No projeto Django a classe abaixo foi definida como herdando de outra classe,
+por isso essa classe possui particularidades que devem ser observadas.
+
+Os campos da classe Pai não devem estar renderizados aqui.
+Na classe $ModelClass$Base deve haver um campo seguindo o padrão `classe_pai_ptr_id`
+
+TODO: Verificar se os atributos foram renderizados corretamente.
+
 """
 
 import datetime
@@ -16,9 +24,6 @@ from pydantic import BaseModel, EmailStr
 
 $auth_import$
 
-"""
-TODO Verifique se os atributos foram renderizados corretamente
-"""
 
 # $ModelClass$
 class $ModelClass$Base(BaseModel):

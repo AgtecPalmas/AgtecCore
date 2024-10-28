@@ -51,8 +51,35 @@ class ModelsBuild:
                 attribute += f", default = '{field_str}'"
         return attribute
 
+    def __check_file_is_locked(self, path: str) -> bool:
+        """Método para verificar se no arquivo passado como parâmetro existe a palavra FileLocked
+           caso existe o processo de parser do arquivo não será executado
+
+        Arguments:
+            path {str} - Caminho para o arquivo a ser checado
+
+        Returns:
+            bool - True se a palavra existir e False caso contrário
+        """
+        __process_result = False
+        try:
+            if Utils.check_file(path):
+                with open(path, encoding="utf-8") as file:
+                    content = file.read()
+                    __process_result = "#FileLocked" in content
+        except Exception as error:
+            Utils.show_error(f"Error in Utils.check_file: {error}")
+        finally:
+            if __process_result:
+                Utils.show_message(f"[cyan]Arquivo bloqueado[/]", emoji="lock")
+            return __process_result
+
     def build(self):
         try:
+            # Verificando se o arquivo destino está travado contra o parser
+            if self.__check_file_is_locked(self.path_model_fastapi) is True: # noqa
+                return
+
             model = self.app_instance.get_model(self.model)
             class_is_inherited = model.__bases__[0].__name__ != "Base"
             content = Utils.get_snippet(str(Path(f"{self.snippet_dir}/model.txt")))

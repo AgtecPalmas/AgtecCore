@@ -1,3 +1,49 @@
+"""
+===================================================================================================
+Atenção:
+===================================================================================================
+
+Arquivo gerado pelo Build FastAPI, portanto é necessário
+verificar se todos os atributos foram renderizados corretamente.
+
+Caso exista relacionamento entre classes, ``ForeignKey``, e a classe referenciada
+herde de outra classe lá no projeto Django é necessário verificar se a definição está
+apontando para o atributo correto da classe 'pai'.
+
+Como exemplo imagine que exista um relacionamento entre as classes A e B, onde a classe B possui
+um relacionamento com a classe A, e a classe A no projeto Django herda de outra classe.
+
+No exemplo o campo PK da classe A apontará para o campo PK da classe pai, que por padrão segue o formato:
+'nome_classe_pai_ptr_id', ou seja 'nome_classe_pai' + '_ptr_id'.
+
+Portando será necessário verificar
+se o campo na classe B está apontando para o campo correto da classe A.
+
+e.g.:
+
+    class A(CoreBase):
+        __tablename__ = "classe_a"
+
+        classepai_ptr_id: Mapped[UUID] = mapped_column(
+            ForeignKey("classe_pai.id"), primary_key=True, nullable=False
+        )
+
+    class B(CoreBase):
+        __tablename__ = "classe_b"
+
+        a_id: Mapped[UUID] = mapped_column(
+            ForeignKey("classe_a.classepai_ptr_id"), nullable=True
+        )
+        a = relationship("A", foreign_keys=[a_id])
+
+TODO: Verificar se os atributos foram renderizados corretamente.
+
+Para travar o parser basta adicionar o # antes da palavra FileLocked na linha abaixo.
+
+FileLocked
+
+"""
+
 import datetime
 from sqlalchemy import (
     UUID,
