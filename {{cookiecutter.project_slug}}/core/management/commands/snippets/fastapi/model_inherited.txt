@@ -1,0 +1,50 @@
+"""
+==================================================================================
+Atenção.
+==================================================================================
+
+Arquivo gerado pelo Build FastAPI, portanto é necessário
+verificar se todos os atributos foram renderizados corretamente.
+
+No projeto Django a classe abaixo foi definida como herdando de outra classe,
+por isso essa classe possui particularidades que devem ser observadas.
+
+Ela herda de CoreBaseInherit, outro detalhe é existe um relacionamento com a classe `pai`,
+que segue o padrão: 'nome_classe_pai' + '_ptr_id'.
+
+e.g.:
+
+    class A(CoreBaseInherit):
+        __tablename__ = "classe_a"
+
+        classepai_ptr_id: Mapped[UUID] = mapped_column(
+            ForeignKey("classe_pai.id"), primary_key=True, nullable=False
+        )
+        classepai = relationship("ClassePai", foreign_keys=[classepai_ptr_id])
+        ...
+
+TODO: Verificar se os atributos foram renderizados corretamente.
+
+Para travar o parser basta adicionar o # antes da palavra FileLocked na linha abaixo.
+
+FileLocked
+
+"""
+
+import datetime
+from sqlalchemy import (
+    UUID, Boolean, Column, Date, DateTime,
+    Float, ForeignKey, Integer, String, Table, Time)
+
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from core.database import CoreBaseInherit
+
+$imports$
+
+
+$manyToMany$
+class $ModelClass$(CoreBaseInherit):
+	__tablename__ = "$table$"
+
+$columns$

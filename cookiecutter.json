@@ -10,6 +10,8 @@
   "author_name": "Informe seu nome",
   "domain_name": "palmas.to.gov.br",
   "email": "agtec@palmas.to.gov.br",
+  "flutter_organization_name": "Agtec",
+  "flutter_organization_domain": "{{ '.'.join(cookiecutter.domain_name.split('.')[::-1]) }}",
   "django_version": "4.2",
   "python_version": "3.10",
   "postgresql_version": "14.2",
@@ -50,7 +52,6 @@
     "scanapi_exemplo.yaml",
     "docs/**",
     "contrib/**",
-    ".env.example",
     ".flake8",
     ".coveragerc",
     ".prospector.yaml"

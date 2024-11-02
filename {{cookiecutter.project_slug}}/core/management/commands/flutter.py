@@ -397,7 +397,7 @@ class Command(BaseCommand):
                     "--project-name",
                     f"{self.flutter_project.lower()}",
                     "--org",
-                    f"br.com.{self.organization_flutter_name}",
+                    f"{self.organization_flutter_name}",
                     "--platforms",
                     "android,ios",
                     f"{self.flutter_dir}",

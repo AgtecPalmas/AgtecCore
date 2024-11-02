@@ -222,6 +222,26 @@ def build_default_apps() -> None:
         print(f"{EMOJIS['error']} Erro ao construir as apps padrões do projeto: {e}")
         sys.exit(1)
 
+def restore_cookiecutter_json_file_backup():
+    """ Método para restaurar o arquivo cookiecutter_backup.json """
+    try:
+        path_root = os.getcwd()
+        path_path = Path(path_root)
+        path_cookiecutter_json_file = Path(f"{path_path.parent.parent}/AgtecCore/cookiecutter.json")
+        path_cookiecutter_json_file_backup = Path(f"{path_path.parent}/AgtecCore/cookiecutter_backup.json")
+
+        # Atualizando o conteúdo do arquivo cookiecutter.json com o conteúdo do arquivo cookiecutter_backup.json
+        shutil.copyfile(path_cookiecutter_json_file_backup, path_cookiecutter_json_file)
+
+        # Removendo o arquivo cookiecutter_backup.json
+        os.remove(path_cookiecutter_json_file_backup)
+
+    except OSError as os_error:
+        print(f"{EMOJIS['error']} Erro ao remover o arquivo cookiecutter do projeto: {os_error}")
+        sys.exit(0)
+    except Exception as e:
+        print(f"{EMOJIS['error']} Erro ao remover o arquivo cookiecutter do projeto: {e}")
+        sys.exit(1)
 
 copy_all_files_to_root_dir()
 copy_file_env_example_to_env()
@@ -232,4 +252,5 @@ if INSTALL_REQUIREMENTS and pip_install_requirements() and BUILD_APPS:
 if GIT_INIT:
     init_git()
 
+# restore_cookiecutter_json_file_backup()
 remove_subdirectory_project()
