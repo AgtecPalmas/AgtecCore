@@ -400,6 +400,11 @@ class RedisService:
                     resource=recurso, id_resources=id_recursos, request_kwargs=kwargs
                 )
 
+                # Verificando se o debug é true para limpar o cache
+                if settings.debug:
+                    self.invalidate_pattern(recurso)
+                    return await func(request, *args, **kwargs)
+
                 if request.method in ["POST", "PUT", "PATCH", "DELETE"]:
                     self._handle_resource_update(recurso, chave, padrao_invalidado)
                     return await func(request, *args, **kwargs)

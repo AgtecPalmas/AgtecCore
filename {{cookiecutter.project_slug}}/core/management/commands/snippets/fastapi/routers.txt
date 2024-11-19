@@ -4,6 +4,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, Request, Response, status, BackgroundTasks
 
 from authentication import security
+from core.config import settings
 from core.database import AsyncDBDependency
 from core.exceptions import NotFoundException, UUIDValueException
 from core.functions import valid_uuid
@@ -25,17 +26,17 @@ MODEL_NAME = '$model$'
 model_router = APIRouter(
         prefix=f'/{MODEL_NAME}',
         tags=[f'{MODEL_NAME}'],
-        dependencies=[security.ACTIVE_USER_DEPENDENCY]
+        dependencies= [] if settings.debug else [security.ACTIVE_USER_DEPENDENCY]
     )
 
-@model_router.get('/clear-cache', dependencies=[GET_DEPENDENCY])
+@model_router.get('/clear-cache', dependencies=[] if settings.debug else [GET_DEPENDENCY])
 async def clear_cache(request: Request) -> Any:
     result = use_cases.clear_cache(MODEL_NAME)
     if result:
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@model_router.get('/refresh-cache', dependencies=[GET_DEPENDENCY])
+@model_router.get('/refresh-cache', dependencies=[] if settings.debug else [GET_DEPENDENCY])
 async def refresh_cache(
     bg_tasks: BackgroundTasks, request: Request, db: AsyncDBDependency
 ) -> Any:
@@ -46,7 +47,7 @@ async def refresh_cache(
 @model_router.get(
     '/',
     response_model=PaginationBase,
-    dependencies=[GET_DEPENDENCY]
+    dependencies=[] if settings.debug else [GET_DEPENDENCY]
 )
 @redis_service.cache_request(MODEL_NAME)
 async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit: int = 25) -> Any:
@@ -61,7 +62,7 @@ async def fetch(request: Request, db: AsyncDBDependency, offset: int = 0, limit:
 @model_router.post(
     '/',
     response_model=schemas.$ModelClass$Create,
-    dependencies=[CREATE_DEPENDENCY]
+    dependencies=[] if settings.debug else [CREATE_DEPENDENCY]
 )
 @redis_service.cache_request(MODEL_NAME)
 async def create(request: Request, db: AsyncDBDependency, data: schemas.$ModelClass$Create) -> Any:
@@ -70,7 +71,7 @@ async def create(request: Request, db: AsyncDBDependency, data: schemas.$ModelCl
 @model_router.get(
     '/{id}',
     response_model=schemas.$ModelClass$,
-    dependencies=[GET_DEPENDENCY, Depends(valid_uuid)]
+    dependencies=[Depends(valid_uuid)] if settings.debug else [GET_DEPENDENCY, Depends(valid_uuid)]
 )
 @redis_service.cache_request(MODEL_NAME, id_recursos=['id'])
 async def get(request: Request, id: str, db: AsyncDBDependency) -> Any:
@@ -79,7 +80,7 @@ async def get(request: Request, id: str, db: AsyncDBDependency) -> Any:
 @model_router.put(
     '/{id}',
     response_model=schemas.$ModelClass$Update,
-    dependencies=[UPDATE_DEPENDENCY, Depends(valid_uuid)]
+    dependencies=[Depends(valid_uuid)] if settings.debug else [UPDATE_DEPENDENCY, Depends(valid_uuid)]
 )
 @redis_service.cache_request(MODEL_NAME, id_recursos=['id'])
 async def update(request: Request, db: AsyncDBDependency, id: str, data: schemas.$ModelClass$Update) -> Any:
@@ -89,7 +90,7 @@ async def update(request: Request, db: AsyncDBDependency, id: str, data: schemas
 @model_router.delete(
     '/{id}',
     response_model=schemas.$ModelClass$,
-    dependencies=[DELETE_DEPENDENCY, Depends(valid_uuid)]
+    dependencies=[Depends(valid_uuid)] if settings.debug else[DELETE_DEPENDENCY, Depends(valid_uuid)]
 )
 @redis_service.cache_request(MODEL_NAME, id_recursos=['id'])
 async def delete(request: Request, db: AsyncDBDependency, id: str) -> Any:
@@ -99,7 +100,7 @@ async def delete(request: Request, db: AsyncDBDependency, id: str) -> Any:
 @model_router.put(
     '/restore/{id}',
     response_model=schemas.$ModelClass$,
-    dependencies=[*RESTORE_DEPENDENCY, Depends(valid_uuid)]
+    dependencies=[Depends(valid_uuid)] if settings.debug else [*RESTORE_DEPENDENCY, Depends(valid_uuid)]
 )
 @redis_service.cache_request(MODEL_NAME, id_recursos=['id'])
 async def restore(request: Request, db: AsyncDBDependency, id: str) -> Any:

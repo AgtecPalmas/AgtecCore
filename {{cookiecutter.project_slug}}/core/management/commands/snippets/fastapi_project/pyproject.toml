@@ -18,4 +18,5 @@ extend-exclude = '''
 '''
 
 [tool.taskipy.tasks]
-run = "python -m uvicorn main:app --reload"
+run = "fastapi dev --host 0.0.0.0 --port 8181 --reload"
+test = "pytest -s -x -vv"
