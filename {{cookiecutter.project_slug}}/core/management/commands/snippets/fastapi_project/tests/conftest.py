@@ -18,7 +18,7 @@ from testcontainers.postgres import PostgresContainer
 from core.database import get_async_db, Base
 from main import app
 
-BASE_URL = 'http://test/api/v1/'
+BASE_URL = 'https://test/api/v1/'
 
 
 # Fixture para o container do Postgres
