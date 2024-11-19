@@ -69,7 +69,7 @@ class ModelsBuild:
                     __process_result = "#FileLocked" in content
 
                 if __process_result:
-                    Utils.show_message(f"[cyan]Arquivo bloqueado[/]", emoji="lock")
+                    Utils.show_message("[cyan]Arquivo bloqueado[/]", emoji="lock")
                 return __process_result
         except Exception as error:
             Utils.show_error(f"Error in Utils.check_file: {error}")
@@ -159,7 +159,6 @@ class ModelsBuild:
                         _itens_classe = list(model.__dict__.keys())
                         if field_name in field_name in _itens_classe:
                             result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
-                        # result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
                     else:
                         result += f"\t{field_name}: Mapped[{mapped_field}] = mapped_column({attribute})\n"
                     if relationship is not None:
