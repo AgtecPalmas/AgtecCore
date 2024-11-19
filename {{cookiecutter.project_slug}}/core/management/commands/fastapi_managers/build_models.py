@@ -67,12 +67,12 @@ class ModelsBuild:
                 with open(path, encoding="utf-8") as file:
                     content = file.read()
                     __process_result = "#FileLocked" in content
+
+                if __process_result:
+                    Utils.show_message(f"[cyan]Arquivo bloqueado[/]", emoji="lock")
+                return __process_result
         except Exception as error:
             Utils.show_error(f"Error in Utils.check_file: {error}")
-        finally:
-            if __process_result:
-                Utils.show_message(f"[cyan]Arquivo bloqueado[/]", emoji="lock")
-            return __process_result
 
     def build(self):
         try:
