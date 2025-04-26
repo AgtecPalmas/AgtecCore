@@ -5,17 +5,12 @@ Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
 
 # Versão do Flutter
 
-#### Esse projeto foi gerado e validado utilizando a versão do 3.13.0 do Flutter.
-```code
-PS C:\Users\Suporte> flutter doctor -v
-[✓] Flutter (Channel stable, 3.13.0, on Microsoft Windows [versÆo 10.0.22621.2134], locale pt-BR)
-    • Flutter version 3.13.0 on channel stable at C:\Flutter\flutter
-    • Upstream repository https://github.com/flutter/flutter.git
-    • Framework revision efbf63d9c6 (2 days ago), 2023-08-15 21:05:06 -0500
-    • Engine revision 1ac611c64e
-    • Dart version 3.1.0
-    • DevTools version 2.25.0
-```
+#### Esse projeto foi gerado usando as versões:
+
+Dart: 3.7.2
+Flutter: 3.29.3
+DevTools: 2.42.3
+
 # Integração com a camada de API, projeto Django ou FastAPI
 
 Por padrão todos os endpoint's das API's necessitam de autenticação, caso 
@@ -40,20 +35,13 @@ Como forma de auxiliar no desenvolvimento do projeto, recomendamos aplicar as re
 1. Criar um repositório git
 2. Configurando o projeto para executar no Android 
     
-    2.1 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle** o **multiDexEnabled true**
+    2.1 Adicionar no arquivo build.gradle no caminho **android/app/build.gradle.kts** para **23**
     ```code
         defaultConfig {
-            ...
-            multiDexEnabled true 
-            ...
+          ... 
+           minSdk = 23
+          ...
         }
-    ```
-
-    2.2 Alterar o arquivo build.gradle no caminho **android/build.gradle** para a versão '1.9.10' do kotlin
-    ```code
-        buildscript {
-           ext.kotlin_version = '1.9.10'
-           ...
     ```
 
 1. Instalar o FVM para facilitar o trabalho no versionamento das versões do Flutter [https://fvm.app/] (Etapa opcional)
