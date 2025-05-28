@@ -243,55 +243,55 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
     );
   }
 
-  ///
-  /// Método para exibir o BottomSheet com título e formulário, e com altura dinâmica
-  /// baseado na exibição ou não do teclado
-  ///
-  void _showDynamicBottomSheetDynamicHeight([$ModelClass$Model? updateModel]) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: AppColors.listViewPageBottomSheetBackground,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            // Obtemos a altura do teclado usando MediaQuery
-            final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-            return AnimatedPadding(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-              padding: EdgeInsets.only(bottom: keyboardHeight),
-              child: DraggableScrollableSheet(
-                expand: false,
-                maxChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMaxChildSize,
-                minChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMinChildSize,
-                builder: (context, scrollController) {
-                  return SingleChildScrollView(
-                    controller: scrollController,
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppSizeMarginPadding.paddingModalBottomSheetAll),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            updateModel != null ? 'Editando item ${updateModel.id}' : 'Cadastrar',
-                            style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
-                          ),
-                          const SizedBox(height: AppSizeMarginPadding.paddingModalBottomSizedBoxTitleForm),
-                          $ModelClass$Form(controller: controller$ModelClass$, updateModel: updateModel),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+  // ///
+  // /// Método para exibir o BottomSheet com título e formulário, e com altura dinâmica
+  // /// baseado na exibição ou não do teclado
+  // ///
+  // void _showDynamicBottomSheetDynamicHeight([$ModelClass$Model? updateModel]) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: AppColors.listViewPageBottomSheetBackground,
+  //     isScrollControlled: true,
+  //     builder: (BuildContext context) {
+  //       return LayoutBuilder(
+  //         builder: (context, constraints) {
+  //           // Obtemos a altura do teclado usando MediaQuery
+  //           final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+  //           return AnimatedPadding(
+  //             duration: const Duration(milliseconds: 300),
+  //             curve: Curves.easeOut,
+  //             padding: EdgeInsets.only(bottom: keyboardHeight),
+  //             child: DraggableScrollableSheet(
+  //               expand: false,
+  //               maxChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMaxChildSize,
+  //               minChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMinChildSize,
+  //               builder: (context, scrollController) {
+  //                 return SingleChildScrollView(
+  //                   controller: scrollController,
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.all(AppSizeMarginPadding.paddingModalBottomSheetAll),
+  //                     child: Column(
+  //                       mainAxisSize: MainAxisSize.min,
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           updateModel != null ? 'Editando item ${updateModel.id}' : 'Cadastrar',
+  //                           style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
+  //                         ),
+  //                         const SizedBox(height: AppSizeMarginPadding.paddingModalBottomSizedBoxTitleForm),
+  //                         $ModelClass$Form(controller: controller$ModelClass$, updateModel: updateModel),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
 
   ///

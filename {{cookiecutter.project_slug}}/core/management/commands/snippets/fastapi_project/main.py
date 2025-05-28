@@ -16,25 +16,25 @@ if settings.backend_cors_origins:
         allow_headers=["*"],
     )
 
-if settings.debug is False:
-    import sentry_sdk
-    from elasticapm.contrib.starlette import ElasticAPM
+try:
+    if settings.debug is False:
+        import sentry_sdk
+        from elasticapm.contrib.starlette import ElasticAPM
 
-    from core.elastic import ELASTIC_APM
+        from core.elastic import ELASTIC_APM
 
-    sentry_sdk.init(
-        dsn=settings.sentry_dsn, enable_tracing=True, environment=settings.environment
-    )
+        sentry_sdk.init(
+            dsn=settings.sentry_dsn,
+            enable_tracing=True,
+            environment=settings.environment,
+        )
 
-    app.add_middleware(
-        ElasticAPM,
-        client=ELASTIC_APM,
-    )
-else:
-    from core.middlewares.log import CustomLog
+        app.add_middleware(ElasticAPM, client=ELASTIC_APM)
+    else:
+        from core.middlewares.log import CustomLog
 
-    app.add_middleware(
-        CustomLog,
-    )
+        app.add_middleware(CustomLog)
+except ImportError:
+    pass
 
 app.include_router(api_router)
