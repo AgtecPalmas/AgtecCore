@@ -43,7 +43,7 @@ class _AppHeaderPageState extends State<AppHeaderPage> {
             width: AppSizeMarginPadding.avatarHeaderWH,
             child: CircleAvatar(
               radius: AppSizeMarginPadding.iconMenuDefaultWH,
-              backgroundImage: AssetImage('assets/images/avatar.png'),
+              backgroundImage: AssetImage('assets/icons/icon.png'),
             ),
           ),
         ],

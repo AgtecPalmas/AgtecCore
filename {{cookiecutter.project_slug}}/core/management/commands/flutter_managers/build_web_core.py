@@ -14,67 +14,57 @@ from core.management.commands.utils import Utils
 class FlutterWebBuildProject:
     def __init__(self, command) -> None:
         self.command = command
-        self.snippet_web_dir = self.command.snippet_web_dir
+        self._snippet_dir = self.command.snippet_dir
         self.flutter_web_dir = self.command.flutter_dir
         self.flutter_web_project = Path(
             f"{self.command.path_command}/snippets/flutter_web_project/"
         )
         self._django_dir = self.command.path_root
 
-    def __create_base_project(self):
-        """Método para criar o projeto Flutter Web
-        que deverá ser criado como subdiretório do diretório FlutterWeb
-        ficando o diretório pai no mesmo nível do Django e do Flutter"""
-
-        try:
-            if not Utils.check_dir(self.flutter_web_project):
-                Utils.show_message("Criando projeto Flutter Web")
-
-                _cmd = [
-                    "flutter",
-                    "create",
-                    "--project-name",
-                    f"{self.flutter_project.lower()}",
-                    "--org",
-                    f"{self.organization_flutter_name}",
-                    "--platforms",
-                    "web",
-                    f"{self.flutter_web_project}",
-                ]
-
-                subprocess.call(
-                    _cmd,
-                    text=True,
-                    stdin=subprocess.DEVNULL,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                )
-                shutil.copyfile(
-                    f"{self.snippet_dir}/README.md", f"{self.flutter_dir}/README.md"
-                )
-        except Exception as error:
-            Utils.show_error(f"Error ao criar o projeto flutter web: {error}")
-
     def __override_project(self):
         """
-        Método para sobrescrever o projeto Flutter Web,
+        def para sobrescrever o projeto Flutter Web,
         mais especificamente a pasta core
         """
 
         try:
-            Utils.show_message(
-                f"Substituindo o core do projeto Flutter Web: {self.flutter_web_dir}"
-            )
-            shutil.rmtree(f"{self.flutter_web_dir}/core")
-            shutil.copytree(
-                f"{self.flutter_web_project}/core", f"{self.flutter_web_dir}/core"
-            )
+            # Verificando se o core já existe
+            if Utils.check_dir(f"{self.flutter_web_dir}/lib/core") is False:
+                Utils.show_message("Adicionando o core ao projeto flutter")
+                shutil.copytree(
+                    f"{self.flutter_web_project}/core", f"{self.flutter_web_dir}/lib/core"
+                )
+            
+            # Verificando se o diretório de constantes já existe
+            if Utils.check_dir(f"{self.flutter_web_dir}/lib/constants") is False:
+                # Copiando o diretório de constantes
+                Utils.show_message("Adicionando as constantes ao projeto flutter")
+                shutil.copytree(
+                    f"{self.flutter_web_project}/constants", f"{self.flutter_web_dir}/lib/constants"
+                )
+
+            # Verificando se o diretório de apps já existe
+            if Utils.check_dir(f"{self.flutter_web_dir}/lib/apps") is False:
+                # Copiando o diretório de apps
+                Utils.show_message("Adicionando as apps padrões ao projeto")
+                shutil.copytree(
+                    f"{self.flutter_web_project}/apps", f"{self.flutter_web_dir}/lib/apps"
+                )
+            
+            # Verificando se o diretório de assets já existe
+            if Utils.check_dir(f"{self.flutter_web_dir}/assets") is False:
+                # Copiando o diretório de assets
+                Utils.show_message("Adicionando os assets ao projeto")
+                shutil.copytree(
+                    f"{self.flutter_web_project}/assets", f"{self.flutter_web_dir}/assets"
+                )
+
         except Exception as error:
             Utils.show_error(f"Error in _override_project: {error}")
 
     def build(self):
         """
-        Método para construir o projeto Flutter Web
+        def para construir o projeto Flutter Web
         """
         try:
             self.__override_project()

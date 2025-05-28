@@ -7,22 +7,30 @@ import sys
 import time
 from pathlib import Path
 
-from base.settings import FLUTTER_APPS, ORGANIZATION_FLUTTER_NAME
+from django.apps import apps
+from django.core.management.base import BaseCommand
+
+from base.settings import FLUTTER_APPS_WEB, ORGANIZATION_FLUTTER_NAME
 from core.management.commands.constants.flutter import (
     DJANGO_TYPES,
     FLUTTER_TYPES,
     SQLLITE_TYPES,
 )
 from core.management.commands.flutter_managers import (
-    MainFileWebBuilder
+    AddAnalysisOptionsWebBuilder,
+    AddPackagesWebBuilder,
+    AppsWebDirectoriesBuilder,
+    AppsWebInjectMenuItensBuilder,
+    AppsWebRouterInjectRootRouteBuilder,
+    FlutterWebBuildProject,
+    MainFileWebBuilder,
+    AppsWebInjectProvidersBuilder
 )
+
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
-from django.apps import apps
-from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("django_debug")
-
 
 
 class AppModel:
@@ -267,6 +275,10 @@ class Command(BaseCommand):
         self.core_dir = str(Path(f"{self.flutter_dir}/lib/core"))
         self.constants_dir = str(Path(f"{self.flutter_dir}/lib/constants"))
 
+        self.snippet_dir = str(
+            Path(f"{self.path_core}/management/commands/snippets/flutter_web_project")
+        )
+
         self.current_app_model = None
 
     BASE_DIR = os.path.dirname(
@@ -279,6 +291,35 @@ class Command(BaseCommand):
 
     _sqlite_types = SQLLITE_TYPES
 
+
+    def add_arguments(self, parser):
+        parser.add_argument("App", type=str, nargs="?")
+        parser.add_argument("Model", type=str, nargs="?")
+        parser.add_argument(
+            "--app", action="store_true", dest="app", help="Criar a App e seus models"
+        )
+        parser.add_argument(
+            "--app_model",
+            action="store_true",
+            dest="app_model",
+            help="Criar a App e o Model informado",
+        )
+        parser.add_argument(
+            "--main", action="store_true", dest="main", help="Renderizar a main.dart"
+        )
+        parser.add_argument(
+            "--yaml", action="store_true", dest="yaml", help="Refatorando o YAML"
+        )
+        parser.add_argument(
+            "--clear", action="store_true", dest="clear", help="Limpar projeto flutter."
+        )
+        parser.add_argument(
+            "--all",
+            action="store_true",
+            dest="all",
+            help="Criar o projeto Flutter e todos os arquivos necessários.",
+        )
+
     def _ignore_fields(self, field):
         try:
             return ignore_base_fields(field)
@@ -288,7 +329,7 @@ class Command(BaseCommand):
     def _init_flutter(self):
         try:
             if not Utils.check_dir(self.flutter_dir):
-                Utils.show_message("Criando projeto Flutter")
+                Utils.show_message("Criando projeto Flutter Web..")
 
                 _cmd = [
                     "flutter",
@@ -315,11 +356,81 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in _init_flutter: {error}")
 
+    def _copy_defaults_directories(self):
+        """
+        def para copiar o diretório core do snippet flutter_web para
+        dentro da pasta lib do projeto flutter web
+        """
+        try:
+            Utils.show_message("Criando o diretório core do projeto Flutter Web")
+            FlutterWebBuildProject(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _copy_defaults_directories: {error}")
+
+    def _replace_main(self):
+        """def para substituir o arquivo main.dart do projeto"""
+        try:
+            Utils.show_message("Atualizando o arquivo main.dart")
+            MainFileWebBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in __replace_main: {error}")
+
+    def _add_analysis_options(self):
+        """def para adicionar o arquivo analysis_options.yaml ao projeto criado"""
+        try:
+            Utils.show_message("Criando o arquivo analysis_options.yaml")
+            AddAnalysisOptionsWebBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _add_analysis_options: {error}")
+
+    def _add_packages(self):
+        """def para copiar o arquivo de dependências do projeto"""
+        try:
+            Utils.show_message("Criando o arquivo de dependências do projeto")
+            AddPackagesWebBuilder(command=self).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _add_packages: {error}")
+
+    def _create_apps_directories(self, app):
+        """def para criar os diretórios das apps dentro do projeto Flutter Web"""
+        try:
+            AppsWebDirectoriesBuilder(command=self, app=app).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _create_apps_directories: {error}")
+
+    def _inject_routes_app_in_root_route(self, flutter_project):
+        """def para injetar os routers das apps no arquivo app.routes.dart"""
+        try:
+            Utils.show_message("Injetando os routers das apps no arquivo app.routes.dart")
+            AppsWebRouterInjectRootRouteBuilder(command=self, flutter_project=flutter_project).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _inject_routes_app_in_root_route: {error}")
+    
+    def _inject_provider_in_main(self, flutter_project):
+        """def para injetar os routers das apps no arquivo app.routes.dart"""
+        try:
+            Utils.show_message("Injetando os routers das apps no arquivo app.routes.dart")
+            AppsWebInjectProvidersBuilder(command=self, flutter_project=flutter_project).build()
+        except Exception as error:
+            Utils.show_error(f"Error in _inject_routes_app_in_root_route: {error}")
+
     def _build_flutter(self):
         try:
             if Utils.check_dir(self.flutter_dir):
-                Utils.show_message("Atualizando o arquivo de dependências.")
+                # Adicionando o arquivo de dependências
                 self._add_packages()
+                time.sleep(3)
+
+                # Adicionando o arquivo de análise
+                self._add_analysis_options()
+                time.sleep(3)
+
+                # Copiando o core do projeto
+                self._copy_defaults_directories()
+                time.sleep(3)
+
+                # Atualizando o arquivo main.dart
+                self._replace_main()
                 time.sleep(3)
 
                 current_path = os.getcwd()
@@ -333,17 +444,11 @@ class Command(BaseCommand):
                 )
                 os.chdir(current_path)
 
-                Utils.show_message("Atualizando o arquivo main.dart.")
-                self._replace_main()
+                # Utils.show_message("Atualizando o arquivo main.dart.")
+                # self._replace_main()
 
         except Exception as error:
             Utils.show_error(f"Error in __build_flutter: {error}")
-
-    def _replace_main(self):
-        try:
-            MainFileBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __replace_main: {error}")
 
     def _check_flutter_installation(self) -> bool:
         if subprocess.call(
@@ -366,9 +471,6 @@ class Command(BaseCommand):
             return
         elif options["yaml"]:
             self._add_packages()
-            return
-        elif options["routers"]:
-            self._build_named_routes()
             return
         elif options["clear"]:
             self._clear_project()
@@ -395,6 +497,18 @@ class Command(BaseCommand):
                 \n[b cyan]--all\n--clear\n--main\n--routers\n--yaml[/]"
             )
 
+    def _create_source_from_generators(self):
+        try:
+            Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
+
+            # Criando o diretório da APP com os subdiretórios
+            AppsWebDirectoriesBuilder(
+                command=self, app=self.current_app_model.app
+            ).build()
+
+        except Exception as error:
+            Utils.show_error(f"Error in __create_source_from_generators: {error}")
+
     def handle(self, *args, **options):
         Utils.show_core_box("", tipo="core")
         app = options["App"] or None
@@ -404,57 +518,28 @@ class Command(BaseCommand):
         if self._check_flutter_installation() is False:
             return
 
-        if app is None and model is None and not FLUTTER_APPS:
+        if app is None and model is None and not FLUTTER_APPS_WEB:
             Utils.show_error(
-                "Você não configurou o FLUTTER_APPS no settings e também não informou uma APP para ser gerada.",
+                "Você não configurou o FLUTTER_APPS_WEB no settings e também não informou uma APP para ser gerada.",
             )
             return
 
-        if app:
-            try:
-                apps.get_app_config(app)
-            except LookupError:
-                Utils.show_error(f"App {app} não encontrada")
-                return
+        self.call_methods(options)
 
-            if model:
-                try:
-                    apps.get_app_config(app).get_model(model)
-                except LookupError:
-                    Utils.show_error(f"Modelo {model} não encontrado")
-                    return
-
-        if app and model:
-            if Utils.contain_number(app) or Utils.contain_number(model):
-                Utils.show_message("Nome da app ou do model contendo números")
-                return
-
-            self.current_app_model = AppModel(self.flutter_project, app, model)
-            with Utils.ProgressBar() as bar:
-                bar.add_task(
-                    f"Gerando App [b green]{app}[/]:[b cyan]{model}[/] - [1/1]",
-                    total=1,
-                )
-                self._create_source_from_model()
-
-        elif app and model is None:
-            if Utils.contain_number(app):
-                Utils.show_error("Nome da app contendo números")
-                return
-
-            self.current_app_model = AppModel(self.flutter_project, app)
+        for _app in FLUTTER_APPS_WEB:
+            self.current_app_model = AppModel(self.flutter_project, _app)
             self._create_source_from_generators()
 
-        elif not FLUTTER_APPS:
-            Utils.show_error("Não foram informadas as APPS a serem mapeadas")
-            return
+        # Chamando o método para injetar os routers das apps no arquivo app.routes.dart
+        self._inject_routes_app_in_root_route(flutter_project=self.flutter_project)
 
-        else:
-            self.call_methods(options)
+        # Chamando o método para injetar os itens do menu no arquivo app.menu.dart
+        AppsWebInjectMenuItensBuilder(
+            command=self, flutter_project=self.flutter_project
+        ).build()
 
-            for _app in FLUTTER_APPS:
-                self.current_app_model = AppModel(self.flutter_project, _app)
-                self._create_source_from_generators()
+        # Chamando o método para injetar os providers no arquivo main.dart
+        self._inject_provider_in_main(flutter_project=self.flutter_project)
 
         Utils.show_message("Processo concluído", title=True, emoji="rocket")
 

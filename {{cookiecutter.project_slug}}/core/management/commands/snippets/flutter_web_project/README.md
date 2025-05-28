@@ -8,11 +8,22 @@ conceitos do build-flutter.
 -----
 
 ## Dados do projeto
-
 ### Flutter 3.29.3
-
 ### Dart 3.7.0
 
+----- 
+
+## Pacotes de ícones 
+
+No projeto o site utilizado como fonte para os ícones é o [HeroIcons](https://heroicons.com/), onde os ícones são baixados em SVG e convertidos para PNG. Mas caso utilizar outro site trazemos como
+sugestão:
+
+- [Font Awesome](https://fontawesome.com/)
+- [Icons8](https://icons8.com/icons)
+- [Flaticon](https://www.flaticon.com/)
+- [IconFinder](https://www.iconfinder.com/)
+- [IconScout](https://iconscout.com/)
+- [Iconmonstr](https://iconmonstr.com/)
 
 -----
 
