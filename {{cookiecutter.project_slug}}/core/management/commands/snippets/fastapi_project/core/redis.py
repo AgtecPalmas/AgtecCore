@@ -3,7 +3,7 @@ import functools
 import json
 import pickle
 from http import HTTPStatus
-from typing import Any, Callable, Optional
+from typing import Any, Callable
 
 from fastapi import Request
 from fastapi.encoders import jsonable_encoder
@@ -130,7 +130,7 @@ class RedisService:
 
         return f"{chave}:offset:{offset}:limit:{limit}"
 
-    def get_key(self, key: str) -> Optional[str]:
+    def get_key(self, key: str) -> str | None:
         """
         Gets the value for a key from Redis.
 
@@ -328,7 +328,7 @@ class RedisService:
         except RedisError as e:
             raise RedisError(f"Error while invalidating pattern '{pattern}': {e}")
 
-    def get_specific_field(self, key_name: str, field: str) -> Optional[str]:
+    def get_specific_field(self, key_name: str, field: str) -> str | None:
         """
         Get
 
