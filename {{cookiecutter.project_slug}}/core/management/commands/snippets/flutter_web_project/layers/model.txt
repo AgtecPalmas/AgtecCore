@@ -55,9 +55,9 @@ class $ModelClass$Model {
       model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
       model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
       model.createdOn =
-          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+          map.containsKey('created_at') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_at']) : null;
       model.updatedOn =
-          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+          map.containsKey('updated_at') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_at']) : null;
 
       $ParserfromMap$
 
@@ -78,9 +78,9 @@ class $ModelClass$Model {
       model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
       model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
       model.createdOn =
-          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+          map.containsKey('created_at') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_at']) : null;
       model.updatedOn =
-          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+          map.containsKey('updated_at') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_at']) : null;
 
       $ParserfromMap$
 

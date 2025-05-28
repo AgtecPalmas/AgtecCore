@@ -2,8 +2,8 @@ IGNORE_FIELDS = [
     "id",
     "deleted",
     "enabled",
-    "created_on",
-    "updated_on"
+    "created_at",
+    "updated_at"
 ]
 
 AUTO_PEP_8_COMMAND = (
