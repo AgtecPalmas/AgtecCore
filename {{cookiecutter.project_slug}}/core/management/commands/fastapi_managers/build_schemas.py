@@ -28,7 +28,7 @@ class SchemasBuild:
 
     def __add_attr_null(self, field, attribute): # noqa
         if getattr(field, "null", None):
-            attribute = f"Optional[{attribute}] = None"
+            attribute = f"{attribute} | None = None"
         return attribute
 
     def __add_attr_default(self, field, attribute): # noqa
@@ -108,7 +108,7 @@ class SchemasBuild:
                             continue
 
                         if str(field_name).endswith("_id"):
-                            result += f"\t{field_name}: Optional[UUID]\n"
+                            result += f"\t{field_name}: UUID | None\n"
                             continue
 
                         field_name = field.get_attname_column()[1]
