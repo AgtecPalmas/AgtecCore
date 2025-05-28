@@ -1,11 +1,12 @@
-/// [Arquivo gerado automatimante pelo NuvolsCore]
+///
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
 /// por um novo build do Core, o mesmo está travado por default.
 /// #FileLocked
 ///
-library;
+
 
 import 'package:dio/dio.dart';
 import '/core/app.config.dart';
@@ -33,22 +34,22 @@ final class RefreshTokenInterceptor extends Interceptor {
             // Chamando o método para realizar a retentativa da consulta
             // await _retryRequest(err);
           } else {
-            NuvolsCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
+            AppLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
             throw err;
           }
         } else {
           // Erro não é 403 nem 401
-          NuvolsCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
+          AppLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
           // Passando o erro para cima, quem chamou a requisição
           throw err;
         }
       }
     } on DioException catch (err, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: $stackTrace', err);
+      AppLogger().erro('Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: $stackTrace', err);
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace', error);
+      AppLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace', error);
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     }

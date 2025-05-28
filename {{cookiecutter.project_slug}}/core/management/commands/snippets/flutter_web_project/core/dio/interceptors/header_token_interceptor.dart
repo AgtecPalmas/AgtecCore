@@ -1,11 +1,12 @@
-/// [Arquivo gerado automatimante pelo NuvolsCore]
+///
+/// [Arquivo gerado automatimante pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado
 /// por um novo build do Core, o mesmo está travado por default.
 /// #FileLocked
 ///
-library;
+
 import 'package:dio/dio.dart';
 
 import '../../app.config.dart';

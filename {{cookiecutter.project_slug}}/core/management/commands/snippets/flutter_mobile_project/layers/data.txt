@@ -1,0 +1,200 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+/// ========================================================================
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+/// ========================================================================
+///
+/// Data do model $ModelClass$
+///
+/// Os Métodos padrões gerados são:
+///
+///     initDb() -> Inicializa o banco de dados.
+///     fecthAll() -> Recupera a lista de $ModelClass$.
+///     save() -> Salva os dados de uma instância do $ModelClass$.
+///     detail() -> Recupera os detalhes de $ModelClass$.
+///     update() -> Atualiza os dados de uma instância do $ModelClass$.
+///     delete() -> Deleta um registro.
+///     deleteAll() -> Deleta todos os registros.
+///
+/// ========================================================================
+
+
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sembast/sembast.dart' as smbt;
+import 'package:sembast/sembast_io.dart' as smbt_io;
+
+import '../../../core/app.logger.dart';
+
+import '../models/$Model$.dart';
+
+class $ModelClass$Data {
+  static  $ModelClass$Data? _instance;
+  factory $ModelClass$Data() {
+    _instance ??= $ModelClass$Data._internal();
+    return _instance!;
+  }
+
+  $ModelClass$Data._internal();
+
+  final String _storeName = '$ModelClass$StoreDB';
+
+  Future<smbt.Database?> initDb() async {
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      await dir.create(recursive: true);
+      final dbPath = join(dir.path, '$project$.db');
+      return await smbt_io.databaseFactoryIo.openDatabase(dbPath);
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método initDb do ArbitroData',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    }
+    return null;
+  }
+
+  Future<List<$ModelClass$Model>> fetchAll() async {
+    var localList = <$ModelClass$Model>[];
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+        final store = smbt.intMapStoreFactory.store(_storeName);
+        final data = await store.find(db);
+        localList = data.map((snapshot) {
+          return $ModelClass$Model.fromMap(snapshot.value);
+        }).toList();
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método fetchAll do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return localList;
+  }
+
+  Future<$ModelClass$Model?> get(int id) async {
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+          final store = smbt.intMapStoreFactory.store(_storeName);
+          final data = await store.findFirst(db);
+          if(data != null){
+            return $ModelClass$Model.fromMap(data.value);
+          }
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método get do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return null;
+  }
+
+  Future<bool> save($ModelClass$Model modelData) async {
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+          final store = smbt.intMapStoreFactory.store(_storeName);
+          final map = modelData.toMap();
+          if(map != null){
+            // Salvando o dado do novo modelData
+            await store.add(db, map);
+            return true;
+          }
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método save do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return false;
+  }
+
+  Future<bool> deleteAll() async {
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+          final store = smbt.intMapStoreFactory.store(_storeName);
+          // Apagando todos os registros anteriores
+          await store.delete(db);
+          return true;
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método deletar do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return false;
+  }
+
+  Future<bool> delete(int id) async {
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+          final store = smbt.intMapStoreFactory.store(_storeName);
+          await store.delete(db);
+          return true;
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método deletar do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return false;
+  }
+
+  Future<bool> update($ModelClass$Model modelData) async {
+    smbt.Database? db;
+    try {
+      db = await initDb();
+      if (db != null) {
+          final store = smbt.intMapStoreFactory.store(_storeName);
+          final finder = smbt.Finder(filter: smbt.Filter.byKey(modelData.id));
+          final map = modelData.toMap();
+          if(map != null){
+            await store.update(db, map, finder: finder);
+            return true;
+          }
+      }
+    } catch (error, stackTrace) {
+      AppLogger().erro(
+        'Ocorreu no método update do $ModelClass$Data',
+        'Error: ${error.toString()}\nException: ${stackTrace.toString()}',
+      );
+    } finally {
+      await db?.close();
+    }
+    return false;
+  }
+}

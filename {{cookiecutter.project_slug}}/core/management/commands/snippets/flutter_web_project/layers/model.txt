@@ -1,0 +1,146 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+///
+/// [Arquivo travado]
+///
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+///
+/// Model do objeto $ModelClass$
+/// 
+/// Os Métodos padrões gerados são:
+///     toString() -> Sobrescreve o toString para trazer todos os atributos da classe.
+///     copyWith() -> Retorna uma cópia do objeto com os atributos alterados.
+///     fromMap() -> Realiza o parser do Json para o Model.
+///     toMap()   -> Realiza o parser do Model para Json.
+///
+ 
+import 'dart:convert';
+import 'package:intl/intl.dart';
+import '../../../core/app.logger.dart';
+
+class $ModelClass$Model {
+  String id;
+  String nextUrl;
+  String previousUrl;
+  bool enabled;
+  bool deleted;
+  DateTime? createdOn;
+  DateTime? updatedOn;
+  $AttributeClass$
+
+  $ModelClass$Model({
+    this.id = '',
+    this.nextUrl = '',
+    this.previousUrl = '',
+    this.enabled = true,
+    this.deleted = false,
+    DateTime? createdOn,
+    DateTime? updatedOn,
+    $ConstructorModelClass$
+  });
+
+  factory $ModelClass$Model.fromMapGET(Map<String, dynamic> map){
+    try {
+      final model = $ModelClass$Model();
+      model.id = map.containsKey('id') ? map['id'] : '';
+      model.nextUrl = map.containsKey('next_url') ? map['next_url'] : '';
+      model.previousUrl = map.containsKey('previous_url') ? map['previous_url'] : '';
+      model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
+      model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
+      model.createdOn =
+          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+      model.updatedOn =
+          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+
+      $ParserfromMap$
+
+      return model;
+      
+    } catch (error, stackTrace) {
+      AppLogger().erro('Erro $ModelClass$Model.fromMapGET', error, stackTrace);
+      return $ModelClass$Model();
+    }
+  }
+
+  factory $ModelClass$Model.fromMap(Map<String, dynamic> map){
+    try {
+      final model = $ModelClass$Model();
+      model.id = map.containsKey('id') ? map['id'] : '';
+      model.nextUrl = map.containsKey('next_url') ? map['next_url'] : '';
+      model.previousUrl = map.containsKey('previous_url') ? map['previous_url'] : '';
+      model.enabled = map.containsKey('enabled') ? map['enabled'] : false;
+      model.deleted = map.containsKey('deleted') ? map['deleted'] : false;
+      model.createdOn =
+          map.containsKey('created_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['created_on']) : null;
+      model.updatedOn =
+          map.containsKey('updated_on') ? DateFormat('yyyy-MM-ddTHH:mm:ss.SSSSSSZ').parse(map['updated_on']) : null;
+
+      $ParserfromMap$
+
+      return model;
+      
+    } catch (error, stackTrace) {
+      AppLogger().erro('Erro $ModelClass$Model.fromMap', error, stackTrace);
+
+      return $ModelClass$Model();
+    }
+  }
+
+  Map<String, dynamic>? toMap(){
+    try{
+      return {
+        'nextUrl': nextUrl,
+        'previousUrl': previousUrl,
+        $ParserToMap$
+      };
+    } catch (error, stackTrace) {
+      AppLogger().erro('Erro $ModelClass$Model.toMap', error, stackTrace);
+      return null;
+    }
+  }
+
+  $ModelClass$Model copyWith({
+    String? id,
+    String? nextUrl,
+    String? previousUrl,
+    bool? enabled,
+    bool? deleted,
+    DateTime? createdOn,
+    DateTime? updatedOn,
+    $AttributeClassConstructor$
+  }) {
+    try {
+      return $ModelClass$Model(
+      id: id ?? this.id,
+      nextUrl: nextUrl ?? this.nextUrl,
+      previousUrl: previousUrl ?? this.previousUrl,
+      enabled: enabled ?? this.enabled,
+      deleted: deleted ?? this.deleted,
+      createdOn: createdOn ?? this.createdOn,
+      updatedOn: updatedOn ?? this.updatedOn,
+      $AttributesClassCopyWith$
+    );
+    } catch (error, stackTrace) {
+      AppLogger().erro('Erro $ModelClass$Model.copyWith', error, stackTrace);
+      return $ModelClass$Model();
+    }
+  }
+ 
+  String toJson() => json.encode(toMap());
+
+  factory $ModelClass$Model.fromJson(String source) => $ModelClass$Model.fromMap(json.decode(source));
+
+  /// Sobscrevendo o método toString para retornar todos os atributos da classe.
+  @override
+  String toString() {
+    return '$StringReturn$';
+  }
+
+}

@@ -20,6 +20,8 @@ class AppColors {
   static const Color withF4F4F4 = Color(0xFFF4F4F4);
   static const Color withEBEBEB = Color(0xFFEBEBEB);
   static const Color gray858080 = Color(0xFF858080);
+  static const Color warningBackgroundSnackBarMessage = Color.fromARGB(255, 181, 143, 78);
+  static const Color warningIconColorSnackBarMessage = Color.fromARGB(255, 34, 34, 33);
   static const Color menuBackground = Color(0xFFFFFFFF);
   static const Color menuBorder = Color(0xFFEBEBEB);
   static const Color desktopBackground = Color(0xFFF5F5F5);

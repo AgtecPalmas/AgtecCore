@@ -80,15 +80,12 @@ class DashboardService implements HttpInterface {
 
   @override
   Future<Either<Exception, T>> put<T>({
-    String? uri,
     required dynamic data,
-    required String id,
     bool multipart = false,
   }) async {
     try {
       final response = await _dio.put(
-        uri: uri ?? _uri,
-        id: id,
+        uri: _uri,
         data: data,
         multipart: multipart,
       );
@@ -100,19 +97,15 @@ class DashboardService implements HttpInterface {
       return Left(Exception('Error updating data, error: $error'));
     }
   }
-
+  
   @override
   Future<Either<Exception, T>> patch<T>({
-    String? uri,
     required dynamic data,
-    required String id,
     bool multipart = false,
   }) async {
     try {
       final response = await _dio.patch(
-        uri: uri ?? _uri,
-        id: id,
-        data: data,
+        uri: _uri, data: data,
         multipart: multipart,
       );
       if (response.isRight) {

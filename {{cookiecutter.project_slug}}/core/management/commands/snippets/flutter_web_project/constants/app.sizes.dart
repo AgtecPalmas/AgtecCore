@@ -43,9 +43,11 @@ class AppSizeMarginPadding {
   static const double paddingMenuItemB = 10.0;
   static const double paddingMenuItemL = 16.0;
 
-  // Padding ModalForm
+  // ModalForm
   static const double paddingModalFormContentV = 12.0;
   static const double paddingModalFormContentH = 16.0;
+  static const double paddingBottonBoxParentModalForm = 220;
+  static const double heightSizedBoxParentModalForm = 0.80;
 
   // Button
   static const double paddingButtonDefaultV = 16.0;
@@ -54,6 +56,7 @@ class AppSizeMarginPadding {
   // Table
   static const double paddingTableV = 12.0;
   static const double paddingTableH = 24.0;
+  static const double heightSizedBoxParentTable = 0.75;
 
   // TableColumnAction
   static const double paddingTableColumnActionV = 12.0;

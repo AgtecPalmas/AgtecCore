@@ -1,19 +1,29 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+/// [Descrição]
+/// Arquivo responsável por definir as rotas do projeto.
+/// que será utilizado para navegar entre as telas do app.
+/// as rotas de cada app serão apensadas neste arquivo.
+///
+
+
+///
+/// [Arquivo travado]
+///
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
 import 'package:go_router/go_router.dart';
 
 import '../apps/auth/pages/sigin.dart';
-import '../apps/products/pages/products.dart';
 import '../apps/settings/pages/settings.dart';
 
-///
-/// Arquivo para controlar as rotas principais do app
-/// as rotas internas das app serão injetadas
-/// aqui teremos apenas as rotas principais
-///  dashboard
-///  login
-///  logout
-///  settings
-///
-///
+$ImportRouters$
 
 final appRouter = GoRouter(
   initialLocation: '/dashboard',
@@ -28,18 +38,13 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/products',
-      name: 'products',
-      builder: (context, state) {
-        return const ProductPage(title: 'Produtos');
-      },
-    ),
-    GoRoute(
       path: '/settings',
       name: 'configuracao',
       builder: (context, state) {
         return const SettingsPage(title: 'Configurações');
       },
     ),
+    // Incorporando as rotas de cada app
+    $AppsRouters$
   ],
 );
