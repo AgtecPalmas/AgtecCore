@@ -48,7 +48,7 @@ DJANGO_USER_FIELDS = [
     "enabled",
     "deleted",
     "createdOn",
-    "created_on",
+    "created_at",
     "updatedOn",
     "updatedOn",
 ]
@@ -139,7 +139,7 @@ IGNORE_FIELDS = [
     "enabled",
     "deleted",
     "createdOn",
-    "created_on",
+    "created_at",
     "updatedOn",
-    "updated_on",
+    "updated_at",
 ]

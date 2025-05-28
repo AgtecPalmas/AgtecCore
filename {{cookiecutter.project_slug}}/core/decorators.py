@@ -826,7 +826,7 @@ def audit_save(save):
                 if (
                     audit_relationship.tipo_revision == "Edit Por Relacionamento"
                     and len(fields_model) <= 1
-                    and "updated_on" in fields_model
+                    and "updated_at" in fields_model
                 ):
                     list_audit_relationships.remove(audit_relationship)
                 else:
@@ -845,20 +845,20 @@ def audit_save(save):
                         )
 
             # trata o caso de ter apenas o update_on no pai
-            __audit_updated_on = False
+            __audit_updated_at = False
             __audit_fields_change_len = 0
             __audit_fields_model_exists = False
             __audit_fields_forms_exists = False
             if audit.fields_change is not None:
                 # Verificando se o audit.fields_change é diferente de None para poder recuperar os valores
                 __audit_fields_change_len = len(audit.fields_change["fields_model"])
-                __audit_updated_on = "updated_on" in audit.fields_change["fields_model"]
+                __audit_updated_at = "updated_at" in audit.fields_change["fields_model"]
                 __audit_fields_model_exists = "fields_model" in audit.fields_change
                 __audit_fields_forms_exists = "fields_forms" in audit.fields_change
 
             if (
                 __audit_fields_change_len <= 1
-                and __audit_updated_on
+                and __audit_updated_at
                 and len(list_audit_relationships) <= 0
             ):
                 audit.fields_change["fields_model"] = []

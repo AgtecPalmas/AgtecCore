@@ -74,8 +74,8 @@ class Base(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     enabled = models.BooleanField("Ativo", default=True)
     deleted = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     # Verificação se deve ser usado o manager padrão ou o customizado
     if USE_DEFAULT_MANAGER is False:
@@ -276,7 +276,7 @@ class Base(models.Model):
         return request.user.has_perm(f"{opts.app_label}.{codename}")
 
     def __str__(self):
-        return self.updated_on.strftime("%d/%m/%Y %H:%M:%S")
+        return self.updated_at.strftime("%d/%m/%Y %H:%M:%S")
 
 
 """

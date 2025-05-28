@@ -19,8 +19,8 @@ class $ModelClass$Update($ModelClass$Base):
 class $ModelClass$InDBBase($ModelClass$Base):
     id: UUID
     deleted: bool
-    created_on: datetime.datetime
-    updated_on: datetime.datetime
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
 
     class Config:
         from_attributes = True

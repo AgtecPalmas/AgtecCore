@@ -249,8 +249,8 @@ class ParserHTMLBuild:
                 for field in iter(__fields)
                 if str(field).split(".")[2]
                 not in (
-                    "updated_on",
-                    "created_on",
+                    "updated_at",
+                    "created_at",
                     "deleted",
                     "enabled",
                     "id",
