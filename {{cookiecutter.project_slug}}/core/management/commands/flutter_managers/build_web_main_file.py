@@ -6,7 +6,7 @@ from core.management.commands.flutter_managers.build_register_controller import 
 from core.management.commands.utils import Utils
 
 
-class MainFileBuilder:
+class MainFileWebBuilder:
     def __init__(self, command, flutter_apps) -> None:
         self._command = command
         self._flutter_apps = flutter_apps

@@ -14,32 +14,7 @@ from core.management.commands.constants.flutter import (
     SQLLITE_TYPES,
 )
 from core.management.commands.flutter_managers import (
-    AddPackagesBuilder,
-    AnalisysOptionsBuilder,
-    AuthAppBuilder,
-    ColorsSchemeBuilder,
-    ControllerBuilder,
-    CustomColorsBuilder,
-    CustomDIOBuilder,
-    CustomDIOInterceptorsBuilder,
-    CustomStyleBuilder,
-    DataServiceLayerBuild,
-    ExceptionClassBuilder,
-    LoggerBuilder,
-    MainFileBuilder,
-    MixinsClassBuilder,
-    ModelsBuilder,
-    NamedRoutesBuilder,
-    PagesBuilder,
-    RegisterProviderControllerBuilder,
-    SettingsControllerBuilder,
-    SizedExtensionsBuilder,
-    SourceFileBuilder,
-    StringExtensionsBuilder,
-    TranslateStringBuilder,
-    UserInterfaceBuilder,
-    UtilsBuilder,
-    WidgetBuilder,
+    MainFileWebBuilder
 )
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
@@ -47,6 +22,7 @@ from django.apps import apps
 from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("django_debug")
+
 
 
 class AppModel:
@@ -267,9 +243,7 @@ class AppModel:
 
 
 class Command(BaseCommand):
-    help = """Manager responsável por analisar as classes de modelos do projeto Django para gerar os demais arquivos
-    do projeto Django (templates, forms, views, urls, serializers) seguindo os arquivos de modelos, snippets, e também
-    gerar o projeto Flutter correspondente às apps do Django"""
+    help = """Manager responsável por criar o projeto Flutter Web"""
 
     def __init__(self):
         super().__init__()
@@ -286,47 +260,12 @@ class Command(BaseCommand):
         # Refatorando para Path
         self.project = Path.cwd().parts[-1]
         self.path_root = Path(*Path.cwd().parts[:-2]).as_posix()
-        self.flutter_dir = str(Path(f"{self.path_root}/Flutter/{self.project.lower()}"))
+        self.flutter_dir = str(Path(f"{self.path_root}/FlutterWeb/{self.project.lower()}"))
 
         self.project = self.project.replace("-", "").replace("_", "")
         self.flutter_project = f"{self.project}"
-
         self.core_dir = str(Path(f"{self.flutter_dir}/lib/core"))
-        self.ui_dir = str(Path(f"{self.core_dir}/user_interface"))
-        self.ui_extensions = str(Path(f"{self.core_dir}/extensions"))
-        self.ui_extensions_file = str(
-            Path(f"{self.ui_extensions}/size_screen_extension.dart")
-        )
-        self.ui_string_extensions_file = str(
-            Path(f"{self.ui_extensions}/string_methods_extensions.dart")
-        )
-
-        self.config_file = str(Path(f"{self.core_dir}/config.dart"))
-        self.either_file = str(Path(f"{self.core_dir}/either.dart"))
-        self.application_config_file = str(
-            Path(f"{self.core_dir}/application.config.dart")
-        )
-        self.util_file = str(Path(f"{self.core_dir}/util.dart"))
-        self.snippet_dir = str(
-            Path(f"{self.path_core}/management/commands/snippets/flutter")
-        )
-
-        self.app_configuration = str(Path(f"{self.flutter_dir}/lib/apps/configuracao"))
-        self.app_configuration_page_file = str(
-            Path(f"{self.app_configuration}/index.page.dart")
-        )
-        self.app_configuration_controller_file = str(
-            Path(f"{self.app_configuration}/controller.dart")
-        )
-        self.app_configuration_profile_file = str(
-            Path(f"{self.app_configuration}/model.dart")
-        )
-        self.app_configuration_cubit_file = str(
-            Path(f"{self.app_configuration}/cubit.dart")
-        )
-        self.app_configuration_cubit_state_file = str(
-            Path(f"{self.app_configuration}/state.dart")
-        )
+        self.constants_dir = str(Path(f"{self.flutter_dir}/lib/constants"))
 
         self.current_app_model = None
 
@@ -339,46 +278,6 @@ class Command(BaseCommand):
     _flutter_types = FLUTTER_TYPES
 
     _sqlite_types = SQLLITE_TYPES
-
-    def add_arguments(self, parser):
-        parser.add_argument("App", type=str, nargs="?")
-        parser.add_argument("Model", type=str, nargs="?")
-        parser.add_argument(
-            "--app", action="store_true", dest="app", help="Criar a App e seus models"
-        )
-        parser.add_argument(
-            "--app_model",
-            action="store_true",
-            dest="app_model",
-            help="Criar a App e o Model informado",
-        )
-        parser.add_argument(
-            "--main", action="store_true", dest="main", help="Renderizar a main.dart"
-        )
-        parser.add_argument(
-            "--yaml", action="store_true", dest="yaml", help="Refatorando o YAML"
-        )
-        parser.add_argument(
-            "--init_cubit",
-            action="store_true",
-            dest="init_cubit",
-            help="Gerar o projeto Flutter utilizando o Cubit como gerencia de estado.",
-        )
-        parser.add_argument(
-            "--clear", action="store_true", dest="clear", help="Limpar projeto flutter."
-        )
-        parser.add_argument(
-            "--routers",
-            action="store_true",
-            dest="routers",
-            help="Criar o arquivo de rotas nomeadas.",
-        )
-        parser.add_argument(
-            "--all",
-            action="store_true",
-            dest="all",
-            help="Criar o projeto Flutter e todos os arquivos necessários.",
-        )
 
     def _ignore_fields(self, field):
         try:
@@ -399,7 +298,7 @@ class Command(BaseCommand):
                     "--org",
                     f"{self.organization_flutter_name}",
                     "--platforms",
-                    "android,ios",
+                    "web",
                     f"{self.flutter_dir}",
                 ]
 
@@ -440,248 +339,6 @@ class Command(BaseCommand):
         except Exception as error:
             Utils.show_error(f"Error in __build_flutter: {error}")
 
-    def _build_auth_app(self):
-        try:
-            AuthAppBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __build_auth_app {error}")
-
-    def _register_providers_controller(self) -> tuple:
-        try:
-            return RegisterProviderControllerBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _register_providers_controller: {error}")
-            return None, None
-
-    def _build_widget(self, app):
-        try:
-            __widget_file = Path(f"{app.get_path_views_dir()}/widget.dart")
-            if Utils.check_file_is_locked(__widget_file):
-                return
-            WidgetBuilder(command=self, app=app).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_widget {error}")
-
-    def _build_exception_class(self):
-        try:
-            _path_directory = Path(f"{self.flutter_dir}/lib/core/exceptions")
-            if not Utils.check_dir(_path_directory):
-                os.makedirs(_path_directory)
-            ExceptionClassBuilder(command=self).build()
-
-        except Exception as error:
-            Utils.show_error(f"Error in _build_exception_class: {error}")
-
-    def _build_custom_dio_interceptors(self):
-        try:
-            _path = Path(f"{self.flutter_dir}/lib/core/dio/interceptors")
-            if not Utils.check_dir(_path):
-                os.makedirs(_path)
-            CustomDIOInterceptorsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __build_custom_dio_interceptors {error}")
-
-    def _build_custom_dio(self):
-        try:
-            _path_directory = Path(f"{self.flutter_dir}/lib/core/dio")
-            if not Utils.check_dir(_path_directory):
-                os.makedirs(_path_directory)
-            CustomDIOBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __build_custom_dio {error}")
-
-    def _build_custom_style(self):
-        try:
-            if not Utils.check_dir(self.ui_dir):
-                os.makedirs(self.ui_dir)
-            CustomStyleBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_custom_style {error}")
-
-    def _build_sized_extensions(self):
-        try:
-            if not Utils.check_dir(self.ui_extensions):
-                os.makedirs(self.ui_extensions)
-            SizedExtensionsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_sized_extensions {error}")
-
-    def _build_string_extensions(self):
-        try:
-            if not Utils.check_dir(self.ui_extensions):
-                os.makedirs(self.ui_extensions)
-            StringExtensionsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_string_extensions {error}")
-
-    def _build_logger_file(self):
-        try:
-            if not Utils.check_dir(self.core_dir):
-                os.makedirs(self.core_dir)
-            LoggerBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __build_logger_file {error}")
-
-    def _build_colors_schemes_file(self):
-        try:
-            if not Utils.check_dir(self.core_dir):
-                os.makedirs(self.core_dir)
-            ColorsSchemeBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_colors_schemes_file {error}")
-
-    def _build_analysis_options_file(self):
-        try:
-            if not Utils.check_dir(self.core_dir):
-                os.makedirs(self.core_dir)
-            AnalisysOptionsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_colors_schemes_file {error}")
-
-    def _controller_parser(self, app):
-        try:
-            if app.model is None:
-                return
-            ControllerBuilder(command=self, app=app).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _controller_parser: {error}")
-
-    def _data_local_and_service_layer_parser(self, app: AppModel):
-        try:
-            if app.model is None:
-                return
-            DataServiceLayerBuild(command=self, app=app).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _data_local_and_service_layer_parser: {error}")
-
-    def _model_parser(self, app):
-        try:
-            if app.model is None:
-                return
-            ModelsBuilder(command=self, app=app).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _model_parser: {error}")
-
-    def _build_custom_colors(self):
-        try:
-            # Verificando se o diretório das extensions existe
-            if not Utils.check_dir(self.ui_dir):
-                os.makedirs(self.ui_dir)
-            CustomColorsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_custom_colors {error}")
-
-    def _build_config_utils_file(self):
-        try:
-            if not Utils.check_dir(self.core_dir):
-                os.makedirs(self.core_dir)
-            UtilsBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __build_utils {error}")
-
-    def _build_named_routes(self):
-        try:
-            path_routes = Path(f"{self.flutter_dir}/lib/routers.dart")
-            if Utils.check_file_is_locked(path_routes):
-                return
-            NamedRoutesBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
-        except Exception as error:
-            Utils.show_error(f"Error in __create_name_route: {error}", exit=False)
-
-    def _buid_settings(self):
-        try:
-            if not Utils.check_dir(self.app_configuration):
-                os.makedirs(self.app_configuration)
-                SettingsControllerBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _buid_settings: {error}")
-
-    def _build_user_interface(self):
-        try:
-            if not Utils.check_dir(self.ui_dir):
-                os.makedirs(self.ui_dir)
-            UserInterfaceBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_user_interface: {error}")
-
-    def _build_user_interface_mixins(self):
-        try:
-            if not Utils.check_dir(self.ui_dir):
-                os.makedirs(self.ui_dir)
-            MixinsClassBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_user_interface: {error}")
-
-    def _add_packages(self):
-        try:
-            AddPackagesBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _add_packages: {error}")
-
-    def _build_translate_strings(self):
-        try:
-            TranslateStringBuilder(command=self).build()
-        except Exception as error:
-            Utils.show_error(f"Error in _build_translate_strings: {error}")
-
-    def _create_source_from_model(self):
-        Utils.show_message("Criando as apps baseado na App e no Model")
-        try:
-            Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
-
-            self._create_source_files(
-                self.current_app_model.app_name, self.current_app_model.model_name
-            )
-        except Exception as error:
-            Utils.show_error(f"Error in __create_source_from_model: {error}")
-
-    def _create_source_from_generators(self):
-        try:
-            Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
-
-            with Utils.ProgressBar() as bar:
-                task = bar.add_task("", total=len(self.current_app_model.models))
-                for i, model in enumerate(self.current_app_model.models):
-                    bar.update(
-                        task,
-                        description=f"Gerando App [b green]{self.current_app_model.app_name}[/]:[b cyan]{model[1]}[/] - [{i + 1}/{len(self.current_app_model.models)}]",
-                    )
-                    self._create_source_files(self.current_app_model.app_name, model[1])
-                    bar.advance(task, 1)
-
-        except Exception as error:
-            Utils.show_error(f"Error in __create_source_from_generators: {error}")
-
-    def _create_source_files(self, app_name, model_name):
-        try:
-            if app_name is None:
-                Utils.show_message("É necessário passar a App")
-                return
-
-            if model_name is None:
-                Utils.show_message("É necessário passar o Model")
-                return
-
-            Utils.show_core_box(f"Model {app_name}:{model_name}", tipo="model")
-
-            _source_class = AppModel(self.flutter_dir, app_name, model_name)
-
-            SourceFileBuilder(
-                command=self,
-                source_app=_source_class,
-                app_name=app_name,
-                model_name=model_name,
-            ).build()
-
-            PagesBuilder(command=self, source_app=_source_class).build()
-            self._build_widget(_source_class)
-            self._model_parser(_source_class)
-            self._data_local_and_service_layer_parser(_source_class)
-            self._controller_parser(_source_class)
-
-        except Exception as error:
-            Utils.show_error(f"Error in _create_source_file: {error}")
-
     def _replace_main(self):
         try:
             MainFileBuilder(command=self, flutter_apps=FLUTTER_APPS).build()
@@ -719,25 +376,7 @@ class Command(BaseCommand):
 
         else:
             self._init_flutter()
-            self._build_auth_app()
             self._build_flutter()
-
-            self._build_user_interface()
-            self._build_user_interface_mixins()
-            self._build_named_routes()
-            self._buid_settings()
-            self._build_exception_class()
-            self._build_custom_dio()
-            self._build_custom_dio_interceptors()
-            self._build_custom_colors()
-            self._build_custom_style()
-            self._build_translate_strings()
-            self._build_logger_file()
-            self._build_colors_schemes_file()
-            self._build_analysis_options_file()
-            self._build_string_extensions()
-            self._build_sized_extensions()
-            self._build_config_utils_file()
         return
 
     def __verify_valid_flags(self, options):
