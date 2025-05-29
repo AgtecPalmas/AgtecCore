@@ -1,22 +1,22 @@
-[tool.taskipy.settings]
-user_vars = true
+[project]
+name = "FastAPIProject"
+version = "0.1.0"
+description = "Projeto FastAPI gerado pelo NuvolsCore"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  { name = "Nuvols", email = "falecom@nuvols.com.br"}
+]
 
 [tool.isort]
 profile = "black"
 line_length = 88
 
-[tool.black]
-max-line-length = 88
-line-length = 88
-ignore = "E203, W503"
-extend-exclude = '''
-(
-  ^/docs/*
-  ^.venv/*
-  ^.env/
-)
-'''
 
 [tool.taskipy.tasks]
 run = "fastapi dev --host 0.0.0.0 --port 8181 --reload"
-test = "pytest -s -x -vv"
+test = "pytest"
+test-verbose = "pytest -s -x -vv"
+test-dev = "pytest -s -x -vv --disable-warnings"
+test-dev-resume = "pytest -vv -x --disable-warnings"
+test-failed = "pytest --disable-warnings -vv --last-failed"
