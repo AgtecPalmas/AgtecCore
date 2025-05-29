@@ -1,19 +1,107 @@
 [project]
-name = "FastAPIProject"
+name = "ProjetoFAstAPI"
 version = "0.1.0"
 description = "Projeto FastAPI gerado pelo NuvolsCore"
 readme = "README.md"
 requires-python = ">=3.12"
-authors = [
-  { name = "Nuvols", email = "falecom@nuvols.com.br"}
+dependencies = [
+    "alembic==1.*",
+    "asyncpg==0.*",
+    "elastic-apm==6.*",
+    "email-validator==2.*",
+    "fastapi==0.111.*",
+    "gunicorn==22.*",
+    "httpx==0.27.2",
+    "loguru==0.*",
+    "passlib==1.*",
+    "psycopg2-binary==2.*",
+    "pydantic==2.*",
+    "pydantic-settings==2.*",
+    "pyjwt==2.*",
+    "python-dotenv==1.*",
+    "python-multipart==0.*",
+    "SQLAlchemy==2.*",
+    "uvicorn[standard]==0.*",
+    "redis==5.0.*",
+    "anyio==4.6.2.post1",
+    "certifi==2024.8.30",
+    "charset-normalizer==3.4.0",
+    "docker==7.1.0",
+    "h11==0.14.0",
+    "httpcore==1.0.6",
+    "idna==3.10",
+    "iniconfig==2.0.0",
+    "packaging==24.1",
+    "pluggy==1.5.0",
+    "psycopg==3.2.3",
+    "psycopg-binary==3.2.3",
+    "requests==2.32.3",
+    "sniffio==1.3.1",
+    "typing-extensions==4.12.2",
+    "urllib3==2.2.3",
+    "wrapt==1.16.0",
+]
+
+[dependency-groups]
+dev = [
+    "anyio==4.6.2.post1",
+    "certifi==2024.8.30",
+    "charset-normalizer==3.4.0",
+    "docker==7.1.0",
+    "h11==0.14.0",
+    "httpcore==1.0.6",
+    "httpx==0.27.2",
+    "idna==3.10",
+    "iniconfig==2.0.0",
+    "packaging==24.1",
+    "pluggy==1.5.0",
+    "psycopg[binary]==3.2.3",
+    "psycopg-binary==3.2.3",
+    "pytest==8.3.3",
+    "pytest-asyncio==0.24.0",
+    "requests==2.32.3",
+    "sniffio==1.3.1",
+    "ruff==0.11.11"
 ]
 
 [tool.isort]
 profile = "black"
-line_length = 88
+line_length = 120
 
+[tool.ruff]
+line-length = 120
+exclude = [
+    'migrations', 'tests', 'testcontainers', 'docker', 
+    'scripts', 'examples', 'docs', 'env', 'venv', 
+    '.env', '.venv']
+
+extend-exclude = [
+    'migrations', 'tests', 'testcontainers', 'docker', 
+    'scripts', 'examples', 'docs', 'env', 'venv', 
+    '.env', '.venv']
+
+[tool.ruff.lint]
+ignore = ['E203', 'E501', 'PLR6301', 'PLR0913', 'PLR0917', 'PLR6301', 'PLW3201', 'PLR6201', 'FAST002']
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT', 'FAST']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+indent-style = 'space'
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = '-p no:warnings'
+asyncio_default_fixture_loop_scope = 'function'
+
+[tool.coverage.run]
+concurrency = ["thread", "greenlet"]
 
 [tool.taskipy.tasks]
+lint = 'ruff check'
+pre_format = 'ruff check --fix'
+format = 'ruff format'
 run = "fastapi dev --host 0.0.0.0 --port 8181 --reload"
 test = "pytest"
 test-verbose = "pytest -s -x -vv"
