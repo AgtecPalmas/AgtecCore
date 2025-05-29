@@ -1,6 +1,6 @@
-site_name: AGTEC Core
+site_name: Nuvols Core
 repo_url: https://github.com/AgtecPalmas/AgtecCore
-repo_name: AGTEC Core
+repo_name: Nuvols Core
 
 theme:
   name: material
@@ -30,9 +30,9 @@ extra_css:
 
 plugins:
   - with-pdf:
-      author: AGTEC Core
+      author: Nuvols Core
 #      Por padrão, o título do PDF é o mesmo do site_name, ultilizando o cover_title é possível alterar o título do PDF.
-#      cover_title: Documentação AGTEC Core
-      cover_subtitle: Documentação para utilização do AGTEC Core
+#      cover_title: Documentação Nuvols Core
+      cover_subtitle: Documentação para utilização do Nuvols Core
       toc_level: 6
       toc_title: Índice

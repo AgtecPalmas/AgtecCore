@@ -1,6 +1,6 @@
 *Esta ferramenta digital faz parte do catálogo de ferramentas do **Banco Interamericano de Desenvolvimento**. Você pode saber mais sobre a iniciativa do BID em [code.iadb.org](https://code.iadb.org)*
 
-<h1 align="center"> AGTEC Core</h1>
+<h1 align="center"> Nuvols Core</h1>
 <p align="center"><img src="./images/agtec_core.png"></p>
 
 ## Tabela de conteúdos:

@@ -118,7 +118,7 @@ class Utils(object):
         if tipo == "core":
             print(
                 Panel(
-                    Text("AGTEC CORE", justify="center", style="cyan bold"),
+                    Text("Nuvols CORE", justify="center", style="cyan bold"),
                     border_style="cyan",
                 )
             )
