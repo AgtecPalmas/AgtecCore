@@ -47,7 +47,7 @@ Acesse a documentação contendo todos os detalhes do projeto em:
 
 - Clone este projeto
 ```
-git clone https://github.com/AgtecPalmas/AgtecCore
+git clone https://github.com/nuvols/
 ```
 
 - Crie um diretório para o seu projeto fora do Clone
@@ -263,7 +263,7 @@ end
 
 The MIT License (MIT)
 
-Copyright © 2023 Agência de Tecnologia da Informação da Prefeitura de Palmas estado do Tocantins
+Copyright © 2023 Nuvols
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

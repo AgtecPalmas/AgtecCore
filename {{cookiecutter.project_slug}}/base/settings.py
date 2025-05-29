@@ -284,7 +284,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "LICENSE": {
         "name": "BSD License",
-        "url": "https://www.palmas.to.gov.br/",
+        "url": "https://www.nuvols.com.br/",
     },
     "CONTACT": {
         "name": "{{ cookiecutter.author_name }}",

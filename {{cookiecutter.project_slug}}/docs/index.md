@@ -108,8 +108,8 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 --------------------------------------------
 
-Nuvols - Prefeitura Municipal de Palmas
+Nuvols - 
 
-[agtec.dev@palmas.to.gov.br](mailto:agtec.dev@palmas.to.gov.br)
+[falecom@nuvols.com.br](mailto:falecom@nuvols.com.br)
 
 ![Nuvols](assets/logo_agtec.svg){width="200"}
