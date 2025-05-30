@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -36,35 +36,35 @@ class ExceptionCustom implements Exception {
     url = url;
     typeException = CustomTypeException.dio;
     dioError = dioError;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.data(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
     friendlyMessage = mensagemAmigavel;
     errorMessage = mensagemErro;
     typeException = CustomTypeException.data;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.service(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
     friendlyMessage = mensagemAmigavel;
     errorMessage = mensagemErro;
     typeException = CustomTypeException.service;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.state(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
     friendlyMessage = mensagemAmigavel;
     errorMessage = mensagemErro;
     typeException = CustomTypeException.state;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   ExceptionCustom.general(mensagemAmigavel, mensagemErro, [dynamic error, StackTrace? stackTrace]) {
     friendlyMessage = mensagemAmigavel;
     errorMessage = mensagemErro;
     typeException = CustomTypeException.general;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   /// Excessão para ser levantada quando o método
@@ -73,7 +73,7 @@ class ExceptionCustom implements Exception {
     friendlyMessage = mensagemAmigavel;
     errorMessage = mensagemErro;
     typeException = CustomTypeException.refreshToken;
-    AgtecCoreLogger().erro(mensagemAmigavel, error, stackTrace);
+    NuvolsCoreLogger().erro(mensagemAmigavel, error, stackTrace);
   }
 
   CustomTypeException get getTipo {

@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -28,7 +28,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       lightTheme = true;
       emit(const SettingsSuccessState(successMessage: ''));
     } catch (e, s) {
-      dev.log('Settings', name: 'AgtecCore', error: e.toString(), stackTrace: s);
+      dev.log('Settings', name: 'NuvolsCore', error: e.toString(), stackTrace: s);
       emit(SettingsErrorState(e.toString()));
     }
   }
@@ -39,7 +39,7 @@ class SettingsCubit extends Cubit<SettingsState> {
       lightTheme = false;
       emit(const SettingsSuccessState(successMessage: ''));
     } catch (e, s) {
-      dev.log('Settings', name: 'AgtecCore', error: e.toString(), stackTrace: s);
+      dev.log('Settings', name: 'NuvolsCore', error: e.toString(), stackTrace: s);
       emit(SettingsErrorState(e.toString()));
     }
   }

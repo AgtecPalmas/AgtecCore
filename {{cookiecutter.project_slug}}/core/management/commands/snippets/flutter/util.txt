@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -122,7 +122,7 @@ class Util {
       }
       return result;
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro Util parserDateTimeTimeZoneToBrasilianFormat ', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro Util parserDateTimeTimeZoneToBrasilianFormat ', error, stackTrace);
       return '';
     }
   }
@@ -140,7 +140,7 @@ class Util {
       final DateTime data = format.parse(stringDate);
       return data;
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro Util convertStrToDate ', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro Util convertStrToDate ', error, stackTrace);
       return null;
     }
   }
@@ -179,7 +179,7 @@ class Util {
           return [data, hora];
       }
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro Util stringDateTimeSplit ', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro Util stringDateTimeSplit ', error, stackTrace);
       return null;
     }
   }
@@ -226,7 +226,7 @@ class Util {
         // return DateTime.parse("1000-01-01T$stringDate");
       }
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro Util convertDate', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro Util convertDate', error, stackTrace);
       return null;
     }
     return null;

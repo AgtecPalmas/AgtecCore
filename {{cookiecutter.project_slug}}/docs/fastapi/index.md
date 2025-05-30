@@ -1,6 +1,6 @@
 # Projeto FastAPI
 
-O AgtecCore possue um manager que gera um projeto fastapi já integrado com a camada do projeto Django.
+O NuvolsCore possue um manager que gera um projeto fastapi já integrado com a camada do projeto Django.
 
 ### Observação
 

@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -139,7 +139,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         // #TODO Pesquisar um outro pacote para substituir o SignInButton
       );
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildGoogleAccount', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildGoogleAccount', error, stackTrace);
       return const SizedBox.shrink();
     }
   }
@@ -181,7 +181,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         }
         return;
       } catch (error, stackTrace) {
-        AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpGoogle', error, stackTrace);
+        NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpGoogle', error, stackTrace);
       }
     }
   }
@@ -210,7 +210,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         _showMessage(authCubit.state.props[0].toString().replaceAll('Exception:', ''), error: true);
       }
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInGoogle', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInGoogle', error, stackTrace);
     }
   }
 
@@ -227,7 +227,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         // #TODO Pesquisar um outro pacote para substituir o SignInButton
       );
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildEmailAccount', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildEmailAccount', error, stackTrace);
       return const SizedBox.shrink();
     }
   }
@@ -373,7 +373,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         _showMessage(authCubit.state.props[0].toString().replaceAll('Exception:', ''), error: true);
       }
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInEmail', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signInEmail', error, stackTrace);
     }
   }
 
@@ -415,7 +415,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         ),
       );
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPAccount', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPAccount', error, stackTrace);
       return const SizedBox.shrink();
     }
   }
@@ -504,7 +504,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
           // Método chamado quando o processo de validação do usuário baseado no telefone finalizar
           verificationCompleted: (PhoneAuthCredential credential) async {
             final userAuth = await firebaseAuth.signInWithCredential(credential);
-            AgtecCoreLogger().info('Usuário autenticado com sucesso', userAuth.user?.uid ?? '');
+            NuvolsCoreLogger().info('Usuário autenticado com sucesso', userAuth.user?.uid ?? '');
           },
           // Callback disparado quando ocorre algum erro no Firebase
           verificationFailed: (FirebaseAuthException e) {},
@@ -520,7 +520,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
             });
           });
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpoWithOTP', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page signUpoWithOTP', error, stackTrace);
     }
   }
 
@@ -568,7 +568,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
                     await firebaseAuth.signInWithCredential(phoneAuthCredential);
                   }
                 } catch (e) {
-                  AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', e, null);
+                  NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', e, null);
                 }
               },
               child: const Text('Validar Código'),
@@ -577,7 +577,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         ),
       );
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildOTPInputCodeArea', error, stackTrace);
     }
   }
 
@@ -622,7 +622,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         ],
       );
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildIAgreeArea', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page _buildIAgreeArea', error, stackTrace);
       return const SizedBox.shrink();
     }
   }
@@ -646,7 +646,7 @@ class _SignupPageState extends State<SignupPage> with SingleTickerProviderStateM
         return users.last;
       }
     } catch (error, stackTrace) {
-      AgtecCoreLogger().erro('Ocorreu o erro no Auth SignUp Page checkLocalUser', error, stackTrace);
+      NuvolsCoreLogger().erro('Ocorreu o erro no Auth SignUp Page checkLocalUser', error, stackTrace);
     }
     return AuthModel();
   }

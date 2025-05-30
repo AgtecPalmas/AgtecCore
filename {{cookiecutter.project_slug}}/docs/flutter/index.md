@@ -1,6 +1,6 @@
 # Projeto Flutter
 
-O AgtecCore possue um manager que gera um projeto flutter já integrado com a camada de API do projeto Django.
+O NuvolsCore possue um manager que gera um projeto flutter já integrado com a camada de API do projeto Django.
 
 ## Para que o manager do projeto flutter funcione corretamente é necessário validar as etapas abaixo
 

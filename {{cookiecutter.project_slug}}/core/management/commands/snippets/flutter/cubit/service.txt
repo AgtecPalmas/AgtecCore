@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo NuvolsCore ]
 ///
 
 ///
@@ -69,7 +69,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service fetch', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service fetch', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -95,7 +95,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         }
       }
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service getMore', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service getMore', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -112,7 +112,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
       }
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service detail', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service detail', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -130,7 +130,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service post', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service post', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -149,7 +149,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service put', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service put', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -168,7 +168,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
         _$ModelClassCamelCase$ = $ModelClass$Model.fromMap(dataResponse);
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service patch', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service patch', [error]);
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
     }
@@ -187,7 +187,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return false;
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service delete', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service delete', [error]);
       return false;
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -227,7 +227,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service fetchEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service fetchEither', [error]);
       return Either<List<$ModelClass$Model>?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -257,7 +257,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<List<$ModelClass$Model>?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service getMoreEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service getMoreEither', [error]);
       return Either<List<$ModelClass$Model>?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -278,7 +278,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service detailEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service detailEither', [error]);
       return Either<$ModelClass$Model?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -299,7 +299,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service postEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service postEither', [error]);
       return Either<$ModelClass$Model?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -320,7 +320,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service putEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service putEither', [error]);
       return Either<$ModelClass$Model?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -341,7 +341,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<$ModelClass$Model?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service patchEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service patchEither', [error]);
       return Either<$ModelClass$Model?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);
@@ -368,7 +368,7 @@ class $ModelClass$Service implements $ModelClass$ServiceInterface {
       }
       return Either<bool?>.failure(dataResponse.failure.toString());
     } on ArgumentError catch (error) {
-      AgtecCoreLogger().erro('ArgumentError no service patchEither', [error]);
+      NuvolsCoreLogger().erro('ArgumentError no service patchEither', [error]);
       return Either<bool?>.failure(error.toString());
     } catch (error, stackTrace)  {
       ExceptionCustom.service('Erro no service', error, error, stackTrace);

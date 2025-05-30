@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
@@ -32,7 +32,7 @@ class ApplicationConfig {
       );
       await remoteConfig.fetchAndActivate();
     } catch (error) {
-      AgtecCoreLogger().erro('Erro ao inicializar o Firebase:', error);
+      NuvolsCoreLogger().erro('Erro ao inicializar o Firebase:', error);
     }
   }
 
@@ -55,7 +55,7 @@ class ApplicationConfig {
       final remoteConfig = FirebaseRemoteConfig.instance;
       return remoteConfig.getString(key);
     } catch (error) {
-      AgtecCoreLogger().erro('Erro ao buscar a chave $key no Firebase Remote Config:', error);
+      NuvolsCoreLogger().erro('Erro ao buscar a chave $key no Firebase Remote Config:', error);
       return null;
     }
   }
