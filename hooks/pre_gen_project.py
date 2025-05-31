@@ -10,7 +10,7 @@ def create_cookiecutter_json_file_backup(path_cookiecutter_json_file):
     try:
         path_root = os.getcwd()
         path_path = Path(path_root)
-        path_cookiecutter_json_file_backup = Path(f"{path_path.parent.parent}/AgtecCore/cookiecutter_backup.json")
+        path_cookiecutter_json_file_backup = Path(f"{path_path.parent.parent}/NuvolsCore/cookiecutter_backup.json")
         with open(path_cookiecutter_json_file, "r") as json_file:
             json_data = json.load(json_file)
 
@@ -27,7 +27,7 @@ def update_cookiecutter_key_docker_port():
     try:
         path_root = os.getcwd()
         path_path = Path(path_root)
-        path_cookiecutter_json_file = Path(f"{path_path.parent.parent}/AgtecCore/cookiecutter.json")
+        path_cookiecutter_json_file = Path(f"{path_path.parent.parent}/NuvolsCore/cookiecutter.json")
         create_cookiecutter_json_file_backup(path_cookiecutter_json_file)
         docker_post = str(random.randint(8100, 9000))
         postgre_port = str(random.randint(5500, 6500))

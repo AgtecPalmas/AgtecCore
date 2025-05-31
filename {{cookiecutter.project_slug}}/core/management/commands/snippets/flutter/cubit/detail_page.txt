@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore ]
+/// [Arquivo gerado automaticamente pelo NuvolsCore ]
 ///
 
 ///
@@ -53,7 +53,7 @@ class _$ModelClass$DetailPageState extends State<$ModelClass$DetailPage>
       listener: (context, state) {
         if (state is $ModelClass$ErrorState){
           showError(DetailStringConstants.error);
-          AgtecCoreLogger().erro('Ocorreu o erro ao executar o Detail Page BlocConsumer', state.error.toString());
+          NuvolsCoreLogger().erro('Ocorreu o erro ao executar o Detail Page BlocConsumer', state.error.toString());
         }
         if(state is $ModelClass$SuccessState){
           showSuccess(DetailStringConstants.success);

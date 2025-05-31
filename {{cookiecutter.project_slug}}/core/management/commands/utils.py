@@ -64,7 +64,7 @@ class Utils(object):
         __log.setLevel(logging.INFO)
 
         emoji = f":{emoji}: " if emoji else ""
-        message = f"{emoji}{self}\n\nPor favor consulte a documentação\nhttps://github.com/AgtecPalmas/AgtecCore"
+        message = f"{emoji}{self}\n\nPor favor consulte a documentação\nhttps://github.com/nuvols/"
 
         print(
             Panel.fit(
@@ -118,7 +118,7 @@ class Utils(object):
         if tipo == "core":
             print(
                 Panel(
-                    Text("AGTEC CORE", justify="center", style="cyan bold"),
+                    Text("Nuvols CORE", justify="center", style="cyan bold"),
                     border_style="cyan",
                 )
             )

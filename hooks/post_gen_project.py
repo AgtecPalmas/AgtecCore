@@ -4,13 +4,14 @@ import subprocess
 import sys
 import typing as t
 from pathlib import Path
+from subprocess import DEVNULL, PIPE
+
 from rich.progress import (
     BarColumn,
     Progress,
     SpinnerColumn,
     TimeRemainingColumn,
 )
-from subprocess import DEVNULL, PIPE
 
 INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "Sim"
 
@@ -227,8 +228,8 @@ def restore_cookiecutter_json_file_backup():
     try:
         path_root = os.getcwd()
         path_path = Path(path_root)
-        path_cookiecutter_json_file = Path(f"{path_path.parent.parent}/AgtecCore/cookiecutter.json")
-        path_cookiecutter_json_file_backup = Path(f"{path_path.parent}/AgtecCore/cookiecutter_backup.json")
+        path_cookiecutter_json_file = Path(f"{path_path.parent.parent}/NuvolsCore/cookiecutter.json")
+        path_cookiecutter_json_file_backup = Path(f"{path_path.parent}/NuvolsCore/cookiecutter_backup.json")
 
         # Atualizando o conteúdo do arquivo cookiecutter.json com o conteúdo do arquivo cookiecutter_backup.json
         shutil.copyfile(path_cookiecutter_json_file_backup, path_cookiecutter_json_file)

@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automatimante pelo AgtecCore ]
+/// [Arquivo gerado automatimante pelo NuvolsCore ]
 ///
 
 /// 

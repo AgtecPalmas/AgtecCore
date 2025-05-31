@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -101,19 +101,19 @@ Future<List<AuthModel>> fetchAll() async {
   Future<bool> save(AuthModel auth) async {
     smbt.Database? db;
     try {
-      AgtecCoreLogger().debug('Iniciado processo de save do AuthModel');
+      NuvolsCoreLogger().debug('Iniciado processo de save do AuthModel');
       await deleteAll();
-      AgtecCoreLogger().debug('Iniciando o db');
+      NuvolsCoreLogger().debug('Iniciando o db');
       db = await initDb();
       if (db != null) {
-        AgtecCoreLogger().debug('DB não nulo');
+        NuvolsCoreLogger().debug('DB não nulo');
         final store = smbt.intMapStoreFactory.store(_storeName);
-        AgtecCoreLogger().debug('Store criada');
+        NuvolsCoreLogger().debug('Store criada');
         await store.add(db, auth.toMap());
-        AgtecCoreLogger().debug('Dados salvos: ${auth.toMap()}');
+        NuvolsCoreLogger().debug('Dados salvos: ${auth.toMap()}');
         return true;
       }
-      AgtecCoreLogger().debug('Finalizado processo de save do AuthModel');
+      NuvolsCoreLogger().debug('Finalizado processo de save do AuthModel');
     } catch (error, stackTrace) {
       ExceptionCustom.data(
         '------DATA ERROR------',

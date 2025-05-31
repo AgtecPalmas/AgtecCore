@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo AgtecCore]
+/// [Arquivo gerado automaticamente pelo NuvolsCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -110,7 +110,7 @@ Future<String> getRemoteConfigExample(String nomeChaveFirebaseConfig) async {
     }
     return '';
   } catch (error, stackTrace) {
-    AgtecCoreLogger().erro('Erro ao chamar o getRemoteConfigExample', error, stackTrace);
+    NuvolsCoreLogger().erro('Erro ao chamar o getRemoteConfigExample', error, stackTrace);
     return '';
   }
 }

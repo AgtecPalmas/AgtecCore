@@ -1,5 +1,5 @@
 ///
-/// [ Arquivo gerado automatimante pelo AgtecCore ]
+/// [ Arquivo gerado automatimante pelo NuvolsCore ]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração do pacote Dio, e que não deve ser alterado

@@ -1,6 +1,6 @@
 *Esta ferramenta digital faz parte do catálogo de ferramentas do **Banco Interamericano de Desenvolvimento**. Você pode saber mais sobre a iniciativa do BID em [code.iadb.org](https://code.iadb.org)*
 
-<h1 align="center"> AGTEC Core</h1>
+<h1 align="center"> Nuvols Core</h1>
 <p align="center"><img src="./images/agtec_core.png"></p>
 
 ## Tabela de conteúdos:
@@ -16,12 +16,26 @@
 - [Como contribuir](#como-contribuir)
 - [Estrutura do projeto gerado](#estrutura-do-projeto-gerado)
 - [Autor(es)](#autores)
+  - [Coordenador](#coordenador)
+    - [Guilherme de Carvalho Carneiro](#guilherme-de-carvalho-carneiro)
+  - [Desenvolvedores](#desenvolvedores)
+    - [Thiago Schuch](#thiago-schuch)
+    - [Claysllan Ferreira](#claysllan-ferreira)
+    - [Brayan Mota](#brayan-mota)
+    - [Lucas Siqueira](#lucas-siqueira)
+    - [Robson Ronzani](#robson-ronzani)
+    - [Emanoel Mendes](#emanoel-mendes)
+    - [Thales Barbosa](#thales-barbosa)
+    - [Márcio Henrique Rodrigues de Lima](#márcio-henrique-rodrigues-de-lima)
+    - [Clazzeani Almeida](#clazzeani-almeida)
+    - [André Praça de Almeida Pinheiro](#andré-praça-de-almeida-pinheiro)
+    - [Marco Antônio Martins Porto Netto](#marco-antônio-martins-porto-netto)
 - [Licença](#licença)
 
 ## Informações
 ---
 - Dependências de Terceiros: ![dependencies](https://img.shields.io/badge/dependencies-out%20of%20date-orange)
-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AgtecPalmas_AgtecCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AgtecPalmas_AgtecCore)
+- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NuvolsPalmas_NuvolsCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=NuvolsPalmas_NuvolsCore)
 
   ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)
   ![Django](https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white)
@@ -39,7 +53,7 @@ Utilizamos no desenvolvimento da ferramenta o pacote [mkdocs](https://www.mkdocs
 ## Documentação Externa
 ---
 Acesse a documentação contendo todos os detalhes do projeto em: 
-<https://agtecpalmas.github.io/AgtecCore/>
+<https://agtecpalmas.github.io/NuvolsCore/>
 
  
 ## Guia de instalação
@@ -47,7 +61,7 @@ Acesse a documentação contendo todos os detalhes do projeto em:
 
 - Clone este projeto
 ```
-git clone https://github.com/AgtecPalmas/AgtecCore
+git clone https://github.com/nuvols/
 ```
 
 - Crie um diretório para o seu projeto fora do Clone
@@ -77,9 +91,9 @@ mkdir <nome_do_seu_projeto>
   pip install cookiecutter==2.3.0
 ````
 
-- Inicie o projeto com o Cookiecutter apontando para o Clone do Agtec Core
+- Inicie o projeto com o Cookiecutter apontando para o Clone do Nuvols Core
 ```
-cookiecutter <caminho_para_o_clone>/AgtecCore
+cookiecutter <caminho_para_o_clone>/NuvolsCore
 ```
 
 - Siga os passos informados no terminal
@@ -151,7 +165,7 @@ Acesse a documentação externa na seção [Documentação Externa](#documentaç
 
 ```mermaid
 flowchart TD
-    A[ AgtecCore - Cookiecutter ]
+    A[ NuvolsCore - Cookiecutter ]
 A --> B( cookiecutter.. /AgteCore )
 B --> D[ Projeto Django baseado no AgteCore]
 D --> E[ Projeto Django ]
@@ -263,7 +277,7 @@ end
 
 The MIT License (MIT)
 
-Copyright © 2023 Agência de Tecnologia da Informação da Prefeitura de Palmas estado do Tocantins
+Copyright © 2023 Nuvols
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

@@ -25,7 +25,7 @@ MESSAGES = {
         "Algo está errado\nCore $version_core\nProjeto $version_project"
     ),
     "help": Template(
-        "[green b]AGTEC CORE[/]\
+        "[green b]Nuvols CORE[/]\
             \n[cyan b]$version - $codename[/]\
             \n\n[yellow b]Comandos[/]\
             \n[green b]--upgrade[/]\tVerifica se existe uma nova versão do Core e atualiza\
