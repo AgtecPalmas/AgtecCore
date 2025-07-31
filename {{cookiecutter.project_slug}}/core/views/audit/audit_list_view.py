@@ -165,7 +165,7 @@ class AuditObjectListView(BaseListView):
         if self.kwargs and "object_id" in self.kwargs and self.kwargs.get("object_id"):
             itens_kwargs = self.kwargs.get("object_id", "/").split("/")
             pk = None
-
+            contentType = None
             if len(itens_kwargs) == 2:
                 (name_app, name_model) = itens_kwargs
                 contentType = ContentType.objects.filter(app_label=name_app)

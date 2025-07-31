@@ -402,7 +402,7 @@ def audit_delete(delete):
             objetos_atualizado = []
             content_type_instance = ContentType.objects.get_for_model(cls)
             num_revision = (
-                len(Audit.objects.filter(data_type=content_type_instance)) + 1
+                Audit.objects.filter(data_type=content_type_instance).count()+ 1
             )
 
             previous_instance = cls.objects.filter(id=kwargs.get("pk")).first()
@@ -516,10 +516,7 @@ def audit_delete(delete):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = datetime.now()
                     audit_relationship.num_revision = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                            Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
 
                     if (
@@ -596,7 +593,7 @@ def audit_save(save):
 
             content_type_instance = ContentType.objects.get_for_model(cls)
             num_revision = (
-                len(Audit.objects.filter(data_type=content_type_instance)) + 1
+                Audit.objects.filter(data_type=content_type_instance).count() + 1
             )
 
             # Verifica se é Adição
@@ -874,10 +871,7 @@ def audit_save(save):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = audit.created
                     __num_version = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                        Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
                     audit_relationship.num_revision = __num_version
                     audit_relationship.ip = audit.ip
@@ -909,10 +903,7 @@ def audit_save(save):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = audit.created
                     __num_version = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                        Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
                     audit_relationship.num_revision = __num_version
                     audit_relationship.ip = audit.ip
