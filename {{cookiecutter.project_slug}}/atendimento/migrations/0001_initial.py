@@ -5,6 +5,7 @@ import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 import uuid
+import atendimento.models
 
 
 class Migration(migrations.Migration):
@@ -41,9 +42,9 @@ class Migration(migrations.Migration):
                 ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('updated_on', models.DateTimeField(auto_now=True)),
                 ('evento', models.CharField(blank=True, max_length=100, null=True)),
-                ('data_inicial', models.DateField(validators=[django.core.validators.MinValueValidator(datetime.date.today), django.core.validators.MaxValueValidator(datetime.date(2024, 5, 28))], verbose_name='Data inicial')),
+                ('data_inicial', models.DateField(validators=[django.core.validators.MinValueValidator(datetime.date.today), django.core.validators.MaxValueValidator(atendimento.models.CriarAgendamentos.max_date)], verbose_name='Data inicial')),
                 ('hora_inicial', models.TimeField(verbose_name='Hora inicial')),
-                ('data_final', models.DateField(validators=[django.core.validators.MinValueValidator(datetime.date.today), django.core.validators.MaxValueValidator(datetime.date(2024, 5, 28))], verbose_name='Data final')),
+                ('data_final', models.DateField(validators=[django.core.validators.MinValueValidator(datetime.date.today), django.core.validators.MaxValueValidator(atendimento.models.CriarAgendamentos.max_date)], verbose_name='Data final')),
                 ('hora_final', models.TimeField(verbose_name='Hora final')),
                 ('numero_atendentes', models.PositiveIntegerField(validators=[django.core.validators.MaxValueValidator(20), django.core.validators.MinValueValidator(1)], verbose_name='Número de Atendentes Simultâneos')),
                 ('tempo_atendimento', models.PositiveIntegerField(validators=[django.core.validators.MaxValueValidator(360), django.core.validators.MinValueValidator(1)], verbose_name='Tempo de Atendimento em MINUTOS')),

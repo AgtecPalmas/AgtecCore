@@ -12,12 +12,15 @@ class CriarAgendamentos(Base):
     Cria agendamentos com base nas informações passadas dentro desta classe
     """
 
+    def max_date(self):
+        dt.date.today() + dt.timedelta(days=365)
+
     evento = models.CharField(max_length=100, blank=True, null=True)
     data_inicial = models.DateField(
         "Data inicial",
         validators=[
             MinValueValidator(dt.date.today),
-            MaxValueValidator(dt.date.today() + dt.timedelta(days=365)),
+            MaxValueValidator(max_date),
         ],
     )
     hora_inicial = models.TimeField("Hora inicial")
@@ -25,7 +28,7 @@ class CriarAgendamentos(Base):
         "Data final",
         validators=[
             MinValueValidator(dt.date.today),
-            MaxValueValidator(dt.date.today() + dt.timedelta(days=365)),
+            MaxValueValidator(max_date),
         ],
     )
     hora_final = models.TimeField("Hora final")
