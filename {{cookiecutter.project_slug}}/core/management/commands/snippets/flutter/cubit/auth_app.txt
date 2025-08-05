@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// Cubit do model Auth
 /// 
@@ -39,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
       _service.defaultAuthenticationFastAPI();
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit defaultAuthenticationFastAPI', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit defaultAuthenticationFastAPI', error, stackTrace);
     }
   }
 
@@ -49,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUser', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUser', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -60,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUserFirebase', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUpUserFirebase', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -79,7 +79,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(const AuthErrorState('Ocorreu um erro ao tentar criar o usuário'));
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit signUp', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signUp', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -90,7 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit signIn', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit signIn', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -101,7 +101,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit login', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit login', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -111,7 +111,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthProcessState());
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit logout', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit logout', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -122,7 +122,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit changePassword', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit changePassword', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -133,7 +133,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit recoverPassword', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit recoverPassword', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -144,7 +144,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit createAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit createAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -154,7 +154,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthProcessState());
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit disableAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit disableAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }
@@ -165,7 +165,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthSuccessState(user: user, successMessage: ''));
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthCubit excludeAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthCubit excludeAccount', error, stackTrace);
       emit(AuthErrorState(error.toString()));
     }
   }

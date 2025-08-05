@@ -4,9 +4,10 @@ from core.management.commands.utils import Utils
 
 
 class AppsWebFilesBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, app, model=None) -> None:
         self.command = command
         self.app = app
+        self.model = model
         self.flutter_web_dir = self.command.flutter_dir
         self.flutter_project_path = Path(f"{self.command.path_command}/snippets/flutter_web_project/")
 
@@ -32,6 +33,11 @@ class AppsWebFilesBuilder:
                     )
                     for sub_dir in _sub_dirs:
                         if Utils.check_dir(_app_dir) is True:
+                            if (
+                                self.model is not None
+                                and model.lower() != self.model.lower()
+                            ):
+                                continue
                             # Tratando quando forem gerados os arquivos de pages
                             if sub_dir == "pages":
                                 _app_file = f"{_app_dir}/{sub_dir}/{model.lower()}.list.dart"

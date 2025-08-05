@@ -13,9 +13,10 @@ from core.management.commands.utils import Utils
 
 
 class AppsWebCubitStateManagerBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, app, model=None) -> None:
         self.command = command
         self.app = app
+        self.model = model
         self.flutter_web_dir = self.command.flutter_dir
         self.flutter_state_snippet = Path(
             f"{self.command.path_command}/snippets/flutter_web_project/layers/state.txt"
@@ -35,6 +36,10 @@ class AppsWebCubitStateManagerBuilder:
                 _model_app_lower = _model_app.lower()
                 _model_name = model.__name__
                 _model_name_lower = _model_name.lower()
+
+                if self.model is not None and _model_name_lower != self.model.lower():
+                    continue
+            
                 # Parseando o snippet
                 _content = Utils.get_snippet(self.flutter_state_snippet)
                 _content = _content.replace("$ModelClass$", _model_name)
@@ -49,6 +54,11 @@ class AppsWebCubitStateManagerBuilder:
 
                 # Criando o state do gerenciador de estado Cubit
                 _state_file = Path(f"{self.flutter_web_dir}/lib/apps/{_model_app_lower}/states/{_model_name_lower}.dart")
+
+                # Verificando se o arquivo já existe e está bloqueado
+                if Utils.check_file_is_locked(str(_state_file)):
+                    return
+                
                 Utils.show_message(
                     f"Criando {_state_file}"
                 )
@@ -69,6 +79,11 @@ class AppsWebCubitStateManagerBuilder:
 
                 # Criando o controller do gerenciador de estado Cubit
                 _controller_file = Path(f"{self.flutter_web_dir}/lib/apps/{_model_app_lower}/controllers/{_model_name_lower}.dart")
+
+                # Verificando se o arquivo já existe e está bloqueado
+                if Utils.check_file_is_locked(str(_controller_file)):
+                    return
+                
                 Utils.show_message(
                     f"Criando {_controller_file}"
                 )

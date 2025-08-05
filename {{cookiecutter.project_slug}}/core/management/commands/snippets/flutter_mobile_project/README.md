@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Projeto gerado por meio do build-flutter-web do NuvolsCore, seguindo os mesmos
+Projeto gerado por meio do build-flutter-web do AgtecCore, seguindo os mesmos
 conceitos do build-flutter. 
 
 -----

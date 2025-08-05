@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -98,7 +98,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
                   listener: (context, state) {
                     if (state is $ModelClass$ErrorState){
                       showError(InsertStringConstants.error);
-                      NuvolsCoreLogger().erro(
+                      AgtecCoreLogger().erro(
                         'Ocorreu o erro ao executar o Update Page BlocListner', 
                         state.error.toString(),
                       );
@@ -171,7 +171,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
 
       await $Model$Controller.put(_$Model$Model);
     }catch (error, stackTrace){
-      NuvolsCoreLogger().erro('Ocorreu o erro ao executar o Update Page _put', error.toString(), stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o Update Page _put', error.toString(), stackTrace);
       showError(UpdateStringConstants.error);
     }
   }
@@ -180,7 +180,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$UpdatePage>
     try{
       $EditedAttributes$
     }catch (error, stackTrace){
-      NuvolsCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o Update Page _loadData', error.toString(), stackTrace);
       showError(UpdateStringConstants.loadingError);
     }
   }

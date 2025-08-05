@@ -104,11 +104,11 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
         switch (state) {
           case $ModelClass$ErrorState(:final error):
 
-            NuvolsCoreLogger().erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
+            AgtecCoreLogger().erro('Ocorreu o erro ao executar o List Page BlocConsumer | listener', error);
             showError(ListStringConstants.error);
             break;
           case $ModelClass$SuccessState():
-            NuvolsCoreLogger().info('Dados carregados com sucesso no List Page BlocConsumer | listener');
+            AgtecCoreLogger().info('Dados carregados com sucesso no List Page BlocConsumer | listener');
             showSuccess(ListStringConstants.success);
             break;
           default:
@@ -179,7 +179,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
     try {
       /// [Implementar o método de refresh da tela]
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro ao executar o _refresh na listPage', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o _refresh na listPage', error, stackTrace);
       showError(ListStringConstants.refreshError);
     }
   }
@@ -190,7 +190,7 @@ class $ModelClass$ListPageState extends State<$ModelClass$ListPage>
       final $ModelClassCamelCase$Controller = context.read<$ModelClass$Controller>();
       await $ModelClassCamelCase$Controller.fetch();
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro ao executar o _loadData na listPage', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro ao executar o _loadData na listPage', error, stackTrace);
     }
     
   }

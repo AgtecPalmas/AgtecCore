@@ -1,5 +1,5 @@
 /// 
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -36,7 +36,7 @@ class AuthService {
       final authenticationForm = FormData.fromMap(authenticationLogin);
       final dataResponse = await dio.postHttp(authenticationForm);
       if (dataResponse != null) {
-        NuvolsCoreLogger().debug(dataResponse);
+        AgtecCoreLogger().debug(dataResponse);
         final authData = AuthData();
         final authModel = AuthModel();
         final String token = dataResponse['access_token'] ?? '';
@@ -81,7 +81,7 @@ class AuthService {
       });
       await dio.postHttp(data0, uri: uri);
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
     }
   }
 
@@ -95,7 +95,7 @@ class AuthService {
         signUpUser(0);
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signUpUserFirebase', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUserFirebase', error, stackTrace);
     }
   }
 
@@ -111,7 +111,7 @@ class AuthService {
         _success('Usuário logado com sucesso', statusCode: 200);
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signIn', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signIn', error, stackTrace);
     }
     return authModel;
   }
@@ -128,7 +128,7 @@ class AuthService {
         return 1;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService checkDjangoUserTypeClient', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService checkDjangoUserTypeClient', error, stackTrace);
     }
     return null;
   }
@@ -158,7 +158,7 @@ class AuthService {
         return data['id'];
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signUp', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUp', error, stackTrace);
     }
     return null;
   }
@@ -191,7 +191,7 @@ class AuthService {
         return null;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService login', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService login', error, stackTrace);
     }
     return null;
   }
@@ -207,7 +207,7 @@ class AuthService {
         result = dataResult['count'] != 0;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService verifyingEmailAlreadyExists', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService verifyingEmailAlreadyExists', error, stackTrace);
     }
     return result;
   }
@@ -234,7 +234,7 @@ class AuthService {
         }
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signInDJangoUser', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signInDJangoUser', error, stackTrace);
     }
     if (typeException == 0) {
       throw ('Seu cadastro ainda não foi aprovado.');
@@ -254,7 +254,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService logout', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService logout', error, stackTrace);
     }
     return false;
   }
@@ -268,7 +268,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService changePassword', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService changePassword', error, stackTrace);
     }
     return false;
   }
@@ -282,7 +282,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService recoverPassword', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService recoverPassword', error, stackTrace);
     }
     return false;
   }
@@ -296,7 +296,7 @@ class AuthService {
         return AuthModel.fromMap(data);
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService createAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService createAccount', error, stackTrace);
     }
     return null;
   }
@@ -310,7 +310,7 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService disableAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService disableAccount', error, stackTrace);
     }
     return false;
   }
@@ -324,16 +324,16 @@ class AuthService {
         return true;
       }
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService excludeAccount', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService excludeAccount', error, stackTrace);
     }
     return false;
   }
 
   void _success(String message, {int statusCode = 200}) async {
     try {
-      NuvolsCoreLogger().debug(message);
+      AgtecCoreLogger().debug(message);
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no AuthService signUpUser', error, stackTrace);
     }
   }
 }

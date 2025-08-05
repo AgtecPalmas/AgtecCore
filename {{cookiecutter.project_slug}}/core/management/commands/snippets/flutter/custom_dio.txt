@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -50,8 +50,8 @@ class CustomDio {
       final Response response = await _dio.get(uri ?? _url);
       if (response.statusCode == 200) {
         if (returnResult) return response.data['results'];
-        NuvolsCoreLogger().info('Retorno do método getHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método getHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -77,8 +77,8 @@ class CustomDio {
       }
       final Response response = await _dio.post(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('Retorno do método postHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método postHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -104,8 +104,8 @@ class CustomDio {
       }
       final Response response = await _dio.put(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('Retorno do método putHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método putHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -128,8 +128,8 @@ class CustomDio {
     try {
       final Response response = await _dio.patch(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('Retorno do método patchHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método patchHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -152,8 +152,8 @@ class CustomDio {
     try {
       final Response response = await _dio.delete(uri ?? _url, data: data);
       if (response.statusCode == 200 || response.statusCode == 204) {
-        NuvolsCoreLogger().info('Retorno do método deleteHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('Retorno do método deleteHTTP');
+        AgtecCoreLogger().verbose(response);
         return response.data;
       }
       return null;
@@ -201,12 +201,12 @@ class CustomDio {
   ///
   Future<Either<dynamic>> getHttpEither({returnResult = false, String? uri}) async {
     try {
-      NuvolsCoreLogger().info('#dio_custom URl: $_url');
-      NuvolsCoreLogger().info('#dio_custom Dio Headers: ${_dio.options.headers}');
+      AgtecCoreLogger().info('#dio_custom URl: $_url');
+      AgtecCoreLogger().info('#dio_custom Dio Headers: ${_dio.options.headers}');
       final Response response = await _dio.get(uri ?? _url);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('#dio_custom Retorno do método getHttpEither');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('#dio_custom Retorno do método getHttpEither');
+        AgtecCoreLogger().verbose(response);
         if (returnResult) return Either<dynamic>.success(response.data['results']);
         return Either<dynamic>.success(response.data);
       }
@@ -246,8 +246,8 @@ class CustomDio {
       }
       final Response response = await _dio.post(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('#dio_custom Retorno do método postHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('#dio_custom Retorno do método postHTTP');
+        AgtecCoreLogger().verbose(response);
         return Either<dynamic>.success(response.data);
       }
       return Either<dynamic>.failure('Erro ao tentar executar o PostHttp');
@@ -286,8 +286,8 @@ class CustomDio {
       }
       final Response response = await _dio.put(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('#dio_custom Retorno do método putHTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('#dio_custom Retorno do método putHTTP');
+        AgtecCoreLogger().verbose(response);
         return Either<dynamic>.success(response.data);
       }
       return Either<dynamic>.failure('Erro ao tentar executar o putHttp');
@@ -327,8 +327,8 @@ class CustomDio {
       }
       final Response response = await _dio.patch(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('#dio_custom Retorno do método patch HTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('#dio_custom Retorno do método patch HTTP');
+        AgtecCoreLogger().verbose(response);
         return Either<dynamic>.success(response.data);
       }
       return Either<dynamic>.failure('Erro ao tentar executar o PatchHttp');
@@ -365,8 +365,8 @@ class CustomDio {
     try {
       final Response response = await _dio.delete(uri ?? _url, data: data);
       if (response.statusCode == 201 || response.statusCode == 200) {
-        NuvolsCoreLogger().info('#dio_custom Retorno do método delete HTTP');
-        NuvolsCoreLogger().verbose(response);
+        AgtecCoreLogger().info('#dio_custom Retorno do método delete HTTP');
+        AgtecCoreLogger().verbose(response);
         return Either<dynamic>.success(response.data);
       }
       return Either<dynamic>.failure('Erro ao tentar executar o DeleteHttp');

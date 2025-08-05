@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -77,7 +77,7 @@ class CustomRaisedButton extends StatelessWidget {
         ),
       );
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
+      AgtecCoreLogger().erro('Ocorreu o erro no método customRaisedButton', error, stackTrace);
       return const SizedBox.shrink();
     }
   }

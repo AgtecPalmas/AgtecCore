@@ -164,7 +164,7 @@ class AppsMobileWidgetFormBuilder:
                 _list_attribute += f"_{class_form}Model.{_title_camel_case} = int.tryParse({_textField}) ?? 0;\n"
                 continue
             if _attribute.get("type") == "DateTime?":
-                _list_attribute += f"_{class_form}Model.{_title_camel_case} = DateTime.tryParse({_textField}) ?? DateTime.now();\n"
+                _list_attribute += f"_{class_form}Model.{_title_camel_case} = AppConvertData.parseDataBrasileira({_textField}) ?? DateTime.now();\n"
                 continue
             if _attribute.get("type") == "bool":
                 _list_attribute += f"_{class_form}Model.{_title_camel_case} = bool.tryParse({_textField}) ?? false;\n"
@@ -217,7 +217,14 @@ class AppsMobileWidgetFormBuilder:
                 _content_attributes += f"  final _{_model_name_camel_case}Form{_name_title} = TextEditingController();\n"
                 
                 # Adicionando o content_attributes_update para quando estiver editando
-                _content_attributes_update += f"_{_model_name_camel_case}Form{_name_title}.text = _{_model_name_camel_case}Model.{_name}.toString();\n"
+                # Verificando se o campo é do tipo DateField ou DateTimeField
+                if field_type in ["DateField", "DateTimeField"]:
+                    _content_attributes_update += (
+                        f"  _{_model_name_camel_case}Form{_name_title}.text = "
+                        f"DateFormat('dd/MM/yyyy').format(_{_model_name_camel_case}Model.{_name}!);\n"
+                    )
+                else:
+                    _content_attributes_update += f"_{_model_name_camel_case}Form{_name_title}.text = _{_model_name_camel_case}Model.{_name}.toString();\n"
 
                 _dispose_attributes += (
                     f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
@@ -255,7 +262,7 @@ class AppsMobileWidgetFormBuilder:
                         f"Error in _build_form: {error}", exit=False
                     )
 
-                if field_type == "DateField":
+                if field_type == "DateField" or field_type == "DateTimeField":
                     text_field = text_field.replace(
                         "$ImputFormatter$", 
                         "inputFormatters: [FilteringTextInputFormatter.digitsOnly, DataInputFormatter()],"

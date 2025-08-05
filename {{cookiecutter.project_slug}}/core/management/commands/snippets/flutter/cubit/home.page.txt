@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       try {
         AuthCubit().defaultAuthenticationFastAPI();
       } catch (error, stackTrace) {
-        NuvolsCoreLogger().erro(error.toString(), stackTrace);
+        AgtecCoreLogger().erro(error.toString(), stackTrace);
       }
     });
   }

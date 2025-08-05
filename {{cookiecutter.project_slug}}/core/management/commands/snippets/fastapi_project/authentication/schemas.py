@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, EmailStr, field_validator
 from core.security import get_password_hash
 
@@ -10,18 +12,18 @@ Arquivo com os schemas da app
 
 # Shared properties
 class UserBase(BaseModel):
-    email: EmailStr | None = ''
-    is_active: bool | None = True
+    email: Optional[EmailStr] = None
+    is_active: Optional[bool] = True
     is_superuser: bool = False
-    first_name: str | None = ''
-    last_name: str | None = ''
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
     username: str
 
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     password: str
-    groups: list | None = []
+    groups: Optional[list] = []
 
     @field_validator('password')
     @classmethod
@@ -31,8 +33,8 @@ class UserCreate(UserBase):
 
 # Properties to receive via API on update
 class UserUpdate(UserBase):
-    password: str | None = ''
-    groups: list | None = []
+    password: Optional[str] = None
+    groups: Optional[list] = []
 
 
 class UserInDBBase(UserBase):
@@ -58,7 +60,7 @@ class UserToken(User):
 
 
 class TokenPayload(BaseModel):
-    sub: int | None = None
+    sub: Optional[int] = None
 
 
 # Permisions

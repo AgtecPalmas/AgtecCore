@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -46,28 +46,28 @@ final class RefreshTokenInterceptor extends Interceptor {
             // Chamando o método para realizar a retentativa da consulta
             await _retryRequest(err);
           } else {
-            NuvolsCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
+            AgtecCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
             throw err;
           }
         } else {
           // Erro não é 403 nem 401
-          NuvolsCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
+          AgtecCoreLogger().debug('Ocorreu o erro: $err | StackTrace: ${StackTrace.current}');
           // Passando o erro para cima, quem chamou a requisição
           throw err;
         }
       }
     } on ExceptionCustom {
-      NuvolsCoreLogger().erro(
+      AgtecCoreLogger().erro(
           'Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: ${StackTrace.current}');
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     } on DioException catch (err, stackTrace) {
-      NuvolsCoreLogger()
+      AgtecCoreLogger()
           .erro('Ocorreu o erro: $err ao atualizar o RefreshToken | StackTrace: $stackTrace');
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace');
+      AgtecCoreLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace');
       // Passando o erro para cima, quem chamou a requisição
       handler.next(err);
     }
@@ -91,7 +91,7 @@ final class RefreshTokenInterceptor extends Interceptor {
       // Realizando o processo de Refresh
       _getNewToken(refreshToken, err);
     } catch (error, stackTrace) {
-      NuvolsCoreLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace');
+      AgtecCoreLogger().erro('Ocorreu o erro: $err | StackTrace: $stackTrace');
     }
   }
 

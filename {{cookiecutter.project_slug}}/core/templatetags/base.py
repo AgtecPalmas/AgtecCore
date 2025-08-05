@@ -14,8 +14,8 @@ def set_attribute_display_username(context):
     try:
         request = context["request"]
         return Usuario.get_display_username(request.user)
-    except Exception:
-        return "NuvolsCore"
+    except Exception as error:
+        return "AgtecCore"
 
 
 @register.simple_tag(takes_context=True)

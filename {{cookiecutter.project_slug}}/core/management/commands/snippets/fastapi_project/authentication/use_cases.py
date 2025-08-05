@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict, Optional, Union
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.future import select
@@ -23,17 +23,19 @@ from core.redis import redis_service
 
 
 class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
-    async def get_by_email(self, db: AsyncDBDependency, email: str) -> User | None:
+    async def get_by_email(self, db: AsyncDBDependency, email: str) -> Optional[User]:
         query = select(User).where(User.email == email)
         result = await db.execute(query)
         return result.scalar()
 
-    async def get_by_username(self, db: AsyncDBDependency, username: str) -> User | None:
+    async def get_by_username(
+        self, db: AsyncDBDependency, username: str
+    ) -> Optional[User]:
         query = select(User).where(User.username == username)
         result = await db.execute(query)
         return result.scalar()
 
-    async def get_by_id(self, db: AsyncDBDependency, id: int) -> User | None:
+    async def get_by_id(self, db: AsyncDBDependency, id: int) -> Optional[User]:
         query = select(User).where(User.id == id)
         result = await db.execute(query)
         return result.scalar()
@@ -56,7 +58,7 @@ class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
         self,
         db: AsyncDBDependency,
         objeto: User,
-        data: UserUpdate | dict[str, Any],
+        data: Union[UserUpdate, Dict[str, Any]],
     ) -> User:
         _query = select(Group).where(Group.id.in_(data.groups))
         _result = await db.execute(_query)
@@ -74,7 +76,9 @@ class UserAuthUseCases(BaseUseCases[User, UserCreate, UserUpdate]):
 
         return await super().update(db, objeto, data)
 
-    async def authenticate(self, db: Session, username: str, password: str) -> User | None:
+    async def authenticate(
+        self, db: Session, username: str, password: str
+    ) -> Optional[User]:
         current_user = await self.get_by_username(db, username)
 
         if not current_user:
@@ -98,7 +102,9 @@ user = UserAuthUseCases(User)
 class PermissionAuthUseCases(
     BaseUseCases[Permission, PermissionCreate, PermissionUpdate]
 ):
-    async def check_permission_db(self, db: AsyncDBDependency, content_type_id: int, codename: str) -> bool:
+    async def check_permission_db(
+        self, db: AsyncDBDependency, content_type_id: int, codename: str
+    ) -> bool:
         content_type = select(ContentType).where(ContentType.id == content_type_id)
         result = await db.execute(content_type)
         result = result.scalar()
@@ -131,7 +137,7 @@ class PermissionAuthUseCases(
         self,
         db: AsyncDBDependency,
         objeto: Permission,
-        data: PermissionUpdate | dict[str, Any],
+        data: Union[PermissionUpdate, Dict[str, Any]],
     ) -> Permission:
         await self.check_permission_db(db, data.content_type_id, data.codename)
 
@@ -142,7 +148,7 @@ permission = PermissionAuthUseCases(Permission)
 
 
 class GroupAuthUseCases(BaseUseCases[Group, GroupCreate, GroupUpdate]):
-    async def get_by_name(self, db: AsyncDBDependency, name: str) -> Group | None:
+    async def get_by_name(self, db: AsyncDBDependency, name: str) -> Optional[Group]:
         query = select(Group).where(Group.name == name)
         result = await db.execute(query)
         return result.scalar()

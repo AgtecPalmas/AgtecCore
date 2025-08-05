@@ -12,9 +12,10 @@ from core.management.commands.utils import Utils
 
 
 class AppsWebPagesBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, app, model=None) -> None:
         self.command = command
         self.app = app
+        self.model = model
         self.flutter_web_dir = self.command.flutter_dir
         self.flutter_list_page_snippet = Path(
             f"{self.command.path_command}/snippets/flutter_web_project/layers/listpage.txt"
@@ -36,6 +37,14 @@ class AppsWebPagesBuilder:
                 _app_file = Path(
                     f"{self.flutter_web_dir}/lib/apps/{_model_app_lower}/pages/{_model_name_lower}.list.dart"
                 )
+
+                if self.model is not None and _model_name_lower != self.model.lower():
+                    continue
+                
+                # Verificando se o arquivo já existe e está bloqueado
+                if Utils.check_file_is_locked(str(_app_file)):
+                    return
+                
                 # Parseando o snippet
                 _content = Utils.get_snippet(self.flutter_list_page_snippet)
                 _content = _content.replace("$ModelClass$", _model_name)

@@ -50,10 +50,7 @@ class _AppMenuItemState extends State<AppMenuItem> {
               color: AppColors.menuIcon,
             ),
             const SizedBox(width: AppSizeMarginPadding.menuItemIconSpaceLabelH),
-            Text(
-              widget.title,
-              style: AppMenuItemStyle.style(),
-            ),
+            Flexible(child: Text(widget.title, style: AppMenuItemStyle.style(), maxLines: 2)),
           ],
         ),
       ),

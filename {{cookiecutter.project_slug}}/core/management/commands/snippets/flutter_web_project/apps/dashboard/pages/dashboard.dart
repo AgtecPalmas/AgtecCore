@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '/constants/app.colors.dart';
-import '/core/widgets/app.content.dart';
 import '/core/widgets/app.menu.dart';
+import 'content.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key, required this.title});
@@ -18,14 +19,7 @@ class _DashboardPageState extends State<DashboardPage> {
       color: AppColors.desktopBackground,
       child: Padding(
         padding: EdgeInsets.all(12),
-        child: Row(
-          children: [
-            AppMenuToolbar(currentPath: 'dashboard',),
-            Expanded(
-              child: AppContentContainer(),
-            ),
-          ],
-        ),
+        child: Row(children: [AppMenuToolbar(currentPath: 'dashboard'), Expanded(child: DashboardContent())]),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

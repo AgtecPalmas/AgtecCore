@@ -1,6 +1,6 @@
 # Projeto Flutter
 
-Esse projeto foi gerado a partir do NuvolsCore, as configurações iniciais do projeto (CRUD) foram geradas.
+Esse projeto foi gerado a partir do AgtecCore, as configurações iniciais do projeto (CRUD) foram geradas.
 Abaixo descrevemos os passos que devem ser seguidos para rodar o projeto.
 
 # Versão do Flutter
@@ -102,4 +102,4 @@ projeto flutter
 
 ## Documentação
 
-<https://agtecpalmas.github.io/NuvolsCore/>
+<https://agtecpalmas.github.io/AgtecCore/>

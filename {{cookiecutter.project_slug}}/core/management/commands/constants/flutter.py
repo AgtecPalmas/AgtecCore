@@ -139,7 +139,11 @@ IGNORE_FIELDS = [
     "enabled",
     "deleted",
     "createdOn",
-    "created_at",
     "updatedOn",
+    "created_on",
+    "updated_on",
+    "createdAt",
+    "updatedAt",
+    "created_at",
     "updated_at",
 ]

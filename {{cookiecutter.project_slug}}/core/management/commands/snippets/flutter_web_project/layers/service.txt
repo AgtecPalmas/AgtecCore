@@ -161,4 +161,13 @@ class $ModelClass$Service implements HttpInterface {
       return Left(Exception('Error deleting item, error: $error'));
     }
   }
+
+  /// 
+  /// [======================================================]
+  ///
+  /// Métodos adicionais, para atender as regras de negócio
+  /// devem ser implementados aqui.
+  ///
+  /// [======================================================]
+  ///
 }

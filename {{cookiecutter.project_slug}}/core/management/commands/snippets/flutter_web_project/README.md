@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Projeto gerado por meio do build-flutter-web do NuvolsCore, seguindo os mesmos
+Projeto gerado por meio do build-flutter-web do AgtecCore, seguindo os mesmos
 conceitos do build-flutter. 
 
 -----
@@ -114,3 +114,71 @@ AppTableColumnActions(
 ),
 ```
 
+### AppTableColumn
+Componente para renderizar colunas de tabelas.
+```dart
+AppTableColumnString(
+    title: '...',
+    dataSelector: (XPTOModel item) => item.xpto,
+),
+```
+
+### AppDropdownMenu
+```dart
+return AppContainerDropdownMenu(
+      title: 'Tipo de Evento',
+      dropdownMenu: DropdownMenu<String>(
+        controller: _eventoFormTipo,
+        requestFocusOnTap: true,
+        enableFilter: true,
+        menuHeight: 300,
+        width: constraints.maxWidth * 0.5,
+        menuStyle: DropdownMenuStyle.style(),
+        hintText: 'Selecione o tipo do evento',
+        textStyle: DropdownMenuTextStyle.style(),
+        inputDecorationTheme: DropdownInputDecorationTheme.style(),
+        dropdownMenuEntries:
+            widget.tipoEventoList.map((e) => DropdownMenuEntry<String>(value: e.id, label: e.nome)).toList(),
+        onSelected: (value) {
+          setState(() {
+            // Encontra o item selecionado na lista de tipos de eventos
+            final selectedTipoEvento = widget.tipoEventoList.firstWhere(
+              (item) => item.id == value,
+              orElse: () => TipoEventoModel(),
+            );
+            // Atualiza o ID do tipo de evento selecionado
+            tipoEventoID = selectedTipoEvento.id;
+            // Atualiza o campo de texto do tipo de evento com o nome do tipo selecionado
+            _eventoFormTipo.text = selectedTipoEvento.nome;
+          });
+        },
+      ),
+    );
+```
+
+### AppSwitchFormField
+```dart
+AppWidgetSwitchFormField(
+    labelText: 'Presencial ${eventoPresencial ? 'Sim' : 'Não'}',
+    value: eventoPresencial,
+    onChanged: (value) {
+        setState(() {
+        eventoPresencial = value;
+        });
+    },
+    ),
+)
+```
+
+### AppTextFormField
+```dart
+AppWidgetContainerInputFormField(
+    labelText: 'Local',
+    textFormField: TextFormField(
+        controller: _eventoFormLocals,
+        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+        validator: Validatorless.multiple([Validatorless.required('Campo obrigatório')]),
+        decoration: AppInputTextFormFieldStyle.style(hintText: 'Digite o Local'),
+    ),
+)
+```

@@ -192,4 +192,13 @@ class $ModelClass$Controller extends Cubit<$ModelClass$State> {
       emit(const $ModelClass$ErrorState('Ocorreu um erro ao tentar excluir o registro.'));
     }
   }
+
+  /// 
+  /// [======================================================]
+  ///
+  /// Métodos adicionais, para atender as regras de negócio
+  /// devem ser implementados aqui.
+  ///
+  /// [======================================================]
+  ///
 }

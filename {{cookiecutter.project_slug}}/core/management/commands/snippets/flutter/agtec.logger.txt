@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -15,12 +15,12 @@
 /// visual dos logs
 /// Url Pacote: https://pub.dev/packages/logger/example
 /// [Exemplo de uso]
-///    NuvolsCoreLogger().info("Apenas uma informação teste");
-///    NuvolsCoreLogger().erro("Erro", "", StackTrace.current);
-///    NuvolsCoreLogger.debug("Debug", "", StackTrace.current);
-///    NuvolsCoreLogger.warning("Warning", "", StackTrace.current);
-///    NuvolsCoreLogger.crash("Crash", "", StackTrace.current);
-///    NuvolsCoreLogger().verbose({"chave": "valor"});
+///    AgtecCoreLogger().info("Apenas uma informação teste");
+///    AgtecCoreLogger().erro("Erro", "", StackTrace.current);
+///    AgtecCoreLogger.debug("Debug", "", StackTrace.current);
+///    AgtecCoreLogger.warning("Warning", "", StackTrace.current);
+///    AgtecCoreLogger.crash("Crash", "", StackTrace.current);
+///    AgtecCoreLogger().verbose({"chave": "valor"});
 ///
 
 import 'package:flutter/foundation.dart';
@@ -30,24 +30,24 @@ import 'package:logger/logger.dart';
 ///
 /// [Exemplo de uso]
 /// ```
-/// NuvolsCoreLogger().info("Apenas uma informação teste");
+/// AgtecCoreLogger().info("Apenas uma informação teste");
 /// ```
 /// ```
-/// NuvolsCoreLogger().erro("Erro", "", StackTrace);
+/// AgtecCoreLogger().erro("Erro", "", StackTrace);
 /// ```
 /// ```
-/// NuvolsCoreLogger.debug("Debug", "", StackTrace.current);
+/// AgtecCoreLogger.debug("Debug", "", StackTrace.current);
 /// ```
 /// ```
-/// NuvolsCoreLogger.warning("Warning", "", StackTrace.current);
+/// AgtecCoreLogger.warning("Warning", "", StackTrace.current);
 /// ```
 /// ```
-/// NuvolsCoreLogger.crash("Crash", "", StackTrace);
+/// AgtecCoreLogger.crash("Crash", "", StackTrace);
 /// ```
 /// ```
-/// NuvolsCoreLogger().verbose({"chave": "valor"});
+/// AgtecCoreLogger().verbose({"chave": "valor"});
 /// ```
-class NuvolsCoreLogger {
+class AgtecCoreLogger {
   final Logger _logger = Logger();
 
   void erro(dynamic message, [dynamic error, StackTrace? stackTrace]) {

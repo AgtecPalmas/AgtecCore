@@ -20,6 +20,12 @@ class AppSizeMarginPadding {
   // Margem Item Table to Separator
   static const double marginItemTableTOSeparator = 8.0;
 
+  // Padding AppTable SingleChildScrollView
+  static const double paddingAppTableSingleChildScrollView = 24.0;
+
+  // Padding AppTable Reduce MaxWidth Constraints Parent
+  static const double reducedWidthOfParentMaxSized = 100.0;
+
   // Margem button ModalForm
   static const double marginModalFormBottom = 32.0;
 
@@ -66,7 +72,6 @@ class AppSizeMarginPadding {
   static const double paddingTableColumnActionB = 32.0;
   static const double paddingTableColumnActionL = 32.0;
 
-
   // InputTextFormField
   static const double paddingInputTextFormFieldT = 8.0;
   static const double paddingInputTextFormFieldL = 10.0;
@@ -74,6 +79,10 @@ class AppSizeMarginPadding {
   static const double paddingInputTextFormFieldHintL = 0.0;
   static const double paddingInputTextFormFieldHintT = 0.0;
   static const double paddingInputTextFormFieldHintB = 2.0;
+
+  // SearchFormField
+  static const double paddingSearchFormFieldH = 22.0;
+  static const double paddingSearchFormFieldV = 4.0;
 
   // =======
   // Space
@@ -138,6 +147,9 @@ class AppSizeMarginPadding {
   // WIDTH / HEIGHT
   // =======
 
+  // EmptyContainerList
+  static const double emptyContainerListHeight = 72.0;
+
   // InputTextFormFieldBorderSize
   static const double inputTextFormFieldBorderSize = .75;
 
@@ -171,4 +183,10 @@ class AppSizeMarginPadding {
   // SearchHeader
   static const double searchHeaderWidth = 300.0;
   static const double searchHeaderHeight = 34.0;
+
+  ///
+  /// Dashboard
+  ///
+  static const double dashboardCardHeight = 180.0;
+  static const double dashboardCardContasHeight = 210.0;
 }

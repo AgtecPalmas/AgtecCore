@@ -3,9 +3,9 @@ import '/apps/auth/models/auth.dart';
 import '/core/app.logger.dart';
 import '/core/interfaces/local.data.dart';
 
+///
 /// Classe para controlar o DB local que utiliza o pacote SembastWeb
 /// dados sensíveis não devem ser armazenados no DB local
-///
 ///
 
 class AuthData implements LocalDataInterface {
@@ -29,7 +29,7 @@ class AuthData implements LocalDataInterface {
   ///  [data] - AuthModel - Dados a serem atualizados
   ///
   /// Return:
-  ///   Either<Exception, AuthModel> - Retorna o resultado da operação
+  ///   Either`<Exception, AuthModel>` - Retorna o resultado da operação
   /// 
   @override
   Future<Either<Exception, AuthModel>> update<AuthModel>(AuthModel data) async {
@@ -48,7 +48,7 @@ class AuthData implements LocalDataInterface {
   ///  [id] - int - ID do item a ser deletado
   ///
   /// Return:
-  ///  Either<Exception, bool> - Retorna o resultado da operação
+  ///  Either`<Exception, bool>` - Retorna o resultado da operação
   ///
   @override
   Future<Either<Exception, bool>> delete({required int id}) async {
@@ -64,7 +64,7 @@ class AuthData implements LocalDataInterface {
   /// Método para deletar todos os itens AuthModel no banco de dados local
   ///
   /// Return:
-  ///  Either<Exception, bool> - Retorna o resultado da operação
+  ///  Either`<Exception, bool>` - Retorna o resultado da operação
   ///
   @override
   Future<Either<Exception, bool>> deleteAll() async {
@@ -79,7 +79,7 @@ class AuthData implements LocalDataInterface {
   /// Método para buscar todos os AuthModels dados locais
   ///
   /// Return:
-  ///  Either<Exception, List<AuthModel>> - Retorna o resultado da operação
+  ///  Either`<Exception, List<AuthModel>>` - Retorna o resultado da operação
   ///
   @override
   Future<Either<Exception, List<AuthModel>>> fetch<AuthModel>() async {
@@ -99,7 +99,7 @@ class AuthData implements LocalDataInterface {
   ///  [id] - int - ID do item a ser buscado
   ///
   /// Return:
-  ///  Either<Exception, AuthModel> - Retorna o resultado da operação
+  ///  Either`<Exception, AuthModel>` - Retorna o resultado da operação
   ///
   @override
   Future<Either<Exception, AuthModel>> get<AuthModel>({required int id}) async {
@@ -117,7 +117,7 @@ class AuthData implements LocalDataInterface {
   ///  [data] - AuthModel - Dados a serem inseridos
   ///
   /// Return:
-  ///  Either<Exception, bool> - Retorna o resultado da operação
+  ///  Either`<Exception, bool>` - Retorna o resultado da operação
   ///
   @override
   Future<Either<Exception, bool>> insert<AuthModel>(AuthModel data) async {

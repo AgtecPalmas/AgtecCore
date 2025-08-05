@@ -91,7 +91,7 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
                   cardTitle: '',
                   cardContent: SizedBox(
                     height: MediaQuery.sizeOf(context).height * AppSizeMarginPadding.heightSizedBoxParentTable,
-                    child: CustomScrollView(slivers: [SliverToBoxAdapter(child: _listBuilder())]),
+                    child: CustomScrollView(slivers: [SliverToBoxAdapter(child: _listBuilder(contextLB, constraints))]),
                   ),
                 ),
               )
@@ -111,7 +111,7 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
   ///   XPTOSuccessState -> Quando houver sucesso na operação
   /// 
 
-  Widget _listBuilder() {
+  Widget _listBuilder(BuildContext contextLB, BoxConstraints constraints) {
       return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
         listener: (context, state) {
           switch (state) {
@@ -134,7 +134,7 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
             case $ModelClass$ErrorState():
               return const SizedBox.shrink();
             case $ModelClass$SuccessState(:final $Model$List):
-              return buildTable($Model$List);
+              return buildTable($Model$List, constraints);
             default:
               return const SizedBox.shrink();
           }
@@ -144,7 +144,7 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
 
   /// Método de exemplo para construir uma AppTable passando dados genéricos para ela
   ///
-  Widget buildTable(List<$ModelClass$Model> items) {
+  Widget buildTable(List<$ModelClass$Model> items, BoxConstraints constraints) {
     return SizedBox(
       height: MediaQuery.sizeOf(context).height * AppSizeMarginPadding.heightSizedBoxParentTable,
       child: CustomScrollView(
@@ -152,6 +152,7 @@ class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with 
           SliverToBoxAdapter(
             child: AppTable<$ModelClass$Model>(
               items: items,
+              maxWidth: constraints.maxWidth - AppSizeMarginPadding.reducedWidthOfParentMaxSized,
               columns: [
                 AppTableColumnActions(
                   title: 'Ações',

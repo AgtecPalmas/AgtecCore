@@ -88,7 +88,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
                 listener: (context, state) {
                   if (state is $ModelClass$ErrorState){
                     showError(state.error);
-                    NuvolsCoreLogger().erro(
+                    AgtecCoreLogger().erro(
                       'Ocorreu o erro ao executar o Update Page BlocListner', 
                       state.error.toString(),
                     );
@@ -159,7 +159,7 @@ class _$ModelClass$AddPageState extends State<$ModelClass$AddPage>
       $Model$Controller.$Model$Model = _$Model$Model;
       await $Model$Controller.post(_$Model$Model);
     }catch (error, stackTrace){
-      NuvolsCoreLogger().erro('Ocorreu o erro no _post do PageCreate', [error, stackTrace]);
+      AgtecCoreLogger().erro('Ocorreu o erro no _post do PageCreate', [error, stackTrace]);
       showError(InsertStringConstants.error);
     }
   }

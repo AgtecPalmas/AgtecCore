@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Arquivo travado]
 /// Para evitar que o arquivo seja reescrito acidentalmente, 
@@ -75,7 +75,7 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
         ),
       );
     } catch (error, stackTrace) {
-      dev.log("Erro ao chamar o build do CustomSliverAppbar", name: "NuvolsCore", error: error, stackTrace: stackTrace);
+      dev.log("Erro ao chamar o build do CustomSliverAppbar", name: "AgtecCore", error: error, stackTrace: stackTrace);
       return SizedBox.shrink();
     }
   }

@@ -37,12 +37,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
-import '../../../constants/app.sizes.dart';
 
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/app.logger.dart';
+import '../../../core/utils/app.convert.dart';
 import '../../../core/styles/app.button.style.dart';
 import '../../../core/styles/app.formfield.style.dart';
 import '../../../core/widgets/app.inputformfield.dart';
@@ -69,16 +70,26 @@ class _$ModelClass$FormState extends State<$ModelClass$Form> {
   @override
   void initState() {
     super.initState();
-    if (widget.updateModel != null) {
-      _$Model$Model = widget.updateModel!;
-      $AttributesUpdate$
-    }
+    _configureFormForUpdate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    });
   }
 
   @override
   void dispose() {
     $DisposeController$
     super.dispose();
+  }
+
+  ///
+  /// Método para quando estiver atualizando o formulário
+  /// popular os campos do formulário com os dados do model
+  ///
+  void _configureFormForUpdate() {
+    if (widget.updateModel != null) {
+      _$Model$Model = widget.updateModel!;
+      $AttributesUpdate$
+    }
   }
 
   @override
@@ -88,20 +99,23 @@ class _$ModelClass$FormState extends State<$ModelClass$Form> {
 
 
   Widget _createForm(){
-    return Container(
-      height: MediaQuery.sizeOf(context).height + AppSizeMarginPadding.paddingBottonBoxParentModalForm,
-      padding: const EdgeInsets.only(bottom: 18),
-        child: Form(
-        key: _form$ModelClass$,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            $Form$
-            _buildRowActionButtons(),
-          ],
-        ),
-      )
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          padding: const EdgeInsets.only(bottom: 18),
+          child: Form(
+                key: _form$ModelClass$,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    $Form$
+                    _buildRowActionButtons(),
+                  ],
+                ),
+              )
+        );
+      }
     );
   }
 
@@ -137,6 +151,7 @@ class _$ModelClass$FormState extends State<$ModelClass$Form> {
   Future<void> _post() async {
     try{
       $FormAttributeValueToModel$
+
       await widget.controller.post(_$Model$Model);
       _clearForm();
     }catch (error, stackTrace){

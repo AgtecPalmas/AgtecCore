@@ -1,5 +1,5 @@
 ///
-/// [Arquivo gerado automaticamente pelo NuvolsCore]
+/// [Arquivo gerado automaticamente pelo AgtecCore]
 ///
 /// [Travado por default]
 /// Por ser um arquivo de configuração, para evitar que o mesmo seja sobrescrito
@@ -10,7 +10,7 @@
 import 'package:flutter/foundation.dart';
 
 const bool developingAtHome = true;
-const String homeIPAddress = 'http://192.168.68.110';
+const String homeIPAddress = 'http://127.0.0.1:8181/';
 const String workIPAddress = 'http://11.11.0.112';
 
 // Área para nome de constantes que servirão de chave para os dados
@@ -29,11 +29,10 @@ const bool releaseVersion = !kDebugMode;
 
 // URI para desenvolvimento
 const String uriDeveloper = developingAtHome ? '$homeIPAddress:8000/' : '$workIPAddress:8000/';
-const String fastAPIURIDeveloper = developingAtHome ? '$homeIPAddress:8181/' : '$workIPAddress:8181/'; // Prefeitura
+const String fastAPIURIDeveloper = developingAtHome ? homeIPAddress : '$workIPAddress:8181/';
 
 // URI para produção
-const String uriRelease = '';
-const String uriFastAPIRelease = '';
+const String uriFastAPIRelease = 'http://31.97.28.144:8005/';
 
 // URL para os termos de uso
 const String urlTermoUso = '';
@@ -44,9 +43,12 @@ const bool enabledGoogleAccount = false;
 const bool enabledEmailAccount = false;
 const bool enabledOTPAccount = false;
 
+// Constante com o tamanho padrão da paginação para os métodos
+// http que utilizam paginação
+const int defaultPaginationSize = 16;
 
 class Config {
-  static const uri = releaseVersion ? fastAPIURIDeveloper : fastAPIURIDeveloper;
+  static const uri = releaseVersion ? uriFastAPIRelease : fastAPIURIDeveloper;
   static const uriAuth = '';
 
   // Adicionar aqui o token DRF caso esteja utilizando o Django Rest Framework.

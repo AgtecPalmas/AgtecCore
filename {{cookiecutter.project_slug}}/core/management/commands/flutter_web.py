@@ -21,12 +21,30 @@ from core.management.commands.flutter_managers import (
     AddPackagesWebBuilder,
     AppsWebDirectoriesBuilder,
     AppsWebInjectMenuItensBuilder,
+    AppsWebInjectProvidersBuilder,
     AppsWebRouterInjectRootRouteBuilder,
     FlutterWebBuildProject,
     MainFileWebBuilder,
-    AppsWebInjectProvidersBuilder
 )
-
+from core.management.commands.flutter_managers.build_web_apps_files import (
+    AppsWebFilesBuilder,
+)
+from core.management.commands.flutter_managers.build_web_model_cubit import (
+    AppsWebCubitStateManagerBuilder,
+)
+from core.management.commands.flutter_managers.build_web_model_models import AppsWebModelBuilder
+from core.management.commands.flutter_managers.build_web_model_pages import (
+    AppsWebPagesBuilder,
+)
+from core.management.commands.flutter_managers.build_web_model_router import (
+    AppsWebRouterBuilder,
+)
+from core.management.commands.flutter_managers.build_web_model_service import (
+    AppsWebServiceBuilder,
+)
+from core.management.commands.flutter_managers.build_web_model_widget_form import (
+    AppsWebWidgetFormBuilder,
+)
 from core.management.commands.flutter_managers.utils import ignore_base_fields
 from core.management.commands.utils import Utils
 
@@ -296,13 +314,14 @@ class Command(BaseCommand):
         parser.add_argument("App", type=str, nargs="?")
         parser.add_argument("Model", type=str, nargs="?")
         parser.add_argument(
-            "--app", action="store_true", dest="app", help="Criar a App e seus models"
+            "--app", action="store_true", dest="app", 
+            help="Criar a App e seus models"
         )
         parser.add_argument(
             "--app_model",
             action="store_true",
             dest="app_model",
-            help="Criar a App e o Model informado",
+            help="Gera apenas os arquivos do model da app",
         )
         parser.add_argument(
             "--main", action="store_true", dest="main", help="Renderizar a main.dart"
@@ -462,6 +481,9 @@ class Command(BaseCommand):
         return True
 
     def call_methods(self, options):
+        """
+        Método responsável por chamar os métodos de acordo com as opções passadas
+        """
         if self._check_flutter_installation() is False:
             Utils.show_error("Flutter não está instalado na máquina.", exit=True)
             return
@@ -475,7 +497,10 @@ class Command(BaseCommand):
         elif options["clear"]:
             self._clear_project()
             sys.exit()
-
+        elif options["app_model"]:
+            print("Gerando apenas o model da app")
+            return
+        
         else:
             self._init_flutter()
             self._build_flutter()
@@ -490,14 +515,67 @@ class Command(BaseCommand):
                 or options.get("main")
                 or options.get("routers")
                 or options.get("yaml")
+                or options.get("app")
+                or options.get("app_model")
             )
         ):
             Utils.show_error(
                 "Para gerar o projeto é necessário informar uma das flags:\
-                \n[b cyan]--all\n--clear\n--main\n--routers\n--yaml[/]"
+                \n[b cyan]--all\n--clear\n--main\n--routers\n--yaml\n--app\n--app_model[/]"
             )
 
+    def _create_source_from_app_model(self):
+        """
+        Método responsável por fazer o parser apenas do models da app informado.
+
+        Devendo para tanto encontrar o diretório da app dentro de lib/apps
+        e criar os arquivos necessários para a app/models.
+        
+        """
+        try:
+            Utils.show_core_box(f"App {self.current_app_model.app_name} | Model {self.current_app_model.model_name}", tipo="app")
+
+            AppsWebFilesBuilder(
+                command=self, app=self.current_app_model.app,
+                model=self.current_app_model.model_name
+            ).build()
+
+            AppsWebServiceBuilder(command=self, app=self.current_app_model.app,
+                                  model=self.current_app_model.model_name).build()
+            
+            AppsWebPagesBuilder(command=self, app=self.current_app_model.app,
+                                model=self.current_app_model.model_name).build()
+
+            AppsWebRouterBuilder(command=self, app=self.current_app_model.app,
+                                 model=self.current_app_model.model_name).build()
+        
+            AppsWebCubitStateManagerBuilder(
+                command=self,
+                app=self.current_app_model.app,
+                model=self.current_app_model.model_name
+            ).build()
+            
+            AppsWebWidgetFormBuilder(
+                 command=self, app=self.current_app_model.app,
+                model=self.current_app_model.model_name
+            ).build()
+
+            AppsWebModelBuilder(
+                command=self,
+                app=self.current_app_model.app,
+                model=self.current_app_model.model_name,
+            ).build()
+
+        except Exception as error:
+            Utils.show_error(f"Error in __create_source_from_app_model: {error}")
+
     def _create_source_from_generators(self):
+        """
+            Método responsável por fazer o parser de todos 
+            os elementos do projeto, quando não forem passados
+            a app e o model, ele irá gerar todos os arquivos
+            necessários para a app e o model.
+        """
         try:
             Utils.show_core_box(f"App {self.current_app_model.app_name}", tipo="app")
 
@@ -526,14 +604,23 @@ class Command(BaseCommand):
 
         self.call_methods(options)
 
+        # Verificando se foram passadas a app e o models para
+        # renderização específica
+        if app is not None and model is not None:
+            self.current_app_model = AppModel(self.flutter_project, app, model)
+            self._create_source_from_app_model()
+            return
+        
         for _app in FLUTTER_APPS_WEB:
             self.current_app_model = AppModel(self.flutter_project, _app)
             self._create_source_from_generators()
 
-        # Chamando o método para injetar os routers das apps no arquivo app.routes.dart
+        # Chamando o método para injetar os routers das 
+        # apps no arquivo app.routes.dart
         self._inject_routes_app_in_root_route(flutter_project=self.flutter_project)
 
-        # Chamando o método para injetar os itens do menu no arquivo app.menu.dart
+        # Chamando o método para injetar os itens 
+        # do menu no arquivo app.menu.dart
         AppsWebInjectMenuItensBuilder(
             command=self, flutter_project=self.flutter_project
         ).build()

@@ -39,6 +39,7 @@ class AppsWebDirectoriesBuilder:
         build _summary_
         """
         try:
+
             # Criando o diretório da app dentro de lib/apps
             Utils.show_message(f"Criando o diretório da app: {self.app.name}")
             _app_dir = Path(f"{self.flutter_web_dir}/lib/apps/{self.app.name.lower()}")

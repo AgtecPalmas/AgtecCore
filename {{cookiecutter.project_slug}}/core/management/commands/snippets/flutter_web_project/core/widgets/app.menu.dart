@@ -32,7 +32,7 @@ class _AppMenuToolbarState extends State<AppMenuToolbar> {
           AppSizeMarginPadding.cardRadiusDefault,
         )),
         border: Border(
-          left: AppCardStyle.style(), // Use the style method from AppCardStyle
+          left: AppCardStyle.style(),
           right: AppCardStyle.style(),
           top: AppCardStyle.style(),
           bottom: AppCardStyle.style(),
@@ -44,7 +44,14 @@ class _AppMenuToolbarState extends State<AppMenuToolbar> {
           const SizedBox(
             height: AppSizeMarginPadding.marginDefaultTRBL,
           ),
-          $AppsMenuItem$
+          SizedBox(
+            height: MediaQuery.of(context).size.height - AppSizeMarginPadding.menuW,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [$AppsMenuItem$]
+              )
+            )
+          ),
           const Spacer(),
           _buildConfigMenuItem(),
         ],

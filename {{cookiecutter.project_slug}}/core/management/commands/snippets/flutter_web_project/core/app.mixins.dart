@@ -18,7 +18,7 @@ import '../constants/app.colors.dart';
 /// Para utilizar o mixin, basta adicionar o código [with Messages]
 /// na classe que deseja utilizar o mixin, Lembrando que a
 /// classe deve extender de [StatefulWidget].e o comando
-/// deve ser adicionado na class State<T> da classe
+/// deve ser adicionado na class [State<T>] da classe
 /// Ex:. [class _SplashScreenPageState extends State<SplashScreenPage> with Messages {]
 ///
 mixin MessagesMixin<T extends StatefulWidget> on State<T> {

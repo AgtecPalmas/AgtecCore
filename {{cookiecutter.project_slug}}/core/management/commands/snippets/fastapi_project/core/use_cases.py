@@ -1,7 +1,7 @@
 import datetime
 import json
 import timeit
-from typing import Any, Dict, Generic, Type, TypeVar, Union
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi import BackgroundTasks, HTTPException, Request
 from fastapi.datastructures import URL
@@ -218,7 +218,8 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         )
 
     async def get(
-        self, db: AsyncDBDependency, id: Any, deleted: bool = False) -> ModelType | None:
+        self, db: AsyncDBDependency, id: Any, deleted: bool = False
+    ) -> Optional[ModelType]:
         """
         get
         -------------
@@ -232,7 +233,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             id : str
                 UUID do registro a ser buscado
 
-            deleted : bool | None = False
+            deleted : Optional[bool]
                 Flag que indica se deve buscar registros deletados
 
         Returns
@@ -681,7 +682,8 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         return await self._get_cached_data_from_db(db=db, params=key_data.get("params"))
 
     async def _get_updated_data_from_db(
-        self, request: Request, db: AsyncSession, keys: list[dict]) -> list:
+        self, request: Request, db: AsyncSession, keys: list[dict]
+    ) -> list:
         """
         _get_updated_data_from_db
         -----------------------

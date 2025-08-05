@@ -17,9 +17,10 @@ from core.management.commands.utils import Utils
 
 
 class AppsWebModelBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, app, model=None) -> None:
         self.command = command
         self.app = app
+        self.model = model
         self.snippet_dir = Path(f"{self.command.path_command}/snippets/flutter/")
         self.flutter_web_dir = self.command.flutter_dir
         self._path_flutter = self.command.flutter_dir
@@ -49,9 +50,12 @@ class AppsWebModelBuilder:
                     f"{self.flutter_web_dir}/lib/apps/{_model_app_lower}/models/{_model_name_lower}.dart"
                 )
                 _list_fields_parser = []
+
+                if self.model is not None and _model_name_lower != self.model.lower():
+                    continue 
+
                 # Verificando se o arquivo já existe e está bloqueado
                 if Utils.check_file_is_locked(str(_app_file)):
-                    Utils.show_error(f"File is locked: {_app_file}", exit=False)
                     return
 
                 for field in iter(model._meta.fields):

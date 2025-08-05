@@ -20,10 +20,11 @@ from core.management.commands.utils import Utils
 
 
 class AppsWebWidgetFormBuilder:
-    def __init__(self, command, app) -> None:
+    def __init__(self, command, app, model=None) -> None:
         
         self.command = command
         self.app = app
+        self.model = model
         self.flutter_web_dir = self.command.flutter_dir
         self.flutter_widget_form_snippet = Path(
             f"{self.command.path_command}/snippets/flutter_web_project/layers/form.txt"
@@ -43,6 +44,10 @@ class AppsWebWidgetFormBuilder:
                 _model_app_lower = _model_app.lower()
                 _model_name = model.__name__
                 _model_name_lower = _model_name.lower()
+
+                if self.model is not None and _model_name_lower != self.model.lower():
+                    continue
+
                 _form_field_file_dart = Path(
                     f"{self.flutter_web_dir}/lib/apps/{_model_app_lower}/widgets/{_model_name_lower}.form.dart"
                 )
@@ -164,7 +169,7 @@ class AppsWebWidgetFormBuilder:
                 _list_attribute += f"_{class_form}Model.{_title_camel_case} = int.tryParse({_textField}) ?? 0;\n"
                 continue
             if _attribute.get("type") == "DateTime?":
-                _list_attribute += f"_{class_form}Model.{_title_camel_case} = DateTime.tryParse({_textField}) ?? DateTime.now();\n"
+                _list_attribute += f"_{class_form}Model.{_title_camel_case} = AppConvertData.parseDataBrasileira({_textField}) ?? DateTime.now();\n"
                 continue
             if _attribute.get("type") == "bool":
                 _list_attribute += f"_{class_form}Model.{_title_camel_case} = bool.tryParse({_textField}) ?? false;\n"
@@ -178,8 +183,10 @@ class AppsWebWidgetFormBuilder:
         try:
 
             _form_content_file = self.flutter_widget_form_field_snippet
+
             if Utils.check_file_is_locked(str(self.form_app)):
                 return
+
             _content_attributes = ""
             _content_attributes_update = ""
             _dispose_attributes = ""
@@ -217,7 +224,14 @@ class AppsWebWidgetFormBuilder:
                 _content_attributes += f"  final _{_model_name_camel_case}Form{_name_title} = TextEditingController();\n"
                 
                 # Adicionando o content_attributes_update para quando estiver editando
-                _content_attributes_update += f"_{_model_name_camel_case}Form{_name_title}.text = _{_model_name_camel_case}Model.{_name}.toString();\n"
+                # Verificando se o campo é do tipo DateField ou DateTimeField
+                if field_type in ["DateField", "DateTimeField"]:
+                    _content_attributes_update += (
+                        f"  _{_model_name_camel_case}Form{_name_title}.text = "
+                        f"DateFormat('dd/MM/yyyy').format(_{_model_name_camel_case}Model.{_name}!);\n"
+                    )
+                else:
+                    _content_attributes_update += f"_{_model_name_camel_case}Form{_name_title}.text = _{_model_name_camel_case}Model.{_name}.toString();\n"
 
                 _dispose_attributes += (
                     f"    _{_model_name_camel_case}Form{_name_title}.dispose();\n"
