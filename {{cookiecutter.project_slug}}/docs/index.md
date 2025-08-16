@@ -1,4 +1,4 @@
-# Bem vindo ao projeto Nuvols Core
+# Bem vindo ao projeto Agtec Core
 
 ## Sobre
 
@@ -108,8 +108,8 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 --------------------------------------------
 
-Nuvols - 
+Agtec - 
 
-[falecom@nuvols.com.br](mailto:falecom@nuvols.com.br)
+[falecom@agtec.com.br](mailto:falecom@agtec.com.br)
 
-![Nuvols](assets/logo_agtec.svg){width="200"}
+![Agtec](assets/logo_agtec.svg){width="200"}

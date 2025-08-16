@@ -18,7 +18,7 @@ O UV é um gerenciador de projetos Python que engloba várias funcionalidades, c
 Para executar o projeto com o UV, siga os passos abaixo:
 
 1. Instale o UV, caso ainda não tenha instalado, https://docs.astral.sh/uv/getting-started/installation/
-2. **Remova o .venv, apagando o diretório, caso o build do NuvolsCore tenha criado o ambiente virtual com o pip.**
+2. **Remova o .venv, apagando o diretório, caso o build do AgtecCore tenha criado o ambiente virtual com o pip.**
 3. Inicie o ambiente virtual com o comando:
 
 ```shell

@@ -222,7 +222,7 @@ FLUTTER_API_PASSWORD_DEV = config("FLUTTER_API_PASSWORD_DEV", "")
 API_PATH = config("API_PATH", "")
 API_PASSWORD_DEV = config("SENHA_PADRAO", default="")
 API_USER_DEV = config("USUARIO_PADRAO", default="admin")
-ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="nuvols_core")
+ORGANIZATION_FLUTTER_NAME = config("ORGANIZATION_FLUTTER_NAME", default="agtec_core")
 
 PATH_PRODUCTION = config("PATH_PRODUCTION", default="")
 
@@ -232,7 +232,7 @@ IP_ADDRESS_DEFAULT_FLUTTER = config("IP_ADDRESS_DEFAULT_FLUTTER", "")
 """
 Configuração para o Middleware Header_control
 O middleware header_control é responsavel por controlar
-Se o componente header do nuvols_core vai ser renderizado ou não
+Se o componente header do agtec_core vai ser renderizado ou não
 """
 # Middleware Header Control
 HEADER_COMPLETO = True
@@ -284,7 +284,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "LICENSE": {
         "name": "BSD License",
-        "url": "https://www.nuvols.com.br/",
+        "url": "https://www.agtec.com.br/",
     },
     "CONTACT": {
         "name": "{{ cookiecutter.author_name }}",

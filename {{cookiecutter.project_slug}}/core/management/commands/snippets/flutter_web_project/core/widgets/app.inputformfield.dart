@@ -5,7 +5,7 @@ import '/constants/app.sizes.dart';
 
 class AppWidgetContainerInputFormField extends StatelessWidget {
   // Classe para retornar o componente InputFormField com os padrões do
-  // design system da Nuvols
+  // design system da Agtec
   final String labelText;
   final TextFormField textFormField;
 

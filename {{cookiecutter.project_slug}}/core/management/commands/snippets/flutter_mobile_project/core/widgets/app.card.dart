@@ -4,7 +4,7 @@ import '/constants/app.colors.dart';
 import '/constants/app.sizes.dart';
 import '/core/styles/app.text.style.dart';
 
-/// Classe padrão seguindo o DS da Nuvols
+/// Classe padrão seguindo o DS da Agtec
 ///
 /// [Params]
 ///  - [cardContent] - Conteúdo do card

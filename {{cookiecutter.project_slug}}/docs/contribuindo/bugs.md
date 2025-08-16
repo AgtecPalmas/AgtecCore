@@ -1,6 +1,6 @@
 # Bugs
 
-Caso você encontre algum bug no projeto, sinta-se livre para abrir uma [issue](https://github.com/nuvols//issues) no projeto relatando o bug encontrado.
+Caso você encontre algum bug no projeto, sinta-se livre para abrir uma [issue](https://github.com/agtec//issues) no projeto relatando o bug encontrado.
 
 ## O que devo fazer antes de abrir uma issue?
 

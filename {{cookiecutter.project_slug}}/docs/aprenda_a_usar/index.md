@@ -1,6 +1,6 @@
 # Projeto Django
 
-Esse projeto foi criado utilizando o NuvolsCore, que gera um projeto Django com as configurações utilizadas normalmente em projetos, com Django Rest Framework e com managers que auxiliarão no desenvolvimento do seu projeto.
+Esse projeto foi criado utilizando o AgtecCore, que gera um projeto Django com as configurações utilizadas normalmente em projetos, com Django Rest Framework e com managers que auxiliarão no desenvolvimento do seu projeto.
 
 > Lembre-se de sempre consultar a documentação quando surgir alguma dúvida.
 
@@ -85,6 +85,6 @@ python manage.py core --upgrade
 Versão 4.2.1 está sendo usada
 
 Baixar atualização
-https://github.com/nuvols//releases/tag/4.3
+https://github.com/agtec//releases/tag/4.3
 Deseja atualizar o Core? [S/N]
 ```

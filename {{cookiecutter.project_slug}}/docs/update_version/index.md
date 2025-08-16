@@ -76,7 +76,7 @@
 
  4. Atualizar os arquivos da app usuario. 
  
-     4.1. Copiar os arquivos da app usuario (NuvolsCore) para a app usuario do seu projeto.
+     4.1. Copiar os arquivos da app usuario (AgtecCore) para a app usuario do seu projeto.
 
      4.2. Foi melhorado o Signal que manipula o relacionamento de Usuario com User
 

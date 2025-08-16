@@ -3,8 +3,6 @@ import os
 import re
 import sys
 
-from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
-from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from rich import box, print
@@ -17,6 +15,9 @@ from rich.progress import (
     TimeRemainingColumn,
 )
 from rich.text import Text
+
+from base.settings import IGNORED_APPS as IGNORED_APPS_BASE
+from core.views.constants import IGNORED_APPS, IGNORED_MODELS
 
 from .constants.fastapi import IGNORE_FIELDS
 
@@ -64,7 +65,7 @@ class Utils(object):
         __log.setLevel(logging.INFO)
 
         emoji = f":{emoji}: " if emoji else ""
-        message = f"{emoji}{self}\n\nPor favor consulte a documentação\nhttps://github.com/nuvols/"
+        message = f"{emoji}{self}\n\nPor favor consulte a documentação\nhttps://github.com/agtec/"
 
         print(
             Panel.fit(
@@ -118,7 +119,7 @@ class Utils(object):
         if tipo == "core":
             print(
                 Panel(
-                    Text("Nuvols CORE", justify="center", style="cyan bold"),
+                    Text("Agtec CORE", justify="center", style="cyan bold"),
                     border_style="cyan",
                 )
             )
