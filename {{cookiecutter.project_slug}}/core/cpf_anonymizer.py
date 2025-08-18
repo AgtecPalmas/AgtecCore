@@ -73,7 +73,9 @@ class CPFAnonymizer:
             6. Codifica o IV concatenado com os dados criptografados em Base64 e retorna como string.
         """
         iv = os.urandom(16)
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv), backend=self.backend)
+        cipher = Cipher(
+            algorithms.AES(self.key), modes.CBC(iv), backend=default_backend()
+        )
         encryptor = cipher.encryptor()
         padded_data = self._pad(cpf.encode('utf-8'))
         encrypted = encryptor.update(padded_data) + encryptor.finalize()
@@ -102,7 +104,9 @@ class CPFAnonymizer:
         packed_bytes = base64.b64decode(packed.encode('utf-8'))
         iv = packed_bytes[:16]
         encrypted = packed_bytes[16:]
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv), backend=self.backend)
+        cipher = Cipher(
+            algorithms.AES(self.key), modes.CBC(iv), backend=default_backend()
+        )
         decryptor = cipher.decryptor()
         decrypted_padded = decryptor.update(encrypted) + decryptor.finalize()
         return self._unpad(decrypted_padded).decode('utf-8')
