@@ -26,21 +26,6 @@ Para gerar uma nova SecretKey a ser utilizada no arquivo .env execute o comando 
 python contrib/secret_gen.py  
 ```
 
-----
-
-## Deploy
-
-### Para realizar o deploy do projeto em ambiente de homologação deve-se seguir os seguintes passos
-
-[ ] Adicionar o diretório static do core no sistema de versionamento
-
-### Para realizar o deploy do projeto em ambiente de produção deve-se seguir os seguintes passos
-
-[ ] Configurar o arquivo com as variáveis de ambiente docker-compose.yml  
-[ ] Configurar o arquivo Dockerfile
-
-----
-
 ## Docker
 
 ### Como utilizar
