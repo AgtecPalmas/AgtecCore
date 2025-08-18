@@ -110,6 +110,6 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 Agtec - 
 
-[falecom@agtec.com.br](mailto:falecom@agtec.com.br)
+[agtec@palmas.to.gov.br](mailto:agtec@palmas.to.gov.br)
 
 ![Agtec](assets/logo_agtec.svg){width="200"}
