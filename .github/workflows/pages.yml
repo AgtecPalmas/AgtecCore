@@ -37,7 +37,7 @@ jobs:
         cp -r site/* ../docs  
     
     - name: Upload Pages Artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
       with:
         path: docs/
         retention-days: 1
