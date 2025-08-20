@@ -5,7 +5,7 @@ Obrigado por se interessar em contribuir no nosso projeto! Nesse documento há i
 
 ## Faça um fork da branch `desenvolvimento`
 
-Para contribuir com o projeto, você deve fazer um fork da branch `desenvolvimento` do projeto. Para isso, na [página do projeto](https://github.com/AgtecPalmas/AgtecCore/tree/desenvolvimento), basta clicar no botão `Fork` no canto superior direito da tela.
+Para contribuir com o projeto, você deve fazer um fork da branch `desenvolvimento` do projeto. Para isso, na [página do projeto](https://github.com/agtec//tree/desenvolvimento), basta clicar no botão `Fork` no canto superior direito da tela.
 > Certifique-se de estar usando o fork da branch `desenvolvimento` e não da `main`.
 
 ![Fork](../images/fork.png)
@@ -16,7 +16,7 @@ Você deve clonar o fork para sua máquina local. Para isso, basta copiar o link
 
 ## Inicie um projeto com o AgtecCore
 
-Inicialmente, você deve fazer as alterações em um projeto gerado com o AgtecCore e, assim que finalizar, verifique o resultado das alterações. Se estiver tudo certo, transcreva as alterações para o seu fork. Esse processo é necessário pois, para ver o resultado das alterações, você deve rodar a documentação do projeto localmente e isso só é possível se você tiver um projeto gerado com o AgtecCore. Para iniciar um projeto com o AgtecCore, siga o passo a passo do [readme](https://github.com/AgtecPalmas/AgtecCore/#readme) do projeto.
+Inicialmente, você deve fazer as alterações em um projeto gerado com o AgtecCore e, assim que finalizar, verifique o resultado das alterações. Se estiver tudo certo, transcreva as alterações para o seu fork. Esse processo é necessário pois, para ver o resultado das alterações, você deve rodar a documentação do projeto localmente e isso só é possível se você tiver um projeto gerado com o AgtecCore. Para iniciar um projeto com o AgtecCore, siga o passo a passo do [readme](https://github.com/agtec//#readme) do projeto.
 > Sugerimos esse processo pois, caso você faça as alterações diretamente no seu fork, não será tão simples de ver o resultado das alterações em tempo real. 
 
 ## Faça suas alterações

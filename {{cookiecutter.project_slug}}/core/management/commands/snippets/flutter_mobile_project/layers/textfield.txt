@@ -1,0 +1,13 @@
+AppWidgetContainerInputFormField(
+    labelText: '$Field$',
+    textFormField: TextFormField(
+        controller: $controller$,
+        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+        
+        validator: Validatorless.multiple([
+            $validators$
+        ]),
+        $ImputFormatter$
+        decoration: AppInputTextFormFieldStyle.style(hintText: 'Digite o $Field$'),
+    ),
+),

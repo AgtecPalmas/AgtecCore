@@ -4,13 +4,14 @@ import subprocess
 import sys
 import typing as t
 from pathlib import Path
+from subprocess import DEVNULL, PIPE
+
 from rich.progress import (
     BarColumn,
     Progress,
     SpinnerColumn,
     TimeRemainingColumn,
 )
-from subprocess import DEVNULL, PIPE
 
 INSTALL_REQUIREMENTS = "{{ cookiecutter.install_requirements }}" == "Sim"
 

@@ -144,7 +144,7 @@ router_permission = APIRouter(
     response_model=PaginationBase,
     dependencies=[Depends(security.has_permission("authentication.permission_view"))],
 )
-async def fetch(
+async def fetch_permissions(
     db: AsyncDBDependency, request: Request, offset: int = 0, limit: int = 25
 ) -> Any:
     return await use_cases.permission.get_paginate(
@@ -157,17 +157,19 @@ async def fetch(
 
 
 @router_permission.post("/", response_model=schemas.Permission)
-async def create(db: AsyncDBDependency, data: schemas.PermissionCreate) -> Any:
+async def create_premission(
+    db: AsyncDBDependency, data: schemas.PermissionCreate
+) -> Any:
     return await use_cases.permission.create(db, data)
 
 
 @router_permission.get("/{id}", response_model=schemas.Permission)
-async def get(db: AsyncDBDependency, id: int) -> Any:
+async def get_permission(db: AsyncDBDependency, id: int) -> Any:
     return await use_cases.permission.get(db, id)
 
 
 @router_permission.put("/{id}", response_model=schemas.Permission)
-async def update(
+async def update_permission(
     db: AsyncDBDependency,
     id: int,
     data: schemas.PermissionUpdate,
@@ -177,7 +179,7 @@ async def update(
 
 
 @router_permission.delete("/{id}", response_model=schemas.Permission)
-async def delete(db: AsyncDBDependency, id: int) -> Any:
+async def delete_permission(db: AsyncDBDependency, id: int) -> Any:
     await use_cases.permission.get(db, id)
     await use_cases.permission.delete(db, id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
@@ -191,7 +193,7 @@ router_group = APIRouter(
 
 
 @router_group.get("/", response_model=PaginationBase)
-async def fetch(
+async def fetch_groups(
     db: AsyncDBDependency,
     request: Request,
     offset: int = 0,
@@ -203,23 +205,25 @@ async def fetch(
 
 
 @router_group.post("/", response_model=schemas.Group)
-async def create(db: AsyncDBDependency, data: schemas.GroupCreate) -> Any:
+async def create_group(db: AsyncDBDependency, data: schemas.GroupCreate) -> Any:
     return await use_cases.group.create(db, data)
 
 
 @router_group.get("/{id}", response_model=schemas.Group)
-async def get(db: AsyncDBDependency, id: int) -> Any:
+async def get_group(db: AsyncDBDependency, id: int) -> Any:
     return await use_cases.group.get(db, id)
 
 
 @router_group.put("/{id}", response_model=schemas.Group)
-async def update(db: AsyncDBDependency, id: int, data: schemas.GroupUpdate) -> Any:
+async def update_group(
+    db: AsyncDBDependency, id: int, data: schemas.GroupUpdate
+) -> Any:
     item = await use_cases.group.get(db, id)
     return await use_cases.group.update(db, item, data)
 
 
 @router_group.delete("/{id}", response_model=schemas.Group)
-async def delete(db: AsyncDBDependency, id: int) -> Any:
+async def delete_group(db: AsyncDBDependency, id: int) -> Any:
     await use_cases.group.get(db, id)
     await use_cases.group.delete(db, id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

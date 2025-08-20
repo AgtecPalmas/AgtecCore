@@ -1,4 +1,4 @@
-# Bem vindo ao projeto AGTEC Core
+# Bem vindo ao projeto Agtec Core
 
 ## Sobre
 
@@ -108,8 +108,8 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 --------------------------------------------
 
-AGTEC - Prefeitura Municipal de Palmas
+Agtec - 
 
-[agtec.dev@palmas.to.gov.br](mailto:agtec.dev@palmas.to.gov.br)
+[agtec@palmas.to.gov.br](mailto:agtec@palmas.to.gov.br)
 
-![AGTEC](assets/logo_agtec.svg){width="200"}
+![Agtec](assets/logo_agtec.svg){width="200"}

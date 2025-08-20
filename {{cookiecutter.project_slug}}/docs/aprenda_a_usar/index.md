@@ -85,6 +85,6 @@ python manage.py core --upgrade
 Versão 4.2.1 está sendo usada
 
 Baixar atualização
-https://github.com/AgtecPalmas/AgtecCore/releases/tag/4.3
+https://github.com/agtec//releases/tag/4.3
 Deseja atualizar o Core? [S/N]
 ```

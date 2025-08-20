@@ -32,7 +32,7 @@ class LivroFilter(filterset.FilterSet):
         widget=forms.TextInput(attrs={"class": "form-control"}),
     )
 
-    created_on = filterset.DateFilter(
+    created_at = filterset.DateFilter(
         label="Criado depois de",
         lookup_expr="gte",
         widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
@@ -43,7 +43,7 @@ class LivroFilter(filterset.FilterSet):
 
     class Meta:
         model = Livro
-        fields = ["titulo", "autor", "created_on"]
+        fields = ["titulo", "autor", "created_at"]
 ```
 
 Lembre-se sempre de utilizar o `lookup_expr` corretamente para definir o tipo de filtro que será aplicado, como no exemplo o `icontains` que é um filtro de texto que busca por parte do texto e o `gte` que busca por datas maiores ou iguais.

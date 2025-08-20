@@ -32,10 +32,10 @@ class CoreBase(Base):
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
     deleted: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_on: Mapped[datetime.datetime] = mapped_column(
+    created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.now()
     )
-    updated_on: Mapped[datetime.datetime] = mapped_column(
+    updated_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=datetime.datetime.now()
     )
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
