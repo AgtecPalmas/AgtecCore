@@ -35,7 +35,7 @@
 ## Informações
 ---
 - Dependências de Terceiros: ![dependencies](https://img.shields.io/badge/dependencies-out%20of%20date-orange)
-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=agtecPalmas_agtecCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=agtecPalmas_agtecCore)
+- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AgtecPalmas_AgtecCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AgtecPalmas_AgtecCore)
 
   ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)
   ![Django](https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white)
