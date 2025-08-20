@@ -1,0 +1,108 @@
+name: $AppPackage$
+description: $AppDescription$
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Adicionando o plugin para trabalhar com o PathURlStrategy do GoRouter
+  flutter_web_plugins:
+    sdk: flutter
+
+  go_router: ^14.2.3
+  dio: ^5.8.0+1
+  pretty_dio_logger: ^1.4.0
+  intl: ^0.19.0
+  either_dart: ^1.0.0
+  get_it: ^8.0.3
+  flutter_secure_storage: ^9.2.4
+  logger: ^2.0.2
+  sembast_web: ^2.2.0
+  image_picker: ^1.0.2
+  validatorless: ^1.2.4
+  brasil_fields: ^1.15.0
+  equatable: ^2.0.7
+  bloc: ^9.0.0
+  flutter_bloc: ^9.1.0
+  top_snackbar_flutter: ^3.2.0
+  flutter_spinkit: ^5.2.1
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^5.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/icons/icon.png
+    - assets/icons/settings.png
+    - assets/icons/product.png
+    - assets/icons/sales.png
+    - assets/icons/edit.png
+    - assets/icons/delete.png
+    - assets/icons/enabled.png
+    - assets/icons/disabled.png
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Thin.ttf
+          style: normal
+          weight: 100
+        - asset: assets/fonts/inter/Inter-Regular.ttf
+          style: normal
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Medium.ttf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/inter/Inter-SemiBold.ttf
+          style: normal
+          weight: 600
+        - asset: assets/fonts/inter/Inter-Bold.ttf
+          style: normal
+          weight: 800
+        - asset: assets/fonts/inter/Inter-ExtraBold.ttf
+          style: normal
+          weight: 900
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

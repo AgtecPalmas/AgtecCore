@@ -307,8 +307,8 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         data = data.model_dump(exclude_unset=True)
 
-        if hasattr(self.model, "updated_on"):
-            data["updated_on"] = datetime.datetime.now()
+        if hasattr(self.model, "updated_at"):
+            data["updated_at"] = datetime.datetime.now()
 
         for field in data:
             setattr(objeto, field, data[field])
@@ -411,7 +411,7 @@ class BaseUseCases(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
         model.deleted = False
         model.enabled = True
-        model.updated_on = datetime.datetime.now()
+        model.updated_at = datetime.datetime.now()
         return await self._add_commit_and_refresh(db, model)
 
     async def refresh_cache(

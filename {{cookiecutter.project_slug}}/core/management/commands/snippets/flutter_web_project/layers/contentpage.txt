@@ -1,0 +1,237 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+///
+/// [Arquivo travado]
+///
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../constants/app.strings.dart';
+import '../../../core/widgets/app.listview.empty.dart';
+import '../../../core/app.mixins.dart';
+import '../controllers/$Model$.dart';
+import '../models/$Model$.dart';
+import '../widgets/$Model$.form.dart';
+import '/constants/app.colors.dart';
+import '/constants/app.sizes.dart';
+import '/core/app.logger.dart';
+import '/core/extensions/open.modal.form.dart';
+import '/core/styles/app.button.style.dart';
+import '/core/widgets/app.card.dart';
+import '/core/widgets/app.form.modal.dart';
+import '/core/widgets/app.header.content.page.dart';
+import '/core/widgets/app.table.dart';
+import '../../../core/widgets/app.loading.dart';
+
+class Content$ModelClass$Page extends StatefulWidget {
+  const Content$ModelClass$Page({super.key});
+
+  @override
+  State<Content$ModelClass$Page> createState() => _Content$ModelClass$PageState();
+}
+
+class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with MessagesMixin {
+  late final $ModelClass$Controller controller$ModelClass$;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller$ModelClass$ = context.read<$ModelClass$Controller>();
+      _loadData();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (BuildContext contextLB, BoxConstraints constraints) {
+      return Container(
+        margin: const EdgeInsets.only(
+          top: AppSizeMarginPadding.marginDefaultTRBL,
+          left: AppSizeMarginPadding.marginMenuItemContentH,
+          right: AppSizeMarginPadding.marginDefaultTRBL,
+        ),
+        decoration: const BoxDecoration(
+          color: AppColors.transparent,
+        ),
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const AppHeaderPage(
+                title: '$ModelClass$',
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      context.openModalWindow(
+                        AppFormModal(
+                          title: 'Adicionar $ModelClass$',
+                          child: _buildForm$ModelClass$(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: AppButtonPrimaryStyle.style(),
+                  child: const Text('Adicionar'),
+                ),
+              ),
+              Expanded(
+                child: AppCard(
+                  cardTitle: '',
+                  cardContent: SizedBox(
+                    height: MediaQuery.sizeOf(context).height * AppSizeMarginPadding.heightSizedBoxParentTable,
+                    child: CustomScrollView(slivers: [SliverToBoxAdapter(child: _listBuilder(contextLB, constraints))]),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  ///
+  /// Método para criar o observador do cubit, exibindo os possíveis estados
+  /// [States]
+  ///   XPTOErrorState -> Quando ocorrer um erro
+  ///   XPTOProcessState -> Quando o cubit estiver processando
+  ///   XPTOEmptyListState -> Quando não houver dados
+  ///   XPTOSuccessState -> Quando houver sucesso na operação
+  /// 
+
+  Widget _listBuilder(BuildContext contextLB, BoxConstraints constraints) {
+      return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
+        listener: (context, state) {
+          switch (state) {
+            case $ModelClass$ErrorState(:final error):
+              showError(error);
+              break;
+            case $ModelClass$SuccessState():
+              showSuccess(ListStringConstants.success);
+              break;
+            default:
+              break;
+          }
+        },
+        builder: (context, state) {
+          switch (state) {
+            case $ModelClass$ProcessState():
+              return AppLoading();
+            case $ModelClass$EmptyListState():
+              return AppEmptyList();
+            case $ModelClass$ErrorState():
+              return const SizedBox.shrink();
+            case $ModelClass$SuccessState(:final $Model$List):
+              return buildTable($Model$List, constraints);
+            default:
+              return const SizedBox.shrink();
+          }
+        },
+      );
+    }
+
+  /// Método de exemplo para construir uma AppTable passando dados genéricos para ela
+  ///
+  Widget buildTable(List<$ModelClass$Model> items, BoxConstraints constraints) {
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * AppSizeMarginPadding.heightSizedBoxParentTable,
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: AppTable<$ModelClass$Model>(
+              items: items,
+              maxWidth: constraints.maxWidth - AppSizeMarginPadding.reducedWidthOfParentMaxSized,
+              columns: [
+                AppTableColumnActions(
+                  title: 'Ações',
+                  width: const FixedColumnWidth(120),
+                  dataSelector:
+                      ($ModelClass$Model item) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              /// Chamando o FormModal passando como parâmetro o widget
+                              /// o item que foi clicado
+                              Navigator.of(context).push(
+                                context.openModalWindow(
+                                  AppFormModal(title: 'Editar $ModelClass$ ${item.id}', child: _buildForm$ModelClass$(item)),
+                                ),
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/icons/edit.png',
+                              width: 20,
+                              height: 20,
+                              color: AppColors.editButtonIcon,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              AppLogger().info('Ativando/desativando item ${item.id}');
+                            },
+                            child: Image.asset(
+                              'assets/icons/disabled.png',
+                              width: 20,
+                              height: 20,
+                              color: AppColors.disabledButtonIcon,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              AppLogger().info('Deletando item ${item.id}');
+                            },
+                            child: Image.asset(
+                              'assets/icons/delete.png',
+                              width: 20,
+                              height: 20,
+                              color: AppColors.deleteButtonIcon,
+                            ),
+                          ),
+                        ],
+                      ),
+                ),
+                AppTableColumnString(title: 'ID', dataSelector: ($ModelClass$Model item) => item.id.toString()),
+                AppTableColumnString(title: 'Descrição', dataSelector: ($ModelClass$Model item) => item.toString()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildForm$ModelClass$([$ModelClass$Model? updateModel]) {
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * AppSizeMarginPadding.heightSizedBoxParentTable,
+      child: CustomScrollView(
+        slivers: [SliverToBoxAdapter(
+          child: $ModelClass$Form(
+              controller: controller$ModelClass$,
+              updateModel: updateModel,
+           )
+          )
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// Método para carregar os dados por meio do controller
+  /// 
+  Future<void> _loadData() async {
+    await controller$ModelClass$.fetch();
+  }
+}

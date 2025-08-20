@@ -1,0 +1,173 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+
+/// ========================================================================
+///
+///  Os campos do formulários foram todos renderizados como sendo do tipo
+///  TextFormField.
+///
+///  Caso algum campo do formulário seja do tipo diferente, basta alterar
+///  tomando como base o catálogo de widgets do Flutter.
+///  https://docs.flutter.dev/ui/widgets
+///
+/// ========================================================================
+
+/// ========================================================================
+/// 
+/// [Método _post()]
+/// 
+///  O método _post é responsável por enviar os dados do formulário para o
+///  controller, que por sua vez irá enviar os dados para o service.
+///  
+///  A atribuição dos valores dos campos do formulário para o model foi gerada
+///  automaticamente, caso o tipo do campo do models seja diferente de string,
+///  é necessário fazer a conversão do valor do campo para o tipo correto.
+/// 
+/// ========================================================================
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+import 'package:flutter/material.dart';
+import 'package:validatorless/validatorless.dart';
+
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
+import '../../../core/app.logger.dart';
+import '../../../core/utils/app.convert.dart';
+import '../../../core/styles/app.button.style.dart';
+import '../../../core/styles/app.formfield.style.dart';
+import '../../../core/widgets/app.inputformfield.dart';
+import '../models/$ModelLower$.dart';
+import '../controllers/$ModelLower$.dart';
+
+
+class $ModelClass$Form extends StatefulWidget {
+  final $ModelClass$Model? updateModel;
+  final $ModelClass$Controller controller;
+
+  const $ModelClass$Form({super.key, required this.controller, this.updateModel});
+
+  @override
+  State<$ModelClass$Form>  createState() => _$ModelClass$FormState();
+
+}
+
+class _$ModelClass$FormState extends State<$ModelClass$Form> {
+  $ModelClass$Model _$Model$Model = $ModelClass$Model();
+  final _form$ModelClass$ = GlobalKey<FormState>();
+  $Attributes$
+
+  @override
+  void initState() {
+    super.initState();
+    _configureFormForUpdate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    });
+  }
+
+  @override
+  void dispose() {
+    $DisposeController$
+    super.dispose();
+  }
+
+  ///
+  /// Método para quando estiver atualizando o formulário
+  /// popular os campos do formulário com os dados do model
+  ///
+  void _configureFormForUpdate() {
+    if (widget.updateModel != null) {
+      _$Model$Model = widget.updateModel!;
+      $AttributesUpdate$
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _createForm();
+  }
+
+
+  Widget _createForm(){
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          padding: const EdgeInsets.only(bottom: 18),
+          child: Form(
+                key: _form$ModelClass$,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    $Form$
+                    _buildRowActionButtons(),
+                  ],
+                ),
+              )
+        );
+      }
+    );
+  }
+
+  Widget _buildRowActionButtons(){
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+            ElevatedButton(onPressed: () {
+            if(_form$ModelClass$.currentState?.validate() ?? false) {
+              if (widget.updateModel != null) {
+                _put();
+              } else {
+                _post();
+              }
+            }
+            }, style: AppButtonPrimaryStyle.style(), child: const Text('Salvar')),
+            const SizedBox(width: 8),
+            OutlinedButton(
+                onPressed: () {
+                Navigator.of(context).pop();
+                },
+                style: AppButtonOutlinedStyle.style(),
+                child: const Text('Cancelar')),
+        ],
+    );
+  }
+
+  void _clearForm(){
+    $ClearData$
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _post() async {
+    try{
+      $FormAttributeValueToModel$
+
+      await widget.controller.post(_$Model$Model);
+      _clearForm();
+    }catch (error, stackTrace){
+      AppLogger().erro('Ocorreu o erro', [error, stackTrace]);
+    }
+  }
+
+
+  Future<void> _put() async {
+    try {
+      $FormAttributeValueToModel$
+
+      await widget.controller.put(_$Model$Model);
+      _clearForm();
+    } catch (error, stackTrace) {
+      AppLogger().erro('Ocorreu o erro', [error, stackTrace]);
+    }
+  }
+}

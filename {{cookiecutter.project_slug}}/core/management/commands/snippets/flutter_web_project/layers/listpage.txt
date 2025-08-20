@@ -1,0 +1,50 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+///
+/// [Arquivo travado]
+///
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+
+import 'package:flutter/material.dart';
+
+import '/constants/app.colors.dart';
+import '/core/widgets/app.menu.dart';
+import '$Model$.content.dart';
+
+
+class $ModelClass$Page extends StatefulWidget {
+  const $ModelClass$Page({super.key, required this.title});
+  final String title;
+
+  @override
+  State<$ModelClass$Page> createState() => _$ModelClass$PageState();
+}
+
+class _$ModelClass$PageState extends State<$ModelClass$Page> {
+  @override
+  Widget build(BuildContext context) {
+    return const Material(
+      color: AppColors.desktopBackground,
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Row(
+          children: [
+            AppMenuToolbar(
+              currentPath: '$Model$',
+            ),
+            Expanded(
+              child: Content$ModelClass$Page(),
+            ),
+          ],
+        ),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}

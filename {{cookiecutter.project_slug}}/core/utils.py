@@ -1,4 +1,4 @@
-import contextlib
+import logging
 import re
 import uuid
 from pathlib import Path
@@ -9,12 +9,16 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import DEFAULT_CACHE_ALIAS, caches
 from django.db.models import Q
 
+from base.settings import DEBUG
 from core.excecoes import CpfCnpjValidationError
 
 cache = caches[getattr(settings, "CACHE_NAME", DEFAULT_CACHE_ALIAS)]
 
 # Validators
 EMPTY_VALUES = (None, "", [], (), {})
+
+
+logger = logging.getLogger("django_debug")
 
 
 def obter_modelo(nome_modelo):
@@ -50,9 +54,9 @@ def is_valid_cpf(value):
     error_messages = {
         "invalid": "CPF Inválido",
         "max_digits": (
-            "CPF possui 11 dígitos (somente números) ou 14" " (com pontos e hífen)"
+            "CPF possui 11 dígitos (somente números) ou 14 (com pontos e hífen)"
         ),
-        "digits_only": ("Digite um CPF com apenas números ou com ponto e " "hífen"),
+        "digits_only": ("Digite um CPF com apenas números ou com ponto e hífen"),
     }
 
     if value in EMPTY_VALUES:
@@ -134,3 +138,22 @@ def save_file_to(instance, filename) -> str:
 def get_full_url_static(file: str) -> str:
     """Retorna o caminho completo do arquivo estático"""
     return staticfiles_storage.url(file)
+
+
+def send_message_to_email(email: str, subject: str, message: str) -> None:
+    """Envia mensagem para o e-mail"""
+    try:
+        from django.core.mail import send_mail
+
+        _recipient_list = [email]
+        if DEBUG:
+            _recipient_list = ["guilherme.carvalho.carneiro@gmail.com"]
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=_recipient_list,
+            fail_silently=False,
+        )
+    except Exception as e:
+        logger.error(f"Erro ao enviar email: {e}")

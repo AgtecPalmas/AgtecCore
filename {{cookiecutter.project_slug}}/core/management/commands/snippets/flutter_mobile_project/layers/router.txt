@@ -1,0 +1,32 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+/// ========================================================================
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:go_router/go_router.dart';
+import '../controllers/$Model$.dart';
+import '../pages/$Model$.list.dart';
+
+List<GoRoute> $Model$Routes = [
+  GoRoute(
+    path: '/$Model$',
+    name: '$Model$',
+    builder:
+        (context, state) => BlocProvider(
+          create: (context) => $ModelClass$Controller(),
+          child: $ModelClass$Page(title: '$ModelClass$'),
+        ),
+  ),
+];

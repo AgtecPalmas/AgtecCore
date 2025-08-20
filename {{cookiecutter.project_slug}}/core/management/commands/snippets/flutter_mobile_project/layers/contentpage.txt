@@ -1,0 +1,389 @@
+///
+/// [Arquivo gerado automaticamente pelo AgtecCore ]
+///
+
+/// ========================================================================
+
+///
+/// [Arquivo travado]
+/// Para evitar que o arquivo seja reescrito acidentalmente, 
+/// o mesmo encontra-se "travado", para destravar remova o # da linha abaixo.
+/// 
+/// #FileLocked
+///
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../constants/app.strings.dart';
+import '../../../core/styles/app.button.style.dart';
+import '../../../core/widgets/app.listview.empty.dart';
+import '../../../core/widgets/app.list.page.iten.card.dart';
+import '../../../core/widgets/app.bottom.bar.dart';
+import '../../../core/styles/app.formfield.style.dart';
+import '../../../core/app.mixins.dart';
+import '../controllers/$Model$.dart';
+import '../models/$Model$.dart';
+import '../widgets/$Model$.form.dart';
+import '/constants/app.colors.dart';
+import '/constants/app.sizes.dart';
+import '/core/app.logger.dart';
+import '/core/widgets/app.header.content.page.dart';
+import '../../../core/widgets/app.loading.dart';
+
+class Content$ModelClass$Page extends StatefulWidget {
+  const Content$ModelClass$Page({super.key});
+
+  @override
+  State<Content$ModelClass$Page> createState() => _Content$ModelClass$PageState();
+}
+
+class _Content$ModelClass$PageState extends State<Content$ModelClass$Page> with MessagesMixin {
+  late final $ModelClass$Controller controller$ModelClass$;
+  // Controlador de scroll para o ListView, que será utilizado para identificar
+  // se a rolagem da tela chegou ao fim, para carregar mais dados
+  final ScrollController _scrollController = ScrollController();
+  
+  // Termo que será utilizado para filtrar os dados
+  // o valor é atualizado por meio do evento onChanged do TextField de Search
+  String searchText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller$ModelClass$ = context.read<$ModelClass$Controller>();
+      _loadData();
+    });
+    // Vinculando a função _onScroll ao _scrollController
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const AppHeaderPage(title: '$ModelClass$', previusRoute: '/dashboard'),
+                    SizedBox(height: AppSizeMarginPadding.marginDefaultTRBL),
+                  ],
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                child: TextFormField(
+                  decoration: AppSearchFieldStyle.style(hintText: 'Pesquisar/filtrar categoria'),
+                  onChanged: (value) {
+                    searchText = value;
+                    AppLogger().info('#searchField Search text: $searchText');
+                  },
+                  onFieldSubmitted: (value) {
+                    AppLogger().info('#searchField pesquisando pelo termo: $searchText');
+                    // Adicione aqui a lógica que deve ser executada ao pressionar "Enter"
+                  },
+                ),
+              ),
+            ),
+            _listBuilder(),
+          ],
+        ),
+        // Adicionando o AppBottomBar
+        _buildAppBottomBar(),
+      ]
+    );
+  }
+
+  ///
+  /// Método para criar o observador do cubit, exibindo os possíveis estados
+  /// [States]
+  ///   XPTOErrorState -> Quando ocorrer um erro
+  ///   XPTOProcessState -> Quando o cubit estiver processando
+  ///   XPTOEmptyListState -> Quando não houver dados
+  ///   XPTOSuccessState -> Quando houver sucesso na operação
+  /// 
+
+  Widget _listBuilder() {
+      return BlocConsumer<$ModelClass$Controller, $ModelClass$State>(
+        listener: (context, state) {
+          switch (state) {
+            case $ModelClass$ErrorState(:final error):
+              showError(error);
+              break;
+            case $ModelClass$SuccessState():
+              showSuccess(ListStringConstants.success);
+              break;
+            default:
+              break;
+          }
+        },
+        builder: (context, state) {
+          switch (state) {
+            case $ModelClass$ProcessState():
+              return SliverToBoxAdapter(child: AppLoading());
+            case $ModelClass$EmptyListState():
+              return SliverToBoxAdapter(child: AppEmptyList());
+            case $ModelClass$ErrorState():
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+            case $ModelClass$SuccessState(:final $Model$List):
+              return SliverPadding(padding: EdgeInsets.only(left: 20), sliver: buildSliverListView($Model$List));
+            default:
+              return SliverToBoxAdapter(child: SizedBox.shrink());
+          }
+        },
+      );
+    }
+
+  ///
+  /// Método para construir uma SliverListView com os dados
+  ///
+  /// [items] -> Lista de itens a serem exibidos
+  ///
+  ///
+  Widget buildSliverListView(List<$ModelClass$Model> items) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final item = items[index];
+        return AppListPageItenCard(item: item, 
+          onEdit: () {
+            _showDynamicBottomSheetDynamicHeight(item);
+          },
+          onView: () {
+            AppLogger().info('Visualizando item ${item.id}');
+          },
+          onDelete: () {
+            _buildDeleteConfirmationModal(item);
+          },
+        );
+      }, childCount: items.length),
+    );
+  }
+
+  ///
+  /// Método para construir a AppBottomBar
+  ///
+  Widget _buildAppBottomBar() {
+    return AppBottomBar(
+      itens: [
+        IconButton(onPressed: () {
+          context.go('/dashboard');
+        }, icon: Image.asset('assets/icons/home.png', color: AppColors.iconsColor)),
+        IconButton(onPressed: () {}, icon: Image.asset('assets/icons/chat.png', color: AppColors.iconsColor)),
+        IconButton.filled(
+          onPressed: () {
+            // Chamando o modal de inserção da categoria atleta
+            _showDynamicBottomSheetDynamicHeight();
+          },
+          icon: Image.asset('assets/icons/plus-circle.png', color: AppColors.iconsColor),
+        ),
+        IconButton(onPressed: () {}, icon: Image.asset('assets/icons/reload.png', color: AppColors.iconsColor)),
+        IconButton(onPressed: () {}, icon: Image.asset('assets/icons/settings.png', color: AppColors.iconsColor)),
+      ],
+    );
+  }
+
+  ///
+  /// Método para exibir o BottomSheet com título e formulário, e com altura dinâmica
+  /// baseado na exibição ou não do teclado
+  ///
+  void _showDynamicBottomSheetDynamicHeight([$ModelClass$Model? updateModel]) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.listViewPageBottomSheetBackground,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            // Obtemos a altura do teclado usando MediaQuery
+            final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+            return AnimatedPadding(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              padding: EdgeInsets.only(bottom: keyboardHeight),
+              child: DraggableScrollableSheet(
+                expand: false,
+                maxChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMaxChildSize,
+                minChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMinChildSize,
+                initialChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxInitialChildSize,
+                builder: (context, scrollController) {
+                  return SingleChildScrollView(
+                    controller: scrollController,
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSizeMarginPadding.paddingModalBottomSheetAll),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            updateModel != null ? 'Editando item ${updateModel.id}' : 'Cadastrar',
+                            style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
+                          ),
+                          const SizedBox(height: AppSizeMarginPadding.paddingModalBottomSizedBoxTitleForm),
+                          $ModelClass$Form(controller: controller$ModelClass$, updateModel: updateModel),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // ///
+  // /// Método para exibir o BottomSheet com título e formulário, e com altura dinâmica
+  // /// baseado na exibição ou não do teclado
+  // ///
+  // void _showDynamicBottomSheetDynamicHeight([$ModelClass$Model? updateModel]) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     backgroundColor: AppColors.listViewPageBottomSheetBackground,
+  //     isScrollControlled: true,
+  //     builder: (BuildContext context) {
+  //       return LayoutBuilder(
+  //         builder: (context, constraints) {
+  //           // Obtemos a altura do teclado usando MediaQuery
+  //           final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+  //           return AnimatedPadding(
+  //             duration: const Duration(milliseconds: 300),
+  //             curve: Curves.easeOut,
+  //             padding: EdgeInsets.only(bottom: keyboardHeight),
+  //             child: DraggableScrollableSheet(
+  //               expand: false,
+  //               maxChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMaxChildSize,
+  //               minChildSize: AppSizeMarginPadding.paddingModalBottomSizedBoxMinChildSize,
+  //               builder: (context, scrollController) {
+  //                 return SingleChildScrollView(
+  //                   controller: scrollController,
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.all(AppSizeMarginPadding.paddingModalBottomSheetAll),
+  //                     child: Column(
+  //                       mainAxisSize: MainAxisSize.min,
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text(
+  //                           updateModel != null ? 'Editando item ${updateModel.id}' : 'Cadastrar',
+  //                           style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
+  //                         ),
+  //                         const SizedBox(height: AppSizeMarginPadding.paddingModalBottomSizedBoxTitleForm),
+  //                         $ModelClass$Form(controller: controller$ModelClass$, updateModel: updateModel),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
+
+  ///
+  /// Método para criar o modal de confirmação da exclusão
+  ///
+  /// [Params]
+  ///   [item] -> item a ser excluído
+  ///
+  void _buildDeleteConfirmationModal($ModelClass$Model item) {
+    showDialog<String>(
+      context: context,
+      builder:
+          (BuildContext context) => Dialog(
+            backgroundColor: AppColors.listViewPageBottomSheetBackground,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            insetPadding: const EdgeInsets.all(AppSizeMarginPadding.paddingModalDeleteConfirmationAll),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppSizeMarginPadding.paddingModalDeleteConfirmationAllV,
+                horizontal: AppSizeMarginPadding.paddingModalDeleteConfirmationAllH,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Deseja realmente excluir?',
+                    style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
+                  ),
+                  const SizedBox(height: AppSizeMarginPadding.paddingModalDeleteConfirmationSpaceTitleContent),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(color: AppColors.listViewPageBottomSheetChildrensForeground),
+                        ),
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: () {
+                          _deleteItem(item);
+                          Navigator.pop(context);
+                        },
+                        style: AppButtonPrimaryStyle.style(),
+                        child: const Text('Confirmar'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+    );
+  }
+
+  ///
+  /// Método para carregar os dados por meio do controller
+  /// 
+  Future<void> _loadData() async {
+    await controller$ModelClass$.fetch();
+  }
+
+  /// 
+  /// Método para excluir o item após a confirmação no modal
+  /// 
+  /// [Params]
+  ///  [item] -> item a ser excluído
+  /// 
+  Future<void> _deleteItem($ModelClass$Model item) async {
+    AppLogger().info('#deleteItem: Excluindo item ${item.id}');
+    await controller$ModelClass$.delete(item);
+    AppLogger().info('#deleteItem: Item ${item.id} excluído com sucesso');
+  }
+
+  ///
+  /// Método responsável por controlar se o último item da SliverListView foi atingido
+  /// para chamar o método do controller que irá buscar mais dados
+  /// e apensar na lista existente.
+  /// 
+  void _onScroll() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      final nextUrl = controller$ModelClass$.$Model$List.last.nextUrl;
+      AppLogger().info('#listView: Carregando mais dados: $nextUrl');
+      // Verifica se o nextUrl não está vazio
+      if (nextUrl.isNotEmpty) {
+        controller$ModelClass$.getMore(nextUrl);
+      }
+    }
+  }
+}

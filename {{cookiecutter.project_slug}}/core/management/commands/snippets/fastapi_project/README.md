@@ -4,6 +4,77 @@ Esse projeto foi gerado a partir do projeto Django, os dois projetos estão inte
 
 > Caso você tenha criado o super usuário no projeto Django, você pode usar o mesmo usuário e senha para acessar esse projeto.
 
+---- 
+
+## Executando o projeto com o UV (Astral)
+
+O UV é um gerenciador de projetos Python que engloba várias funcionalidades, como:
+
+1. Instalar versões do Python.
+2. Criar ambientes virtuais.
+3. Instalar dependências do projeto.
+4. Executar o projeto.
+
+Para executar o projeto com o UV, siga os passos abaixo:
+
+1. Instale o UV, caso ainda não tenha instalado, https://docs.astral.sh/uv/getting-started/installation/
+2. **Remova o .venv, apagando o diretório, caso o build do AgtecCore tenha criado o ambiente virtual com o pip.**
+3. Inicie o ambiente virtual com o comando:
+
+```shell
+source .venv/bin/activate
+```
+
+4. Instale as dependências do projeto com o comando:
+
+```shell
+uv sync
+```
+
+5. Execute o projeto com o comando:
+
+```shell
+task run
+```
+
+### Outros comandos do UV
+
+#### Adicionar uma nova dependência ao projeto, ambiente de produção:
+
+```shell
+uv add <nome_da_dependencia>
+```
+
+#### Adicionar uma nova dependência ao projeto, ambiente de desenvolvimento:
+
+```shell
+uv add <nome_da_dependencia> --dev
+```
+
+#### Remover uma dependência do projeto, ambiente de produção:
+
+```shell
+uv remove <nome_da_dependencia>
+```
+
+#### Remover uma dependência do projeto, ambiente de desenvolvimento:
+
+```shell
+uv remove <nome_da_dependencia> --dev
+```
+
+#### Atualizar as dependências do projeto:
+
+```shell
+uv update
+```
+
+#### Sincronizar as dependências do projeto:
+
+```shell
+uv sync
+```
+
 ----
 
 ## Executando o projeto via Docker

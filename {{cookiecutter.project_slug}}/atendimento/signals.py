@@ -35,7 +35,7 @@ def __create_atendimentos(sender, **kwargs):
     dados: object = kwargs["instance"]
 
     # Verifica se objeto é novo
-    if dados.updated_on == dados.created_on and dados.deleted is False:
+    if dados.updated_at == dados.created_at and dados.deleted is False:
         data_in_while: dt.date = dados.data_inicial
         hora_in_while: dt.time = dados.hora_inicial
         # Loop nas datas

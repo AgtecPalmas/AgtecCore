@@ -3,7 +3,7 @@
 ## Tarefas a serem feitas
 
 Abaixo estão listadas algumas tarefas que precisam ser feitas e que você pode contribuir. 
-> Caso queira contribuir com alguma tarefa que não esteja listada aqui, você pode abrir uma [issue no projeto](https://github.com/AgtecPalmas/AgtecCore/issues) relatando o que deseja fazer.
+> Caso queira contribuir com alguma tarefa que não esteja listada aqui, você pode abrir uma [issue no projeto](https://github.com/agtec//issues) relatando o que deseja fazer.
 
 ### Documentação
 

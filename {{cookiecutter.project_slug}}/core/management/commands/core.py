@@ -7,11 +7,12 @@ import zipfile
 from string import Template
 
 import requests
-from core.management.commands.utils import Utils
 from decouple import config
 from django.apps import apps
 from django.core.management.base import BaseCommand
 from packaging.version import parse
+
+from core.management.commands.utils import Utils
 
 MESSAGES = {
     "erro_exception": Template(
@@ -25,7 +26,7 @@ MESSAGES = {
         "Algo está errado\nCore $version_core\nProjeto $version_project"
     ),
     "help": Template(
-        "[green b]AGTEC CORE[/]\
+        "[green b]Agtec CORE[/]\
             \n[cyan b]$version - $codename[/]\
             \n\n[yellow b]Comandos[/]\
             \n[green b]--upgrade[/]\tVerifica se existe uma nova versão do Core e atualiza\
