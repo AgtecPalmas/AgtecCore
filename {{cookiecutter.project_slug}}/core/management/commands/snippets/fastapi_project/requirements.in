@@ -3,7 +3,7 @@ asyncpg==0.*
 elastic-apm==6.*
 email-validator==2.*
 fastapi==0.111.*
-gunicorn==22.*
+gunicorn==23.*
 httpx==0.*
 loguru==0.*
 passlib==1.*
