@@ -30,7 +30,6 @@ django==4.2.13
     #   -r requirements.in
     #   dj-rest-auth
     #   django-ckeditor
-    #   django-ckeditor-5
     #   django-filter
     #   django-image-optimizer
     #   django-js-asset
@@ -40,8 +39,6 @@ django==4.2.13
     #   drf-jsonmask
     #   drf-spectacular
 django-ckeditor==6.7.1
-    # via -r requirements.in
-django-ckeditor-5==0.2.15
     # via -r requirements.in
 django-filter==24.2
     # via -r requirements.in
@@ -58,7 +55,7 @@ djangorestframework==3.15.1
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
-djangorestframework-simplejwt==5.3.1
+djangorestframework-simplejwt==5.5.1
     # via -r requirements.in
 drf-jsonmask==0.4.0
     # via -r requirements.in
@@ -87,7 +84,6 @@ packaging==24.0
 pillow==10.3.0
     # via
     #   -r requirements.in
-    #   django-ckeditor-5
     #   django-image-optimizer
     #   python-resize-image
 psycopg[binary]==3.1.19
@@ -136,7 +132,9 @@ sqlparse==0.5.0
 tinify==1.6.0
     # via django-image-optimizer
 typing-extensions==4.12.1
-    # via psycopg
+    # via
+    #   asgiref
+    #   psycopg
 tzlocal==5.2
     # via dateparser
 uritemplate==4.1.1

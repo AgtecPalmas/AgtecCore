@@ -35,8 +35,11 @@ certifi==2024.6.2
     #   elastic-apm
     #   requests
     #   sentry-sdk
-cffi==1.16.0
-    # via weasyprint
+cffi==1.17.1
+    # via
+    #   -r requirements.txt
+    #   cryptography
+    #   weasyprint
 charset-normalizer==3.3.2
     # via
     #   -r requirements.txt
@@ -54,15 +57,20 @@ colorama==0.4.6
     #   taskipy
 coverage[toml]==7.5.3
     # via pytest-cov
+cryptography==44.0.2
+    # via -r requirements.txt
 cssbeautifier==1.15.1
     # via djlint
 cssselect2==0.7.0
     # via weasyprint
 dateparser==1.2.0
     # via -r requirements.txt
+dj-rest-auth==6.0.0
+    # via -r requirements.txt
 django==4.2.13
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   django-ckeditor
     #   django-debug-toolbar
     #   django-extensions
@@ -94,10 +102,11 @@ django-tempus-dominus==5.1.2.17
 djangorestframework==3.15.1
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
-djangorestframework-simplejwt==5.3.1
+djangorestframework-simplejwt==5.5.1
     # via -r requirements.txt
 djlint==1.34.1
     # via -r requirements-dev.in
@@ -262,7 +271,9 @@ psycopg-binary==3.1.19
 pycodestyle==2.11.1
     # via autopep8
 pycparser==2.22
-    # via cffi
+    # via
+    #   -r requirements.txt
+    #   cffi
 pydyf==0.10.0
     # via weasyprint
 pyflakes==3.2.0
