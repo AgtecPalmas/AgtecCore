@@ -35,8 +35,11 @@ certifi==2024.6.2
     #   elastic-apm
     #   requests
     #   sentry-sdk
-cffi==1.16.0
-    # via weasyprint
+cffi==1.17.1
+    # via
+    #   -r requirements.txt
+    #   cryptography
+    #   weasyprint
 charset-normalizer==3.3.2
     # via
     #   -r requirements.txt
@@ -54,16 +57,22 @@ colorama==0.4.6
     #   taskipy
 coverage[toml]==7.5.3
     # via pytest-cov
+cryptography==44.0.2
+    # via -r requirements.txt
 cssbeautifier==1.15.1
     # via djlint
 cssselect2==0.7.0
     # via weasyprint
 dateparser==1.2.0
     # via -r requirements.txt
+dj-rest-auth==6.0.0
+    # via -r requirements.txt
 django==4.2.13
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   django-ckeditor
+    #   django-ckeditor-5
     #   django-debug-toolbar
     #   django-extensions
     #   django-filter
@@ -76,6 +85,8 @@ django==4.2.13
     #   drf-spectacular
     #   model-bakery
 django-ckeditor==6.7.1
+    # via -r requirements.txt
+django-ckeditor-5==0.2.15
     # via -r requirements.txt
 django-debug-toolbar==4.4.2
     # via -r requirements-dev.in
@@ -94,6 +105,7 @@ django-tempus-dominus==5.1.2.17
 djangorestframework==3.15.1
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
@@ -241,6 +253,7 @@ pathspec==0.12.1
 pillow==10.3.0
     # via
     #   -r requirements.txt
+    #   django-ckeditor-5
     #   django-image-optimizer
     #   python-resize-image
     #   weasyprint
@@ -262,7 +275,9 @@ psycopg-binary==3.1.19
 pycodestyle==2.11.1
     # via autopep8
 pycparser==2.22
-    # via cffi
+    # via
+    #   -r requirements.txt
+    #   cffi
 pydyf==0.10.0
     # via weasyprint
 pyflakes==3.2.0
@@ -276,7 +291,7 @@ pyjwt==2.8.0
     # via
     #   -r requirements.txt
     #   djangorestframework-simplejwt
-pymdown-extensions==10.8.1
+pymdown-extensions==10.16.1
     # via
     #   mkdocs-material
     #   mkdocstrings
