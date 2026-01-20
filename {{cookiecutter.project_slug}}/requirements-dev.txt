@@ -35,8 +35,11 @@ certifi==2024.6.2
     #   elastic-apm
     #   requests
     #   sentry-sdk
-cffi==1.16.0
-    # via weasyprint
+cffi==1.17.1
+    # via
+    #   -r requirements.txt
+    #   cryptography
+    #   weasyprint
 charset-normalizer==3.3.2
     # via
     #   -r requirements.txt
@@ -54,16 +57,22 @@ colorama==0.4.6
     #   taskipy
 coverage[toml]==7.5.3
     # via pytest-cov
+cryptography==44.0.2
+    # via -r requirements.txt
 cssbeautifier==1.15.1
     # via djlint
-cssselect2==0.7.0
+cssselect2==0.8.0
     # via weasyprint
 dateparser==1.2.0
+    # via -r requirements.txt
+dj-rest-auth==6.0.0
     # via -r requirements.txt
 django==4.2.13
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   django-ckeditor
+    #   django-ckeditor-5
     #   django-debug-toolbar
     #   django-extensions
     #   django-filter
@@ -76,6 +85,8 @@ django==4.2.13
     #   drf-spectacular
     #   model-bakery
 django-ckeditor==6.7.1
+    # via -r requirements.txt
+django-ckeditor-5==0.2.15
     # via -r requirements.txt
 django-debug-toolbar==4.4.2
     # via -r requirements-dev.in
@@ -94,6 +105,7 @@ django-tempus-dominus==5.1.2.17
 djangorestframework==3.15.1
     # via
     #   -r requirements.txt
+    #   dj-rest-auth
     #   djangorestframework-simplejwt
     #   drf-jsonmask
     #   drf-spectacular
@@ -123,7 +135,7 @@ exceptiongroup==1.2.1
     # via pytest
 faker==25.5.0
     # via -r requirements-dev.in
-fonttools[woff]==4.53.0
+fonttools[woff]==4.61.1
     # via weasyprint
 ghp-import==2.1.0
     # via mkdocs
@@ -136,9 +148,7 @@ html-tag-names==0.1.2
 html-void-elements==0.1.0
     # via djlint
 html5lib==1.1
-    # via
-    #   -r requirements-dev.in
-    #   weasyprint
+    # via -r requirements-dev.in
 idna==3.7
     # via
     #   -r requirements.txt
@@ -241,6 +251,7 @@ pathspec==0.12.1
 pillow==10.3.0
     # via
     #   -r requirements.txt
+    #   django-ckeditor-5
     #   django-image-optimizer
     #   python-resize-image
     #   weasyprint
@@ -262,8 +273,10 @@ psycopg-binary==3.1.19
 pycodestyle==2.11.1
     # via autopep8
 pycparser==2.22
-    # via cffi
-pydyf==0.10.0
+    # via
+    #   -r requirements.txt
+    #   cffi
+pydyf==0.12.1
     # via weasyprint
 pyflakes==3.2.0
     # via autoflake
@@ -390,10 +403,12 @@ tinify==1.6.0
     # via
     #   -r requirements.txt
     #   django-image-optimizer
-tinycss2==1.3.0
+tinycss2==1.5.1
     # via
     #   cssselect2
     #   weasyprint
+tinyhtml5==2.0.0
+    # via weasyprint
 tomli==2.0.1
     # via
     #   autoflake
@@ -430,13 +445,14 @@ validate-docbr==1.10.0
     # via -r requirements-dev.in
 watchdog==4.0.1
     # via mkdocs
-weasyprint==62.2
+weasyprint==68.0
     # via mkdocs-with-pdf
 webencodings==0.5.1
     # via
     #   cssselect2
     #   html5lib
     #   tinycss2
+    #   tinyhtml5
 wrapt==1.16.0
     # via
     #   -r requirements.txt
