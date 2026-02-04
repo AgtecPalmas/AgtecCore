@@ -94,10 +94,12 @@ class ParserHTMLBuild:
                         <div class="br-switch icon top mr-5">\n\
                             {{ form.$field_name }}\n\
                             {{ form.$field_name.label_tag }}\n\
-                            {% if form.$field_name.errors %}\n\
-                                {{ form.$field_name.errors }}\n\
-                            {% endif %}\n\
                         </div>\n\
+                        {% if form.$field_name.errors %}\n\
+                            <span class="text-danger">\n\
+                                {{ form.$field_name.errors }}\n\
+                            </span>\n\
+                        {% endif %}\n\
                         $help_text\n\
                     </div>\n\
                 {% endif %}"""
