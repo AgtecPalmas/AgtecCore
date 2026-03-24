@@ -12,8 +12,8 @@
   "email": "agtec@palmas.to.gov.br",
   "flutter_organization_name": "Agtec",
   "flutter_organization_domain": "{{ '.'.join(cookiecutter.domain_name.split('.')[::-1]) }}",
-  "django_version": "4.2",
-  "python_version": "3.10",
+  "django_version": "5.2.12",
+  "python_version": "3.14.2",
   "postgresql_version": "14.2",
   "install_requirements": [
     "Sim",

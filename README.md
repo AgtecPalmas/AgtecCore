@@ -61,12 +61,40 @@ Acesse a documentação contendo todos os detalhes do projeto em:
 
 - Clone este projeto
 ```
-git clone https://github.com/agtec/
+  git clone https://github.com/agtec/
 ```
 
-- Crie um diretório para o seu projeto fora do Clone
+- Instalar o uv
+- macOS e Linux
 ```
-mkdir <nome_do_seu_projeto>
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+- Windows
+```
+  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+- Adicione no path para reconhecer o comando
+ 
+
+- Crie um diretório para o seu projeto fora do Clone do AgtecCore
+```
+  mkdir <nome_do_seu_projeto>
+```
+
+- Dentro do AgtecCore, crie o venv usando uv e apontando para o diretorio criado
+``` 
+  uv venv  <caminho_diretorio_do_projeto>\.venv
+```
+
+- Ative o virtual ambiente do venv criado ainda na pasta AgtecCore
+```
+  .\<caminho_diretorio_do_projeto>\.venv\Scripts\activate
+```
+
+- Instale as libs no venv:
+```
+  uv sync --all-groups --active
 ```
 
 - Acesse o diretório criado na etapa anterior
@@ -74,62 +102,68 @@ mkdir <nome_do_seu_projeto>
 ```
   cd <nome_do_seu_projeto>
 ```
-
-- Crie e ative um ambiente virtual python (Exemplo)
-```
-  python3 -m venv venv
-  source venv/bin/activate
-```
-
-- Atualize o PIP (Recomendado)
-````
-  python3 -m pip install --upgrade pip
-````
-
-- Instale o **cookiecutter**
-````console
-  pip install cookiecutter==2.3.0
-````
-
+ 
 - Inicie o projeto com o Cookiecutter apontando para o Clone do Agtec Core
 ```
-cookiecutter <caminho_para_o_clone>/AgtecCore
+  cookiecutter <caminho_para_o_clone>/AgtecCore
 ```
 
 - Siga os passos informados no terminal
   
   <img src="./images/cookiecutter.png">
 
+
+- Vá para o projeto criado
+
+
+- Ative o venv do projeto
+```
+  .venv\Scripts\activate
+```
+- Atualize o venv
+```
+  uv sync --all-groups --active
+```
+
 - Configure seu arquivo .env com as informações do seu banco de dados
 
 - Execute as migrações
 ```
-python3 manage.py makemigrations
-python3 manage.py migrate
+  python manage.py makemigrations
+```
+```
+  python manage.py migrate
 ```
 
 - Crie um super usuário
 ```
-python3 mock_superuser.py
+  python mock_superuser.py
 ```
 
 - Execute o projeto
 ```
-python3 manage.py runserver
+  python manage.py runserver
 ```
 
 ---
 
 - Caso o processo do Cookiecutter não tenha sido concluído corretamente, execute os comandos abaixo para instalar as dependências do projeto
+
+- Ative o venv
 ```
-python3 -m pip install -r requirements.txt
-python3 -m pip install -r requirements-dev.txt
+  .venv\Scripts\activate
+```
+- Atualize o venv
+```
+  uv sync --all-groups --active
 ```
 
 - Construa as aplicações iniciais
 ```
-python3 manage.py build usuario --all
-python3 manage.py build configuracao_core --all
+  python manage.py build usuario --all
+```
+```
+  python manage.py build configuracao_core --all
 ```
 
 ## Dependências
