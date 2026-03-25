@@ -22,7 +22,7 @@
         {
             "location": "#principais-bibliotecas-embarcadas-no-projeto",
             "title": "Principais bibliotecas embarcadas no projeto",
-            "text": "<ul> <li>Django rest framework</li> <li>PyTest</li> <li>Flake8</li> <li>Prospector</li> <li>Python Decouple</li> <li>Taskipy</li> </ul>"
+            "text": "<ul> <li>Django rest framework</li> <li>PyTest</li> <li>Ruff</li> <li>Prospector</li> <li>Python Decouple</li> <li>Taskipy</li> </ul>"
         },
         {
             "location": "#equipe",
@@ -145,27 +145,26 @@
             "text": "Pip Docs Pip Doc"
         },
         {
-            "location": "flake8/",
-            "title": "Flake8",
+            "location": "ruff/",
+            "title": "Ruff",
             "text": ""
-        },
-        {
-            "location": "flake8/#sobre",
+        },{
+            "location": "ruff/#sobre",
             "title": "Sobre",
-            "text": "<p>Biblioteca respons\u00e1vel por analisar se os c\u00f3digos do projeto est\u00e3o segundo os padr\u00f5es de qualidade de c\u00f3digo do Python, as famosas PEP`s.  </p> <p>Na raiz do projeto existe o arquivo .flake8 que deve ser utilizado para configurar o comportamento da lib. Por padr\u00e3o foi configurado que o limite de caracteres por linha \u00e9 de 120</p>"
+            "text": "<p>Biblioteca responsável por analisar se os códigos do projeto estão segundo os padrões de qualidade de código do Python, as famosas PEP`s.  </p> <p>Na raiz do projeto existe o arquivo <strong>pyproject.toml</strong> que deve ser utilizado para configurar o comportamento da ferramenta Ruff. Por padrão, foi configurado que o limite de caracteres por linha é de 120</p>"
         },
         {
-            "location": "flake8/#executar",
+            "location": "ruff/#executar",
             "title": "Executar",
-            "text": "<pre><code>flake8\n</code></pre>"
+            "text": "<pre><code>ruff\n</code></pre>"
         },
         {
-            "location": "flake8/#arquivo-de-configuracao-padrao",
-            "title": "Arquivo de configura\u00e7\u00e3o padr\u00e3o",
-            "text": "<pre><code>[flake8]\nmax-line-length=120\nexclude=.venv\n</code></pre>"
+            "location": "ruff/#arquivo-de-configuracao-padrao",
+            "title": "Arquivo de configuração padrão",
+            "text": "<pre><code>[tool.ruff]\nline-length = 120\nexclude = [\".venv\"]\n</code></pre>"
         },
         {
-            "location": "flake8/#links",
+            "location": "ruff/#links",
             "title": "Links",
             "text": "Pip Docs Pip Doc"
         },

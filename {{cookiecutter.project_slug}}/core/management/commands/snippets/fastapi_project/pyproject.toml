@@ -66,44 +66,43 @@ dev = [
     "taskipy==1.14.1",
 ]
 
-[tool.isort]
-profile = "black"
-line_length = 120
 
 [tool.ruff]
 line-length = 120
 exclude = [
-    'migrations', 'tests', 'testcontainers', 'docker',
-    'scripts', 'examples', 'docs', 'env', 'venv',
-    '.env', '.venv']
+    "migrations", "tests", "testcontainers", "docker",
+    "scripts", "examples", "docs", "env", "venv",
+    ".env", ".venv"
+]
 
 extend-exclude = [
-    'migrations', 'tests', 'testcontainers', 'docker',
-    'scripts', 'examples', 'docs', 'env', 'venv',
-    '.env', '.venv']
+    "migrations", "tests", "testcontainers", "docker",
+    "scripts", "examples", "docs", "env", "venv",
+    ".env", ".venv"
+]
 
 [tool.ruff.lint]
-ignore = ['E203', 'E501', 'PLR6301', 'PLR0913', 'PLR0917', 'PLR6301', 'PLW3201', 'PLR6201', 'FAST002']
+ignore = ["E203", "E501", "PLR6301", "PLR0913", "PLR0917", "PLR6301", "PLW3201", "PLR6201", "FAST002"]
 preview = true
-select = ['I', 'F', 'E', 'W', 'PL', 'PT', 'FAST']
+select = ["I", "F", "E", "W", "PL", "PT", "FAST"]
 
 [tool.ruff.format]
 preview = true
-quote-style = 'single'
-indent-style = 'space'
+quote-style = "single"
+indent-style = "space"
 
 [tool.pytest.ini_options]
 pythonpath = "."
-addopts = '-p no:warnings'
-asyncio_default_fixture_loop_scope = 'function'
+addopts = "-p no:warnings"
+asyncio_default_fixture_loop_scope = "function"
 
 [tool.coverage.run]
 concurrency = ["thread", "greenlet"]
 
 [tool.taskipy.tasks]
-lint = 'ruff check'
-pre_format = 'ruff check --fix'
-format = 'ruff format'
+lint = "ruff check"
+pre_format = "ruff check --fix"
+format = "ruff format"
 run = "fastapi dev --host 0.0.0.0 --port 8181 --reload"
 test = "pytest"
 test-verbose = "pytest -s -x -vv"

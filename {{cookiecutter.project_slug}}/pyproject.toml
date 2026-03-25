@@ -51,9 +51,6 @@ extend-exclude = '''
 dev = [
     "asgiref==3.11.1",
     "attrs==25.4.0",
-    "autoflake==2.*",
-    "autopep8==2.*",
-    "black==24.*",
     "certifi==2026.2.25",
     "cffi==2.0.0",
     "charset-normalizer==3.4.6",
@@ -81,7 +78,6 @@ dev = [
     "html5lib==1.*",
     "idna==3.11",
     "inflection==0.5.1",
-    "isort==5.*",
     "jsonmask==0.1.1",
     "jsonschema==4.26.0",
     "jsonschema-specifications==2025.9.1",
@@ -109,6 +105,7 @@ dev = [
     "requests==2.32.5",
     "rich==13.*",
     "rpds-py==0.30.0",
+    "ruff>=0.4.0",
     "sentry-sdk==2.55.0",
     "six==1.17.0",
     "sphinx==7.*",
@@ -124,6 +121,25 @@ dev = [
     "wrapt==2.1.2",
 ]
 
+[tool.ruff]
+line-length = 120
+target-version = "py314"
+extend-exclude = [
+  "core",
+  "docs",
+  ".venv",
+  "migrations",
+  ".env"
+]
+
+
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
 [tool.taskipy.tasks]
 build-all = "python manage.py build --all"
 build-fastapi = "python manage.py fastapi"
@@ -137,7 +153,9 @@ core-upgrade = "python manage.py core --upgrade"
 core-version = "python manage.py core --version"
 coverage = "coverage html"
 docs = "mkdocs serve"
-lint = "black --diff --color . && isort --check-only --diff ."
+lint = "ruff check ."
+fix = "ruff check . --fix"
+format = "ruff format ."
 mgt = "python manage.py migrate"
 mkm = "python manage.py makemigrations"
 post-test = "coverage html"

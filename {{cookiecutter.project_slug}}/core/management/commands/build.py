@@ -107,7 +107,7 @@ class Command(BaseCommand):
             "--format",
             dest="format",
             choices=["html", "python", "all"],
-            help="Aplicar Black, isort e flake8 nos arquivos .py e djlint nos arquivos .html",
+            help="Aplicar Ruff nos arquivos .py e djlint nos arquivos .html",
         )
         parser.add_argument(
             "--static",

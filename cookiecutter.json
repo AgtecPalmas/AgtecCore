@@ -52,7 +52,6 @@
     "scanapi_exemplo.yaml",
     "docs/**",
     "contrib/**",
-    ".flake8",
     ".coveragerc",
     ".prospector.yaml"
   ]

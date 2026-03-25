@@ -65,6 +65,8 @@ Acesse a documentação contendo todos os detalhes do projeto em:
 ```
 
 - Instalar o uv
+
+
 - macOS e Linux
 ```
   curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -113,7 +115,7 @@ Acesse a documentação contendo todos os detalhes do projeto em:
   <img src="./images/cookiecutter.png">
 
 
-- Vá para o projeto criado
+- Nesse momento pode continuar por aqui, porem caso queira é mais pratico abrir o projeto criado. 
 
 
 - Ative o venv do projeto
@@ -124,8 +126,11 @@ Acesse a documentação contendo todos os detalhes do projeto em:
 ```
   uv sync --all-groups --active
 ```
+---
 
 - Configure seu arquivo .env com as informações do seu banco de dados
+
+---
 
 - Execute as migrações
 ```
