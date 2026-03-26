@@ -1,4 +1,6 @@
 
+ISORT = "isort --float-to-top"
+
 RUFF_CHECK = "ruff check --fix"
 
 RUFF_FORMAT = "ruff format"
