@@ -78,6 +78,7 @@ dev = [
     "html5lib==1.*",
     "idna==3.11",
     "inflection==0.5.1",
+    "isort==5.*",
     "jsonmask==0.1.1",
     "jsonschema==4.26.0",
     "jsonschema-specifications==2025.9.1",
@@ -153,7 +154,7 @@ core-upgrade = "python manage.py core --upgrade"
 core-version = "python manage.py core --version"
 coverage = "coverage html"
 docs = "mkdocs serve"
-lint = "ruff check ."
+lint = "ruff format . --diff && ruff check . --diff"
 fix = "ruff check . --fix"
 format = "ruff format ."
 mgt = "python manage.py migrate"
