@@ -64,8 +64,19 @@ Acesse a documentação contendo todos os detalhes do projeto em:
   git clone https://github.com/agtec/
 ```
 
-- Instalar o uv
 
+## Executando o projeto com o UV (Astral)
+
+O UV é um gerenciador de projetos Python que engloba várias funcionalidades, como:
+
+1. Instalar versões do Python.
+2. Criar ambientes virtuais.
+3. Instalar dependências do projeto.
+4. Executar o projeto.
+
+Para executar o projeto com o UV, siga os passos abaixo:
+
+1. Instale o UV, caso ainda não tenha instalado, https://docs.astral.sh/uv/getting-started/installation/
 
 - macOS e Linux
 ```

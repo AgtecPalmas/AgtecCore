@@ -3,7 +3,7 @@ name = "agteccore"
 version = "0.1.0"
 description = "Projeto base para sistemas com base Views"
 readme = "README.md"
-requires-python = "==3.14.2"
+requires-python = "==3.12.2"
 dependencies = [
     "cryptography>=46.0.5",
     "dateparser>=1.3.0",
@@ -124,7 +124,7 @@ dev = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py314"
+target-version = "py312"
 extend-exclude = [
   "core",
   "docs",

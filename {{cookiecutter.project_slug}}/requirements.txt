@@ -127,6 +127,10 @@ sqlparse==0.5.5
     # via django
 tinify==1.7.1
     # via django-image-optimizer
+typing-extensions==4.15.0
+    # via
+    #   psycopg
+    #   referencing
 tzdata==2025.3
     # via
     #   django

@@ -3,7 +3,7 @@ name = "agteccore"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.14.2"
+requires-python = "==3.12.2"
 dependencies = [
     "cookiecutter>=2.7.1",
     "django==5.2.12",
@@ -17,7 +17,7 @@ addopts = "--cov={{cookiecutter.project_slug.lower()}} --cov-report=html --cov-f
 
 [tool.ruff]
 line-length = 120
-target-version = "py314"
+target-version = "py312"
 extend-exclude = [
   "core",
   "docs",
