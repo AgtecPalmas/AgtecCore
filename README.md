@@ -3,15 +3,16 @@
 <h1 align="center"> Agtec Core</h1>
 <p align="center"><img src="./images/agtec_core.png"></p>
 
-## Tabela de conteúdos:
----
 
-- [Tabela de conteúdos:](#tabela-de-conteúdos)
+## Tabela de conteúdos
+
+- [Tabela de conteúdos](#tabela-de-conteúdos)
 - [Informações](#informações)
 - [Descrição e contexto](#descrição-e-contexto)
 - [Documentação](#documentação)
 - [Documentação Externa](#documentação-externa)
 - [Guia de instalação](#guia-de-instalação)
+- [Comandos via pacote taskipy](#taskpy)
 - [Dependências](#dependências)
 - [Como contribuir](#como-contribuir)
 - [Estrutura do projeto gerado](#estrutura-do-projeto-gerado)
@@ -33,7 +34,9 @@
 - [Licença](#licença)
 
 ## Informações
+
 ---
+
 - Dependências de Terceiros: ![dependencies](https://img.shields.io/badge/dependencies-out%20of%20date-orange)
 - [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AgtecPalmas_AgtecCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AgtecPalmas_AgtecCore)
 
@@ -42,24 +45,28 @@
   ![Postgres](https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Descrição e contexto
+
 ---
 Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Django trazendo diversas tecnologias embarcadas para expandir o conceito Don't Repeat Yourself (DRY). Além das tecnologias já embarcadas, temos managers para automatizar a geração de código do projeto.
 
 ## Documentação
+
 ___
 
 Utilizamos no desenvolvimento da ferramenta o pacote [mkdocs](https://www.mkdocs.org/), para gerar a documentação do projeto, acesse o site do mkdocs para maiores informações.
 
 ## Documentação Externa
+
 ---
-Acesse a documentação contendo todos os detalhes do projeto em: 
+Acesse a documentação contendo todos os detalhes do projeto em:
 <https://agtecpalmas.github.io/AgtecCore/>
 
- 
 ## Guia de instalação
+
 ---
 
 - Clone este projeto
+
 ```
   git clone https://github.com/agtec/
 ```
@@ -117,6 +124,7 @@ Para executar o projeto com o UV, siga os passos abaixo:
 ```
  
 - Inicie o projeto com o Cookiecutter apontando para o Clone do Agtec Core
+
 ```
   cookiecutter <caminho_para_o_clone>/AgtecCore
 ```
@@ -144,6 +152,7 @@ Para executar o projeto com o UV, siga os passos abaixo:
 ---
 
 - Execute as migrações
+
 ```
   python manage.py makemigrations
 ```
@@ -152,11 +161,13 @@ Para executar o projeto com o UV, siga os passos abaixo:
 ```
 
 - Crie um super usuário
+
 ```
   python mock_superuser.py
 ```
 
 - Execute o projeto
+
 ```
   python manage.py runserver
 ```
@@ -175,6 +186,7 @@ Para executar o projeto com o UV, siga os passos abaixo:
 ```
 
 - Construa as aplicações iniciais
+
 ```
   python manage.py build usuario --all
 ```
@@ -182,7 +194,45 @@ Para executar o projeto com o UV, siga os passos abaixo:
   python manage.py build configuracao_core --all
 ```
 
+## Taskpy
+
+Como forma de facilitar o uso de comandos comuns no desenvolvimento do projeto, utilizamos o [Taskipy](https://taskipy.org/) para gerenciar esses comandos.
+Após a instalação das dependências do projeto, você poderá utilizar os seguintes comandos via Taskipy:
+
+```bash
+build-all              python manage.py build --all
+build-fastapi          python manage.py fastapi
+build-force            python manage.py build --all --force
+core-upgrade           python manage.py core --upgrade
+core-version           python manage.py core --version
+coverage               coverage html
+docs                   mkdocs serve
+lint                   black --diff --color . && isort --check-only --diff .
+mgt                    python manage.py migrate
+mkm                    python manage.py makemigrations
+post-test              coverage html
+pre-test               task lint
+run                    python manage.py runserver
+runserver              python manage.py runserver
+shell                  python manage.py shell
+startapp               python manage.py startapp
+test                   pytest -s -x --cov=federacao_bt -vv
+```
+
+Exemplo de uso:
+
+```
+task build-all NOME_DA_APP
+```
+
+Consultado o help para saber quais parâmetros podem ser passados:
+
+```
+task build-all --help
+```
+
 ## Dependências
+
 ---
 Principais dependências do projeto:
 
@@ -202,15 +252,14 @@ Principais dependências do projeto:
     Taskipy
     ...
 
-
-
 ## Como contribuir
+
 ---
 Há várias formas de contribuir com o projeto, com código, testes, documentação, etc.
 Acesse a documentação externa na seção [Documentação Externa](#documentação-externa) para saber mais sobre como contribuir com o projeto.
 
-
 ## Estrutura do projeto gerado
+
 ---
 
 ```mermaid
@@ -249,9 +298,10 @@ end
 
 ```
 
-
 ## Autor(es)
+
 ---
+
 ### Coordenador
 
 #### Guilherme de Carvalho Carneiro
@@ -321,8 +371,8 @@ end
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tchez)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tch%C3%AA/)
 
-
 ## Licença
+
 ---
 
 The MIT License (MIT)
