@@ -99,6 +99,9 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+#Ruff cache
+.ruff_cache/
+
 # Scrapy stuff:
 .scrapy
 

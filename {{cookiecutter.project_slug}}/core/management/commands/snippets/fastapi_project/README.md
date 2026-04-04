@@ -19,10 +19,20 @@ Para executar o projeto com o UV, siga os passos abaixo:
 
 1. Instale o UV, caso ainda não tenha instalado, https://docs.astral.sh/uv/getting-started/installation/
 2. **Remova o .venv, apagando o diretório, caso o build do AgtecCore tenha criado o ambiente virtual com o pip.**
-3. Inicie o ambiente virtual com o comando:
+3. Caso não tenha o .venv, crie e depois ative-o com o comando:
+
+```shell
+uv venv
+```
+- depois ative
 
 ```shell
 source .venv/bin/activate
+```
+- ou
+
+```shell
+.venv\Scripts\activate
 ```
 
 4. Instale as dependências do projeto com o comando:

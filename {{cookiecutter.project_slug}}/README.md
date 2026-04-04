@@ -23,13 +23,66 @@
 Para gerar uma nova SecretKey a ser utilizada no arquivo .env execute o comando a seguir (com o virtualenv ativado)
 
 ```shell
-python contrib/secret_gen.py  
+  python contrib/secret_gen.py  
 ```
 
-## Docker
 
-### Como utilizar
+## Como utilizar 
 
+### Ambiente local 
+
+- Ative o venv do projeto
+```
+  .venv\Scripts\activate
+```
+- Atualize o venv
+```
+  uv sync --all-groups --active
+```
+
+- Configure seu arquivo .env com as informações do seu banco de dados
+
+- Execute as migrações
+```
+  python manage.py makemigrations
+```
+```
+  python manage.py migrate
+```
+
+- Crie um super usuário
+```
+  python mock_superuser.py
+```
+
+- Execute o projeto
+```
+  python manage.py runserver
+```
+
+---
+
+- Caso o processo do Cookiecutter não tenha sido concluído corretamente, execute os comandos abaixo para instalar as dependências do projeto
+
+- Ative a venv
+```
+  .venv\Scripts\activate
+```
+- Atualize a venv
+```
+  uv sync --all-groups --active
+```
+
+- Construa as aplicações iniciais
+```
+  python manage.py build usuario --all
+```
+```
+  python manage.py build configuracao_core --all
+```
+
+### Docker
+ 
 Caso deseje desenvolver utilizando a tecnologia de containers (Docker) listamos abaixo os comandos para executar no
 projeto
 
@@ -38,37 +91,37 @@ projeto
 ### Criando a imagem e executando o container
 
 ```shell
-docker-compose up -d
+  docker-compose up -d
 ```
 
 ### Executando em ambiente de desenvolvimento
 
 ```shell
-docker-compose --f docker-dev.yml up -d
+  docker-compose --f docker-dev.yml up -d
 ```
 
 ### Forçando a geração da nova imagem e container
 
 ```shell
-docker-compose -f docker-dev.yml up -d --force-recreate --no-deps
+  docker-compose -f docker-dev.yml up -d --force-recreate --no-deps
 ```
 
 ### Mostrando as imagens geradas
 
 ```shell
-docker images ls
+  docker images ls
 ```
 
 ### Mostrando os containers gerados
 
 ```shell
-docker container ls
+  docker container ls
 ```
 
 ### Acessando o terminal de um container executando em backgroud
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash
 ```
 
 ### Saindo do terminal de um container que foi acesso via comando exec, sem **manter o container**
@@ -78,7 +131,7 @@ docker container exec -it {{ cookiecutter.project_slug }}_django bash
 ### Criando a SECRET_KEY
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python contrib/secret_gen.py"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python contrib/secret_gen.py"
 ```
 
 O comando acima retorna uma string similar a esta
@@ -87,37 +140,37 @@ O comando acima retorna uma string similar a esta
 ### Executando o makemigrations
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py makemigrations"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py makemigrations"
 ```
 
 ### Executando o migrations
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py migrate"    
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py migrate"    
 ```
 
 ### Executando o build da app Usuario
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py build usuario"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py build usuario"
 ```
 
 ### Executando o comando para gerar o SuperUser
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python mock_superuser.py"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python mock_superuser.py"
 ```
 
 ### Executando o comando para gerar os dados Fake do models Usuario
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python mock_data.py"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python mock_data.py"
 ```
 
 ### Criando uma nova app
 
 ```shell
-docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py startapp NomeDaNovaApp"
+  docker container exec -it {{ cookiecutter.project_slug }}_django bash -c "python manage.py startapp NomeDaNovaApp"
 ```
 
 ### Container`s do Projeto

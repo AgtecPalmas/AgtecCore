@@ -26,8 +26,7 @@ DEFAULT_APPS = ["usuario", "configuracao_core"]
 PROJECT_DIRECTORY = Path(os.path.realpath(os.path.curdir)).parent
 
 REQUIREMENTS = [
-    Path(f"{PROJECT_DIRECTORY}/requirements.txt"),
-    Path(f"{PROJECT_DIRECTORY}/requirements-dev.txt"),
+    Path(f"{PROJECT_DIRECTORY}/pyproject.toml"),
 ]
 
 SECRET_COMMAND = [PYTHON, "contrib/secret_gen.py"]
@@ -186,7 +185,7 @@ def pip_install_requirements() -> bool:
                     return False
 
                 returncode = run_command(
-                    f"{PYTHON} -m pip install -r {requirement}", silent=True
+                    f"uv sync --all-extras", silent=True
                 )
 
                 if returncode is False:

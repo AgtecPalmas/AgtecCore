@@ -8,7 +8,7 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 
 * [Django rest framework](https://www.django-rest-framework.org/)
 * [PyTest](https://pypi.org/project/pytest/)
-* [Flake8](https://pypi.org/project/flake8/)
+* [Ruff](https://pypi.org/project/ruff/)
 * [Prospector](https://pypi.org/project/prospector/)
 * [Python Decouple](https://pypi.org/project/python-decouple/)
 * [Taskipy](https://pypi.org/project/taskipy/)

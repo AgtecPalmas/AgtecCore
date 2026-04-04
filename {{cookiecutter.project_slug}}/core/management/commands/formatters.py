@@ -1,6 +1,6 @@
 import subprocess
 
-from .constants.formatters import AUTOFLAKE, AUTOPEP8, BLACK, DJLINT, ISORT
+from .constants.formatters import ISORT, DJLINT, RUFF_FORMAT, RUFF_CHECK
 from .utils import Utils
 
 
@@ -21,19 +21,17 @@ class PythonFormatter:
     def __init__(self, path: str):
         self.path = path
 
-    def apply_autoflake(self) -> None:
-        """Método para aplicar o autoflake no arquivo"""
+    def apply_ruff(self) -> None:
+        """Método para aplicar lint e formatação usando Ruff"""
         try:
-            run_subprocess_silently(f"{AUTOFLAKE} {self.path}")
-        except Exception as error:
-            Utils.show_message(f"Error in PythonFormatter.apply_autoflake: {error}")
+            # Corrige problemas automaticamente (lint + imports + etc)
+            run_subprocess_silently(f"{RUFF_CHECK} {self.path}")
 
-    def apply_autopep8(self) -> None:
-        """Método para aplicar o autopep8 no arquivo"""
-        try:
-            run_subprocess_silently(f"{AUTOPEP8} {self.path}")
+            # Formata o código (equivalente ao black)
+            run_subprocess_silently(f"{RUFF_FORMAT} {self.path}")
+
         except Exception as error:
-            Utils.show_message(f"Error in PythonFormatter.apply_autopep8: {error}")
+            Utils.show_message(f"Error in PythonFormatter.apply_ruff: {error}")
 
     def apply_isort(self) -> None:
         """Método para aplicar o isort no arquivo"""
@@ -42,19 +40,10 @@ class PythonFormatter:
         except Exception as error:
             Utils.show_message(f"Error in PythonFormatter.apply_isort: {error}")
 
-    def apply_black(self) -> None:
-        """Método para aplicar o black no arquivo"""
-        try:
-            run_subprocess_silently(f"{BLACK} {self.path}")
-        except Exception as error:
-            Utils.show_message(f"Error in PythonFormatter.apply_black: {error}")
-
     def format(self) -> None:
         """Método para aplicar os formatters no arquivo"""
-        self.apply_autoflake()
-        self.apply_autopep8()
         self.apply_isort()
-        self.apply_black()
+        self.apply_ruff()
 
 
 class HtmlFormatter:
