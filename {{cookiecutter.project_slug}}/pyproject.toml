@@ -104,7 +104,7 @@ dev = [
     "referencing==0.37.0",
     "regex==2026.2.28",
     "requests==2.32.5",
-    "rich==13.*",
+    "rich==14.*",
     "rpds-py==0.30.0",
     "ruff>=0.4.0",
     "sentry-sdk==2.55.0",
