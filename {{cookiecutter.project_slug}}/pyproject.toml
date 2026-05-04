@@ -1,3 +1,32 @@
+[project]
+name = "agteccore"
+version = "0.1.0"
+description = "Projeto base para sistemas com base Views"
+readme = "README.md"
+requires-python = "==3.12.*"
+dependencies = [
+    "cryptography>=46.0.5",
+    "dateparser>=1.3.0",
+    "dj-rest-auth>=7.2.0",
+    "django==5.2.12",
+    "django-ckeditor>=6.7.3",
+    "django-filter>=25.2",
+    "django-image-optimizer>=1.0.3",
+    "django-tempus-dominus>=5.1.2.17",
+    "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "drf-jsonmask>=0.4.0",
+    "drf-spectacular>=0.29.0",
+    "elastic-apm>=6.25.0",
+    "gunicorn>=25.1.0",
+    "holidays>=0.93",
+    "pillow>=12.1.1",
+    "psycopg[binary]>=3.3.3",
+    "python-decouple>=3.8",
+    "regex>=2026.2.28",
+    "sentry-sdk>=2.55.0",
+]
+
 [tool.taskipy.settings]
 user_vars = true
 
@@ -18,6 +47,100 @@ extend-exclude = '''
 )
 '''
 
+[dependency-groups]
+dev = [
+    "asgiref==3.11.1",
+    "attrs==25.4.0",
+    "certifi==2026.2.25",
+    "cffi==2.0.0",
+    "charset-normalizer==3.4.6",
+    "cryptography==46.0.5",
+    "dateparser==1.3.0",
+    "dj-rest-auth==7.2.0",
+    "django==5.2.12",
+    "django-ckeditor==6.7.3",
+    "django-debug-toolbar==4.*",
+    "django-extensions==3.*",
+    "django-filter==25.2",
+    "django-image-optimizer==1.0.3",
+    "django-js-asset==3.1.2",
+    "django-tempus-dominus==5.1.2.17",
+    "djangorestframework==3.16.1",
+    "djangorestframework-simplejwt==5.5.1",
+    "djlint==1.*",
+    "drf-jsonmask==0.4.0",
+    "drf-spectacular==0.29.0",
+    "ecs-logging==2.3.0",
+    "elastic-apm==6.25.0",
+    "faker==25.*",
+    "gunicorn==25.1.0",
+    "holidays==0.93",
+    "html5lib==1.*",
+    "idna==3.11",
+    "inflection==0.5.1",
+    "isort==5.*",
+    "jsonmask==0.1.1",
+    "jsonschema==4.26.0",
+    "jsonschema-specifications==2025.9.1",
+    "mkdocs==1.*",
+    "mkdocs-material==9.*",
+    "mkdocs-with-pdf==0.*",
+    "mkdocstrings==0.*",
+    "model-bakery==1.*",
+    "packaging==26.0",
+    "pillow==12.1.1",
+    "psycopg==3.3.3",
+    "psycopg-binary==3.3.3",
+    "pycparser==3.0",
+    "pyjwt==2.12.1",
+    "pytest==8.*",
+    "pytest-cov==5.*",
+    "pytest-django==4.*",
+    "python-dateutil==2.9.0.post0",
+    "python-decouple==3.8",
+    "python-resize-image==1.1.20",
+    "pytz==2026.1.post1",
+    "pyyaml==6.0.3",
+    "referencing==0.37.0",
+    "regex==2026.2.28",
+    "requests==2.32.5",
+    "rich==14.*",
+    "rpds-py==0.30.0",
+    "ruff>=0.4.0",
+    "sentry-sdk==2.55.0",
+    "six==1.17.0",
+    "sphinx==7.*",
+    "sphinx-rtd-theme==2.*",
+    "sqlparse==0.5.5",
+    "taskipy==1.*",
+    "tinify==1.7.1",
+    "tzdata==2025.3",
+    "tzlocal==5.3.1",
+    "uritemplate==4.2.0",
+    "urllib3==2.6.3",
+    "validate-docbr==1.*",
+    "wrapt==2.1.2",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = [
+  "core",
+  "docs",
+  ".venv",
+  "migrations",
+  ".env"
+]
+
+
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
 [tool.taskipy.tasks]
 build-all = "python manage.py build --all"
 build-fastapi = "python manage.py fastapi"
@@ -31,7 +154,9 @@ core-upgrade = "python manage.py core --upgrade"
 core-version = "python manage.py core --version"
 coverage = "coverage html"
 docs = "mkdocs serve"
-lint = "black --diff --color . && isort --check-only --diff ."
+lint = "ruff format . --diff && ruff check . --diff"
+fix = "ruff check . --fix"
+format = "ruff format ."
 mgt = "python manage.py migrate"
 mkm = "python manage.py makemigrations"
 post-test = "coverage html"

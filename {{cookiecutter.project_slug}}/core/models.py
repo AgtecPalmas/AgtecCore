@@ -691,12 +691,6 @@ class Audit(BaseMetod):
     def __str__(self):
         return f"{self.created} - {self.user_change.get('fields').get('username')}"
 
-    def has_delete_permission(self) -> bool:
-        return False
-
-    def has_change_permission(self) -> bool:
-        return False
-
     class Meta:
         ordering = ["data_type", "-created"]
         verbose_name = "Auditoria"

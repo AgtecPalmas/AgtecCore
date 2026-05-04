@@ -14,11 +14,17 @@ ENV PYTHONUNBUFFERED=1
 ENV POSTGRES_USER=TROCAR_PELO_NOME_DO_SISTEMA_dbmanager_2LiyBoLHeHo5yG
 ENV POSTGRES_PASSWORD=senha_padrao_deve_ser_mudada
 
-# Install pip requirements
-COPY requirements.txt .
-RUN python -m pip install -r requirements.txt
-
+# Define o diretório de trabalho
 WORKDIR /app
+
+COPY pyproject.toml uv.lock ./
+
+# instala uv
+RUN pip install uv
+
+# instala dependências
+RUN uv sync --frozen
+
 COPY . /app
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder

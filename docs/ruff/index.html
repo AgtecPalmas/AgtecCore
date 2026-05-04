@@ -19,7 +19,7 @@
 
 
 
-    <title>Flake8 - Agtec Core</title>
+    <title>Ruff - Agtec Core</title>
 
 
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
 
 
-      <a href="#flake8" class="md-skip">
+      <a href="#ruff" class="md-skip">
         Pular para conteúdo
       </a>
 
@@ -112,8 +112,8 @@
             <div class="md-header__topic" data-md-component="header-topic">
               <span class="md-ellipsis">
 
-              Flake8
-            
+              Ruff
+
           </span>
             </div>
           </div>
@@ -222,7 +222,7 @@
                 <nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
                   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Agtec Core" class="md-nav__button md-logo" aria-label="Agtec Core" data-md-component="logo">
-      
+
   <img src="../assets/logo_agtec.svg" alt="logo">
 
     </a>
@@ -293,12 +293,12 @@
 
 
                       <label class="md-nav__link md-nav__link--active" for="__toc">
-          Flake8
+          Ruff
           <span class="md-nav__icon md-icon"></span>
         </label>
 
                       <a href="./" class="md-nav__link md-nav__link--active">
-                        Flake8
+                        Ruff
                       </a>
 
 
@@ -1071,44 +1071,39 @@
 
 
           <div class="md-content" data-md-component="content">
-            <article class="md-content__inner md-typeset">
+              <article class="md-content__inner md-typeset">
+                  <h1 id="ruff">Ruff</h1>
+                  <h2 id="sobre">Sobre</h2>
+                  <p>Ferramenta responsável por analisar e formatar o código do projeto, garantindo conformidade com os padrões de qualidade do Python (PEPs).</p>
+                  <p>A configuração é feita diretamente no arquivo <strong>pyproject.toml</strong>. Por padrão foi configurado que o limite de caracteres por linha é de 120.</p>
 
+                  <h2 id="executar">Executar</h2>
+                  <pre><code class="language-bash">ruff check .
+ruff check . --fix
+ruff format .
+                </code></pre>
 
+                  <h2 id="arquivo-de-configuracao-padrao">Arquivo de configuração padrão</h2>
+                  <pre>
+                    <code class="language-toml">[tool.ruff]
+line-length = 120
+exclude = [".venv"]
+target-version = "py312"
+                    </code>
+                </pre>
 
-
-              <h1 id="flake8">Flake8</h1>
-              <h2 id="sobre">Sobre</h2>
-              <p>Biblioteca responsável por analisar se os códigos do projeto estão segundo os padrões de qualidade de código do Python, as famosas PEP`s. </p>
-              <p>Na raiz do projeto existe o arquivo <strong>.flake8</strong> que deve ser utilizado para configurar o comportamento da lib. Por padrão foi configurado que o limite de caracteres por linha é de 120</p>
-              <h2 id="executar">Executar</h2>
-              <pre><code class="language-python">flake8
-</code></pre>
-              <h2 id="arquivo-de-configuracao-padrao">Arquivo de configuração padrão</h2>
-              <pre><code class="language-toml">[flake8]
-max-line-length=120
-exclude=.venv
-</code></pre>
-              <h2 id="links">Links</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Pip</th>
-                    <th>Docs</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><a href="https://pypi.org/project/flake8/">Pip</a></td>
-                    <td><a href="https://flake8.pycqa.org/en/latest/">Doc</a></td>
-                  </tr>
-                </tbody>
-              </table>
-
-
-
-
-
-
+                  <h2 id="links">Links</h2>
+                  <table>
+                    <thead>
+                      <tr><th>Pip</th><th>Docs</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><a href="https://pypi.org/project/ruff/">Pip</a></td>
+                        <td><a href="https://docs.astral.sh/ruff/">Doc</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
             </article>
           </div>
 

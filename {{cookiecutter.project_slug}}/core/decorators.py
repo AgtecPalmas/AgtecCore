@@ -15,9 +15,6 @@ from django.db import transaction
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-user_model = get_user_model()
-
-
 def item_equals_item(item, item2):
     """
     Função faz comparação entre dois objetos json para saber se tem alguma diferença nos dados
@@ -398,11 +395,10 @@ def audit_delete(delete):
             if not model_audit or (not settings.AUDIT_ENABLED and not model_audit):
                 return delete(*args, **kwargs)
 
-            user_model = get_user_model()
             objetos_atualizado = []
             content_type_instance = ContentType.objects.get_for_model(cls)
             num_revision = (
-                len(Audit.objects.filter(data_type=content_type_instance)) + 1
+                Audit.objects.filter(data_type=content_type_instance).count() + 1
             )
 
             previous_instance = cls.objects.filter(id=kwargs.get("pk")).first()
@@ -421,6 +417,7 @@ def audit_delete(delete):
                 user = form.user
 
             if user:
+                user_model = get_user_model()
                 audit.user_change = convert_listobject_for_json(
                     [user_model.objects.filter(id=user.id).first()]
                 )[0]
@@ -443,7 +440,6 @@ def audit_delete(delete):
                         ] = convert_listobject_for_json(
                             list(Permission.objects.filter(id__in=list_permissions))
                         )
-
             audit.data_type = content_type_instance
 
             if previous_instance:
@@ -516,10 +512,7 @@ def audit_delete(delete):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = datetime.now()
                     audit_relationship.num_revision = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                            Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
 
                     if (
@@ -589,14 +582,13 @@ def audit_save(save):
             cls = form.instance.__class__
             request = None
             user = None
-            user_model = get_user_model()
             objetos_atualizado = []
 
             fields_change = {"fields_model": [], "fields_form": []}
 
             content_type_instance = ContentType.objects.get_for_model(cls)
             num_revision = (
-                len(Audit.objects.filter(data_type=content_type_instance)) + 1
+                Audit.objects.filter(data_type=content_type_instance).count() + 1
             )
 
             # Verifica se é Adição
@@ -635,6 +627,7 @@ def audit_save(save):
                 user = args[0].request.user
 
             if user:
+                user_model = get_user_model()
                 audit.user_change = convert_listobject_for_json(
                     [user_model.objects.filter(id=user.id).first()]
                 )[0]
@@ -657,7 +650,6 @@ def audit_save(save):
                         ] = convert_listobject_for_json(
                             list(Permission.objects.filter(id__in=list_permissions))
                         )
-
             audit.data_type = content_type_instance
 
             previous_relationships = {}
@@ -874,10 +866,7 @@ def audit_save(save):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = audit.created
                     __num_version = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                        Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
                     audit_relationship.num_revision = __num_version
                     audit_relationship.ip = audit.ip
@@ -909,10 +898,7 @@ def audit_save(save):
                 for audit_relationship in list_audit_relationships:
                     audit_relationship.created = audit.created
                     __num_version = (
-                        len(
-                            Audit.objects.filter(data_type=audit_relationship.data_type)
-                        )
-                        + 1
+                        Audit.objects.filter(data_type=audit_relationship.data_type).count() + 1
                     )
                     audit_relationship.num_revision = __num_version
                     audit_relationship.ip = audit.ip

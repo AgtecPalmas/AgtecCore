@@ -109,7 +109,7 @@ class Command(BaseCommand):
             "--format",
             action="store_true",
             dest="format",
-            help="Aplica Black, isort e flake8 nos arquivos",
+            help="Aplicar Ruff nos arquivos",
         )
 
     @staticmethod
