@@ -168,16 +168,16 @@ class AuditObjectListView(BaseListView):
             contentType = None
             if len(itens_kwargs) == 2:
                 (name_app, name_model) = itens_kwargs
-                contentType = ContentType.objects.filter(app_label=name_app)
+                content_type = ContentType.objects.filter(app_label=name_app)
 
             elif len(itens_kwargs) == 3:
                 (name_app, name_model, pk) = itens_kwargs
-                contentType = ContentType.objects.filter(
+                content_type = ContentType.objects.filter(
                     app_label=name_app, model=name_model
                 )
 
-            if contentType:
-                queryset = queryset.filter(data_type__in=contentType.all())
+            if content_type:
+                queryset = queryset.filter(data_type__in=content_type.all())
 
             if not pk:
                 return []
@@ -508,18 +508,18 @@ class AuditObjectListView(BaseListView):
 
                 if len(itens_kwargs) == 2:
                     (name_app, name_model) = itens_kwargs
-                    contentType = ContentType.objects.filter(
+                    content_type = ContentType.objects.filter(
                         app_label=self.model._meta.app_label, model=name_model
                     ).first()
 
                 elif len(itens_kwargs) >= 3:
                     (name_app, name_model, pk) = itens_kwargs
-                    contentType = ContentType.objects.filter(
+                    content_type = ContentType.objects.filter(
                         app_label=name_app, model=name_model
                     ).first()
 
-                if contentType:
-                    model_class = contentType.model_class()
+                if content_type:
+                    model_class = content_type.model_class()
 
             if model_class:
                 context["url_detail"] = "{app}:{model}-detail".format(
