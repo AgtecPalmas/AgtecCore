@@ -46,15 +46,31 @@ class ProjetoBuild:
     def __overwrite_project(self):
         """Sobrescreve o projeto FastAPI"""
         try:
-            shutil.rmtree(f"{self.fastapi_dir}/core")
-            shutil.rmtree(f"{self.fastapi_dir}/authentication")
-            shutil.rmtree(f"{self.fastapi_dir}/usuario")
+            _ignore = shutil.ignore_patterns("__pycache__", "*.pyc")
 
-            shutil.copytree(f"{self.fastapi_project}/core", f"{self.fastapi_dir}/core")
+            for dirname in ("core", "authentication", "usuario"):
+                target = Path(self.fastapi_dir) / dirname
+                if target.exists():
+                    shutil.rmtree(target)
+                shutil.copytree(
+                    self.fastapi_project / dirname,
+                    target,
+                    ignore=_ignore,
+                )
+
+            # atualiza .ia/ e AGENTS.md preservando customizações só de code
+            ia_target = Path(self.fastapi_dir) / ".ia"
+            if ia_target.exists():
+                shutil.rmtree(ia_target)
             shutil.copytree(
-                f"{self.fastapi_project}/authentication",
-                f"{self.fastapi_dir}/authentication",
+                self.fastapi_project / ".ia",
+                ia_target,
+                ignore=_ignore,
             )
+
+            agents_src = self.fastapi_project / "AGENTS.md"
+            agents_dst = Path(self.fastapi_dir) / "AGENTS.md"
+            shutil.copyfile(agents_src, agents_dst)
 
         except Exception as error:
             Utils.show_error(f"Error in __overwrite_project: {error}")
@@ -63,7 +79,8 @@ class ProjetoBuild:
         """Copia o projeto base do FastAPI substituindo arquivos existentes"""
         try:
             Utils.show_message("Criando o projeto Fastapi.")
-            shutil.copytree(self.fastapi_project, self.fastapi_dir)
+            _ignore = shutil.ignore_patterns("__pycache__", "*.pyc")
+            shutil.copytree(self.fastapi_project, self.fastapi_dir, ignore=_ignore)
             Utils.show_message("Projeto base criado com sucesso.")
 
         except Exception as error:
@@ -109,11 +126,32 @@ class ProjetoBuild:
             f.write(env_file)
             f.truncate()
 
+    def __update_ia_project_name(self) -> None:
+        """Substitui __system_name__ pelo nome real do projeto em AGENTS.md e .ia/"""
+        targets = [
+            Path(self.fastapi_dir) / "AGENTS.md",
+            Path(self.fastapi_dir) / ".ia",
+        ]
+
+        for target in targets:
+            paths = [target] if target.is_file() else target.rglob("*.md")
+            for md_file in paths:
+                try:
+                    content = md_file.read_text(encoding="utf-8")
+                    if "__system_name__" in content:
+                        md_file.write_text(
+                            content.replace("__system_name__", SYSTEM_NAME),
+                            encoding="utf-8",
+                        )
+                except Exception:
+                    pass
+
     def build(self):
         try:
             self.__create_base_project()
             self.__copy_file_env_example_to_env()
             self.__update_env_file()
+            self.__update_ia_project_name()
 
         except Exception as error:
             Utils.show_error(f"Error in build: {error}")
