@@ -21,6 +21,222 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 
 > **Nota**: a governança recebida da camada Django é referência para contrato transversal de tasks, status, datas, branchs, merge e gate. Regras técnicas Django não são padrão ativo desta camada FastAPI.
 
+---
+
+## Configuração do ambiente de desenvolvimento assistido por IA
+
+Esta seção descreve como preparar o ambiente neste projeto FastAPI. Execute os passos na ordem apresentada.
+
+### 1. Instalar o Claude Code
+
+Claude Code é o agente de terminal da Anthropic que orquestra o desenvolvimento assistido neste projeto.
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Após a instalação, inicialize na raiz do repositório:
+
+```bash
+cd /caminho/do/projeto
+claude
+```
+
+O agente detecta automaticamente o `AGENTS.md` e carrega as regras operacionais do projeto.
+
+> Documentação completa: https://docs.anthropic.com/claude-code
+
+---
+
+### 2. Instalar o RTK
+
+RTK (Rust Token Killer) intercepta comandos shell e os reescreve para versões filtradas, reduzindo 60–90% do consumo de tokens em operações de dev.
+
+```bash
+# Homebrew (recomendado)
+brew install rtk
+
+# Linux / macOS via script
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+```
+
+Verificar instalação:
+
+```bash
+rtk --version
+rtk gain
+```
+
+Integrar ao Claude Code (cria hook de interceptação):
+
+```bash
+rtk init -g
+```
+
+> Repositório: https://github.com/rtk-ai/rtk
+
+---
+
+### 3. Instalar o Caveman
+
+Caveman ativa o modo de comunicação comprimido nos agentes de IA, reduzindo ~75% dos tokens de saída sem perda de precisão técnica.
+
+```bash
+# macOS / Linux / WSL
+curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+```
+
+O instalador detecta automaticamente os agentes presentes (Claude Code, OpenCode, Codex) e implanta os hooks necessários em cada um.
+
+Modos disponíveis após instalação: `/caveman lite`, `/caveman full` (padrão), `/caveman ultra`.
+
+> Repositório: https://github.com/JuliusBrussee/caveman
+
+---
+
+### 4. Configurar o Obsidian Brain (memória persistente)
+
+O Obsidian Brain integra o agente com um vault Obsidian, permitindo armazenar e consultar contexto de forma persistente entre sessões.
+
+1. Instale o Obsidian: https://obsidian.md/download
+2. Crie um vault chamado `DevBrain` (ou nome de sua preferência).
+3. Configure a variável de ambiente no projeto:
+
+```bash
+OBSIDIAN_DEV_VAULT="CAMINHO_PARA_SEU_VAULT/DevBrain"
+```
+
+Após configurar, use as skills `obsidian-sync` para exportar contexto do repositório para o vault e `obsidian-query` para consultar histórico e specs.
+
+---
+
+### 5. Preencher os documentos de arquitetura
+
+Após receber o projeto gerado, preencha os placeholders dos documentos de arquitetura antes de iniciar qualquer demanda assistida:
+
+```
+Leia AGENTS.md e preencha os documentos de arquitetura em .ia/docs/architecture/
+com a stack confirmada do projeto. Use a skill atualizar-artefatos-ia.
+```
+
+O agente irá verificar `pyproject.toml`, `core/config.py`, `core/routers.py` e demais arquivos do projeto para preencher `overview.md`, `relatorio-arquitetural.md` e `modules.md` com os dados reais.
+
+---
+
+## Como escrever prompts para desenvolvimento assistido por IA
+
+A qualidade do resultado entregue pelo agente é diretamente proporcional à qualidade do prompt. Um prompt ruim gera código genérico, ignora a arquitetura do projeto e exige retrabalho. Um prompt bem escrito ativa o contexto correto, respeita o fluxo de tasks e produz código alinhado ao padrão real do repositório.
+
+---
+
+### Prompt ruim — o que evitar
+
+```
+Cria um endpoint de listagem para o módulo de contratos
+```
+
+**Por que é ruim:**
+
+| Problema | Consequência |
+|---|---|
+| Sem contexto de origem | Agente não sabe se é feature nova, bugfix ou refactor — não cria task |
+| Sem referência à arquitetura | Agente pode criar lógica de negócio no router, ignorar o padrão `use_cases.py` |
+| Sem escopo definido | Agente decide sozinho quais arquivos tocar, podendo alterar `core/` |
+| Sem pedido de planejamento | Agente vai direto para código sem plano de ação ou critérios de aceite |
+| Verbo imperativo direto | Induz o agente a implementar antes de entender — viola o fluxo de task |
+
+---
+
+### Prompt correto — o que fazer
+
+```
+O time de produto identificou que o módulo de contratos precisa expor um endpoint
+de listagem paginada com filtros por status e data. Siga as regras de AGENTS.md.
+
+Consulte .ia/docs/architecture/overview.md e .ia/docs/architecture/modules.md
+para entender o padrão de router → schema → use_case. Crie o planejamento da
+demanda com as camadas impactadas (router, schema, use_case, testes), os critérios
+de aceite e as skills a usar. Não implemente até a aprovação.
+```
+
+**Por que é correto:**
+
+| Elemento | Função |
+|---|---|
+| Origem da demanda declarada | Agente entende o contexto de negócio sem precisar inferir |
+| Referência explícita aos docs de arquitetura | Agente ancora a implementação no padrão real do projeto |
+| Referência a `AGENTS.md` | Agente carrega as skills corretas e respeita as restrições |
+| Pedido de planejamento com task | Ativa o fluxo de `workflow-demandas` e cria rastreabilidade |
+| Camadas listadas explicitamente | Agente sabe exatamente o que carregar antes de implementar |
+| "Não implemente até a aprovação" | Preserva o ciclo de revisão humana — agente não avança sozinho |
+
+---
+
+### Anatomia de um prompt bem escrito
+
+```
+[ORIGEM]
+De onde veio a demanda (produto, cliente, bug reportado, débito técnico).
+
+[OBJETIVO]
+O que precisa ser verdade ao final — em termos de comportamento, não de código.
+
+[REFERÊNCIAS]
+- Documentação externa relevante (URLs)
+- Arquivos internos a consultar primeiro (.ia/docs/*, AGENTS.md)
+
+[RESTRIÇÕES]
+Camadas que não devem ser tocadas, compatibilidade necessária, prazo, LGPD.
+Lembrete: core/ não deve ser alterado sem autorização explícita.
+
+[INSTRUÇÃO DE FLUXO]
+"Crie o planejamento e aguarde aprovação antes de implementar."
+ou
+"Task já aprovada em .ia/docs/tasks/todo/<hash>.md — execute a implementação."
+```
+
+---
+
+### Exemplos adicionais
+
+**Ruim:**
+```
+Adiciona paginação nos endpoints de listagem
+```
+
+**Correto:**
+```
+O time de produto identificou que endpoints de listagem do módulo `servico` estão
+retornando todos os registros sem paginação, causando timeout em produção.
+
+Consulte AGENTS.md e .ia/docs/architecture/overview.md para entender o padrão
+adotado de paginação. Crie o planejamento com as camadas impactadas (router,
+schema, use_case, testes) e os critérios de aceite antes de implementar.
+```
+
+---
+
+**Ruim:**
+```
+Refatora o módulo de autenticação
+```
+
+**Correto:**
+```
+O módulo `authentication` possui acesso direto ao banco em `routers.py`,
+violando a regra RULE-ARCH-002 de .ia/docs/guides/constraints.md.
+
+Siga as regras de AGENTS.md — crie uma task com escopo (apenas os handlers
+identificados), plano de ação e critérios de aceite. Não altere arquivos de
+`core/` sem autorização explícita. Aguarde aprovação antes de implementar.
+```
+
+---
+
+> **Regra geral:** o agente executa melhor quando recebe _contexto_, _restrições_ e _ordem de operações_ — não apenas _o que fazer_. Quanto mais o prompt se parece com um briefing técnico, menos retrabalho haverá.
+
+---
+
 ## Workflows documentais
 
 - **Datas de governança**: metadados documentais e nomes de novos artefatos usam `DD-MM-YYYY`.
@@ -39,6 +255,23 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 | `prd.md` | `docs/templates/` | PRD completo de produto (problema, escopo, métricas, release plan) | Funcionalidade nova com discussão de produto antes da spec técnica |
 | `feature-prompt.md` | `docs/templates/` | Prompt-template curto para pedir feature FastAPI ao agente | Quando o desenvolvedor quer um prompt pronto para uma feature concreta |
 | `integracao-flutter.md` | `docs/templates/` | Template de contrato para consumo Flutter | Quando a mudança afetar contrato HTTP consumido pelo cliente Flutter |
+
+---
+
+## Como os agentes usam este contexto
+
+O ponto de entrada para qualquer agente é o arquivo `AGENTS.md` na raiz do repositório. Ele define:
+
+1. **Idioma e stack** — resposta em português, FastAPI + SQLAlchemy + Pydantic v2, PostgreSQL.
+2. **Fontes de verdade** — lista explícita de quais arquivos de `.ia/docs/` prevalecem sobre qualquer outra instrução.
+3. **Catálogo de skills** — quais skills existem e onde encontrá-las.
+4. **Fluxo de tasks** — como criar, executar, aprovar e encerrar uma demanda rastreável.
+5. **Comandos de build** — `rtk uv sync`, `rtk task run`, `rtk task lint`, `rtk task test`.
+6. **Proibições de segurança** — `git commit/push/rebase/pull` nunca são executados pela IA; `core/` nunca é alterado sem autorização explícita.
+
+**Regra de precedência:** `AGENTS.md` é o ponto de entrada; em caso de conflito, os arquivos de `.ia/docs/` prevalecem.
+
+---
 
 ## Skills
 
@@ -75,14 +308,20 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 | `.ia/skills/obsidian-sync/export_devbrain.py` | `obsidian-sync` | Exporta contexto do repositório para o vault DevBrain. |
 | `.ia/skills/obsidian-query/query_devbrain.py` | `obsidian-query` | Consulta o vault DevBrain e retorna contexto rastreável. |
 
+---
+
 ## Documentação arquitetural
 
-- `.ia/docs/architecture/overview.md`
-- `.ia/docs/architecture/modules.md`
-- `.ia/docs/architecture/ia_modules.md`
-- `.ia/docs/architecture/ia_embeddings.md`
-- `.ia/docs/architecture/security.md`
-- `.ia/docs/architecture/relatorio-arquitetural.md`
+| Arquivo | Conteúdo canônico |
+|---|---|
+| `overview.md` | Stack confirmada, organização da aplicação, padrão por módulo e regras transversais |
+| `modules.md` | Estrutura interna esperada por módulo e regras de acoplamento |
+| `ia_modules.md` | Módulo de IA do projeto (se existir) — runtime, agentes, embeddings, endpoints |
+| `ia_embeddings.md` | Padrão e especificações para embeddings vetoriais |
+| `security.md` | JWT, bcrypt, CORS, LGPD, anonimização de dados sensíveis |
+| `relatorio-arquitetural.md` | Relatório factual da arquitetura atual do projeto gerado |
+
+---
 
 ## Gestão de tarefas
 
@@ -95,3 +334,14 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 
 - Specs ativas ficam em `.ia/docs/specs/`, usando status em inglês e data `DD-MM-YYYY`.
 - Specs concluídas ficam em `.ia/docs/specs/done/` com status `done` ou `superseded`.
+
+---
+
+## Regras de manutenção deste diretório
+
+1. **Não duplicar conteúdo entre arquivos.** Cada regra tem uma fonte canônica. Se uma informação já existe em outro arquivo, aponte para ele.
+2. **Não fixar versão de dependências em texto corrido.** Fonte de verdade para versões: `pyproject.toml`.
+3. **Manter `AGENTS.md` focado em regras operacionais.** Detalhes de arquitetura ficam em `.ia/docs/`; `AGENTS.md` é apenas o ponto de entrada.
+4. **Toda mudança em `.ia/` que envolva múltiplos arquivos deve ter task rastreável** em `tasks/todo/` antes de ser executada.
+5. **Scripts Python em `.ia/skills/` não devem ser alterados pela IA sem instrução explícita** do desenvolvedor.
+6. **`core/` nunca deve ser alterado pela IA** sem autorização explícita documentada em task aprovada.
