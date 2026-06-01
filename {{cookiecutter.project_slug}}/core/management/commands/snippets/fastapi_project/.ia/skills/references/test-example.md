@@ -1,7 +1,7 @@
 # Referência One-Shot: Teste
 
 > Fonte real: `tests/tests_usuario/test_usuario.py` + `tests/conftest.py`
-> Padrão canônico de testes do projeto Argus com pytest + TestContainers.
+> Padrão canônico de testes do projeto AgtecCore com pytest + TestContainers.
 
 ## Padrão de teste com TestContainers
 

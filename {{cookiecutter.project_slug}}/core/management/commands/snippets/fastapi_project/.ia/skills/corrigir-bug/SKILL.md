@@ -1,15 +1,15 @@
 ---
 name: corrigir-bug
-description: Diagnostica e corrige bugs no projeto Argus seguindo o protocolo anti-alucinação. Use quando o usuário reportar um erro, exceção, comportamento inesperado, ou falha em teste. Também ativa automaticamente quando o contexto menciona "bug", "erro", "exception", "falha", "não funciona" ou stack traces.
+description: Diagnostica e corrige bugs no projeto AgtecCore seguindo o protocolo anti-alucinação. Use quando o usuário reportar um erro, exceção, comportamento inesperado, ou falha em teste. Também ativa automaticamente quando o contexto menciona "bug", "erro", "exception", "falha", "não funciona" ou stack traces.
 ---
 
-# Corrigir Bug — Argus
+# Corrigir Bug — AgtecCore
 
 # Objetivo
 Diagnosticar e corrigir bugs com base em evidências do código real, reproduzindo a falha quando possível e atacando a causa raiz.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Ler o stack trace e o código afetado antes de propor correção.
 - Não inventar módulos, funções, payloads ou comportamentos.
 - Registrar na task os arquivos consultados, causa raiz e validação executada.
@@ -64,7 +64,7 @@ Antes de qualquer mudança:
 ### Erro no módulo IA
 - Verificar se a rota `/api/v1/ia/chat/` foi acidentalmente modificada
 - Verificar se `run_context` está sendo passado corretamente para as tools
-- Checar `argus_ia_agent/config.py` para configurações (`IaSettings`)
+- Checar o arquivo de configurações do módulo de IA do projeto (se existir)
 
 ### Erro em testes
 - Confirmar que Docker está rodando: `docker info`

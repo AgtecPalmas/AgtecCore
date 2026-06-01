@@ -1,13 +1,13 @@
 ---
 name: spec-integracao-flutter
-description: Cria uma especificação técnica de integração entre um módulo FastAPI do Argus e o cliente Flutter Web. Usar quando o usuário pedir explicitamente para criar uma spec de integração Flutter web/mobile, spec flutter, integração flutter, flutter mobile, flutter web.
+description: Cria uma especificação técnica de integração entre um módulo FastAPI do AgtecCore e o cliente Flutter Web. Usar quando o usuário pedir explicitamente para criar uma spec de integração Flutter web/mobile, spec flutter, integração flutter, flutter mobile, flutter web.
 ---
 
 # Objetivo
 Gerar specs de integração Flutter focadas no contrato HTTP consumido pelo cliente, sem expor detalhes internos desnecessários da implementação backend.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - A spec deve refletir apenas contratos confirmados em routers, schemas ou OpenAPI.
 - Não incluir detalhes internos de implementação backend no artefato final de integração.
 - Usar o template canônico `.ia/docs/templates/integracao-flutter.md`.

@@ -13,7 +13,7 @@ Detectar regressões de governança em `AGENTS.md` e `.ia/` antes de consolidar 
 4. Reexecutar o comando até que o resultado esperado para a etapa seja atingido.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - O script `check_ia_governance.py` é a fonte de verdade para as checagens detalhadas e para a lista exata de categorias retornadas.
 - O contrato normativo validado pelo script vem de `AGENTS.md`, `.ia/docs/guides/rules-catalog.md`, templates correntes e skills ativas; a skill não deve duplicar esse catálogo em bullets operacionais.
 - Findings de governança bloqueiam a etapa quando o fluxo exigir conformidade explícita, especialmente antes de fechamento documental ou consolidação de mudanças amplas em `.ia/`.

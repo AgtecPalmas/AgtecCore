@@ -14,7 +14,7 @@ Garantir que a abertura da branch de implementação ocorra de forma determinís
 5. Prosseguir para a implementação somente depois que o script atualizar a task para `in_progress`.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - A branch de implementação deve usar exatamente o nome do arquivo da task sem a extensão `.md`.
 - Para novas tasks, o nome da branch deve seguir `task-DD-MM-YYYY-<hash_alfanumerico_10>`; branches antigas com `DD_MM_YYYY` são legado apenas quando derivadas de tasks históricas.
 - A task deve conter um unico campo `Status da task`; se houver duplicidade, ela deve ser reconciliada antes da abertura da branch.

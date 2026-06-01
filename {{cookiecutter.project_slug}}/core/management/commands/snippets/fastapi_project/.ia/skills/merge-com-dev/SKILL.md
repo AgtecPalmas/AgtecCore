@@ -15,7 +15,7 @@ Garantir um fluxo determinístico e seguro para merge local de branches de task 
 6. Se houver confirmação explícita, executar `rtk python .ia/skills/merge-com-dev/merge_task_branch_with_dev.py --delete-merged-branch <nome_da_branch_task>`.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - O script `.ia/skills/merge-com-dev/merge_task_branch_with_dev.py` é a fonte de verdade para a automação.
 - Esta automação é a única exceção permitida à regra geral que proíbe `git commit` pela IA; a permissão existe apenas quando o merge for disparado pelo script Python oficial versionado.
 - Usar `--dry-run` quando a intenção for apenas validar a branch alvo, o estado do repositório e a ação planejada.

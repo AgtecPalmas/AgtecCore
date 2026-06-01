@@ -20,7 +20,7 @@ Reduzir ambiguidades operacionais em demandas multi-etapa, garantindo planejamen
 11. Ao concluir, preencher as seções `## Descricao da solucao implementada`, `## Trade-offs` e `## Arquivos alterados`, combinar com `task-encerramento` para validar o fechamento, atualizar o status para `done` e mover a task para `.ia/docs/tasks/done/`, preservando o mesmo hash do arquivo original.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Toda demanda deve começar com planejamento explícito em spec ou task, conforme escopo e tipo de mudança.
 - Spec aprovada não substitui task de execução; qualquer implementação, inclusive documental relevante em `.ia/`, exige task derivada ou task direta com `Status da task: approved`.
 - Não agrupar mudanças sem relação direta na mesma task.

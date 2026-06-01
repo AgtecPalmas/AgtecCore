@@ -25,7 +25,7 @@ Com sistema explícito:
 
 ```bash
 rtk python .ia/skills/obsidian-query/query_devbrain.py \
-  --system-name "Argus FastAPI" \
+  --system-name "AgtecCore FastAPI" \
   --query "Qual a ultima tarefa que implementamos?"
 ```
 
@@ -59,7 +59,7 @@ O script deve indicar:
 5. alternativas, quando houver
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 
 - Sempre indicar a fonte (`vault` ou `repositório`).
 - Não devolver conteúdo do repositório quando o vault tiver respondido com nível de confiança suficiente.

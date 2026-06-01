@@ -1,7 +1,7 @@
 # Referência One-Shot: Router
 
 > Fonte real: `filiado/cargotrabalho/routers.py`
-> Padrão canônico de router FastAPI do projeto Argus.
+> Padrão canônico de router FastAPI do projeto AgtecCore.
 
 ## Padrão de router com permissões
 

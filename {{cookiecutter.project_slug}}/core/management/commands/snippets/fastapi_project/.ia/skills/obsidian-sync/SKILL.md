@@ -57,7 +57,7 @@ Após execução, verificar as notas principais:
 4. `01-Sistemas/<Sistema>/09-Integracoes.md`
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 
 - Preferir o exportador local. Não duplicar lógica de sincronização dentro da skill — apenas orquestrar a execução do script.
 - Não sobrescrever o vault sem antes confirmar o caminho resolvido (variáveis de ambiente ou parâmetros explícitos).

@@ -7,8 +7,8 @@
 ## 1. Linguagem e contexto
 
 - Sempre responder em **português**, a menos que o contexto da tarefa exija outro idioma (por exemplo, contrato externo em inglês).
-- Este projeto é a camada **FastAPI** do Argus, organizada como API modular por domínios, usando **FastAPI**, **SQLAlchemy**, **Pydantic v2**, **PostgreSQL**, cache externo quando configurado, autenticação JWT compatível com o ecossistema Django existente e observabilidade via **Sentry**, **Elastic APM**, **Logfire** e logs da aplicação conforme configuração real do ambiente.
-- O projeto foi derivado do ecossistema Django Argus e ainda se integra a dados/modelos de autenticação e domínio compartilhados. Regras Django devem ser tratadas como contexto de integração, não como padrão técnico ativo desta camada.
+- Este projeto é a camada **FastAPI** do AgtecCore, organizada como API modular por domínios, usando **FastAPI**, **SQLAlchemy**, **Pydantic v2**, **PostgreSQL**, cache externo quando configurado, autenticação JWT compatível com o ecossistema Django existente e observabilidade via **Sentry**, **Elastic APM**, **Logfire** e logs da aplicação conforme configuração real do ambiente.
+- O projeto foi derivado do ecossistema Django AgtecCore e ainda se integra a dados/modelos de autenticação e domínio compartilhados. Regras Django devem ser tratadas como contexto de integração, não como padrão técnico ativo desta camada.
 
 ## 2. Fontes de verdade para arquitetura
 

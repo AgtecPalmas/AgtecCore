@@ -1,15 +1,15 @@
 ---
 name: atualizar-artefatos-ia
-description: Atualiza os artefatos de desenvolvimento assistido por IA do projeto Argus (`.ia/` e `AGENTS.md`) quando há mudanças arquiteturais, novos módulos, novas restrições ou inconsistências detectadas. Use quando o usuário pedir para atualizar documentação IA, corrigir artefatos, ou após uma mudança arquitetural significativa. Também ativa automaticamente quando o contexto menciona "atualizar artefatos", "documentação IA", "artefatos desatualizados" ou arquivos em `.ia/`.
+description: Atualiza os artefatos de desenvolvimento assistido por IA do projeto AgtecCore (`.ia/` e `AGENTS.md`) quando há mudanças arquiteturais, novos módulos, novas restrições ou inconsistências detectadas. Use quando o usuário pedir para atualizar documentação IA, corrigir artefatos, ou após uma mudança arquitetural significativa. Também ativa automaticamente quando o contexto menciona "atualizar artefatos", "documentação IA", "artefatos desatualizados" ou arquivos em `.ia/`.
 ---
 
-# Atualizar Artefatos IA — Argus
+# Atualizar Artefatos IA — AgtecCore
 
 # Objetivo
 Manter `AGENTS.md`, `.ia/README.md` e artefatos `.ia/` alinhados ao código real, às decisões arquiteturais vigentes e ao contrato de governança do projeto.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Atualizar apenas artefatos diretamente relacionados à mudança aprovada.
 - Documentar somente fatos confirmados por arquivos reais do repositório.
 - Preservar o contrato `DD-MM-YYYY`, status canônicos e comandos com prefixo `rtk`.
@@ -23,7 +23,7 @@ Manter `AGENTS.md`, `.ia/README.md` e artefatos `.ia/` alinhados ao código real
 | `.ia/docs/architecture/relatorio-arquitetural.md` | **Fonte de verdade principal** — estado atual completo | Todos os agentes |
 | `.ia/docs/architecture/overview.md` | Índice de navegação dos artefatos | Orientação rápida |
 | `.ia/docs/architecture/modules.md` | Módulos ativos e responsabilidades | Novos módulos |
-| `.ia/docs/architecture/ia_modules.md` | Arquitetura do módulo `argus_ia_agent` | Demandas IA |
+| `.ia/docs/architecture/ia_modules.md` | Arquitetura do módulo de IA do projeto | Demandas IA |
 | `.ia/docs/architecture/security.md` | JWT, LGPD, CORS, middlewares | Segurança |
 | `.ia/docs/guides/patterns.md` | Padrões obrigatórios de implementação | Toda implementação |
 | `.ia/docs/guides/rules-catalog.md` | Catálogo canônico de rules (`rule_id`) | Governança de instruções |

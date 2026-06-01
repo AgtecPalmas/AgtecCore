@@ -1,6 +1,6 @@
 ---
 name: fastapi-tests-pytest
-description: Escrever e revisar testes automatizados com `pytest`, `pytest-asyncio` e `TestContainers` para routers, use cases e models do projeto FastAPI Argus. Usar quando adicionar feature, bugfix, refactor ou alterar contrato de endpoint.
+description: Escrever e revisar testes automatizados com `pytest`, `pytest-asyncio` e `TestContainers` para routers, use cases e models do projeto FastAPI AgtecCore. Usar quando adicionar feature, bugfix, refactor ou alterar contrato de endpoint.
 ---
 
 # Testes para FastAPI com pytest
@@ -17,7 +17,7 @@ Garantir cobertura de regressão com testes assíncronos e determinísticos por 
 6. Executar a suíte segmentada do módulo antes da finalização: `rtk task test`.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Todos os testes **devem** ser assíncronos: `@pytest.mark.asyncio` + `async def test_*`.
 - Usar **TestContainers** para PostgreSQL e Redis — nunca banco real.
 - Manter testes determinísticos e sem dependência de ordem.

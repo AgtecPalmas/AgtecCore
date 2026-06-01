@@ -3,7 +3,7 @@
 ## Objetivo
 
 Este documento define as especificacoes obrigatorias para qualquer Agent de IA
-que precise analisar, especificar ou planejar embeddings de um modulo ja existente no módulo de argus_ia_agent.
+que precise analisar, especificar ou planejar embeddings de um modulo ja existente no módulo de IA do projeto.
 
 
 O foco e garantir padrao unico de:
@@ -16,7 +16,7 @@ O foco e garantir padrao unico de:
 
 ## Escopo
 
-Aplica-se a demandas de analise ou especificacao de embeddings em modulos existentes em argus_ia_agent, como exemplo:
+Aplica-se a demandas de analise ou especificacao de embeddings em modulos existentes em <modulo_ia>, como exemplo:
 
 - `atendimento`
 - `convenio`
@@ -31,8 +31,8 @@ Nao cobre criacao de novo endpoint de chat nem mudancas no contrato principal de
 Antes de qualquer especificacao ou planejamento, o Agent deve consultar em modo leitura:
 
 - `.ia/docs/architecture/ia_modules.md`
-- `argus_ia_agent/embeddings/README.md`
-- `argus_ia_agent/embeddings/*.py`
+- `<modulo_ia>/embeddings/README.md`
+- `<modulo_ia>/embeddings/*.py`
 - codigo do modulo de negocio que sera indexado
 
 Se houver divergencia entre docs e codigo, o codigo atual e a referencia tecnica final.
@@ -131,7 +131,7 @@ Saida esperada:
 
 Arquivo principal:
 
-- `argus_ia_agent/embeddings/schema_catalog_indexer.py`
+- `<modulo_ia>/embeddings/schema_catalog_indexer.py`
 
 Passos:
 
@@ -156,7 +156,7 @@ Quando aumentar `version`:
 
 Arquivos tipicos:
 
-- `argus_ia_agent/embeddings/background_tasks.py`
+- `<modulo_ia>/embeddings/background_tasks.py`
 - `modulo/.../use_cases.py` ou `modulo/.../background_tasks.py`
 
 Passos:
@@ -175,7 +175,7 @@ Metadata recomendada:
 
 Arquivo principal:
 
-- `argus_ia_agent/embeddings/content_bulk_indexer.py`
+- `<modulo_ia>/embeddings/content_bulk_indexer.py`
 
 Passos:
 
@@ -261,10 +261,10 @@ Uma demanda so e considerada concluida quando:
 
 ## Referencias diretas
 
-- `argus_ia_agent/embeddings/README.md`
-- `argus_ia_agent/embeddings/schema_catalog_indexer.py`
-- `argus_ia_agent/embeddings/content_bulk_indexer.py`
-- `argus_ia_agent/embeddings/background_tasks.py`
-- `argus_ia_agent/embeddings/schema_embedding_service.py`
-- `argus_ia_agent/embeddings/content_embedding_service.py`
+- `<modulo_ia>/embeddings/README.md`
+- `<modulo_ia>/embeddings/schema_catalog_indexer.py`
+- `<modulo_ia>/embeddings/content_bulk_indexer.py`
+- `<modulo_ia>/embeddings/background_tasks.py`
+- `<modulo_ia>/embeddings/schema_embedding_service.py`
+- `<modulo_ia>/embeddings/content_embedding_service.py`
 - `.ia/docs/architecture/ia_modules.md`

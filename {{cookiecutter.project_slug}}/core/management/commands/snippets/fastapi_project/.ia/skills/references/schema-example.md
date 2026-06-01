@@ -1,7 +1,7 @@
 # Referência One-Shot: Schema
 
 > Fonte real: `filiado/cargotrabalho/schemas.py`
-> Padrão canônico de schemas Pydantic v2 do projeto Argus.
+> Padrão canônico de schemas Pydantic v2 do projeto AgtecCore.
 
 ## Padrão de schemas Pydantic v2
 

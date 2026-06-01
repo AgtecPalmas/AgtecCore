@@ -14,7 +14,7 @@ Garantir que o encerramento de tasks assistidas por IA ocorra de forma determin�
 5. Verificar que o arquivo foi movido para `.ia/docs/tasks/done/` com prefixo `done-` e mesmo hash original.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - O status final canônico de task concluída é `done` (valor literal do campo `Status da task`).
 - A task deve conter um unico campo `Status da task`; se houver duplicidade, ela deve ser reconciliada antes do encerramento.
 - O script deve falhar explicitamente se a task não estiver em `in_progress`.

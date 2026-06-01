@@ -1,7 +1,7 @@
 # Referência One-Shot: Use Case
 
 > Fonte real: `filiado/cargotrabalho/use_cases.py`
-> Padrão canônico de use case FastAPI do projeto Argus.
+> Padrão canônico de use case FastAPI do projeto AgtecCore.
 
 ## Padrão de use case com BaseUseCases
 

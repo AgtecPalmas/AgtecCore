@@ -1,7 +1,7 @@
 # Referência One-Shot: Model
 
 > Fonte real: `filiado/cargotrabalho/models.py`
-> Padrão canônico de model SQLAlchemy do projeto Argus.
+> Padrão canônico de model SQLAlchemy do projeto AgtecCore.
 
 ## Padrão de model com CoreBase
 

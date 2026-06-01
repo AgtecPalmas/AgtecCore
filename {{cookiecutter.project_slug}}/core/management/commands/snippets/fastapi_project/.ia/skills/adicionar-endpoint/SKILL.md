@@ -1,15 +1,15 @@
 ---
 name: adicionar-endpoint
-description: Adiciona um novo endpoint FastAPI ao projeto Argus seguindo a arquitetura em camadas (router → use_case → crud). Use quando o usuário pedir para criar um endpoint, adicionar uma rota, implementar um CRUD, ou estender um módulo existente. Também ativa automaticamente quando o contexto menciona "novo endpoint", "nova rota", "criar endpoint" ou arquivos em módulos com routers.py.
+description: Adiciona um novo endpoint FastAPI ao projeto AgtecCore seguindo a arquitetura em camadas (router → use_case → crud). Use quando o usuário pedir para criar um endpoint, adicionar uma rota, implementar um CRUD, ou estender um módulo existente. Também ativa automaticamente quando o contexto menciona "novo endpoint", "nova rota", "criar endpoint" ou arquivos em módulos com routers.py.
 ---
 
-# Adicionar Endpoint — FastAPI Argus
+# Adicionar Endpoint — FastAPI AgtecCore
 
 # Objetivo
 Criar ou evoluir endpoints FastAPI seguindo o padrão modular do projeto, mantendo routers finos, contratos Pydantic claros e regras em use cases.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Criar ou reutilizar task aprovada antes de implementar.
 - Preservar a arquitetura router → use case → ORM.
 - Não aceitar `filiado_id` em endpoints self-service de filiado autenticado.

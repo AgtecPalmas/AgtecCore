@@ -1,15 +1,15 @@
 ---
 name: refatorar-modulo
-description: Refatora um módulo existente do Argus para alinhar com os padrões arquiteturais vigentes (CoreBase, BaseUseCases, Pydantic v2, async). Use quando o usuário pedir para refatorar, modernizar, ou corrigir padrões em um módulo FastAPI existente. Também ativa automaticamente quando o contexto menciona "refatorar", "modernizar", "padronizar módulo" ou "alinha ao padrão".
+description: Refatora um módulo existente do AgtecCore para alinhar com os padrões arquiteturais vigentes (CoreBase, BaseUseCases, Pydantic v2, async). Use quando o usuário pedir para refatorar, modernizar, ou corrigir padrões em um módulo FastAPI existente. Também ativa automaticamente quando o contexto menciona "refatorar", "modernizar", "padronizar módulo" ou "alinha ao padrão".
 ---
 
-# Refatorar Módulo — Argus
+# Refatorar Módulo — AgtecCore
 
 # Objetivo
 Refatorar módulos FastAPI existentes para os padrões arquiteturais vigentes, reduzindo regressão e mantendo contratos públicos estáveis.
 
 # Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 - Ler o módulo alvo por completo antes de propor mudanças.
 - Aguardar aprovação antes de implementar refatorações.
 - Não alterar nomes de tabelas, endpoints em produção ou lógica de negócio sem aprovação explícita.

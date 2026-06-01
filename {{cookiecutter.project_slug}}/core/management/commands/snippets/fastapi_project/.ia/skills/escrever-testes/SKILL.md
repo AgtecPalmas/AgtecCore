@@ -1,9 +1,9 @@
 ---
 name: escrever-testes
-description: Escreve testes automatizados para o projeto Argus usando pytest, pytest-asyncio e TestContainers. Use quando o usuário pedir para criar testes, aumentar cobertura, escrever test cases, ou validar uma implementação. Também ativa automaticamente quando o contexto menciona "escrever testes", "criar testes", "test coverage" ou arquivos em tests/.
+description: Escreve testes automatizados para o projeto AgtecCore usando pytest, pytest-asyncio e TestContainers. Use quando o usuário pedir para criar testes, aumentar cobertura, escrever test cases, ou validar uma implementação. Também ativa automaticamente quando o contexto menciona "escrever testes", "criar testes", "test coverage" ou arquivos em tests/.
 ---
 
-# Escrever Testes — Argus
+# Escrever Testes — AgtecCore
 
 # Objetivo
 Criar e manter testes automatizados assíncronos para a camada FastAPI, cobrindo contratos HTTP, regras de domínio e regressões relevantes.
@@ -16,7 +16,7 @@ Antes de começar:
 3. Verificar se já existe pasta `tests/tests_<modulo>/`
 
 ## Regras obrigatórias
-- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob `argus_ia_agent/`; demandas nesse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
+- Regra global: nenhuma skill pode criar, editar, mover ou remover arquivos sob o módulo de IA/agentes do projeto (se existir); demandas sobre esse módulo devem ser tratadas como análise, especificação, backlog ou orientação operacional, sem implementação direta nesse diretório.
 
 - Testes **sempre** assíncronos (`async def test_*`)
 - Usar **TestContainers** para dependências (PostgreSQL, Redis) — nunca banco real
@@ -90,11 +90,11 @@ rtk task test
 rtk task test-verbose
 ```
 
-## Para testes do módulo IA (argus_ia_agent)
+## Para testes do módulo de IA (se existir)
 
-- Arquivo em: `tests/tests_argus_ia_agent/test_<nome_modulo>_tool.py`
-- Criar também: `argus_ia_agent/tests/<nome_modulo>_chat.http` para validação manual
-- Referências: `argus_ia_agent/tests/chat_dev_filiado.http`
+- Arquivo em: `tests/tests_<modulo_ia>/test_<nome_modulo>_tool.py`
+- Criar também: `<modulo_ia>/tests/<nome_modulo>_chat.http` para validação manual
+- Referências: `<modulo_ia>/tests/chat_dev_filiado.http`
 
 ## Referências de código
 
