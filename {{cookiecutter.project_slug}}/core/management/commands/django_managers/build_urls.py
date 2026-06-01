@@ -33,15 +33,20 @@ class UrlsBuild:
             return
 
         content = (
+            "from django.urls import path\n"
             f"from {self.app}.views.index import {self.app.title()}IndexTemplateView\n"
         )
 
         if Utils.read_file(self.path_urls):
             content += "urlpatterns += "
         else:
-            content += f"app_name = '{self.app}'\nurlpatterns = "
+            content += f'app_name = "{self.app.lower()}"\nurlpatterns = '
 
-        content += f"[path('{self.app.lower()}/', {self.app.title()}IndexTemplateView.as_view(), name='{self.app.lower()}-index'),]\n"
+        content += (
+            f'[\n    path("{self.app.lower()}/", '
+            f"{self.app.title()}IndexTemplateView.as_view(), "
+            f'name="{self.app.lower()}-index"),\n]\n'
+        )
 
         Utils.append_file(self.path_urls, content)
         Utils.show_message("[cyan]IndexView[/] adicionada à urls.py")
@@ -79,7 +84,13 @@ class UrlsBuild:
                 Utils.show_message("[cyan]URLs[/] já existem")
                 return
 
-            Utils.append_file(self.path_urls, f"{new_imports}\n{content}")
+            current = Utils.read_file(self.path_urls) or ""
+            app_name_marker = f'app_name = "{self.app.lower()}"'
+            if app_name_marker in current:
+                updated = current.replace(app_name_marker, f"{new_imports}\n{app_name_marker}", 1)
+                Utils.write_file(self.path_urls, updated + "\n" + content)
+            else:
+                Utils.append_file(self.path_urls, f"{new_imports}\n{content}")
 
         except Exception as error:
             Utils.show_error(
