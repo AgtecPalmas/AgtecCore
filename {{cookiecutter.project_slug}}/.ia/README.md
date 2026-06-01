@@ -12,7 +12,7 @@ Diretório central de governança de IA do projeto. Contém skills, documentaç�
 │   ├── reports/             # relatórios gerados por skills (ex.: análise arquitetural)
 │   ├── specs/               # specs técnicas (raiz = em andamento; done/ = concluídas; fastapi/ = camada FastAPI)
 │   ├── tasks/               # todo/ e done/
-│   └── templates/           # task-template.md, spec-template.md, prd_template.md, feature-prompt-template.md
+│   └── templates/           # task-template.md, spec-template.md, prd-template.md, feature-prompt-template.md
 └── skills/                  # skills internas (ver tabela abaixo)
 ```
 
@@ -25,7 +25,7 @@ Diretório central de governança de IA do projeto. Contém skills, documentaç�
 - O campo canônico de lifecycle da task é `Status da task` em `## 1. Metadados`; `Controle de implementacao` registra aprovação, branch e validações operacionais. Novas tasks usam `task-DD-MM-YYYY-<hash_alfanumerico_10>.md`; concluídas usam `done-task-DD-MM-YYYY-<hash_alfanumerico_10>.md`; a branch usa o nome do arquivo sem `.md`.
 - **Specs técnicas** (`docs/specs/`): design upfront para mudanças amplas, integrações e refatorações multi-app. Uma spec gera N tasks derivadas. Specs Django usam `<dominio>-<descricao-curta>-spec-DD-MM-YYYY.md`; specs FastAPI usam `<dominio>-<descricao-curta>-fastapi-spec-DD-MM-YYYY.md`; status válidos são `draft`, `approved`, `in_progress`, `in_review`, `done`, `cancelled`, `superseded`. Regras em `AGENTS.md` §6.
 - **Relatórios** (`docs/reports/`): saída de scripts de skills (análise arquitetural, conformidade etc). Novos reports usam `DD-MM-YYYY-<descricao-curta>.md` e `Status do relatorio` em `draft`, `in_review`, `done` ou `superseded`.
-- **Templates** (`docs/templates/`): `task-template.md`, `spec-template.md`, `prd_template.md`, `feature-prompt-template.md`.
+- **Templates** (`docs/templates/`): `task-template.md`, `spec-template.md`, `prd-template.md`, `feature-prompt-template.md`.
 
 ### Quando usar cada artefato de planejamento
 
@@ -33,7 +33,7 @@ Diretório central de governança de IA do projeto. Contém skills, documentaç�
 | ---------------------------- | ----------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `task-template.md`           | `docs/templates/` | Unidade de execução (uma demanda concreta, escopo delimitado)             | Toda demanda assistida por IA (§5 do `AGENTS.md`)                      |
 | `spec-template.md`           | `docs/templates/` | Design técnico upfront com AS-IS/TO-BE, contratos, ordem de implementação | Mudança ampla, integração externa, refatoração multi-app (§6)          |
-| `prd_template.md`            | `docs/templates/` | PRD completo de produto (problema, escopo, métricas, release plan)        | Funcionalidade nova com discussão de produto antes da spec técnica     |
+| `prd-template.md`            | `docs/templates/` | PRD completo de produto (problema, escopo, métricas, release plan)        | Funcionalidade nova com discussão de produto antes da spec técnica     |
 | `feature-prompt-template.md` | `docs/templates/` | Prompt-template curto para pedir feature Django ao agente                 | Quando o desenvolvedor quer um prompt pronto para uma feature concreta |
 
 ## Skills
