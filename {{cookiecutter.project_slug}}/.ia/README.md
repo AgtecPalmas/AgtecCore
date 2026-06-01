@@ -24,24 +24,31 @@ Diretório central de governança de IA do projeto. Contém skills, documentaç�
 
 Esta seção descreve como preparar o ambiente em um projeto gerado pelo template. Execute os passos na ordem apresentada.
 
-### 1. Instalar o Claude Code
+### 1. Instalar o OpenCode
 
-Claude Code é o agente de terminal da Anthropic que orquestra o desenvolvimento assistido neste projeto.
+OpenCode é o ambiente de terminal com IA que orquestra os agentes neste projeto.
 
 ```bash
-npm install -g @anthropic-ai/claude-code
+# macOS / Linux (recomendado)
+curl -fsSL https://opencode.ai/install | bash
+
+# Homebrew
+brew install anomalyco/tap/opencode
+
+# npm
+npm install -g opencode-ai
 ```
 
 Após a instalação, inicialize na raiz do repositório:
 
 ```bash
 cd /caminho/do/projeto
-claude
+opencode
 ```
 
-O agente detecta automaticamente o `AGENTS.md` e carrega as regras operacionais do projeto.
+Dentro da sessão OpenCode, execute `/init` para que o agente analise o repositório e registre o `AGENTS.md` existente como contexto ativo.
 
-> Documentação completa: https://docs.anthropic.com/claude-code
+> Documentação completa: https://opencode.ai/docs
 
 ---
 
@@ -64,10 +71,10 @@ rtk --version
 rtk gain
 ```
 
-Integrar ao Claude Code (cria hook de interceptação):
+Integrar ao OpenCode (cria hook de interceptação):
 
 ```bash
-rtk init -g
+rtk init -g --opencode
 ```
 
 > Repositório: https://github.com/rtk-ai/rtk
