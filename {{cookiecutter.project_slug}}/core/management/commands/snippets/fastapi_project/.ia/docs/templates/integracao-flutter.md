@@ -68,7 +68,7 @@ Liste os endpoints do backend e seus contratos, copiando da spec ou do OpenAPI d
 ## Perguntas de esclarecimento (se faltar contexto)
 
 - Qual é o código de referência no app que define o padrão Dio/`Either`?
-- Quais módulos do app são a referência obrigatória (ex.: `usuario/filiado`, `diaria/solicitacaodiaria`)?
+- Quais módulos do app são a referência obrigatória (ex.: `<modulo_principal>/<submodulo>`)?
 - Qual design system devemos seguir (link/arquivo)?
 
 ## Fontes consultadas

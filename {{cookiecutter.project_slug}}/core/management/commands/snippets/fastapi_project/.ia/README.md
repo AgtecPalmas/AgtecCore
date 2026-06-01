@@ -7,11 +7,14 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 ```
 .ia/
 ├── docs/
-│   ├── architecture/        # overview, modules, ia_modules, security, relatorio-arquitetural
-│   ├── guides/              # constraints, patterns, project-context, rules, skills-decision
+│   ├── architecture/        # overview, modules, ia_modules, ia_embeddings, security, relatorio-arquitetural
+│   ├── guides/              # constraints, patterns, project-context, rules-catalog, rules-governance, skills-decision
+│   ├── prd/                 # PRDs de produto (gerados a partir de docs/templates/prd.md)
+│   ├── reports/             # relatórios de auditoria/conformidade gerados por skills
+│   ├── rfc/                 # RFCs técnicas
 │   ├── specs/               # specs técnicas (raiz = em andamento; done/ = concluídas)
 │   ├── tasks/               # todo/ e done/
-│   ├── templates/           # task-template.md, spec-template.md, prd.md, feature-prompt.md
+│   ├── templates/           # task-template.md, spec-template.md, prd.md, feature-prompt.md, integracao-flutter.md
 │   └── testing/             # estratégia de testes
 └── skills/                  # skills internas (ver tabela abaixo)
 ```
@@ -54,9 +57,9 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 | `corrigir-bug` | `.ia/skills/corrigir-bug/SKILL.md` | Diagnostica e corrige bugs seguindo protocolo anti-alucinação. |
 | `escrever-testes` | `.ia/skills/escrever-testes/SKILL.md` | Escreve testes automatizados pytest/pytest-asyncio/TestContainers. |
 | `fastapi-tests-pytest` | `.ia/skills/fastapi-tests-pytest/SKILL.md` | Testes para routers, use cases e models do projeto FastAPI. |
-| `adicionar-embeddings` | `.ia/skills/adicionar-embeddings/SKILL.md` | Analisa ou especifica embeddings, pgvector, busca semântica e memória sem alterar `argus_ia_agent/`. |
-| `nova-tool-ia` | `.ia/skills/nova-tool-ia/SKILL.md` | Especifica tool assíncrona para agentes sem alterar `argus_ia_agent/`. |
-| `novo-agente-ia` | `.ia/skills/novo-agente-ia/SKILL.md` | Especifica agente especialista sem alterar `argus_ia_agent/`. |
+| `adicionar-embeddings` | `.ia/skills/adicionar-embeddings/SKILL.md` | Analisa ou especifica embeddings, pgvector, busca semântica e memória — não alterar módulo de IA/agentes do projeto (se existir). |
+| `nova-tool-ia` | `.ia/skills/nova-tool-ia/SKILL.md` | Especifica tool assíncrona para agentes — não alterar módulo de IA/agentes do projeto (se existir). |
+| `novo-agente-ia` | `.ia/skills/novo-agente-ia/SKILL.md` | Especifica agente especialista — não alterar módulo de IA/agentes do projeto (se existir). |
 | `spec-integracao-flutter` | `.ia/skills/spec-integracao-flutter/SKILL.md` | Cria spec de integração entre API FastAPI e cliente Flutter. |
 | `obsidian-sync` | `.ia/skills/obsidian-sync/SKILL.md` | Sincronização do repositório com o vault DevBrain. |
 | `obsidian-query` | `.ia/skills/obsidian-query/SKILL.md` | Consulta ao vault DevBrain com fallback para o repositório. |
@@ -77,6 +80,7 @@ Diretório central de governança de IA do projeto FastAPI. Contém skills, docu
 - `.ia/docs/architecture/overview.md`
 - `.ia/docs/architecture/modules.md`
 - `.ia/docs/architecture/ia_modules.md`
+- `.ia/docs/architecture/ia_embeddings.md`
 - `.ia/docs/architecture/security.md`
 - `.ia/docs/architecture/relatorio-arquitetural.md`
 
