@@ -5,7 +5,7 @@
 ## 1. Metadados
 
 - ID da task: `task-01-01-2025-Exemplo9012`
-- Status da task: `done`
+- Status da task: `planned`
 - Prioridade: `high`
 - Tipo: `feature`
 - Modulo/area: `usuario`

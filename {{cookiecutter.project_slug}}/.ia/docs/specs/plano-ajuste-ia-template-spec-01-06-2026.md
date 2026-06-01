@@ -158,14 +158,14 @@ Manter como exemplo de checklist, mas comentar que são pontos de atenção do A
 
 | # | Job | Prioridade | Complexidade | Arquivos afetados |
 |---|-----|------------|--------------|-------------------|
-| 1 | Revisar AGENTS.md | Alta | Média | 1 |
-| 2 | overview.md com CookieCutter | Alta | Alta | 1 |
-| 3 | Renomear skill legacy → onboarding | Alta | Média | 4+ |
-| 4 | Limpar todo/done com exemplos | Média | Baixa | 4+ |
-| 5 | Remover referências circulares | Alta | Média | 16 |
-| 6 | Preencher system-architecture e modules | Média | Alta | 2 |
-| 7 | Ajustar django-celery-tasks | Baixa | Baixa | 1 |
-| 8 | Ajustar README .ia | Média | Baixa | 1 |
+| 1 | Revisar AGENTS.md | Alta | Média | 1 | ✅ concluído |
+| 2 | overview.md com CookieCutter | Alta | Alta | 1 | ✅ concluído |
+| 3 | Renomear skill legacy → onboarding | Alta | Média | 4+ | ✅ concluído |
+| 4 | Limpar todo/done com exemplos | Média | Baixa | 4+ | ✅ concluído |
+| 5 | Remover referências circulares | Alta | Média | 16 | pendente |
+| 6 | Preencher system-architecture e modules | Média | Alta | 2 | pendente |
+| 7 | Ajustar django-celery-tasks | Baixa | Baixa | 1 | pendente |
+| 8 | Ajustar README .ia | Média | Baixa | 1 | ✅ concluído |
 
 ---
 
@@ -186,6 +186,6 @@ Manter como exemplo de checklist, mas comentar que são pontos de atenção do A
 
 ## 5. Status
 
-- **Status**: `draft`
-- **Jobs pendentes**: 8
-- **Jobs concluídos**: 0
+- **Status**: `in_progress`
+- **Jobs pendentes**: 3 (Jobs 5, 6, 7)
+- **Jobs concluídos**: 5 (Jobs 1, 2, 3, 4, 8)

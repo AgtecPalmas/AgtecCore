@@ -4,7 +4,7 @@
 
 ## 1. Metadados
 
-- ID da task: `done-task-01-01-2025-Exemplo9012`
+- ID da task: `task-01-01-2025-Exemplo9012`
 - Status da task: `done`
 - Prioridade: `high`
 - Tipo: `feature`

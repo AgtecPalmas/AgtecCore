@@ -70,7 +70,6 @@ Diretório central de governança de IA do projeto. Contém skills, documentaç�
 | `.ia/skills/task-encerramento/close_task_and_move_to_done.py`            | `task-encerramento`                 | Valida status final e move task para `done/`.                                                                               |
 | `.ia/skills/merge-com-dev/merge_task_branch_with_dev.py`                 | `merge-com-dev`                     | Merge da branch atual para `dev` com `--dry-run` opcional; unica excecao permitida para efetivar merge via automacao da IA. |
 | `.ia/skills/governanca-compliance/check_ia_governance.py`                | `governanca-compliance`             | Auditoria automatizada de `AGENTS.md` + `.ia/`.                                                                             |
-| `.ia/skills/django-analise-arquitetura-legado/analyze_legacy_project.py` | `django-analise-arquitetura-legado` | Coleta factual para análise arquitetural inicial.                                                                           |
 | `.ia/skills/obsidian-query/query_devbrain.py`                            | `obsidian-query`                    | Consulta o vault DevBrain e faz fallback para o repositório quando necessário.                                              |
 | `.ia/skills/obsidian-sync/export_devbrain.py`                            | `obsidian-sync`                     | Exporta contexto do repositório para o vault DevBrain.                                                                      |
 
