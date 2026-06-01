@@ -360,7 +360,7 @@ def main() -> int:
 {bullet_list([
     "`task lint`",
     "`task test`",
-    "`pytest -s -x --cov=argus -vv`",
+    "`pytest -s -x --cov=AgtecCore -vv`",
 ])}
 
 ## Comandos operacionais identificados
