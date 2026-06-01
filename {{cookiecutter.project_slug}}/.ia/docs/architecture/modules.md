@@ -1,6 +1,8 @@
-# Estrutura Modular — AgtecCore
+# Estrutura Modular
 
-## Padrão alvo por app
+> Este documento define o padrão modular esperado para apps Django neste projeto.
+
+## Padrão por app
 
 ```
 <app>/
@@ -9,11 +11,11 @@
 ├── admin.py                    # registro no Django admin
 ├── models.py                   # ORM e Regras de Negócio (FatModel)
 ├── managers.py                 # QuerySets/managers customizados
-├── signals.py                  # opcional, ver tabela §3
-├── tasks.py                    # opcional; hoje só assinatura_documento tem fallback síncrono para Celery ausente
+├── signals.py                  # opcional
+├── tasks.py                    # opcional (tasks Celery, se instalado)
 ├── urls.py                     # rotas web (templates)
-├── views/                      # CBVs web (alguns apps mantêm views.py único)
-├── forms/  ou forms.py         # formulários Django (web)
+├── views/                      # CBVs web (ou views.py único)
+├── forms/ ou forms.py          # formulários Django (web)
 ├── templates/                  # templates HTML do app
 ├── static/                     # estáticos do app (opcional)
 ├── fixtures/                   # opcional
@@ -26,26 +28,64 @@
     └── serializers/            # serializers DRF
 ```
 
-## 1. Variações observadas (não obrigatórias hoje)
+## Variações permitidas
 
--
+- `services.py` ou `use_cases.py` para lógica de domínio (não ambos — escolher por projeto)
+- `views.py` único no lugar de `views/` quando o app for simples
 
-## 2. `services.py` x `use_cases.py`
+---
 
--
+## Regras transversais
 
-## 3. `signals.py`
+### Soft-delete
 
--
+Modelos de domínio herdam de `core.Base` (campos `enabled`/`deleted`). Não usar `Model.delete()` direto — o `Base.delete()` faz update em `deleted=True`, `enabled=False`.
 
-## 4. `tasks.py`
+### Manager padrão
 
--
-## 5. Regras transversais
+`core.BaseManager` filtra `deleted=False` por default. Para ler registros soft-deletados, usar `objects.all_with_deleted()`.
 
-- **Soft-delete**: modelos de domínio herdam de `core.Base` (campos `enabled`/`deleted`). Não usar `Model.delete()` direto; o `Base.delete()` faz update em `deleted=True`, `enabled=False` (ver `core/models.py:223+`).
-- **Manager padrão**: `core.BaseManager` filtra `deleted=False` por default; a flag global `USE_DEFAULT_MANAGER=False` em settings ativa esse comportamento. Para ler registros soft-deletados, usar `objects.all_with_deleted()` (verificar API real em `core/models.py`).
-- **`CurrentUserMiddleware`**: o usuário corrente é exposto via thread-local para auditoria. Jobs offline e eventuais tasks futuras fora do ciclo HTTP precisam injetar usuário manualmente (não há request).
-- **Otimização ORM**: `select_related`/`prefetch_related` por padrão em ViewSets de leitura. Definir `get_queryset()` no QuerySet/Manager, não na view.
-- **Migrations**: pequenas, reversíveis. `RunPython`/`RunSQL` devem ser idempotentes (modelo: `core/migrations/0008_enable_pgvector_extension.py`).
-- **Logs estruturados**: usar `logging.getLogger("django_debug")` com `extra={"chave": valor}`.
+### CurrentUserMiddleware
+
+O usuário corrente é exposto via thread-local para auditoria. Jobs offline e tasks Celery fora do ciclo HTTP precisam injetar usuário manualmente.
+
+### Otimização ORM
+
+`select_related`/`prefetch_related` por padrão em ViewSets de leitura. Definir `get_queryset()` no QuerySet/Manager, não na view.
+
+### Migrations
+
+Pequenas, reversíveis. `RunPython`/`RunSQL` devem ser idempotentes.
+
+### Logs estruturados
+
+Usar `logging.getLogger("django_debug")` com `extra={"chave": valor}`.
+
+---
+
+## Exemplo de estrutura de um app completo
+
+```
+usuario/
+├── __init__.py
+├── apps.py
+├── admin.py
+├── models.py              # Usuario model herdando de core.Base
+├── managers.py           # UsuarioManager com QuerySet customizado
+├── api/
+│   ├── __init__.py
+│   ├── routers.py        # router.register(r'users', UsuarioViewSet)
+│   ├── views/
+│   │   └── usuario_viewset.py
+│   └── serializers/
+│       └── usuario_serializer.py
+├── services.py           # UsuarioService com regras de negócio
+├── tasks.py              # tarefas Celery (se Celery estiver instalado)
+├── tests/
+│   ├── __init__.py
+│   ├── test_models.py
+│   ├── test_services.py
+│   └── test_api.py
+└── migrations/
+    └── 0001_initial.py
+```

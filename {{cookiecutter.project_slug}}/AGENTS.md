@@ -8,7 +8,7 @@
 ## 1. Linguagem e contexto
 
 - Sempre responder em **português**, a menos que o contexto da tarefa exija outro idioma (por exemplo, contrato externo em inglês).
-- Este projeto é um **backend Django 4.2 com DRF**, organizado como **monólito modular por apps**, usando **PostgreSQL** como banco principal (com extensões `pgvector` e `pg_trgm`), autenticação baseada em **dj-rest-auth + SimpleJWT** e observabilidade via **Sentry + Elastic APM**. O projeto **coexiste com um serviço FastAPI externo** que compartilha o mesmo banco PostgreSQL (não há Redis, Celery ou Elasticsearch ativos hoje — versão canônica e atualizada da stack em `.ia/docs/architecture/overview.md`).
+- Este projeto é um **backend Django com DRF**, organizado como **monólito modular por apps**. A stack tecnológica detalhada (Python, Django, DRF, banco de dados, autenticação, observabilidade, integrações) é documentada em `.ia/docs/architecture/overview.md` — essa é a fonte de verdade canônica para o contexto do projeto.
 
 ## 2. Fontes de verdade para arquitetura
 
@@ -40,7 +40,7 @@ Ordem do catálogo agrupa por finalidade (governança → camadas Django → esp
 | `django-celery-tasks` *(dormente)*  | Projetar tarefas assíncronas Celery — **preparatória/dormente**, Celery ausente na stack (ver `.ia/docs/architecture/overview.md` §2); aplicar apenas em revisão antecipada ou quando Celery for incorporado |
 | `django-migrations`                 | Gerar/revisar migrations de schema, índices, constraints ou backfill                                                                                                                                         |
 | `fastapi-especificacao-tecnica`     | Gerar spec/plano técnico para a camada FastAPI externa                                                                                                                                                       |
-| `django-analise-arquitetura-legado` | Levantamento inicial quando `.ia/docs/architecture/` está vazio                                                                                                                                              |
+| `django-onboarding-checklist` | Levantamento inicial de novo projeto gerado pelo template — verificar INSTALLED_APPS, AUTH_USER_MODEL, banco, env, migrations |
 | `obsidian-sync`                     | Sincronizar repositório com vault DevBrain do Obsidian                                                                                                                                                       |
 | `obsidian-query`                    | Responder pergunta sobre histórico/tasks/specs consultando vault DevBrain                                                                                                                                    |
 
@@ -54,9 +54,9 @@ Mudança técnica em código: **primeiro** `workflow-demandas` (cria task, defin
 
 ## 4. Estrutura do projeto Django
 
-Mapa arquitetural amplo (catálogo de apps, integrações, fluxos) vive em `.ia/docs/architecture/system-architecture.md`. Fonte de verdade para apps ativos: `base/settings.py` (`INSTALLED_APPS`). Este arquivo permanece focado em regras operacionais.
+Mapa arquitetural amplo (catálogo de apps, integrações, fluxos) vive em `.ia/docs/architecture/system-architecture.md`. Fonte de verdade para apps ativos: `settings.py` do projeto Django (`INSTALLED_APPS`). Este arquivo permanece focado em regras operacionais.
 
-**Padrão por app:** `models.py` (ORM/Regras de negócio) · `managers.py` (QuerySets) · `api/serializers/*.py` · `api/views/*.py` · `api/routers.py` (APIRest)) · `tasks.py` (assíncrono — Celery não instalado hoje).
+**Padrão por app:** `models.py` (ORM/Regras de negócio) · `managers.py` (QuerySets) · `api/serializers/*.py` · `api/views/*.py` · `api/routers.py` (APIRest)) · `tasks.py` (assíncrono — se Celery estiver instalado).
 
 **Regras transversais:**
 
@@ -97,9 +97,9 @@ Spec = **design upfront** (contratos, arquitetura, decisões). Task = **execuç�
 ## 7. Comandos de build em desenvolvimento
 
 - Ativar o ambiente virtual (Obrigatório, exceção sem `rtk`) -> source .venv/bin/activate (Linux/Mac) ou .venv\Scripts\activate (Windows).
-- Dependências -> `rtk uv sync`.
+- Dependências -> `rtk uv sync` ou equivalente do projeto.
 - Migrations -> `rtk python manage.py makemigrations` / `rtk python manage.py migrate`.
-- Lint/Test -> `rtk task lint` (black/isort) · `rtk task test`.
+- Lint/Test -> comandos específicos do projeto documentados em `.ia/docs/guides/patterns.md` ou `testing.md`.
 
 ## 8. Segurança e configuração
 

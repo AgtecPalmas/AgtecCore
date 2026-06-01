@@ -1,29 +1,35 @@
-# Arquitetura do Sistema — AgtecCore
+# Arquitetura do Sistema
+
+> Este documento deve ser preenchido pelo agente de IA ao analisar o projeto gerado pelo template, usando `django-onboarding-checklist`. until then, serve como referência da estrutura esperada.
 
 ---
 
 ## 1. Visão geral
 
-- 
+`{{ cookiecutter.project_description | default("Descrição do projeto a ser preenchida") }}`
 
-Domínio de negócio inferido: ...
+---
 
 ## 2. Stack e infraestrutura
 
-Versionamento detalhado em `overview.md` §1. Resumo:
+Versões detalhadas em `overview.md` §1. Resumo:
 
-- 
+| Camada | Tecnologia |
+| --- | --- |
+| Backend | Django + DRF |
+| Banco de dados | PostgreSQL |
+| Autenticação | A definir (SimpleJWT, Session, Token) |
+
+---
 
 ## 3. Catálogo de apps Django
 
-X apps próprios em `INSTALLED_APPS` (excluindo libs de terceiros). Responsabilidade inferida pelos modelos de cada app.
+Apps próprios em `settings.py` (`INSTALLED_APPS`). Responsabilidade inferida pelos modelos de cada app.
 
-| App                    | Responsabilidade                          | Observações                                  |
-| ---------------------- | ----------------------------------------- | -------------------------------------------- |
-...
-
-
-Apps de **debug** ativados condicionalmente quando `DEBUG=True`: `django_extensions`, `debug_toolbar` (silk comentado).
+| App | Responsabilidade | Observações |
+| --- | --- | --- |
+| `{{ cookiecutter.project_slug }}` | App principal do projeto | A ser preenchido |
+| `core` | Base, exceções, middleware, utilitários | Presente em todo projeto Django |
 
 ### Catálogos derivados em `base/settings.py`
 
@@ -31,32 +37,40 @@ Apps de **debug** ativados condicionalmente quando `DEBUG=True`: `django_extensi
 - `FLUTTER_APPS` (X apps) — escopo da API exposta ao app Flutter.
 - `IGNORED_APPS` — apps escondidos do menu administrativo.
 
+> **Nota**:apps de terceiros (rest_framework, django.contrib.*, etc.) não são listados nesta tabela.
+
+---
+
 ## 4. Estrutura modular
 
-Padrão por app definido em `modules.md`. Desvios observados:
+Padrão por app definido em `modules.md`. Desvios do padrão devem ser documentados aqui.
 
-- 
+---
 
-## 5. Fluxos principais de negócio (inferência)
+## 5. Fluxos principais de negócio
 
-1. 
+1. `{{ cookiecutter.fluxo_principal | default("A ser documentado quando o projeto for detalhado") }}`
+
+---
 
 ## 6. Integrações externas
 
-| Integração                   | Direção                                     | Mecanismo                         | App responsável         | Observações                                            |
-| ---------------------------- | ------------------------------------------- | --------------------------------- | ----------------------- | ------------------------------------------------------ |
-| FastAPI externo              | (premissa) FastAPI → Postgres compartilhado | DB compartilhado + `pgvector`     | —                       | `FASTAPI_*` em settings, sem consumo no código Django. |
-| App Flutter                  | Flutter → Django API                        | REST `/api/v1/` + JWT/Token       | Todos em `FLUTTER_APPS` | Credenciais `FLUTTER_API_*` p/ dev.                    |
+| Integração | Direção | Mecanismo | App responsável | Observações |
+| --- | --- | --- | --- | --- |
+| `{{ cookiecutter.integracao_externa_1 | default("A definir") }}` | `{{ cookiecutter.direcao_1 | default("A definir") }}` | `{{ cookiecutter.mecanismo_1 | default("A definir") }}` | `{{ cookiecutter.observacao_1 | default("A definir") }}` |
+
+---
 
 ## 7. Segurança e autenticação
 
 Detalhado em `security.md`. Resumo:
 
-- Auth REST: SimpleJWT (60min access / 1d refresh) + Session + Basic + Token (4 backends ativos).
-- Pagina login Django web: `/core/login`.
-- LGPD: app `privacidade` + helper `core/cpf_anonymizer.py`. PII concentrada em `usuario` (29 campos detectados).
-- `CurrentUserMiddleware` injeta usuário em thread-local (consumido por auditoria).
+- Auth REST: `{{ cookiecutter.auth_backends | default("A configurar conforme necessidade") }}`
+- LGPD: utilitários de anonimização em `core/cpf_anonymizer.py` (se aplicável)
+- `CurrentUserMiddleware` injeta usuário em thread-local (consumido por auditoria, se ativa)
+
+---
 
 ## 8. Pontos de atenção / débito técnico
 
-1. 
+1. `{{ cookiecutter.ponto_atencao_1 | default("A ser identificado durante análise do projeto") }}`

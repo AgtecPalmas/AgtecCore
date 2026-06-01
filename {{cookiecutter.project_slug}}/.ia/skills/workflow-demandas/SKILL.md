@@ -41,8 +41,9 @@ Reduzir ambiguidades operacionais em demandas multi-etapa, garantindo task rastr
 - O encerramento preenche `## Descricao da solucao implementada`, `## Trade-offs` e `## Arquivos alterados`, atualiza o status para `done` e aplica a convenção `done-task-DD-MM-YYYY-<hash_alfanumerico_10>.md` com o mesmo hash original.
 
 # Referências locais
-- `AGENTS.md`
 - `.ia/docs/templates/task-template.md`
 - `.ia/docs/architecture/overview.md`
 - `.ia/docs/guides/patterns.md`
 - `.ia/docs/guides/testing.md`
+- `.ia/skills/branch-task-aprovada/SKILL.md`
+- `.ia/skills/task-encerramento/SKILL.md`

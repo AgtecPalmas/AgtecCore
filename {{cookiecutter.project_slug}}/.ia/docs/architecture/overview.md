@@ -1,23 +1,35 @@
 # Visão Geral da Arquitetura
 
-Backend Django + DRF do projeto **AgtecCore**, organizado como monólito modular por apps. com camada de API consumida por clientes web (templates Django + hotsites públicos), aplicativo Flutter e por uma camada externa de serviço FastAPI desacoplada.
-
+Backend Django + DRF do projeto, organizado como monólito modular por apps. A camada de API pode ser consumida por clientes web (templates Django + hotsites públicos).
 ---
 
 ## 1. Stack Inicial
 
-| Camada                  | Tecnologia                                              | Versão            |
-| ----------------------- | ------------------------------------------------------- | ----------------- |
-| Linguagem               | Python                                                  | `3.12.x`          |
-| Framework web           | Django                                                  | `5.12.x`          |
+| Camada | Tecnologia | Versão |
+| --- | --- | --- |
+| Linguagem | Python | `{{ cookiecutter.python_version }}` |
+| Framework web | Django | `{{ cookiecutter.django_version }}` |
+| API | Django REST Framework | `{{ cookiecutter.drf_version }}` |
+| Banco de dados | PostgreSQL | `{{ cookiecutter.postgresql_version }}` |
 
-## 2. Stack **NÃO** presente (divergência com documentação anterior)
+> **Nota**: versões são defaults do template e podem ser alterados no `cookiecutter.json` ou durante a geração do projeto.
 
--
+---
 
-## 3. Integrações externas declaradas em `base/settings.py`
+## 2. Stack **NÃO** presente (a confirmar no projeto gerado)
 
--
+- Celery (tarefas assíncronas) — instalar se necessário
+- Redis (filas e cache) — instalar se necessário
+- Elasticsearch (busca) — instalar se necessário
+- Outras tecnologias opcionais documentadas em `.ia/docs/guides/constraints.md`
+
+---
+
+## 3. Integrações externas declaradas em `settings.py`
+
+`{{ cookiecutter.integracoes_externas | default("A definir no projeto gerado — documentar aqui as integrações com serviços externos (e-mail, SMS, pagamentos, etc.)") }}`
+
+---
 
 ## 4. Objetivos arquiteturais
 
@@ -28,17 +40,56 @@ Backend Django + DRF do projeto **AgtecCore**, organizado como monólito modular
 - Type hints em helpers, services e tasks externas.
 - Validação obrigatória em serializers/forms antes de persistir.
 
+---
+
 ## 5. Regras transversais
 
 - **Exceções**: helpers de `core.excecoes` para respostas DRF padronizadas.
 - **Soft-delete**: modelos de domínio herdam de `core.Base` (`enabled`/`deleted` em vez de `DELETE` físico). A flag `DELETED_MANY_TO_MANY=True` propaga delete lógico para relacionamentos M2M.
-- **Anonimização PII**: utilitário dedicado `core/cpf_anonymizer.py`.
-- **Middleware de contexto**: `core.middleware.current_user.CurrentUserMiddleware` injeta usuário corrente em thread-local (consumido por auditoria).
+- **Anonimização PII**: utilitário dedicado `core/cpf_anonymizer.py` (se aplicável ao projeto).
+- **Middleware de contexto**: `core.middleware.current_user.CurrentUserMiddleware` injeta usuário corrente em thread-local (consumido por auditoria, se ativa).
+
+---
 
 ## 6. Pontos de atenção imediatos
 
-1. `AUTH_USER_MODEL` não declarado → projeto usa `django.contrib.auth.User` padrão. A entidade de negócio `usuario.Usuario` é separada do `User` Django (modelo de domínio, não auth). Mudança futura para custom user é dolorosa nesse estágio.
-2. `DEFAULT_AUTHENTICATION_CLASSES` ativa **quatro** backends simultaneamente: Basic, Session, Token, JWT — superfície de ataque ampla; revisar se Basic e Token ainda são necessários.
-3. `PAGE_SIZE = 200` é alto — pode mascarar problemas de performance em listagens.
-4. `AUDIT_ENABLED = False` em settings mas o modelo `Audit` existe em `core.models` → auditoria desligada hoje, premissa de que será reativada.
-5. `USE_DEFAULT_MANAGER = False` em settings mas `core.BaseManager` filtra `deleted=False` por default → risco de registros soft-deletados serem lidos acidentalmente.
+> Estes são pontos de atenção genéricos para qualquer projeto Django/DRF. Ajustar conforme o projeto gerado.
+
+1. `AUTH_USER_MODEL` não declarado → projeto usa `django.contrib.auth.User` padrão. Se o projeto requer um model de usuário customizado, declarar em `settings.py` antes de criar migrations.
+2. `DEFAULT_AUTHENTICATION_CLASSES` — verificar quais backends são necessários; remover os não utilizados para reduzir superfície de ataque.
+3. `PAGE_SIZE` em configurações de paginação — ajustar conforme necessidade real do projeto.
+4. `AUDIT_ENABLED` — auditoria desligada por padrão. Se necessária, ativar e verificar se `CurrentUserMiddleware` está na cadeia de middleware.
+5. `USE_DEFAULT_MANAGER` — verificar comportamento esperado para registros soft-deletados; `BaseManager` filtra `deleted=False` por default.
+
+---
+
+## 7. Autenticação e Autorização
+
+| Aspecto | Status no projeto |
+| --- | --- |
+| Backends ativos | `{{ cookiecutter.auth_backends | default("A configurar no projeto") }}` |
+| Token/Session/JWT | `{{ cookiecutter.auth_type | default("A configurar conforme necessidade") }}` |
+| Custom User Model | `{{ cookiecutter.custom_user_model | default("Não — usa django.contrib.auth.User") }}` |
+
+---
+
+## 8. Observabilidade
+
+| Ferramenta | Proposta | Status |
+| --- | --- | --- |
+| Sentry | Error tracking | `{{ cookiecutter.sentry_enabled | default("A configurar se necessário") }}` |
+| Logging estruturado | Django logging | Ativo por padrão |
+| APM/Metrics | `{{ cookiecutter.apm_enabled | default("A configurar se necessário") }}` |
+
+---
+
+## 9. Segurança e LGPD
+
+- Autenticação: backends configurados em `settings.py`
+- Autorização: permissões DRF por ViewSet
+- LGPD: utilitários de anonimização em `core/cpf_anonymizer.py` (se aplicável)
+- Soft-delete: método preferencial de remoção (não `DELETE` físico)
+
+---
+
+*Última atualização: `{{ cookiecutter.data_criacao | default("DD-MM-YYYY") }}` — Documento gerado pelo template CookieCutter*
