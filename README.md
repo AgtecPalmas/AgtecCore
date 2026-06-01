@@ -7,68 +7,26 @@
 ## Tabela de conteúdos
 
 - [Tabela de conteúdos](#tabela-de-conteúdos)
-- [Informações](#informações)
 - [Descrição e contexto](#descrição-e-contexto)
-- [Documentação](#documentação)
-- [Documentação Externa](#documentação-externa)
-- [Guia de instalação](#guia-de-instalação)
-- [Comandos via pacote taskipy](#taskpy)
+- [Executando o projeto com o UV (Astral)](#executando-o-projeto-com-o-uv-astral)
+- [Taskpy](#taskpy)
 - [Dependências](#dependências)
-- [Como contribuir](#como-contribuir)
-- [Estrutura do projeto gerado](#estrutura-do-projeto-gerado)
-- [Autor(es)](#autores)
-  - [Coordenador](#coordenador)
-    - [Guilherme de Carvalho Carneiro](#guilherme-de-carvalho-carneiro)
-  - [Desenvolvedores](#desenvolvedores)
-    - [Thiago Schuch](#thiago-schuch)
-    - [Claysllan Ferreira](#claysllan-ferreira)
-    - [Brayan Mota](#brayan-mota)
-    - [Lucas Siqueira](#lucas-siqueira)
-    - [Robson Ronzani](#robson-ronzani)
-    - [Emanoel Mendes](#emanoel-mendes)
-    - [Thales Barbosa](#thales-barbosa)
-    - [Márcio Henrique Rodrigues de Lima](#márcio-henrique-rodrigues-de-lima)
-    - [Clazzeani Almeida](#clazzeani-almeida)
-    - [André Praça de Almeida Pinheiro](#andré-praça-de-almeida-pinheiro)
-    - [Marco Antônio Martins Porto Netto](#marco-antônio-martins-porto-netto)
+- [Desenvolvimento assistido por IA](#desenvolvimento-assistido-por-ia)
+  - [Configuração do ambiente](#configuração-do-ambiente)
+  - [Como escrever prompts eficazes](#como-escrever-prompts-eficazes)
 - [Licença](#licença)
-
-## Informações
-
----
-
-- Dependências de Terceiros: ![dependencies](https://img.shields.io/badge/dependencies-out%20of%20date-orange)
-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AgtecPalmas_AgtecCore&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AgtecPalmas_AgtecCore)
-
-  ![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-  ![Django](https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white)
-  ![Postgres](https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Descrição e contexto
 
 ---
 Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Django trazendo diversas tecnologias embarcadas para expandir o conceito Don't Repeat Yourself (DRY). Além das tecnologias já embarcadas, temos managers para automatizar a geração de código do projeto.
 
-## Documentação
-
-___
-
-Utilizamos no desenvolvimento da ferramenta o pacote [mkdocs](https://www.mkdocs.org/), para gerar a documentação do projeto, acesse o site do mkdocs para maiores informações.
-
-## Documentação Externa
-
----
-Acesse a documentação contendo todos os detalhes do projeto em:
-<https://agtecpalmas.github.io/AgtecCore/>
-
-## Guia de instalação
-
 ---
 
 - Clone este projeto
 
 ```
-  git clone https://github.com/agtec/
+  git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
 ```
 
 
@@ -252,124 +210,149 @@ Principais dependências do projeto:
     Taskipy
     ...
 
-## Como contribuir
-
----
-Há várias formas de contribuir com o projeto, com código, testes, documentação, etc.
-Acesse a documentação externa na seção [Documentação Externa](#documentação-externa) para saber mais sobre como contribuir com o projeto.
-
-## Estrutura do projeto gerado
+## Desenvolvimento assistido por IA
 
 ---
 
-```mermaid
-flowchart TD
-    A[ AgtecCore - Cookiecutter ]
-A --> B( cookiecutter.. /AgteCore )
-B --> D[ Projeto Django baseado no AgteCore]
-D --> E[ Projeto Django ]
-E --> F( settings.py )
-E --> G( urls.py )
-E --> H( wsgi.py )
-E --> I( manage.py )
-I --> T([ build ])
-I --> U([ fastapi])
-I --> v([ flutter ])
-E --> J[ apps ]
-J --> K[ atendimento ]
-J --> M[ core ]
-J --> N[ configuracao_core ]
-J --> O[ contrib ]
-J --> S[ usuario ]
-E --> P[ base ]
-E --> Q[ contrib ]
-E --> R[ docs]
-T --> X( forms.py )
-T --> Y( models.py )
-T --> Z( views.py )
-T --> AA[ templates ]
-subgraph " "
-AA --> AB( index.html )
-AA --> AC( create.html )
-AA --> AD( detail.html )
-AA --> AE( update.html )
-AA --> AF( delete.html )
-end
+Todo projeto gerado pelo AgtecCore inclui um pacote de governança de IA em `.ia/` com skills, documentação arquitetural, templates de tasks/specs e scripts de automação. O arquivo `AGENTS.md` na raiz do projeto gerado é o ponto de entrada para os agentes.
 
+Consulte `.ia/README.md` no projeto gerado para o guia completo. Esta seção cobre a configuração inicial e o uso básico.
+
+---
+
+### Configuração do ambiente
+
+Execute os passos abaixo **uma vez por máquina** após gerar o projeto com o Cookiecutter.
+
+**1. Instalar o OpenCode**
+
+OpenCode é o ambiente de terminal com IA que orquestra os agentes neste projeto.
+
+```bash
+# macOS / Linux (recomendado)
+curl -fsSL https://opencode.ai/install | bash
+
+# Homebrew
+brew install anomalyco/tap/opencode
+
+# npm
+npm install -g opencode-ai
 ```
 
-## Autor(es)
+Inicialize na raiz do projeto gerado:
+
+```bash
+cd /caminho/do/projeto
+opencode
+```
+
+Execute `/init` para que o agente registre o `AGENTS.md` como contexto ativo.
+
+> Documentação: https://opencode.ai/docs
 
 ---
 
-### Coordenador
+**2. Instalar o RTK**
 
-#### Guilherme de Carvalho Carneiro
+RTK intercepta comandos shell e reduz 60–90% do consumo de tokens em operações de dev.
 
-[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/GCarneiro)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/guilhermecarvalhocarneiro)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/guilhermecarvalho/)
+```bash
+# Homebrew
+brew install rtk
 
-### Desenvolvedores
+# Linux / macOS
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+```
 
-#### Thiago Schuch
+```bash
+rtk init -g --opencode   # integra ao OpenCode
+rtk gain                 # verifica economia acumulada
+```
 
-[![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/thigschuch)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/thigschuch)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/thiago-schuch)
+> Repositório: https://github.com/rtk-ai/rtk
 
-#### Claysllan Ferreira
+---
 
-[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://www.twitter.com/claysllanxavier/)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/claysllanxavier)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/claysllanxavier/)
+**3. Instalar o Caveman**
 
-#### Brayan Mota
+Comprime as respostas dos agentes em ~75% sem perda de precisão técnica.
 
-[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/brayan_ncm)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BrayanMota)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/brayan-mota)
-[![Instagram](https://img.shields.io/badge/instagram-%23E4405F.svg?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/brayanmotaa/)
+```bash
+curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+```
 
-#### Lucas Siqueira
+> Repositório: https://github.com/JuliusBrussee/caveman
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lucas-siqueira)
+---
 
-#### Robson Ronzani
+**4. Configurar o Obsidian Brain (memória persistente)**
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ronzani)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/robson-ronzani/)
+```bash
+# Criar vault no Obsidian e configurar a variável no projeto
+OBSIDIAN_DEV_VAULT="CAMINHO_PARA_SEU_VAULT/DevBrain"
+```
 
-#### Emanoel Mendes
+Use as skills `obsidian-sync` e `obsidian-query` para exportar e consultar contexto do repositório.
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/emanoelmendes2)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emanoel-mendes/)
-[![Instagram](https://img.shields.io/badge/instagram-%23E4405F.svg?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/emmmagalhaes/)
+---
 
-#### Thales Barbosa
+**5. Onboarding inicial do projeto gerado**
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tbblack)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/thales-barbosa-de-oliveira/)
+```
+Execute a skill django-onboarding-checklist para validar o projeto gerado.
+```
 
-#### Márcio Henrique Rodrigues de Lima
+O agente verificará `INSTALLED_APPS`, `AUTH_USER_MODEL`, migrations e variáveis de ambiente antes de qualquer demanda.
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/marciohr9)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/m%C3%A1rcio-henrique-rodrigues-de-lima-71b08576/)
+---
 
-#### Clazzeani Almeida
+### Como escrever prompts eficazes
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/clazzeani)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/clazzeani-almeida-a8a9bb42/)
+A qualidade do resultado do agente é proporcional à qualidade do prompt.
 
-#### André Praça de Almeida Pinheiro
+**Prompt ruim — o que evitar:**
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/apracapinheiro)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/andr%C3%A9-pinheiro-03064120/)
+```
+Faça um módulo de login com o govBR
+```
 
-#### Marco Antônio Martins Porto Netto
+Sem contexto de origem, sem referência à arquitetura, sem escopo — o agente cria código genérico, ignora o padrão do projeto e vai direto para implementação sem task.
 
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tchez)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tch%C3%AA/)
+---
+
+**Prompt correto — o que fazer:**
+
+```
+Recebemos da equipe de produto a demanda de implementar login integrado com o SSO
+govBR. Leia a documentação oficial em https://login.gov.br/documentacao para
+entender o fluxo OAuth2/OIDC e siga as regras de AGENTS.md.
+
+Crie o planejamento com as camadas impactadas (models, serializers, views, testes),
+os critérios de aceite e as skills a usar. Não implemente até a aprovação.
+```
+
+---
+
+**Anatomia de um prompt bem escrito:**
+
+```
+[ORIGEM]    De onde veio a demanda (produto, cliente, bug, débito técnico).
+[OBJETIVO]  O que precisa ser verdade ao final — comportamento, não código.
+[REFERÊNCIAS] Documentação externa (URLs) + arquivos internos (.ia/docs/*, AGENTS.md).
+[RESTRIÇÕES]  Camadas que não devem ser tocadas, prazo, LGPD.
+[FLUXO]     "Crie o planejamento e aguarde aprovação antes de implementar."
+```
+
+---
+
+**Exemplos adicionais:**
+
+| Ruim | Correto |
+|---|---|
+| `Adiciona paginação nas listagens` | Descreva o problema (timeout em produção no app X), cite o padrão em `AGENTS.md`, peça planejamento antes de implementar |
+| `Refatora o app XPTO` | Aponte os arquivos com N+1 identificados, cite a restrição correspondente em `constraints.md`, peça task com escopo delimitado |
+
+> Regra geral: o agente executa melhor quando recebe **contexto**, **restrições** e **ordem de operações** — não apenas *o que fazer*. Consulte `.ia/README.md` no projeto gerado para o guia completo com exemplos detalhados.
 
 ## Licença
 
@@ -377,7 +360,7 @@ end
 
 The MIT License (MIT)
 
-Copyright © 2025 Agtec
+Copyright © 2026 Agtec
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
