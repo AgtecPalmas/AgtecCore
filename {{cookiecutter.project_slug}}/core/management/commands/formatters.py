@@ -4,15 +4,16 @@ from .constants.formatters import ISORT, DJLINT, RUFF_FORMAT, RUFF_CHECK
 from .utils import Utils
 
 
-def run_subprocess_silently(command: str) -> None:
+def run_subprocess_silently(command: str) -> bool:
     """Método para executar um comando no terminal silenciosamente"""
-    subprocess.run(
+    result = subprocess.run(
         command,
         stdin=subprocess.DEVNULL,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         shell=True,
     )
+    return result.returncode == 0
 
 
 class PythonFormatter:
@@ -25,10 +26,20 @@ class PythonFormatter:
         """Método para aplicar lint e formatação usando Ruff"""
         try:
             # Corrige problemas automaticamente (lint + imports + etc)
-            run_subprocess_silently(f"{RUFF_CHECK} {self.path}")
+            if not run_subprocess_silently(f"{RUFF_CHECK} {self.path}"):
+                Utils.show_message(
+                    f"Falha ao executar Ruff check em {self.path}",
+                    emoji="warning",
+                    border_color="yellow",
+                )
 
             # Formata o código (equivalente ao black)
-            run_subprocess_silently(f"{RUFF_FORMAT} {self.path}")
+            if not run_subprocess_silently(f"{RUFF_FORMAT} {self.path}"):
+                Utils.show_message(
+                    f"Falha ao executar Ruff format em {self.path}",
+                    emoji="warning",
+                    border_color="yellow",
+                )
 
         except Exception as error:
             Utils.show_message(f"Error in PythonFormatter.apply_ruff: {error}")
@@ -36,7 +47,12 @@ class PythonFormatter:
     def apply_isort(self) -> None:
         """Método para aplicar o isort no arquivo"""
         try:
-            run_subprocess_silently(f"{ISORT} {self.path}")
+            if not run_subprocess_silently(f"{ISORT} {self.path}"):
+                Utils.show_message(
+                    f"Falha ao executar isort em {self.path}",
+                    emoji="warning",
+                    border_color="yellow",
+                )
         except Exception as error:
             Utils.show_message(f"Error in PythonFormatter.apply_isort: {error}")
 

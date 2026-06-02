@@ -23,6 +23,7 @@ from generate_project import (
     _render,
     _should_skip_render,
     _slugify,
+    finalize_generated_code,
     open_shell_in_project,
     scaffold_project,
     setup_env_file,
@@ -563,6 +564,38 @@ class TestBuildDefaultAppsExecutable:
         assert not hasattr(gp, "PYTHON"), (
             "Constante PYTHON encontrada — deve ser removida em favor de sys.executable"
         )
+
+
+# ─── finalize_generated_code — ordem build -> format ─────────────────────────
+
+class TestFinalizeGeneratedCode:
+    def test_build_runs_before_format_when_enabled(self, tmp_path):
+        call_order = []
+
+        with patch(
+            "generate_project.build_default_apps",
+            side_effect=lambda dest: call_order.append(("build", dest)),
+        ):
+            with patch(
+                "generate_project.format_project",
+                side_effect=lambda dest: call_order.append(("format", dest)),
+            ):
+                finalize_generated_code(tmp_path, build_apps=True)
+
+        assert call_order == [("build", tmp_path), ("format", tmp_path)]
+
+    def test_format_still_runs_when_build_disabled(self, tmp_path):
+        call_order = []
+
+        with patch("generate_project.build_default_apps") as build_mock:
+            with patch(
+                "generate_project.format_project",
+                side_effect=lambda dest: call_order.append(("format", dest)),
+            ):
+                finalize_generated_code(tmp_path, build_apps=False)
+
+        build_mock.assert_not_called()
+        assert call_order == [("format", tmp_path)]
 
 
 # ─── _generate_secret_key ─────────────────────────────────────────────────────

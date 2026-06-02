@@ -291,6 +291,12 @@ def format_project(dest: Path) -> None:
         print(f"  {ERR} Falha na formatação — execute manualmente: ruff format .")
 
 
+def finalize_generated_code(dest: Path, build_apps: bool) -> None:
+    if build_apps:
+        build_default_apps(dest)
+    format_project(dest)
+
+
 def _ask_bool(prompt: str, default: bool = True) -> bool:
     hint = "S/n" if default else "s/N"
     if not sys.stdin.isatty():
@@ -445,9 +451,7 @@ def main() -> None:
     if ctx["install_requirements"]:
         deps_ok = install_dependencies(dest)
         if deps_ok:
-            format_project(dest)
-            if ctx["build_apps"]:
-                build_default_apps(dest)
+            finalize_generated_code(dest, ctx["build_apps"])
     else:
         print(f"  ⏭  Instalação de dependências ignorada")
 
