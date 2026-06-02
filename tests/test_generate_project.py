@@ -23,6 +23,12 @@ from generate_project import (
     _generate_secret_key,
 )
 
+DJANGO_API_SNIPPETS = (
+    ROOT
+    / "{{cookiecutter.project_slug}}"
+    / "core/management/commands/snippets/django/api"
+)
+
 
 # ─── dest_base — mesmo nível que AgtecCore ───────────────────────────────────
 
@@ -405,10 +411,33 @@ class TestInitGit:
 # ─── build_default_apps — portabilidade do executável Python ─────────────────
 
 class TestBuildDefaultAppsExecutable:
-    def test_uses_sys_executable_not_hardcoded_python(self, tmp_path):
-        """manage.py build deve usar sys.executable, funcionando em qualquer SO."""
+    def test_prefers_generated_project_venv_python(self, tmp_path):
+        """Se uv sync criou .venv, o build deve usar esse interpretador."""
         import sys
-        from unittest.mock import call, patch
+        from unittest.mock import patch
+
+        project_python = tmp_path / ".venv" / "bin" / "python"
+        project_python.parent.mkdir(parents=True)
+        project_python.write_text("", encoding="utf-8")
+
+        calls_made = []
+
+        def fake_run(cmd, **kwargs):
+            calls_made.append(cmd)
+            from types import SimpleNamespace
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            gp.build_default_apps(tmp_path)
+
+        for cmd in calls_made:
+            assert cmd[0] == str(project_python)
+            assert cmd[0] != sys.executable
+
+    def test_uses_sys_executable_not_hardcoded_python(self, tmp_path):
+        """Sem .venv local, manage.py build deve cair para sys.executable."""
+        import sys
+        from unittest.mock import patch
         calls_made = []
 
         def fake_run(cmd, **kwargs):
@@ -453,6 +482,17 @@ class TestGenerateSecretKey:
         # token_urlsafe(50) produces ~67 chars
         key = _generate_secret_key()
         assert len(key) >= 60
+
+
+# ─── snippets django/api — consistência view x serializer ─────────────────────
+
+class TestDjangoApiSnippets:
+    def test_view_snippet_only_imports_existing_serializer(self):
+        view_snippet = (DJANGO_API_SNIPPETS / "view.txt").read_text(encoding="utf-8")
+        serializer_snippet = (DJANGO_API_SNIPPETS / "serializer.txt").read_text(encoding="utf-8")
+
+        assert "$ModelName$GETSerializer" not in view_snippet
+        assert "class $ModelName$Serializer" in serializer_snippet
 
 
 # ─── scaffold_project (integração) ────────────────────────────────────────────

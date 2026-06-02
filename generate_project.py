@@ -239,10 +239,22 @@ def install_dependencies(dest: Path) -> bool:
     return ok
 
 
+def _project_python(dest: Path) -> Path:
+    candidates = [
+        dest / ".venv" / "bin" / "python",
+        dest / ".venv" / "Scripts" / "python.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return Path(sys.executable)
+
+
 def build_default_apps(dest: Path) -> None:
+    python_cmd = str(_project_python(dest))
     for app in DEFAULT_APPS:
         print(f"  {WAIT} Construindo app: {app}")
-        ok = _run([sys.executable, "manage.py", "build", app, "--all"], cwd=dest)
+        ok = _run([python_cmd, "manage.py", "build", app, "--all"], cwd=dest)
         if not ok:
             print(f"  {ERR} Falha ao construir {app} — execute manualmente")
 
