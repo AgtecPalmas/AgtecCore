@@ -197,7 +197,12 @@ def scaffold_project(ctx: dict, dest: Path) -> None:
 
 # ─── Pós-geração ──────────────────────────────────────────────────────────────
 
-def _run(cmd: str | list[str], cwd: Path, silent: bool = False) -> bool:
+def _run(
+    cmd: str | list[str],
+    cwd: Path,
+    silent: bool = False,
+    ok_codes: tuple[int, ...] = (0,),
+) -> bool:
     """Executa comando e retorna True se bem-sucedido."""
     kwargs: dict = {"cwd": cwd}
     if silent:
@@ -209,7 +214,7 @@ def _run(cmd: str | list[str], cwd: Path, silent: bool = False) -> bool:
 
     try:
         result = subprocess.run(cmd, **kwargs)
-        return result.returncode == 0
+        return result.returncode in ok_codes
     except Exception as exc:
         print(f"  {ERR} {exc}")
         return False
@@ -278,8 +283,8 @@ def _project_ruff(dest: Path) -> list[str]:
 def format_project(dest: Path) -> None:
     print(f"  {WAIT} Formatando código gerado com ruff...")
     ruff = _project_ruff(dest)
-    ok1 = _run([*ruff, "check", "--fix", str(dest)], cwd=dest, silent=True)
-    ok2 = _run([*ruff, "format", str(dest)], cwd=dest, silent=True)
+    ok1 = _run([*ruff, "check", "--fix", str(dest)], cwd=dest, silent=True, ok_codes=(0, 1))
+    ok2 = _run([*ruff, "format", str(dest)], cwd=dest, silent=True, ok_codes=(0, 1))
     if ok1 and ok2:
         print(f"  {OK} Código formatado")
     else:
