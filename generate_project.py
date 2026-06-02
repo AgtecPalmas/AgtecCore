@@ -9,6 +9,7 @@ import secrets
 import shutil
 import subprocess
 import sys
+import unicodedata
 from datetime import datetime
 from fnmatch import fnmatch
 from pathlib import Path
@@ -52,6 +53,13 @@ def _slugify(value: str) -> str:
     return value.strip("-")
 
 
+def _project_dir_name(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value)
+    ascii_value = normalized.encode("ascii", "ignore").decode("ascii")
+    parts = re.findall(r"[A-Za-z0-9]+", ascii_value)
+    return "".join(part[:1].upper() + part[1:] for part in parts) or "ProjetoBase"
+
+
 def _build_context(args: argparse.Namespace) -> dict[str, Any]:
     """Coleta interativa de inputs com defaults do argparse."""
 
@@ -70,6 +78,7 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
     print("\n── AgtecCore — Novo Projeto ─────────────────────────────────")
 
     project_name = args.project_name or ask("Nome do projeto", "Projeto Base")
+    project_dir_name = _project_dir_name(project_name)
     project_slug = _slugify(project_name).replace("-", "_")
 
     client_name = args.client_name or ask("Nome do cliente", "Nome do Cliente")
@@ -90,6 +99,7 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
 
     return {
         "project_name": project_name,
+        "project_dir_name": project_dir_name,
         "project_slug": project_slug,
         "main_app": project_slug,
         "client_name": client_name,
@@ -336,11 +346,13 @@ def main() -> None:
     ctx = _build_context(args)
 
     project_slug = ctx["project_slug"]
+    project_dir_name = ctx["project_dir_name"]
     dest_base = Path(__file__).parent.parent
-    dest = dest_base / project_slug
+    dest = dest_base / project_dir_name
 
     print(f"\n  Projeto : {ctx['project_name']}")
     print(f"  Slug    : {project_slug}")
+    print(f"  Pasta   : {project_dir_name}")
     print(f"  Destino : {dest}")
     confirm = input("\n  Confirmar geração? [S/n]: ").strip().lower()
     if confirm and confirm not in ("s", "sim", "y", "yes"):
@@ -365,7 +377,7 @@ def main() -> None:
     else:
         print(f"  ⏭  Git ignorado")
 
-    print(f"\n{OK} Projeto '{project_slug}' gerado em: {dest}")
+    print(f"\n{OK} Projeto '{project_dir_name}' gerado em: {dest}")
     print(f"   Próximos passos:")
     print(f"   1. cd {dest}")
     print(f"   2. source .venv/bin/activate")

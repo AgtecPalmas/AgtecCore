@@ -15,6 +15,7 @@ import generate_project as gp
 from generate_project import (
     COPY_WITHOUT_RENDER,
     _build_context,
+    _project_dir_name,
     _render,
     _should_skip_render,
     _slugify,
@@ -88,6 +89,17 @@ class TestSlugify:
         assert result == result.lower()
 
 
+class TestProjectDirName:
+    def test_uses_pascal_case(self):
+        assert _project_dir_name("Projeto Validacao") == "ProjetoValidacao"
+
+    def test_strips_accents(self):
+        assert _project_dir_name("Projeto Validação") == "ProjetoValidacao"
+
+    def test_removes_symbols(self):
+        assert _project_dir_name("Projeto #1!") == "Projeto1"
+
+
 # ─── _build_context ───────────────────────────────────────────────────────────
 
 class TestBuildContext:
@@ -112,6 +124,10 @@ class TestBuildContext:
     def test_project_slug_derived(self):
         ctx = _build_context(self._make_args())
         assert ctx["project_slug"] == "sistema_teste"
+
+    def test_project_dir_name_derived(self):
+        ctx = _build_context(self._make_args(project_name="Sistema Teste"))
+        assert ctx["project_dir_name"] == "SistemaTeste"
 
     def test_main_app_equals_slug(self):
         ctx = _build_context(self._make_args())
@@ -504,6 +520,7 @@ class TestScaffoldProject:
     def ctx(self):
         return {
             "project_name": "Meu Sistema",
+            "project_dir_name": "MeuSistema",
             "project_slug": "meu_sistema",
             "main_app": "meu_sistema",
             "client_name": "Prefeitura",
@@ -523,26 +540,26 @@ class TestScaffoldProject:
         }
 
     def test_generates_project_directory(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         assert dest.is_dir()
 
     def test_base_settings_rendered(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         settings = (dest / "base" / "settings.py").read_text()
         assert "Meu Sistema" in settings
         assert "cookiecutter" not in settings
 
     def test_env_example_rendered(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         env_example = (dest / ".env.example").read_text()
         assert "meu_sistema" in env_example
         assert "cookiecutter" not in env_example
 
     def test_core_copied_without_render(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         core_dir = dest / "core"
         assert core_dir.is_dir()
@@ -557,7 +574,7 @@ class TestScaffoldProject:
             )
 
     def test_fails_if_dest_exists(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         dest.mkdir()
         with pytest.raises(SystemExit):
             scaffold_project(ctx, dest)
