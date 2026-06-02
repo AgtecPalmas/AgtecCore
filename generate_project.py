@@ -38,8 +38,6 @@ COPY_WITHOUT_RENDER: list[str] = [
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
-PYTHON = "py" if sys.platform.startswith("win") else "python"
-
 OK = "✅"
 ERR = "❌"
 WAIT = "⏳"
@@ -244,23 +242,54 @@ def install_dependencies(dest: Path) -> bool:
 def build_default_apps(dest: Path) -> None:
     for app in DEFAULT_APPS:
         print(f"  {WAIT} Construindo app: {app}")
-        ok = _run([PYTHON, "manage.py", "build", app, "--all"], cwd=dest)
+        ok = _run([sys.executable, "manage.py", "build", app, "--all"], cwd=dest)
         if not ok:
             print(f"  {ERR} Falha ao construir {app} — execute manualmente")
 
 
+def _git_has_identity() -> bool:
+    """Verifica se user.name está configurado no git (global ou sistema)."""
+    try:
+        result = subprocess.run(
+            ["git", "config", "--global", "user.name"],
+            capture_output=True,
+            text=True,
+        )
+        return bool(result.stdout.strip())
+    except Exception:
+        return False
+
+
 def init_git(dest: Path) -> None:
     print(f"  {WAIT} Inicializando git...")
-    cmds = [
-        "git init --initial-branch=master",
-        "git add .",
-        'git commit -am "Primeiro Commit"',
-        "git checkout -b desenvolvimento",
+
+    commit_cmd = ["git", "commit", "-am", "Primeiro Commit"]
+    if not _git_has_identity():
+        commit_cmd = [
+            "git",
+            "-c", "user.name=AgtecCore Generator",
+            "-c", "user.email=agtec@palmas.to.gov.br",
+            "commit", "-am", "Primeiro Commit",
+        ]
+
+    setup_cmds: list[list[str]] = [
+        ["git", "init", "--initial-branch=master"],
+        ["git", "add", "."],
+        commit_cmd,
     ]
-    for cmd in cmds:
+
+    commit_ok = True
+    for cmd in setup_cmds:
         ok = _run(cmd, cwd=dest, silent=True)
-        status = OK if ok else ERR
-        print(f"  {status} {cmd}")
+        print(f"  {OK if ok else ERR} {' '.join(cmd)}")
+        if not ok and "commit" in cmd:
+            commit_ok = False
+
+    if commit_ok:
+        ok = _run(["git", "checkout", "-b", "desenvolvimento"], cwd=dest, silent=True)
+        print(f"  {OK if ok else ERR} git checkout -b desenvolvimento")
+    else:
+        print(f"  {ERR} git checkout -b desenvolvimento — ignorado (commit falhou)")
 
 
 # ─── CLI ──────────────────────────────────────────────────────────────────────
