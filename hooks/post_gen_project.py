@@ -1,4 +1,5 @@
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -19,7 +20,7 @@ GIT_INIT = "{{ cookiecutter.git_init }}" == "Sim"
 
 BUILD_APPS = "{{ cookiecutter.build_apps }}" == "Sim"
 
-PYTHON = "py" if sys.platform.startswith("win") else "python"
+PYTHON = sys.executable
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
@@ -53,16 +54,17 @@ def run_command(
         return False
 
     try:
+        args = shlex.split(command) if isinstance(command, str) else command
         if silent:
             command = subprocess.run(
-                command.split(" "),
+                args,
                 cwd=PROJECT_DIRECTORY,
                 stdin=DEVNULL,
                 stdout=DEVNULL,
                 stderr=DEVNULL,
             )
         else:
-            command = subprocess.run(command.split(" "), cwd=PROJECT_DIRECTORY)
+            command = subprocess.run(args, cwd=PROJECT_DIRECTORY)
 
         return command.returncode == 0
 
