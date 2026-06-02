@@ -8,6 +8,9 @@
 
 - [Tabela de conteúdos](#tabela-de-conteúdos)
 - [Descrição e contexto](#descrição-e-contexto)
+- [Gerando um novo projeto](#gerando-um-novo-projeto)
+  - [Opção 1 — generate\_project.py (recomendado)](#opção-1--generate_projectpy-recomendado)
+  - [Opção 2 — CookieCutter (legado)](#opção-2--cookiecutter-legado)
 - [Executando o projeto com o UV (Astral)](#executando-o-projeto-com-o-uv-astral)
 - [Taskpy](#taskpy)
 - [Dependências](#dependências)
@@ -29,6 +32,71 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
   git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
 ```
 
+
+## Gerando um novo projeto
+
+### Opção 1 — generate\_project.py (recomendado)
+
+O script `generate_project.py` substitui o CookieCutter e não requer dependência externa além do ambiente virtual do AgtecCore.
+
+**Pré-requisitos:** clone do AgtecCore com `uv` disponível no PATH.
+
+```bash
+# 1. Clone o AgtecCore e ative o ambiente virtual
+git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
+cd AgtecCore
+uv sync
+source .venv/bin/activate   # Linux/macOS
+# ou: .venv\Scripts\activate  (Windows)
+
+# 2. Execute o gerador (modo interativo)
+python generate_project.py
+
+# 3. O projeto será criado em ../nome_do_projeto/
+```
+
+**Passando argumentos diretamente (modo não-interativo):**
+
+```bash
+python generate_project.py \
+  --project-name "Meu Sistema" \
+  --client-name "Prefeitura" \
+  --author-name "Dev" \
+  --domain-name "palmas.to.gov.br" \
+  --email "dev@palmas.to.gov.br" \
+  --docker-port 8080 \
+  --no-git \
+  --no-install
+```
+
+**Flags opcionais:**
+
+| Flag | Efeito |
+|---|---|
+| `--no-install` | Não executa `uv sync` |
+| `--no-git` | Não inicializa repositório git |
+| `--no-build-apps` | Não executa `manage.py build` para apps padrão |
+
+> O projeto é sempre criado no mesmo nível que o AgtecCore. O destino não pode ser alterado.
+
+**Após a geração:**
+
+```bash
+cd ../nome_do_projeto
+# Ajuste o .env com as credenciais do banco de dados
+python manage.py makemigrations
+python manage.py migrate
+python mock_superuser.py
+python manage.py runserver
+```
+
+---
+
+### Opção 2 — CookieCutter (legado)
+
+O CookieCutter permanece disponível para compatibilidade. Veja a seção abaixo.
+
+---
 
 ## Executando o projeto com o UV (Astral)
 
