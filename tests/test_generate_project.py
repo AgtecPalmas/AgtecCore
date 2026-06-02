@@ -1,6 +1,7 @@
 """Testes para generate_project.py"""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -15,10 +16,14 @@ import generate_project as gp
 from generate_project import (
     COPY_WITHOUT_RENDER,
     _build_context,
+    _ask_bool,
+    _next_steps,
+    _preferred_shell,
     _project_dir_name,
     _render,
     _should_skip_render,
     _slugify,
+    open_shell_in_project,
     scaffold_project,
     setup_env_file,
     _generate_secret_key,
@@ -29,6 +34,8 @@ DJANGO_API_SNIPPETS = (
     / "{{cookiecutter.project_slug}}"
     / "core/management/commands/snippets/django/api"
 )
+COOKIECUTTER_JSON = ROOT / "cookiecutter.json"
+POST_GEN_HOOK = ROOT / "hooks/post_gen_project.py"
 
 
 # ─── dest_base — mesmo nível que AgtecCore ───────────────────────────────────
@@ -98,6 +105,20 @@ class TestProjectDirName:
 
     def test_removes_symbols(self):
         assert _project_dir_name("Projeto #1!") == "Projeto1"
+
+
+class TestCookiecutterJson:
+    def test_contains_project_dir_name_field(self):
+        data = json.loads(COOKIECUTTER_JSON.read_text(encoding="utf-8"))
+        assert "project_dir_name" in data
+        assert "title|replace(' ', '')" in data["project_dir_name"]
+
+
+class TestLegacyCookiecutterHook:
+    def test_uses_project_dir_name_as_target_directory(self):
+        hook_content = POST_GEN_HOOK.read_text(encoding="utf-8")
+        assert 'PROJECT_DIR_NAME = "{{ cookiecutter.project_dir_name }}"' in hook_content
+        assert "PROJECT_DIRECTORY = SOURCE_DIRECTORY.parent / PROJECT_DIR_NAME" in hook_content
 
 
 # ─── _build_context ───────────────────────────────────────────────────────────
@@ -235,6 +256,66 @@ class TestBoolPrompts:
         assert ctx["install_requirements"] is False
         assert ctx["build_apps"] is False
         assert ctx["git_init"] is False
+
+
+class TestAskBool:
+    def test_returns_default_when_non_tty(self):
+        with patch("sys.stdin") as mock_stdin:
+            mock_stdin.isatty.return_value = False
+            assert _ask_bool("Pergunta?", default=False) is False
+            assert _ask_bool("Pergunta?", default=True) is True
+
+    def test_yes_answer(self):
+        with patch("builtins.input", return_value="s"):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                assert _ask_bool("Pergunta?", default=False) is True
+
+    def test_no_answer_uses_default(self):
+        with patch("builtins.input", return_value=""):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                assert _ask_bool("Pergunta?", default=False) is False
+
+
+class TestOpenShellInProject:
+    def test_preferred_shell_uses_shell_env_on_unix(self):
+        with patch.object(sys, "platform", "darwin"):
+            with patch.dict("os.environ", {"SHELL": "/bin/zsh"}, clear=False):
+                assert _preferred_shell() == ["/bin/zsh"]
+
+    def test_open_shell_runs_in_project_directory(self, tmp_path):
+        called = {}
+
+        def fake_run(cmd, **kwargs):
+            called["cmd"] = cmd
+            called["cwd"] = kwargs["cwd"]
+            return SimpleNamespace(returncode=0)
+
+        with patch("generate_project._preferred_shell", return_value=["/bin/zsh"]):
+            with patch("subprocess.run", side_effect=fake_run):
+                assert open_shell_in_project(tmp_path) is True
+
+        assert called["cmd"] == ["/bin/zsh"]
+        assert called["cwd"] == tmp_path
+
+    def test_open_shell_returns_false_when_shell_missing(self, tmp_path):
+        with patch("generate_project._preferred_shell", return_value=None):
+            assert open_shell_in_project(tmp_path) is False
+
+
+class TestNextSteps:
+    def test_unix_instructions(self, tmp_path):
+        with patch.object(sys, "platform", "darwin"):
+            steps = _next_steps(tmp_path)
+        assert steps[0] == f"cd {tmp_path}"
+        assert steps[1] == "source .venv/bin/activate"
+
+    def test_windows_instructions(self, tmp_path):
+        with patch.object(sys, "platform", "win32"):
+            steps = _next_steps(tmp_path)
+        assert steps[0] == f"cd {tmp_path}"
+        assert steps[1] == r".venv\Scripts\activate"
 
 
 # ─── _render ──────────────────────────────────────────────────────────────────

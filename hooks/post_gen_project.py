@@ -24,7 +24,11 @@ PYTHON = sys.executable
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
-PROJECT_DIRECTORY = Path(os.path.realpath(os.path.curdir)).parent
+SOURCE_DIRECTORY = Path(os.path.realpath(os.path.curdir))
+
+PROJECT_DIR_NAME = "{{ cookiecutter.project_dir_name }}"
+
+PROJECT_DIRECTORY = SOURCE_DIRECTORY.parent / PROJECT_DIR_NAME
 
 REQUIREMENTS = [
     Path(f"{PROJECT_DIRECTORY}/pyproject.toml"),
@@ -131,13 +135,16 @@ def remove_subdirectory_project() -> None:
     """Método para remover a subpasta do projeto"""
 
     try:
-        source = Path.cwd()
+        source = SOURCE_DIRECTORY
+
+        if source == PROJECT_DIRECTORY:
+            return
 
         if sys.platform.startswith("win"):
             print(f"{EMOJIS['error']} Remova a pasta {source} manualmente")
             return
 
-        os.chdir("..")
+        os.chdir(PROJECT_DIRECTORY)
         shutil.rmtree(source, ignore_errors=True)
 
     except Exception as e:
@@ -151,8 +158,8 @@ def copy_all_files_to_root_dir() -> None:
     try:
         print(f"{EMOJIS['success']} Copiando arquivos para a pasta principal")
 
-        path_root = Path.cwd()
-        source_dir = Path(path_root)
+        source_dir = SOURCE_DIRECTORY
+        PROJECT_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
         for file_name in Path(source_dir).glob("*"):
             shutil.move(source_dir.joinpath(file_name), PROJECT_DIRECTORY)

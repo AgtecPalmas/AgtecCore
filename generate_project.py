@@ -260,6 +260,52 @@ def _project_python(dest: Path) -> Path:
     return Path(sys.executable)
 
 
+def _ask_bool(prompt: str, default: bool = True) -> bool:
+    hint = "S/n" if default else "s/N"
+    if not sys.stdin.isatty():
+        return default
+    answer = input(f"\n  {prompt} [{hint}]: ").strip().lower()
+    return default if not answer else answer in ("s", "sim", "y", "yes")
+
+
+def _preferred_shell() -> list[str] | None:
+    if sys.platform.startswith("win"):
+        comspec = os.environ.get("COMSPEC")
+        return [comspec] if comspec else None
+
+    shell = os.environ.get("SHELL")
+    return [shell] if shell else None
+
+
+def open_shell_in_project(dest: Path) -> bool:
+    shell_cmd = _preferred_shell()
+    if not shell_cmd:
+        print(f"  {ERR} Shell do sistema não encontrado — entre manualmente com: cd {dest}")
+        return False
+
+    print(f"  {WAIT} Abrindo shell em: {dest}")
+    try:
+        result = subprocess.run(shell_cmd, cwd=dest)
+        return result.returncode == 0
+    except Exception as exc:
+        print(f"  {ERR} Não foi possível abrir shell: {exc}")
+        return False
+
+
+def _next_steps(dest: Path) -> list[str]:
+    activate_cmd = (
+        r".venv\Scripts\activate"
+        if sys.platform.startswith("win")
+        else "source .venv/bin/activate"
+    )
+    return [
+        f"cd {dest}",
+        activate_cmd,
+        "Ajuste o .env com as credenciais do banco",
+        "python manage.py migrate",
+    ]
+
+
 def build_default_apps(dest: Path) -> None:
     python_cmd = str(_project_python(dest))
     for app in DEFAULT_APPS:
@@ -379,10 +425,12 @@ def main() -> None:
 
     print(f"\n{OK} Projeto '{project_dir_name}' gerado em: {dest}")
     print(f"   Próximos passos:")
-    print(f"   1. cd {dest}")
-    print(f"   2. source .venv/bin/activate")
-    print(f"   3. Ajuste o .env com as credenciais do banco")
-    print(f"   4. python manage.py migrate\n")
+    for index, step in enumerate(_next_steps(dest), start=1):
+        print(f"   {index}. {step}")
+    print()
+
+    if _ask_bool("Deseja abrir um novo shell no diretório do projeto?", default=False):
+        open_shell_in_project(dest)
 
 
 if __name__ == "__main__":
