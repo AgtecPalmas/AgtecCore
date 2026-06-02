@@ -1,4 +1,5 @@
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -19,11 +20,15 @@ GIT_INIT = "{{ cookiecutter.git_init }}" == "Sim"
 
 BUILD_APPS = "{{ cookiecutter.build_apps }}" == "Sim"
 
-PYTHON = "py" if sys.platform.startswith("win") else "python"
+PYTHON = sys.executable
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
-PROJECT_DIRECTORY = Path(os.path.realpath(os.path.curdir)).parent
+SOURCE_DIRECTORY = Path(os.path.realpath(os.path.curdir))
+
+PROJECT_DIR_NAME = "{{ cookiecutter.project_dir_name }}"
+
+PROJECT_DIRECTORY = SOURCE_DIRECTORY.parent / PROJECT_DIR_NAME
 
 REQUIREMENTS = [
     Path(f"{PROJECT_DIRECTORY}/pyproject.toml"),
@@ -53,16 +58,17 @@ def run_command(
         return False
 
     try:
+        args = shlex.split(command) if isinstance(command, str) else command
         if silent:
             command = subprocess.run(
-                command.split(" "),
+                args,
                 cwd=PROJECT_DIRECTORY,
                 stdin=DEVNULL,
                 stdout=DEVNULL,
                 stderr=DEVNULL,
             )
         else:
-            command = subprocess.run(command.split(" "), cwd=PROJECT_DIRECTORY)
+            command = subprocess.run(args, cwd=PROJECT_DIRECTORY)
 
         return command.returncode == 0
 
@@ -129,13 +135,16 @@ def remove_subdirectory_project() -> None:
     """Método para remover a subpasta do projeto"""
 
     try:
-        source = Path.cwd()
+        source = SOURCE_DIRECTORY
+
+        if source == PROJECT_DIRECTORY:
+            return
 
         if sys.platform.startswith("win"):
             print(f"{EMOJIS['error']} Remova a pasta {source} manualmente")
             return
 
-        os.chdir("..")
+        os.chdir(PROJECT_DIRECTORY)
         shutil.rmtree(source, ignore_errors=True)
 
     except Exception as e:
@@ -149,8 +158,8 @@ def copy_all_files_to_root_dir() -> None:
     try:
         print(f"{EMOJIS['success']} Copiando arquivos para a pasta principal")
 
-        path_root = Path.cwd()
-        source_dir = Path(path_root)
+        source_dir = SOURCE_DIRECTORY
+        PROJECT_DIRECTORY.mkdir(parents=True, exist_ok=True)
 
         for file_name in Path(source_dir).glob("*"):
             shutil.move(source_dir.joinpath(file_name), PROJECT_DIRECTORY)

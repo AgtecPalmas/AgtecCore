@@ -1,6 +1,7 @@
 """Testes para generate_project.py"""
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -15,13 +16,26 @@ import generate_project as gp
 from generate_project import (
     COPY_WITHOUT_RENDER,
     _build_context,
+    _ask_bool,
+    _next_steps,
+    _preferred_shell,
+    _project_dir_name,
     _render,
     _should_skip_render,
     _slugify,
+    open_shell_in_project,
     scaffold_project,
     setup_env_file,
     _generate_secret_key,
 )
+
+DJANGO_API_SNIPPETS = (
+    ROOT
+    / "{{cookiecutter.project_slug}}"
+    / "core/management/commands/snippets/django/api"
+)
+COOKIECUTTER_JSON = ROOT / "cookiecutter.json"
+POST_GEN_HOOK = ROOT / "hooks/post_gen_project.py"
 
 
 # ─── dest_base — mesmo nível que AgtecCore ───────────────────────────────────
@@ -82,6 +96,31 @@ class TestSlugify:
         assert result == result.lower()
 
 
+class TestProjectDirName:
+    def test_uses_pascal_case(self):
+        assert _project_dir_name("Projeto Validacao") == "ProjetoValidacao"
+
+    def test_strips_accents(self):
+        assert _project_dir_name("Projeto Validação") == "ProjetoValidacao"
+
+    def test_removes_symbols(self):
+        assert _project_dir_name("Projeto #1!") == "Projeto1"
+
+
+class TestCookiecutterJson:
+    def test_contains_project_dir_name_field(self):
+        data = json.loads(COOKIECUTTER_JSON.read_text(encoding="utf-8"))
+        assert "project_dir_name" in data
+        assert "title|replace(' ', '')" in data["project_dir_name"]
+
+
+class TestLegacyCookiecutterHook:
+    def test_uses_project_dir_name_as_target_directory(self):
+        hook_content = POST_GEN_HOOK.read_text(encoding="utf-8")
+        assert 'PROJECT_DIR_NAME = "{{ cookiecutter.project_dir_name }}"' in hook_content
+        assert "PROJECT_DIRECTORY = SOURCE_DIRECTORY.parent / PROJECT_DIR_NAME" in hook_content
+
+
 # ─── _build_context ───────────────────────────────────────────────────────────
 
 class TestBuildContext:
@@ -96,6 +135,9 @@ class TestBuildContext:
             flutter_org="Agtec",
             docker_port="8000",
             postgre_port="5432",
+            no_install=False,
+            no_git=False,
+            no_build_apps=False,
         )
         defaults.update(kwargs)
         return SimpleNamespace(**defaults)
@@ -103,6 +145,10 @@ class TestBuildContext:
     def test_project_slug_derived(self):
         ctx = _build_context(self._make_args())
         assert ctx["project_slug"] == "sistema_teste"
+
+    def test_project_dir_name_derived(self):
+        ctx = _build_context(self._make_args(project_name="Sistema Teste"))
+        assert ctx["project_dir_name"] == "SistemaTeste"
 
     def test_main_app_equals_slug(self):
         ctx = _build_context(self._make_args())
@@ -124,6 +170,152 @@ class TestBuildContext:
         assert ctx["python_version"] == "3.12.*"
         assert ctx["postgresql_version"] == "14.2"
         assert ctx["drf_version"] == "3.16.1"
+
+
+# ─── prompts booleanos (install / build_apps / git) ──────────────────────────
+
+class TestBoolPrompts:
+    """Testa os prompts interativos de install, build_apps e git_init."""
+
+    def _make_args(self, **kwargs) -> SimpleNamespace:
+        defaults = dict(
+            project_name="Proj",
+            client_name="C",
+            description="D",
+            author_name="A",
+            domain_name="test.com",
+            email="a@test.com",
+            flutter_org="Org",
+            docker_port="8000",
+            postgre_port="5432",
+            no_install=False,
+            no_git=False,
+            no_build_apps=False,
+        )
+        defaults.update(kwargs)
+        return SimpleNamespace(**defaults)
+
+    def test_no_install_flag_skips_install(self):
+        ctx = _build_context(self._make_args(no_install=True))
+        assert ctx["install_requirements"] is False
+
+    def test_no_install_forces_build_apps_false(self):
+        """build_apps nunca pode ser True se install_requirements é False."""
+        ctx = _build_context(self._make_args(no_install=True))
+        assert ctx["build_apps"] is False
+
+    def test_no_git_flag_skips_git(self):
+        ctx = _build_context(self._make_args(no_git=True))
+        assert ctx["git_init"] is False
+
+    def test_no_build_apps_flag_skips_build(self):
+        ctx = _build_context(self._make_args(no_build_apps=True))
+        assert ctx["build_apps"] is False
+
+    def test_interactive_defaults_true_in_non_tty(self):
+        """Em ambiente não-interativo (pytest), ask_bool retorna default=True."""
+        ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is True
+        assert ctx["git_init"] is True
+
+    def test_interactive_prompt_yes_answer(self):
+        with patch("builtins.input", side_effect=["s", "s", "s"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is True
+        assert ctx["git_init"] is True
+
+    def test_interactive_prompt_no_answer(self):
+        with patch("builtins.input", side_effect=["n", "n"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is False
+        # build_apps não é perguntado quando install=False
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is False
+
+    def test_interactive_install_yes_build_no(self):
+        with patch("builtins.input", side_effect=["s", "n", "s"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is True
+
+    def test_flag_overrides_skip_prompt(self):
+        """Com flag --no-install, input() não deve ser chamado para install."""
+        with patch("builtins.input", side_effect=Exception("input não deveria ser chamado")):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args(no_install=True, no_git=True, no_build_apps=True))
+        assert ctx["install_requirements"] is False
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is False
+
+
+class TestAskBool:
+    def test_returns_default_when_non_tty(self):
+        with patch("sys.stdin") as mock_stdin:
+            mock_stdin.isatty.return_value = False
+            assert _ask_bool("Pergunta?", default=False) is False
+            assert _ask_bool("Pergunta?", default=True) is True
+
+    def test_yes_answer(self):
+        with patch("builtins.input", return_value="s"):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                assert _ask_bool("Pergunta?", default=False) is True
+
+    def test_no_answer_uses_default(self):
+        with patch("builtins.input", return_value=""):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                assert _ask_bool("Pergunta?", default=False) is False
+
+
+class TestOpenShellInProject:
+    def test_preferred_shell_uses_shell_env_on_unix(self):
+        with patch.object(sys, "platform", "darwin"):
+            with patch.dict("os.environ", {"SHELL": "/bin/zsh"}, clear=False):
+                assert _preferred_shell() == ["/bin/zsh"]
+
+    def test_open_shell_runs_in_project_directory(self, tmp_path):
+        called = {}
+
+        def fake_run(cmd, **kwargs):
+            called["cmd"] = cmd
+            called["cwd"] = kwargs["cwd"]
+            return SimpleNamespace(returncode=0)
+
+        with patch("generate_project._preferred_shell", return_value=["/bin/zsh"]):
+            with patch("subprocess.run", side_effect=fake_run):
+                assert open_shell_in_project(tmp_path) is True
+
+        assert called["cmd"] == ["/bin/zsh"]
+        assert called["cwd"] == tmp_path
+
+    def test_open_shell_returns_false_when_shell_missing(self, tmp_path):
+        with patch("generate_project._preferred_shell", return_value=None):
+            assert open_shell_in_project(tmp_path) is False
+
+
+class TestNextSteps:
+    def test_unix_instructions(self, tmp_path):
+        with patch.object(sys, "platform", "darwin"):
+            steps = _next_steps(tmp_path)
+        assert steps[0] == f"cd {tmp_path}"
+        assert steps[1] == "source .venv/bin/activate"
+
+    def test_windows_instructions(self, tmp_path):
+        with patch.object(sys, "platform", "win32"):
+            steps = _next_steps(tmp_path)
+        assert steps[0] == f"cd {tmp_path}"
+        assert steps[1] == r".venv\Scripts\activate"
 
 
 # ─── _render ──────────────────────────────────────────────────────────────────
@@ -213,6 +405,166 @@ class TestShouldSkipRender:
         assert _should_skip_render(".ia/docs/architecture/overview.md") is False
 
 
+# ─── init_git — identidade e checkout condicional ────────────────────────────
+
+class TestInitGit:
+    def _fake_run_ok(self, cmd, **kwargs):
+        from types import SimpleNamespace
+        return SimpleNamespace(returncode=0)
+
+    def test_commit_uses_identity_flags_when_no_global_config(self, tmp_path):
+        """Sem identidade global, o commit deve injetar -c user.name e -c user.email."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=False):
+                gp.init_git(tmp_path)
+
+        assert committed, "Nenhum commit foi chamado"
+        commit_cmd = committed[0]
+        assert "-c" in commit_cmd
+        assert any("user.name" in arg for arg in commit_cmd)
+        assert any("user.email" in arg for arg in commit_cmd)
+
+    def test_commit_without_identity_flags_when_global_config_exists(self, tmp_path):
+        """Com identidade global configurada, o commit não deve injetar -c."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert committed
+        commit_cmd = committed[0]
+        assert "-c" not in commit_cmd
+
+    def test_checkout_skipped_when_commit_fails(self, tmp_path):
+        """Se o commit falhar, git checkout -b desenvolvimento não deve ser executado."""
+        checkout_called = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "checkout" in cmd:
+                checkout_called.append(cmd)
+                return SimpleNamespace(returncode=0)
+            if isinstance(cmd, list) and "commit" in cmd:
+                return SimpleNamespace(returncode=1)  # commit falha
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert not checkout_called, "checkout não deveria ser chamado após commit falhar"
+
+    def test_checkout_runs_when_commit_succeeds(self, tmp_path):
+        """Se o commit tiver sucesso, git checkout -b desenvolvimento deve ser executado."""
+        checkout_called = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "checkout" in cmd:
+                checkout_called.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert checkout_called
+        assert "desenvolvimento" in checkout_called[0]
+
+    def test_commit_message_is_single_argument(self, tmp_path):
+        """A mensagem do commit deve ser passada como um único argumento (não splitada)."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        commit_cmd = committed[0]
+        # A mensagem "Primeiro Commit" deve ser um único elemento na lista
+        assert "Primeiro Commit" in commit_cmd
+
+
+# ─── build_default_apps — portabilidade do executável Python ─────────────────
+
+class TestBuildDefaultAppsExecutable:
+    def test_prefers_generated_project_venv_python(self, tmp_path):
+        """Se uv sync criou .venv, o build deve usar esse interpretador."""
+        import sys
+        from unittest.mock import patch
+
+        project_python = tmp_path / ".venv" / "bin" / "python"
+        project_python.parent.mkdir(parents=True)
+        project_python.write_text("", encoding="utf-8")
+
+        calls_made = []
+
+        def fake_run(cmd, **kwargs):
+            calls_made.append(cmd)
+            from types import SimpleNamespace
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            gp.build_default_apps(tmp_path)
+
+        for cmd in calls_made:
+            assert cmd[0] == str(project_python)
+            assert cmd[0] != sys.executable
+
+    def test_uses_sys_executable_not_hardcoded_python(self, tmp_path):
+        """Sem .venv local, manage.py build deve cair para sys.executable."""
+        import sys
+        from unittest.mock import patch
+        calls_made = []
+
+        def fake_run(cmd, **kwargs):
+            calls_made.append(cmd)
+            from types import SimpleNamespace
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            gp.build_default_apps(tmp_path)
+
+        for cmd in calls_made:
+            assert cmd[0] == sys.executable, (
+                f"Esperado sys.executable={sys.executable!r}, obtido {cmd[0]!r}. "
+                "O script não deve hardcodar 'python', 'python3' ou 'py'."
+            )
+
+    def test_executable_exists_on_current_platform(self):
+        """sys.executable aponta para um arquivo que realmente existe."""
+        import sys
+        assert Path(sys.executable).exists(), (
+            f"sys.executable={sys.executable!r} não existe — ambiente inválido"
+        )
+
+    def test_no_python_constant_in_module(self):
+        """A constante PYTHON não deve mais existir no módulo."""
+        assert not hasattr(gp, "PYTHON"), (
+            "Constante PYTHON encontrada — deve ser removida em favor de sys.executable"
+        )
+
+
 # ─── _generate_secret_key ─────────────────────────────────────────────────────
 
 class TestGenerateSecretKey:
@@ -229,6 +581,17 @@ class TestGenerateSecretKey:
         assert len(key) >= 60
 
 
+# ─── snippets django/api — consistência view x serializer ─────────────────────
+
+class TestDjangoApiSnippets:
+    def test_view_snippet_only_imports_existing_serializer(self):
+        view_snippet = (DJANGO_API_SNIPPETS / "view.txt").read_text(encoding="utf-8")
+        serializer_snippet = (DJANGO_API_SNIPPETS / "serializer.txt").read_text(encoding="utf-8")
+
+        assert "$ModelName$GETSerializer" not in view_snippet
+        assert "class $ModelName$Serializer" in serializer_snippet
+
+
 # ─── scaffold_project (integração) ────────────────────────────────────────────
 
 class TestScaffoldProject:
@@ -238,6 +601,7 @@ class TestScaffoldProject:
     def ctx(self):
         return {
             "project_name": "Meu Sistema",
+            "project_dir_name": "MeuSistema",
             "project_slug": "meu_sistema",
             "main_app": "meu_sistema",
             "client_name": "Prefeitura",
@@ -257,26 +621,26 @@ class TestScaffoldProject:
         }
 
     def test_generates_project_directory(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         assert dest.is_dir()
 
     def test_base_settings_rendered(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         settings = (dest / "base" / "settings.py").read_text()
         assert "Meu Sistema" in settings
         assert "cookiecutter" not in settings
 
     def test_env_example_rendered(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         env_example = (dest / ".env.example").read_text()
         assert "meu_sistema" in env_example
         assert "cookiecutter" not in env_example
 
     def test_core_copied_without_render(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         scaffold_project(ctx, dest)
         core_dir = dest / "core"
         assert core_dir.is_dir()
@@ -291,7 +655,7 @@ class TestScaffoldProject:
             )
 
     def test_fails_if_dest_exists(self, ctx, tmp_path):
-        dest = tmp_path / ctx["project_slug"]
+        dest = tmp_path / ctx["project_dir_name"]
         dest.mkdir()
         with pytest.raises(SystemExit):
             scaffold_project(ctx, dest)

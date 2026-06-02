@@ -63,7 +63,7 @@ def is_valid_cpf(value):
         return ""
     orig_value = value[:]
     if not value.isdigit():
-        value = re.sub("[-\.]", "", value)
+        value = re.sub(r"[-.]", "", value)
     try:
         int(value)
     except ValueError as e:

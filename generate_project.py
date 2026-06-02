@@ -9,6 +9,7 @@ import secrets
 import shutil
 import subprocess
 import sys
+import unicodedata
 from datetime import datetime
 from fnmatch import fnmatch
 from pathlib import Path
@@ -38,8 +39,6 @@ COPY_WITHOUT_RENDER: list[str] = [
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
-PYTHON = "py" if sys.platform.startswith("win") else "python"
-
 OK = "✅"
 ERR = "❌"
 WAIT = "⏳"
@@ -54,6 +53,13 @@ def _slugify(value: str) -> str:
     return value.strip("-")
 
 
+def _project_dir_name(value: str) -> str:
+    normalized = unicodedata.normalize("NFKD", value)
+    ascii_value = normalized.encode("ascii", "ignore").decode("ascii")
+    parts = re.findall(r"[A-Za-z0-9]+", ascii_value)
+    return "".join(part[:1].upper() + part[1:] for part in parts) or "ProjetoBase"
+
+
 def _build_context(args: argparse.Namespace) -> dict[str, Any]:
     """Coleta interativa de inputs com defaults do argparse."""
 
@@ -62,9 +68,17 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
         value = input(f"  {prompt}{display}: ").strip()
         return value or default
 
+    def ask_bool(prompt: str, default: bool = True) -> bool:
+        hint = "S/n" if default else "s/N"
+        if not sys.stdin.isatty():
+            return default
+        answer = input(f"  {prompt} [{hint}]: ").strip().lower()
+        return default if not answer else answer in ("s", "sim", "y", "yes")
+
     print("\n── AgtecCore — Novo Projeto ─────────────────────────────────")
 
     project_name = args.project_name or ask("Nome do projeto", "Projeto Base")
+    project_dir_name = _project_dir_name(project_name)
     project_slug = _slugify(project_name).replace("-", "_")
 
     client_name = args.client_name or ask("Nome do cliente", "Nome do Cliente")
@@ -76,10 +90,16 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
     docker_port = args.docker_port or ask("Porta Docker", "8000")
     postgre_port = args.postgre_port or ask("Porta PostgreSQL", "5432")
 
+    print()
+    install_requirements = False if args.no_install else ask_bool("Instalar dependências?")
+    build_apps = False if (args.no_build_apps or not install_requirements) else ask_bool("Construir apps padrões?")
+    git_init = False if args.no_git else ask_bool("Inicializar git?")
+
     flutter_org_domain = ".".join(reversed(domain_name.split(".")))
 
     return {
         "project_name": project_name,
+        "project_dir_name": project_dir_name,
         "project_slug": project_slug,
         "main_app": project_slug,
         "client_name": client_name,
@@ -96,6 +116,9 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
         "python_version": "3.12.*",
         "postgresql_version": "14.2",
         "drf_version": "3.16.1",
+        "install_requirements": install_requirements,
+        "build_apps": build_apps,
+        "git_init": git_init,
     }
 
 
@@ -226,26 +249,115 @@ def install_dependencies(dest: Path) -> bool:
     return ok
 
 
+def _project_python(dest: Path) -> Path:
+    candidates = [
+        dest / ".venv" / "bin" / "python",
+        dest / ".venv" / "Scripts" / "python.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return Path(sys.executable)
+
+
+def _ask_bool(prompt: str, default: bool = True) -> bool:
+    hint = "S/n" if default else "s/N"
+    if not sys.stdin.isatty():
+        return default
+    answer = input(f"\n  {prompt} [{hint}]: ").strip().lower()
+    return default if not answer else answer in ("s", "sim", "y", "yes")
+
+
+def _preferred_shell() -> list[str] | None:
+    if sys.platform.startswith("win"):
+        comspec = os.environ.get("COMSPEC")
+        return [comspec] if comspec else None
+
+    shell = os.environ.get("SHELL")
+    return [shell] if shell else None
+
+
+def open_shell_in_project(dest: Path) -> bool:
+    shell_cmd = _preferred_shell()
+    if not shell_cmd:
+        print(f"  {ERR} Shell do sistema não encontrado — entre manualmente com: cd {dest}")
+        return False
+
+    print(f"  {WAIT} Abrindo shell em: {dest}")
+    try:
+        result = subprocess.run(shell_cmd, cwd=dest)
+        return result.returncode == 0
+    except Exception as exc:
+        print(f"  {ERR} Não foi possível abrir shell: {exc}")
+        return False
+
+
+def _next_steps(dest: Path) -> list[str]:
+    activate_cmd = (
+        r".venv\Scripts\activate"
+        if sys.platform.startswith("win")
+        else "source .venv/bin/activate"
+    )
+    return [
+        f"cd {dest}",
+        activate_cmd,
+        "Ajuste o .env com as credenciais do banco",
+        "python manage.py migrate",
+    ]
+
+
 def build_default_apps(dest: Path) -> None:
+    python_cmd = str(_project_python(dest))
     for app in DEFAULT_APPS:
         print(f"  {WAIT} Construindo app: {app}")
-        ok = _run([PYTHON, "manage.py", "build", app, "--all"], cwd=dest)
+        ok = _run([python_cmd, "manage.py", "build", app, "--all"], cwd=dest)
         if not ok:
             print(f"  {ERR} Falha ao construir {app} — execute manualmente")
 
 
+def _git_has_identity() -> bool:
+    """Verifica se user.name está configurado no git (global ou sistema)."""
+    try:
+        result = subprocess.run(
+            ["git", "config", "--global", "user.name"],
+            capture_output=True,
+            text=True,
+        )
+        return bool(result.stdout.strip())
+    except Exception:
+        return False
+
+
 def init_git(dest: Path) -> None:
     print(f"  {WAIT} Inicializando git...")
-    cmds = [
-        "git init --initial-branch=master",
-        "git add .",
-        'git commit -am "Primeiro Commit"',
-        "git checkout -b desenvolvimento",
+
+    commit_cmd = ["git", "commit", "-am", "Primeiro Commit"]
+    if not _git_has_identity():
+        commit_cmd = [
+            "git",
+            "-c", "user.name=AgtecCore Generator",
+            "-c", "user.email=agtec@palmas.to.gov.br",
+            "commit", "-am", "Primeiro Commit",
+        ]
+
+    setup_cmds: list[list[str]] = [
+        ["git", "init", "--initial-branch=master"],
+        ["git", "add", "."],
+        commit_cmd,
     ]
-    for cmd in cmds:
+
+    commit_ok = True
+    for cmd in setup_cmds:
         ok = _run(cmd, cwd=dest, silent=True)
-        status = OK if ok else ERR
-        print(f"  {status} {cmd}")
+        print(f"  {OK if ok else ERR} {' '.join(cmd)}")
+        if not ok and "commit" in cmd:
+            commit_ok = False
+
+    if commit_ok:
+        ok = _run(["git", "checkout", "-b", "desenvolvimento"], cwd=dest, silent=True)
+        print(f"  {OK if ok else ERR} git checkout -b desenvolvimento")
+    else:
+        print(f"  {ERR} git checkout -b desenvolvimento — ignorado (commit falhou)")
 
 
 # ─── CLI ──────────────────────────────────────────────────────────────────────
@@ -280,11 +392,13 @@ def main() -> None:
     ctx = _build_context(args)
 
     project_slug = ctx["project_slug"]
+    project_dir_name = ctx["project_dir_name"]
     dest_base = Path(__file__).parent.parent
-    dest = dest_base / project_slug
+    dest = dest_base / project_dir_name
 
     print(f"\n  Projeto : {ctx['project_name']}")
     print(f"  Slug    : {project_slug}")
+    print(f"  Pasta   : {project_dir_name}")
     print(f"  Destino : {dest}")
     confirm = input("\n  Confirmar geração? [S/n]: ").strip().lower()
     if confirm and confirm not in ("s", "sim", "y", "yes"):
@@ -297,24 +411,26 @@ def main() -> None:
     print(f"\n── Pós-geração ──────────────────────────────────────────────")
     setup_env_file(dest)
 
-    if not args.no_install:
+    if ctx["install_requirements"]:
         deps_ok = install_dependencies(dest)
-        if deps_ok and not args.no_build_apps:
+        if deps_ok and ctx["build_apps"]:
             build_default_apps(dest)
     else:
-        print(f"  ⏭  Instalação de dependências ignorada (--no-install)")
+        print(f"  ⏭  Instalação de dependências ignorada")
 
-    if not args.no_git:
+    if ctx["git_init"]:
         init_git(dest)
     else:
-        print(f"  ⏭  Git ignorado (--no-git)")
+        print(f"  ⏭  Git ignorado")
 
-    print(f"\n{OK} Projeto '{project_slug}' gerado em: {dest}")
+    print(f"\n{OK} Projeto '{project_dir_name}' gerado em: {dest}")
     print(f"   Próximos passos:")
-    print(f"   1. cd {dest}")
-    print(f"   2. source .venv/bin/activate")
-    print(f"   3. Ajuste o .env com as credenciais do banco")
-    print(f"   4. python manage.py migrate\n")
+    for index, step in enumerate(_next_steps(dest), start=1):
+        print(f"   {index}. {step}")
+    print()
+
+    if _ask_bool("Deseja abrir um novo shell no diretório do projeto?", default=False):
+        open_shell_in_project(dest)
 
 
 if __name__ == "__main__":

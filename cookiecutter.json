@@ -1,5 +1,6 @@
 {
   "project_name": "Projeto Base",
+  "project_dir_name": "{{ cookiecutter.project_name|replace(' ', '_')|slugify|replace('-', ' ')|title|replace(' ', '') }}",
   "project_slug": "{{ cookiecutter.project_name|slugify|replace('-', '_') }}",
   "main_app": "{{ cookiecutter.project_name|slugify|replace('-', '_') }}",
   "client_name": "Nome do Cliente",
