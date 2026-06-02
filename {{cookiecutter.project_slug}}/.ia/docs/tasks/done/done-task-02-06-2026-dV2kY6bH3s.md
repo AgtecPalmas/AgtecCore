@@ -3,7 +3,7 @@
 ## 1. Metadados
 
 - ID da task: `task-02-06-2026-dV2kY6bH3s`
-- Status da task: `planned`
+- Status da task: `done`
 - Prioridade: `high`
 - Tipo: `bugfix`
 - Modulo/area: `tooling / generate_project.py`
@@ -95,23 +95,23 @@ Garantir que `git commit` funcione em ambientes sem identidade global configurad
 
 ## 10. Controle de implementacao
 
-- Branch base da implementacao: `dev`
-- Branch de implementacao: `não iniciada`
+- Branch base da implementacao: `task-02-06-2026-xL4jN7cW0p`
+- Branch de implementacao: `task-02-06-2026-dV2kY6bH3s`
 - Skills usadas: `workflow-demandas`
 - Arquivos previstos:
   - `generate_project.py`
   - `tests/test_generate_project.py`
-- Status de aprovacao: `pending_approval`
-- Execucao de testes: `nao_executada`
+- Status de aprovacao: `approved`
+- Execucao de testes: `executada`
 - Comandos executados:
-  - `não se aplica`
+  - `rtk python3 -m pytest tests/test_generate_project.py -q`
 
 ## 11. Evidencias
 
 - Resultado de testes:
-  - `nao executados — task em estado planned`
+  - `61 passed, 0 failed`
 - Logs, screenshots ou observacoes:
-  - Erro reproduzido em teste real: `git commit -am "Primeiro Commit"` ❌ seguido de `git checkout -b desenvolvimento` ✅ (estado inconsistente)
+  - 5 novos testes em TestInitGit cobrindo: injeção de -c, commit sem flags quando identidade existe, checkout condicional ao commit, mensagem como argumento único
 
 ## 12. Definition of Done
 
@@ -130,12 +130,15 @@ Garantir que `git commit` funcione em ambientes sem identidade global configurad
 
 ## Descricao da solucao implementada
 
-Preencher ao concluir a demanda.
+Criada função `_git_has_identity()` que consulta `git config --global user.name` — sem efeito colateral no config do usuário. Em `init_git()`, se a identidade estiver ausente, o comando de commit é montado com `-c user.name=AgtecCore Generator -c user.email=agtec@palmas.to.gov.br` (flags pontuais, não alteram o `.gitconfig` global). O `git checkout -b desenvolvimento` passou a ser condicional: só executa se o commit retornar sucesso, evitando estado inconsistente de repositório sem commits. Corrigido também bug latente: a mensagem "Primeiro Commit" agora é passada como elemento único na lista de argumentos (não sofre `.split()` que quebrava em dois tokens).
 
 ## Trade-offs
 
-Preencher ao concluir a demanda.
+- **`-c` pontual vs `git config --local`**: `-c` é mais limpo — não deixa rastro no `.git/config` do projeto gerado nem no `.gitconfig` global do usuário.
+- **`--global` na detecção**: verificar só o global evita falso positivo de uma config local herdada de outro repo; o projeto recém-criado não tem config local ainda.
+- **Identidade fixa vs solicitada ao usuário**: optado por identidade mínima automática para não interromper o fluxo; o usuário pode alterar depois com `git config user.name`.
 
 ## Arquivos alterados
 
-- Preencher ao concluir a demanda.
+- `generate_project.py` — nova função `_git_has_identity()`; `init_git()` refatorada com commit condicional à identidade, checkout condicional ao commit e mensagem como argumento único
+- `tests/test_generate_project.py` — 5 novos testes em `TestInitGit`

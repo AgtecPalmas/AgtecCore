@@ -302,6 +302,106 @@ class TestShouldSkipRender:
         assert _should_skip_render(".ia/docs/architecture/overview.md") is False
 
 
+# ─── init_git — identidade e checkout condicional ────────────────────────────
+
+class TestInitGit:
+    def _fake_run_ok(self, cmd, **kwargs):
+        from types import SimpleNamespace
+        return SimpleNamespace(returncode=0)
+
+    def test_commit_uses_identity_flags_when_no_global_config(self, tmp_path):
+        """Sem identidade global, o commit deve injetar -c user.name e -c user.email."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=False):
+                gp.init_git(tmp_path)
+
+        assert committed, "Nenhum commit foi chamado"
+        commit_cmd = committed[0]
+        assert "-c" in commit_cmd
+        assert any("user.name" in arg for arg in commit_cmd)
+        assert any("user.email" in arg for arg in commit_cmd)
+
+    def test_commit_without_identity_flags_when_global_config_exists(self, tmp_path):
+        """Com identidade global configurada, o commit não deve injetar -c."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert committed
+        commit_cmd = committed[0]
+        assert "-c" not in commit_cmd
+
+    def test_checkout_skipped_when_commit_fails(self, tmp_path):
+        """Se o commit falhar, git checkout -b desenvolvimento não deve ser executado."""
+        checkout_called = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "checkout" in cmd:
+                checkout_called.append(cmd)
+                return SimpleNamespace(returncode=0)
+            if isinstance(cmd, list) and "commit" in cmd:
+                return SimpleNamespace(returncode=1)  # commit falha
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert not checkout_called, "checkout não deveria ser chamado após commit falhar"
+
+    def test_checkout_runs_when_commit_succeeds(self, tmp_path):
+        """Se o commit tiver sucesso, git checkout -b desenvolvimento deve ser executado."""
+        checkout_called = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "checkout" in cmd:
+                checkout_called.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        assert checkout_called
+        assert "desenvolvimento" in checkout_called[0]
+
+    def test_commit_message_is_single_argument(self, tmp_path):
+        """A mensagem do commit deve ser passada como um único argumento (não splitada)."""
+        committed = []
+
+        def fake_run(cmd, **kwargs):
+            from types import SimpleNamespace
+            if isinstance(cmd, list) and "commit" in cmd:
+                committed.append(cmd)
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            with patch.object(gp, "_git_has_identity", return_value=True):
+                gp.init_git(tmp_path)
+
+        commit_cmd = committed[0]
+        # A mensagem "Primeiro Commit" deve ser um único elemento na lista
+        assert "Primeiro Commit" in commit_cmd
+
+
 # ─── build_default_apps — portabilidade do executável Python ─────────────────
 
 class TestBuildDefaultAppsExecutable:
