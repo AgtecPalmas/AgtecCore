@@ -39,18 +39,15 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 
 O script `generate_project.py` substitui o CookieCutter e não requer dependência externa além do ambiente virtual do AgtecCore.
 
-**Pré-requisitos:** clone do AgtecCore com `uv` disponível no PATH.
+**Pré-requisitos:** `uv` disponível no PATH.
 
 ```bash
-# 1. Clone o AgtecCore e ative o ambiente virtual
+# 1. Clone o AgtecCore
 git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
 cd AgtecCore
-uv sync
-source .venv/bin/activate   # Linux/macOS
-# ou: .venv\Scripts\activate  (Windows)
 
 # 2. Execute o gerador (modo interativo)
-python generate_project.py
+uv run generate_project.py
 
 # 3. O projeto será criado em ../nome_do_projeto/
 ```
@@ -58,7 +55,7 @@ python generate_project.py
 **Passando argumentos diretamente (modo não-interativo):**
 
 ```bash
-python generate_project.py \
+uv run generate_project.py \
   --project-name "Meu Sistema" \
   --client-name "Prefeitura" \
   --author-name "Dev" \

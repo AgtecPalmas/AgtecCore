@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["jinja2"]
+# ///
 """AgtecCore project generator — substitui o CookieCutter."""
 from __future__ import annotations
 
@@ -260,6 +264,28 @@ def _project_python(dest: Path) -> Path:
     return Path(sys.executable)
 
 
+def _project_ruff(dest: Path) -> list[str]:
+    candidates = [
+        dest / ".venv" / "bin" / "ruff",
+        dest / ".venv" / "Scripts" / "ruff.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return [str(candidate)]
+    return ["uvx", "ruff"]
+
+
+def format_project(dest: Path) -> None:
+    print(f"  {WAIT} Formatando código gerado com ruff...")
+    ruff = _project_ruff(dest)
+    ok1 = _run([*ruff, "check", "--fix", str(dest)], cwd=dest, silent=True)
+    ok2 = _run([*ruff, "format", str(dest)], cwd=dest, silent=True)
+    if ok1 and ok2:
+        print(f"  {OK} Código formatado")
+    else:
+        print(f"  {ERR} Falha na formatação — execute manualmente: ruff format .")
+
+
 def _ask_bool(prompt: str, default: bool = True) -> bool:
     hint = "S/n" if default else "s/N"
     if not sys.stdin.isatty():
@@ -413,8 +439,10 @@ def main() -> None:
 
     if ctx["install_requirements"]:
         deps_ok = install_dependencies(dest)
-        if deps_ok and ctx["build_apps"]:
-            build_default_apps(dest)
+        if deps_ok:
+            format_project(dest)
+            if ctx["build_apps"]:
+                build_default_apps(dest)
     else:
         print(f"  ⏭  Instalação de dependências ignorada")
 
