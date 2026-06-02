@@ -62,6 +62,13 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
         value = input(f"  {prompt}{display}: ").strip()
         return value or default
 
+    def ask_bool(prompt: str, default: bool = True) -> bool:
+        hint = "S/n" if default else "s/N"
+        if not sys.stdin.isatty():
+            return default
+        answer = input(f"  {prompt} [{hint}]: ").strip().lower()
+        return default if not answer else answer in ("s", "sim", "y", "yes")
+
     print("\n── AgtecCore — Novo Projeto ─────────────────────────────────")
 
     project_name = args.project_name or ask("Nome do projeto", "Projeto Base")
@@ -75,6 +82,11 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
     flutter_org = args.flutter_org or ask("Flutter organization name", "Agtec")
     docker_port = args.docker_port or ask("Porta Docker", "8000")
     postgre_port = args.postgre_port or ask("Porta PostgreSQL", "5432")
+
+    print()
+    install_requirements = False if args.no_install else ask_bool("Instalar dependências?")
+    build_apps = False if (args.no_build_apps or not install_requirements) else ask_bool("Construir apps padrões?")
+    git_init = False if args.no_git else ask_bool("Inicializar git?")
 
     flutter_org_domain = ".".join(reversed(domain_name.split(".")))
 
@@ -96,6 +108,9 @@ def _build_context(args: argparse.Namespace) -> dict[str, Any]:
         "python_version": "3.12.*",
         "postgresql_version": "14.2",
         "drf_version": "3.16.1",
+        "install_requirements": install_requirements,
+        "build_apps": build_apps,
+        "git_init": git_init,
     }
 
 
@@ -297,17 +312,17 @@ def main() -> None:
     print(f"\n── Pós-geração ──────────────────────────────────────────────")
     setup_env_file(dest)
 
-    if not args.no_install:
+    if ctx["install_requirements"]:
         deps_ok = install_dependencies(dest)
-        if deps_ok and not args.no_build_apps:
+        if deps_ok and ctx["build_apps"]:
             build_default_apps(dest)
     else:
-        print(f"  ⏭  Instalação de dependências ignorada (--no-install)")
+        print(f"  ⏭  Instalação de dependências ignorada")
 
-    if not args.no_git:
+    if ctx["git_init"]:
         init_git(dest)
     else:
-        print(f"  ⏭  Git ignorado (--no-git)")
+        print(f"  ⏭  Git ignorado")
 
     print(f"\n{OK} Projeto '{project_slug}' gerado em: {dest}")
     print(f"   Próximos passos:")
