@@ -38,8 +38,6 @@ COPY_WITHOUT_RENDER: list[str] = [
 
 DEFAULT_APPS = ["usuario", "configuracao_core"]
 
-PYTHON = "py" if sys.platform.startswith("win") else "python"
-
 OK = "✅"
 ERR = "❌"
 WAIT = "⏳"
@@ -244,7 +242,7 @@ def install_dependencies(dest: Path) -> bool:
 def build_default_apps(dest: Path) -> None:
     for app in DEFAULT_APPS:
         print(f"  {WAIT} Construindo app: {app}")
-        ok = _run([PYTHON, "manage.py", "build", app, "--all"], cwd=dest)
+        ok = _run([sys.executable, "manage.py", "build", app, "--all"], cwd=dest)
         if not ok:
             print(f"  {ERR} Falha ao construir {app} — execute manualmente")
 

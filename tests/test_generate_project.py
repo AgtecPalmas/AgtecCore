@@ -302,6 +302,43 @@ class TestShouldSkipRender:
         assert _should_skip_render(".ia/docs/architecture/overview.md") is False
 
 
+# ─── build_default_apps — portabilidade do executável Python ─────────────────
+
+class TestBuildDefaultAppsExecutable:
+    def test_uses_sys_executable_not_hardcoded_python(self, tmp_path):
+        """manage.py build deve usar sys.executable, funcionando em qualquer SO."""
+        import sys
+        from unittest.mock import call, patch
+        calls_made = []
+
+        def fake_run(cmd, **kwargs):
+            calls_made.append(cmd)
+            from types import SimpleNamespace
+            return SimpleNamespace(returncode=0)
+
+        with patch("subprocess.run", side_effect=fake_run):
+            gp.build_default_apps(tmp_path)
+
+        for cmd in calls_made:
+            assert cmd[0] == sys.executable, (
+                f"Esperado sys.executable={sys.executable!r}, obtido {cmd[0]!r}. "
+                "O script não deve hardcodar 'python', 'python3' ou 'py'."
+            )
+
+    def test_executable_exists_on_current_platform(self):
+        """sys.executable aponta para um arquivo que realmente existe."""
+        import sys
+        assert Path(sys.executable).exists(), (
+            f"sys.executable={sys.executable!r} não existe — ambiente inválido"
+        )
+
+    def test_no_python_constant_in_module(self):
+        """A constante PYTHON não deve mais existir no módulo."""
+        assert not hasattr(gp, "PYTHON"), (
+            "Constante PYTHON encontrada — deve ser removida em favor de sys.executable"
+        )
+
+
 # ─── _generate_secret_key ─────────────────────────────────────────────────────
 
 class TestGenerateSecretKey:
