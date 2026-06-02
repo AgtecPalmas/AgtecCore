@@ -96,6 +96,9 @@ class TestBuildContext:
             flutter_org="Agtec",
             docker_port="8000",
             postgre_port="5432",
+            no_install=False,
+            no_git=False,
+            no_build_apps=False,
         )
         defaults.update(kwargs)
         return SimpleNamespace(**defaults)
@@ -124,6 +127,92 @@ class TestBuildContext:
         assert ctx["python_version"] == "3.12.*"
         assert ctx["postgresql_version"] == "14.2"
         assert ctx["drf_version"] == "3.16.1"
+
+
+# ─── prompts booleanos (install / build_apps / git) ──────────────────────────
+
+class TestBoolPrompts:
+    """Testa os prompts interativos de install, build_apps e git_init."""
+
+    def _make_args(self, **kwargs) -> SimpleNamespace:
+        defaults = dict(
+            project_name="Proj",
+            client_name="C",
+            description="D",
+            author_name="A",
+            domain_name="test.com",
+            email="a@test.com",
+            flutter_org="Org",
+            docker_port="8000",
+            postgre_port="5432",
+            no_install=False,
+            no_git=False,
+            no_build_apps=False,
+        )
+        defaults.update(kwargs)
+        return SimpleNamespace(**defaults)
+
+    def test_no_install_flag_skips_install(self):
+        ctx = _build_context(self._make_args(no_install=True))
+        assert ctx["install_requirements"] is False
+
+    def test_no_install_forces_build_apps_false(self):
+        """build_apps nunca pode ser True se install_requirements é False."""
+        ctx = _build_context(self._make_args(no_install=True))
+        assert ctx["build_apps"] is False
+
+    def test_no_git_flag_skips_git(self):
+        ctx = _build_context(self._make_args(no_git=True))
+        assert ctx["git_init"] is False
+
+    def test_no_build_apps_flag_skips_build(self):
+        ctx = _build_context(self._make_args(no_build_apps=True))
+        assert ctx["build_apps"] is False
+
+    def test_interactive_defaults_true_in_non_tty(self):
+        """Em ambiente não-interativo (pytest), ask_bool retorna default=True."""
+        ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is True
+        assert ctx["git_init"] is True
+
+    def test_interactive_prompt_yes_answer(self):
+        with patch("builtins.input", side_effect=["s", "s", "s"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is True
+        assert ctx["git_init"] is True
+
+    def test_interactive_prompt_no_answer(self):
+        with patch("builtins.input", side_effect=["n", "n"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is False
+        # build_apps não é perguntado quando install=False
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is False
+
+    def test_interactive_install_yes_build_no(self):
+        with patch("builtins.input", side_effect=["s", "n", "s"]):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args())
+        assert ctx["install_requirements"] is True
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is True
+
+    def test_flag_overrides_skip_prompt(self):
+        """Com flag --no-install, input() não deve ser chamado para install."""
+        with patch("builtins.input", side_effect=Exception("input não deveria ser chamado")):
+            with patch("sys.stdin") as mock_stdin:
+                mock_stdin.isatty.return_value = True
+                ctx = _build_context(self._make_args(no_install=True, no_git=True, no_build_apps=True))
+        assert ctx["install_requirements"] is False
+        assert ctx["build_apps"] is False
+        assert ctx["git_init"] is False
 
 
 # ─── _render ──────────────────────────────────────────────────────────────────
