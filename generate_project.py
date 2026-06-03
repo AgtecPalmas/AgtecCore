@@ -27,7 +27,7 @@ except ImportError:
 
 # ─── Constantes ───────────────────────────────────────────────────────────────
 
-TEMPLATE_DIR = Path(__file__).parent / "{{cookiecutter.project_slug}}"
+TEMPLATE_DIR = Path(__file__).parent / "blueprint"
 
 COPY_WITHOUT_RENDER: list[str] = [
     "core/**",

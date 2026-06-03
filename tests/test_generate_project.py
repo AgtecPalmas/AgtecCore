@@ -1,7 +1,6 @@
 """Testes para generate_project.py"""
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -32,11 +31,9 @@ from generate_project import (
 
 DJANGO_API_SNIPPETS = (
     ROOT
-    / "{{cookiecutter.project_slug}}"
+    / "blueprint"
     / "core/management/commands/snippets/django/api"
 )
-COOKIECUTTER_JSON = ROOT / "cookiecutter.json"
-POST_GEN_HOOK = ROOT / "hooks/post_gen_project.py"
 
 
 # ─── dest_base — mesmo nível que AgtecCore ───────────────────────────────────
@@ -52,7 +49,7 @@ class TestDestBase:
     def test_script_parent_is_agteccore_root(self):
         script_path = Path(gp.__file__)
         assert script_path.name == "generate_project.py"
-        assert (script_path.parent / "{{cookiecutter.project_slug}}").exists()
+        assert (script_path.parent / "blueprint").exists()
 
     def test_dest_base_resolves_to_sibling_dir(self):
         script_path = Path(gp.__file__)
@@ -106,20 +103,6 @@ class TestProjectDirName:
 
     def test_removes_symbols(self):
         assert _project_dir_name("Projeto #1!") == "Projeto1"
-
-
-class TestCookiecutterJson:
-    def test_contains_project_dir_name_field(self):
-        data = json.loads(COOKIECUTTER_JSON.read_text(encoding="utf-8"))
-        assert "project_dir_name" in data
-        assert "title|replace(' ', '')" in data["project_dir_name"]
-
-
-class TestLegacyCookiecutterHook:
-    def test_uses_project_dir_name_as_target_directory(self):
-        hook_content = POST_GEN_HOOK.read_text(encoding="utf-8")
-        assert 'PROJECT_DIR_NAME = "{{ cookiecutter.project_dir_name }}"' in hook_content
-        assert "PROJECT_DIRECTORY = SOURCE_DIRECTORY.parent / PROJECT_DIR_NAME" in hook_content
 
 
 # ─── _build_context ───────────────────────────────────────────────────────────
