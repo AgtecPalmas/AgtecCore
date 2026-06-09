@@ -283,9 +283,6 @@ Inicialize na raiz do projeto gerado:
 cd /caminho/do/projeto
 opencode
 ```
-
-Execute `/init` para que o agente registre o `AGENTS.md` como contexto ativo.
-
 > Documentação: https://opencode.ai/docs
 
 ---
@@ -334,17 +331,25 @@ OBSIDIAN_DEV_VAULT="CAMINHO_PARA_SEU_VAULT/DevBrain"
 
 Use as skills `obsidian-sync` e `obsidian-query` para exportar e consultar contexto do repositório.
 
+Invocando a skill `obsidian-sync` regularmente, o agente manterá um histórico de mudanças, decisões e aprendizados do projeto, criando uma "memória" que pode ser consultada para informar decisões futuras.
+
+Como executar? No terminal com o OpenCode aberto, basta digitar:
+
+> Atualize o projeto no Obsidian 
+
+Para consultar das memórias do projeto no Obsidian, use a skill `obsidian-query`:
+
+Como executar? No terminal com o OpenCode aberto, basta digitar:
+
+> Consulte o histórico de decisões do projeto
+
 ---
 
 **5. Onboarding inicial do projeto gerado**
 
-Executando a primeira skill para analisar o projeto gerado
+Executando a primeira skill para analisar o projeto gerado. No terminal, com o OpenCode aberto escreva algo como: 
 
-```
-No terminal, com o OpenCode aberto escreva algo como: 
-
-Faça o checklist incial do projeto Django gerado.
-```
+> Faça o checklist inicial do projeto Django gerado.
 
 O agente verificará `INSTALLED_APPS`, `AUTH_USER_MODEL`, migrations e variáveis de ambiente antes de qualquer demanda.
 
