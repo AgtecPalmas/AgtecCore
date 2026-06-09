@@ -232,7 +232,7 @@ sqlalchemy==2.0.48
     # via
     #   projetofastapi (pyproject.toml)
     #   alembic
-starlette==1.0.0
+starlette==1.0.1
     # via fastapi
 taskipy==1.14.1
     # via projetofastapi (pyproject.toml:dev)

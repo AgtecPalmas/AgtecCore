@@ -180,7 +180,7 @@ sqlalchemy==2.0.30
     # via
     #   projetofastapi (pyproject.toml)
     #   alembic
-starlette==1.0.0
+starlette==1.0.1
     # via fastapi
 typer==0.23.1
     # via
