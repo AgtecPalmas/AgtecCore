@@ -340,7 +340,9 @@ Use as skills `obsidian-sync` e `obsidian-query` para exportar e consultar conte
 Executando a primeira skill para analisar o projeto gerado
 
 ```
-No terminal, com o OpenCode aberto escreva algo como: Faça o checklist incial do projeto Django gerado.
+No terminal, com o OpenCode aberto escreva algo como: 
+
+Faça o checklist incial do projeto Django gerado.
 ```
 
 O agente verificará `INSTALLED_APPS`, `AUTH_USER_MODEL`, migrations e variáveis de ambiente antes de qualquer demanda.
