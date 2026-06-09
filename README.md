@@ -29,7 +29,7 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 - Clone este projeto
 
 ```
-  git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
+  git clone git@git.palmas.to.gov.br:dti-desenvolvimento/agteccore.git
 ```
 
 
