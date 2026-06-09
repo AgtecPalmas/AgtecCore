@@ -446,7 +446,7 @@ uritemplate==4.2.0
     # via
     #   agteccore (pyproject.toml:dev)
     #   drf-spectacular
-urllib3==2.6.3
+urllib3==2.7.0
     # via
     #   agteccore (pyproject.toml:dev)
     #   elastic-apm
