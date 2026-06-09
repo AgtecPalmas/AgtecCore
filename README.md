@@ -38,8 +38,7 @@ O script `generate_project.py` é o único gerador de projetos do AgtecCore e n�
 **Pré-requisito:** `uv` disponível no PATH.
 
 ```bash
-# 1. Clone o AgtecCore
-git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
+# 1. Acesse o diretorio do AgtecCore
 cd AgtecCore
 
 # 2. Execute o gerador (modo interativo)
