@@ -337,8 +337,10 @@ Use as skills `obsidian-sync` e `obsidian-query` para exportar e consultar conte
 
 **5. Onboarding inicial do projeto gerado**
 
+Executando a primeira skill para analisar o projeto gerado
+
 ```
-Execute a skill django-onboarding-checklist para validar o projeto gerado.
+No terminal, com o OpenCode aberto escreva algo como: Faça o checklist incial do projeto Django gerado.
 ```
 
 O agente verificará `INSTALLED_APPS`, `AUTH_USER_MODEL`, migrations e variáveis de ambiente antes de qualquer demanda.
