@@ -36,7 +36,7 @@ class Command(BaseCommand):
 
         self.path_base: Path = Path(f"{self.path_root}/base")
         self.path_base_urls: Path = Path(f"{self.path_base}/urls.py")
-        self.path_base_api_urls: Path = Path(f"{self.path_base}/api_urls.py")
+        self.path_base_api_urls: Path = Path(f"{self.path_base}/urls_api.py")
 
         self.app: str = None
         self.app_lower: str = None

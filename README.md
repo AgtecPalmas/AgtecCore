@@ -9,8 +9,6 @@
 - [Tabela de conteúdos](#tabela-de-conteúdos)
 - [Descrição e contexto](#descrição-e-contexto)
 - [Gerando um novo projeto](#gerando-um-novo-projeto)
-  - [Opção 1 — generate\_project.py (recomendado)](#opção-1--generate_projectpy-recomendado)
-  - [Opção 2 — CookieCutter (legado)](#opção-2--cookiecutter-legado)
 - [Executando o projeto com o UV (Astral)](#executando-o-projeto-com-o-uv-astral)
 - [Taskpy](#taskpy)
 - [Dependências](#dependências)
@@ -35,22 +33,17 @@ Esse projeto foi desenvolvimento para facilitar o desenvolvimento de sistemas Dj
 
 ## Gerando um novo projeto
 
-### Opção 1 — generate\_project.py (recomendado)
+O script `generate_project.py` é o único gerador de projetos do AgtecCore e não requer dependência externa além do `uv`.
 
-O script `generate_project.py` substitui o CookieCutter e não requer dependência externa além do ambiente virtual do AgtecCore.
-
-**Pré-requisitos:** clone do AgtecCore com `uv` disponível no PATH.
+**Pré-requisito:** `uv` disponível no PATH.
 
 ```bash
-# 1. Clone o AgtecCore e ative o ambiente virtual
+# 1. Clone o AgtecCore
 git clone https://git.palmas.to.gov.br/dti-desenvolvimento/agteccore
 cd AgtecCore
-uv sync
-source .venv/bin/activate   # Linux/macOS
-# ou: .venv\Scripts\activate  (Windows)
 
 # 2. Execute o gerador (modo interativo)
-python generate_project.py
+uv run generate_project.py
 
 # 3. O projeto será criado em ../nome_do_projeto/
 ```
@@ -58,7 +51,7 @@ python generate_project.py
 **Passando argumentos diretamente (modo não-interativo):**
 
 ```bash
-python generate_project.py \
+uv run generate_project.py \
   --project-name "Meu Sistema" \
   --client-name "Prefeitura" \
   --author-name "Dev" \
@@ -89,12 +82,6 @@ python manage.py migrate
 python mock_superuser.py
 python manage.py runserver
 ```
-
----
-
-### Opção 2 — CookieCutter (legado)
-
-O CookieCutter permanece disponível para compatibilidade. Veja a seção abaixo.
 
 ---
 
@@ -148,29 +135,13 @@ Para executar o projeto com o UV, siga os passos abaixo:
 ```
   cd <nome_do_seu_projeto>
 ```
- 
-- Inicie o projeto com o Cookiecutter apontando para o Clone do Agtec Core
+
+- Execute o gerador de projetos
 
 ```
-  cookiecutter <caminho_para_o_clone>/AgtecCore
+  uv run generate_project.py
 ```
 
-- Siga os passos informados no terminal
-  
-  <img src="./images/cookiecutter.png">
-
-
-- Nesse momento pode continuar por aqui, porem caso queira é mais pratico abrir o projeto criado. 
-
-
-- Ative o venv do projeto
-```
-  .venv\Scripts\activate
-```
-- Atualize o venv
-```
-  uv sync --all-groups --active
-```
 ---
 
 - Configure seu arquivo .env com as informações do seu banco de dados
@@ -200,7 +171,7 @@ Para executar o projeto com o UV, siga os passos abaixo:
 
 ---
 
-- Caso o processo do Cookiecutter não tenha sido concluído corretamente, execute os comandos abaixo para instalar as dependências do projeto
+- Caso a geração não tenha sido concluída corretamente, execute os comandos abaixo para instalar as dependências do projeto
 
 - Ative o venv
 ```
@@ -290,7 +261,7 @@ Consulte `.ia/README.md` no projeto gerado para o guia completo. Esta seção co
 
 ### Configuração do ambiente
 
-Execute os passos abaixo **uma vez por máquina** após gerar o projeto com o Cookiecutter.
+Execute os passos abaixo **uma vez por máquina** após gerar o projeto com o `generate_project.py`.
 
 **1. Instalar o OpenCode**
 

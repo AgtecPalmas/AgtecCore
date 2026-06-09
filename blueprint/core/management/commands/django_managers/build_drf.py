@@ -57,6 +57,22 @@ class DRFBuild:
             if Utils.check_dir(f"{self.path_api}/{folder}") is False:
                 Utils.create_directory(f"{self.path_api}/{folder}", True)
 
+    @staticmethod
+    def _ensure_base_api_imports(content: str) -> str:
+        import_line = "from django.urls import include, path"
+        if import_line in content:
+            return content
+
+        marker = '"""'
+        if content.startswith(marker):
+            end_docstring = content.find(marker, len(marker))
+            if end_docstring != -1:
+                insert_at = end_docstring + len(marker)
+                suffix = "" if content[insert_at:insert_at + 2] == "\n\n" else "\n"
+                return f"{content[:insert_at]}\n\n{import_line}{suffix}{content[insert_at:]}"
+
+        return f"{import_line}\n\n{content.lstrip()}"
+
     def manage_serializers(self):
         try:
             content = Utils.get_snippet(self.snippet_serializer)
@@ -158,7 +174,6 @@ class DRFBuild:
 
     def manage_routers_base(self):
         try:
-            content_exist = False
             new_data = ""
             content_include = "    path('$app_name$/api/v1/', include('$app_name$.api.routers')),".replace(
                 "$app_name$", self.app.lower()
@@ -167,11 +182,10 @@ class DRFBuild:
                 Path(f"{self.path_base}/urls_api.py"), "r", encoding="utf-8"
             ) as urlsapi:
                 new_data = urlsapi.read()
-                if self.app.lower() in new_data:
+                if content_include in new_data:
                     return
+                new_data = self._ensure_base_api_imports(new_data)
                 new_data = new_data.replace("]", f"{content_include}\n]")
-            if content_exist:
-                return
             with open(
                 Path(f"{self.path_base}/urls_api.py"), "w", encoding="utf-8"
             ) as urlsapi:

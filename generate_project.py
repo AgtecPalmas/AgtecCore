@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["jinja2"]
+# ///
 """AgtecCore project generator — substitui o CookieCutter."""
 from __future__ import annotations
 
@@ -23,7 +27,7 @@ except ImportError:
 
 # ─── Constantes ───────────────────────────────────────────────────────────────
 
-TEMPLATE_DIR = Path(__file__).parent / "{{cookiecutter.project_slug}}"
+TEMPLATE_DIR = Path(__file__).parent / "blueprint"
 
 COPY_WITHOUT_RENDER: list[str] = [
     "core/**",
@@ -193,7 +197,12 @@ def scaffold_project(ctx: dict, dest: Path) -> None:
 
 # ─── Pós-geração ──────────────────────────────────────────────────────────────
 
-def _run(cmd: str | list[str], cwd: Path, silent: bool = False) -> bool:
+def _run(
+    cmd: str | list[str],
+    cwd: Path,
+    silent: bool = False,
+    ok_codes: tuple[int, ...] = (0,),
+) -> bool:
     """Executa comando e retorna True se bem-sucedido."""
     kwargs: dict = {"cwd": cwd}
     if silent:
@@ -205,7 +214,7 @@ def _run(cmd: str | list[str], cwd: Path, silent: bool = False) -> bool:
 
     try:
         result = subprocess.run(cmd, **kwargs)
-        return result.returncode == 0
+        return result.returncode in ok_codes
     except Exception as exc:
         print(f"  {ERR} {exc}")
         return False
@@ -258,6 +267,34 @@ def _project_python(dest: Path) -> Path:
         if candidate.exists():
             return candidate
     return Path(sys.executable)
+
+
+def _project_ruff(dest: Path) -> list[str]:
+    candidates = [
+        dest / ".venv" / "bin" / "ruff",
+        dest / ".venv" / "Scripts" / "ruff.exe",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return [str(candidate)]
+    return ["uvx", "ruff"]
+
+
+def format_project(dest: Path) -> None:
+    print(f"  {WAIT} Formatando código gerado com ruff...")
+    ruff = _project_ruff(dest)
+    ok1 = _run([*ruff, "check", "--fix", str(dest)], cwd=dest, silent=True, ok_codes=(0, 1))
+    ok2 = _run([*ruff, "format", str(dest)], cwd=dest, silent=True, ok_codes=(0, 1))
+    if ok1 and ok2:
+        print(f"  {OK} Código formatado")
+    else:
+        print(f"  {ERR} Falha na formatação — execute manualmente: ruff format .")
+
+
+def finalize_generated_code(dest: Path, build_apps: bool) -> None:
+    if build_apps:
+        build_default_apps(dest)
+    format_project(dest)
 
 
 def _ask_bool(prompt: str, default: bool = True) -> bool:
@@ -413,8 +450,8 @@ def main() -> None:
 
     if ctx["install_requirements"]:
         deps_ok = install_dependencies(dest)
-        if deps_ok and ctx["build_apps"]:
-            build_default_apps(dest)
+        if deps_ok:
+            finalize_generated_code(dest, ctx["build_apps"])
     else:
         print(f"  ⏭  Instalação de dependências ignorada")
 

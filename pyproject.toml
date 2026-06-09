@@ -5,15 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
-    "cookiecutter>=2.7.1",
     "django==5.2.12",
+    "jinja2>=3.1.6",
 ]
 
 [tool.taskipy.settings]
 user_vars = true
 
 [tool.pytest.ini_options]
-addopts = "--cov={{cookiecutter.project_slug.lower()}} --cov-report=html --cov-fail-under=90 --doctest-modules --doctest-glob='*.rst' --ignore=core --ignore=docs --ignore=venv --ignore=.venv --ignore=.env"
+addopts = "--cov-report=html --doctest-modules --doctest-glob='*.rst' --ignore=core --ignore=docs --ignore=venv --ignore=.venv --ignore=.env"
 
 [tool.ruff]
 line-length = 120
@@ -32,6 +32,12 @@ ignore = ["E203", "W503"]
 
 [tool.ruff.format]
 quote-style = "double"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+]
 
 [tool.taskipy.tasks]
 build_all = "python manage.py build --all"

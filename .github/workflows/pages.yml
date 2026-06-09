@@ -32,9 +32,9 @@ jobs:
         
     - name: Generate Documentation
       run: |
-        cd {{cookiecutter.project_slug}}
+        cd blueprint
         mkdocs build -d site --clean
-        cp -r site/* ../docs  
+        cp -r site/* ../docs
     
     - name: Upload Pages Artifact
       uses: actions/upload-pages-artifact@v3
