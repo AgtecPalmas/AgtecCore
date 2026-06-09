@@ -325,6 +325,8 @@ curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.
 
 **4. Configurar o Obsidian Brain (memória persistente)**
 
+Entenda o que é o Obsidian -> https://youtu.be/2KUF9BB_rh8?si=FkgBBTkPH4zLc2_5
+
 ```bash
 # Criar vault no Obsidian e configurar a variável no projeto
 OBSIDIAN_DEV_VAULT="CAMINHO_PARA_SEU_VAULT/DevBrain"
