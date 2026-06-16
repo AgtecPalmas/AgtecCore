@@ -176,7 +176,7 @@ pydantic-settings==2.13.1
     #   fastapi
 pygments==2.19.2
     # via rich
-pyjwt==2.12.1
+pyjwt==2.13.0
     # via projetofastapi (pyproject.toml)
 pyproject-hooks==1.2.0
     # via
