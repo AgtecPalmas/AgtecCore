@@ -193,7 +193,7 @@ python-dotenv==1.2.2
     #   projetofastapi (pyproject.toml)
     #   pydantic-settings
     #   uvicorn
-python-multipart==0.0.22
+python-multipart==0.0.31
     # via
     #   projetofastapi (pyproject.toml)
     #   fastapi
