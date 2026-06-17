@@ -293,7 +293,7 @@ pygments==2.19.2
     #   pytest
     #   rich
     #   sphinx
-pyjwt==2.12.1
+pyjwt==2.13.0
     # via
     #   agteccore (pyproject.toml:dev)
     #   djangorestframework-simplejwt
