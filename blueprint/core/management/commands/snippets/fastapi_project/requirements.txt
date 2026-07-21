@@ -110,7 +110,7 @@ packaging==24.1
     #   gunicorn
 passlib==1.7.4
     # via projetofastapi (pyproject.toml)
-pillow==10.2.0
+pillow==12.3.0
     # via projetofastapi (pyproject.toml)
 pluggy==1.5.0
     # via projetofastapi (pyproject.toml)
