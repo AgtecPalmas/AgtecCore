@@ -220,7 +220,7 @@ ruff==0.11.11
     # via projetofastapi (pyproject.toml:dev)
 sentry-sdk==2.56.0
     # via fastapi-cloud-cli
-setuptools==82.0.1
+setuptools==83.0.0
     # via pip-tools
 shellingham==1.5.4
     # via typer
