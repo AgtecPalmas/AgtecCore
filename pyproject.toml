@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
-    "django==5.2.12",
+    "django==5.2.16",
     "jinja2>=3.1.6",
 ]
 
