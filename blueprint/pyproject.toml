@@ -111,7 +111,7 @@ dev = [
     "six==1.17.0",
     "sphinx==7.*",
     "sphinx-rtd-theme==2.*",
-    "sqlparse==0.5.5",
+    "sqlparse==0.6.0",
     "taskipy==1.*",
     "tinify==1.7.1",
     "tzdata==2025.3",
