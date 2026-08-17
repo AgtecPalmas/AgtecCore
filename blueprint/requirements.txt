@@ -123,7 +123,7 @@ sentry-sdk==2.55.0
     # via agteccore (pyproject.toml)
 six==1.17.0
     # via python-dateutil
-sqlparse==0.5.5
+sqlparse==0.6.0
     # via django
 tinify==1.7.1
     # via django-image-optimizer
