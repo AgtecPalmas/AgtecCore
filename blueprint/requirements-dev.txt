@@ -109,7 +109,7 @@ django-tempus-dominus==5.1.2.17
     # via
     #   agteccore (pyproject.toml)
     #   agteccore (pyproject.toml:dev)
-djangorestframework==3.16.1
+djangorestframework==3.17.2
     # via
     #   agteccore (pyproject.toml)
     #   agteccore (pyproject.toml:dev)
