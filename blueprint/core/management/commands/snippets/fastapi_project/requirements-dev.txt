@@ -137,7 +137,7 @@ passlib==1.7.4
     # via projetofastapi (pyproject.toml)
 pillow==10.2.0
     # via projetofastapi (pyproject.toml)
-pip==26.0.1
+pip==26.2
     # via pip-tools
 pip-tools==7.5.3
     # via projetofastapi (pyproject.toml:dev)
